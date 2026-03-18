@@ -7,21 +7,16 @@ import { Moon, Sun, ShieldCheck, Menu, X } from "lucide-react";
 import { useTheme } from "next-themes";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { motion } from "framer-motion";
 
 const navLinks = [
+  { name: "Home", href: "/" },
   { name: "Quem Somos", href: "/quem-somos" },
   { name: "Engenharia", href: "/engenharia" },
   { name: "Incorporadora", href: "/incorporadora" },
   { name: "Construtora", href: "/construtora" },
   { name: "Imobiliária", href: "/imobiliaria" },
   { name: "Patrimonial", href: "/patrimonial" },
-  { name: "Integração", href: "/integracao" },
-  { name: "Investidores", href: "/investidores" },
-];
-
-const ctaLinks = [
-  { name: "Orçamento", href: "/orcamento" },
-  { name: "Contato", href: "/contato" },
 ];
 
 export function Navbar() {
@@ -29,111 +24,105 @@ export function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
   const pathname = usePathname();
 
-  const allLinks = [...navLinks, ...ctaLinks];
-
   return (
-    <nav className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="container mx-auto flex h-16 items-center justify-between px-4">
+    <nav className="fixed top-0 z-[100] w-full bg-background/80 backdrop-blur-md border-b border-primary/10">
+      <div className="container mx-auto flex h-20 items-center justify-between px-6">
+        
         {/* Logo */}
-        <Link href="/" className="flex items-center gap-2 shrink-0">
-          <ShieldCheck className="h-7 w-7 text-primary" />
-          <span className="font-heading text-lg font-bold tracking-tight uppercase">
-            Grupo Patrimonial
+        <Link href="/" className="flex items-center gap-2 group">
+          <ShieldCheck className="h-8 w-8 text-primary transition-transform group-hover:scale-110" />
+          <span className="font-heading text-xl font-bold tracking-[0.2em] uppercase text-primary">
+            PATrim<span className="text-[#0F172A]">ONIAL</span>
           </span>
         </Link>
 
         {/* Desktop Nav */}
-        <div className="hidden xl:flex items-center gap-1">
+        <div className="hidden lg:flex items-center gap-8">
           {navLinks.map((link) => (
             <Link
               key={link.href}
               href={link.href}
               className={cn(
-                "px-3 py-1.5 rounded-md text-sm font-medium transition-colors hover:text-primary hover:bg-primary/5",
-                pathname === link.href
-                  ? "text-primary bg-primary/10"
-                  : "text-foreground/70"
+                "text-xs font-bold uppercase tracking-[0.2em] transition-all hover:text-primary relative group",
+                pathname === link.href ? "text-primary" : "text-[#0F172A]/70"
               )}
             >
               {link.name}
+              <span className={cn(
+                "absolute -bottom-1 left-0 w-0 h-[1px] bg-primary transition-all duration-300 group-hover:w-full",
+                pathname === link.href && "w-full"
+              )} />
             </Link>
           ))}
         </div>
 
-        {/* Desktop CTA + Theme */}
-        <div className="hidden xl:flex items-center gap-3">
-          {ctaLinks.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              className={cn(
-                "px-4 py-1.5 rounded-md text-sm font-semibold border transition-colors",
-                link.name === "Contato"
-                  ? "bg-primary text-primary-foreground border-primary hover:bg-primary/90"
-                  : "border-border hover:border-primary hover:text-primary"
-              )}
-            >
-              {link.name}
-            </Link>
-          ))}
+        {/* Desktop CTA */}
+        <div className="hidden lg:flex items-center gap-4">
           <Button
             variant="ghost"
             size="icon"
             onClick={() => setTheme(theme === "light" ? "dark" : "light")}
-            className="ml-1"
+            className="text-primary hover:bg-primary/10"
           >
             <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
             <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
             <span className="sr-only">Toggle theme</span>
           </Button>
+          
+          <Link href="/contato">
+            <motion.button
+              whileHover={{ scale: 1.05, boxShadow: "0 0 15px rgba(201,161,74,0.3)" }}
+              whileTap={{ scale: 0.95 }}
+              className="bg-primary text-white text-[10px] font-bold uppercase tracking-[0.2em] px-6 py-3 rounded-none shadow-sm transition-all"
+            >
+              Fale com um especialista
+            </motion.button>
+          </Link>
         </div>
 
-        {/* Mobile controls */}
-        <div className="xl:hidden flex items-center gap-2">
-          <Button
+        {/* Mobile menu button */}
+        <div className="lg:hidden flex items-center gap-4">
+           <Button
             variant="ghost"
             size="icon"
             onClick={() => setTheme(theme === "light" ? "dark" : "light")}
+            className="text-primary"
           >
             <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
             <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
-            <span className="sr-only">Toggle theme</span>
           </Button>
-          <Button
-            variant="ghost"
-            size="icon"
+          <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            className="text-[#0F172A]"
           >
-            {isMobileMenuOpen ? (
-              <X className="h-5 w-5" />
-            ) : (
-              <Menu className="h-5 w-5" />
-            )}
-          </Button>
+            {isMobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
+          </button>
         </div>
       </div>
 
       {/* Mobile Menu */}
       {isMobileMenuOpen && (
-        <div className="xl:hidden border-t bg-background absolute w-full shadow-lg">
-          <div className="container mx-auto px-4 py-4 grid grid-cols-2 gap-2">
-            {allLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className={cn(
-                  "px-3 py-2 rounded-md text-sm font-medium transition-colors hover:text-primary hover:bg-primary/5",
-                  pathname === link.href
-                    ? "text-primary bg-primary/10 font-semibold"
-                    : "text-foreground/80"
-                )}
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                {link.name}
-              </Link>
-            ))}
-          </div>
-        </div>
+        <motion.div 
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="lg:hidden bg-background border-t border-primary/10 px-6 py-10 flex flex-col gap-6"
+        >
+          {navLinks.map((link) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              className="text-sm font-bold uppercase tracking-[0.2em] text-[#0F172A]"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              {link.name}
+            </Link>
+          ))}
+          <Link href="/contato" onClick={() => setIsMobileMenuOpen(false)}>
+            <button className="w-full bg-primary text-white text-[10px] font-bold uppercase tracking-[0.2em] py-4 rounded-none">
+              Fale com um especialista
+            </button>
+          </Link>
+        </motion.div>
       )}
     </nav>
   );
