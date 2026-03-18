@@ -1,36 +1,44 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Grupo Patrimonial - Website
 
-## Getting Started
+Projeto construído em **Next.js 15 (App Router)** com **TypeScript**, **Tailwind CSS**, **shadcn/ui**, e **Framer Motion**.
 
-First, run the development server:
+## 🚀 Como iniciar o projeto
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+1. **Instale as dependências:**
+   ```bash
+   npm install
+   ```
+2. **Configure as Variáveis de Ambiente:**
+   Crie um arquivo `.env.local` na raiz do projeto contendo as seguintes variáveis:
+   ```env
+   # Resend para envio de e-mails de formulários (Contato e Orçamento)
+   RESEND_API_KEY="re_123456789"
+   
+   # Senha simples para acesso à página /admin
+   ADMIN_PASSWORD="sua_senha_secreta_aqui"
+   
+   # Vercel Blob Token (para upload de imagens no admin)
+   BLOB_READ_WRITE_TOKEN="vercel_blob_rw_123456789"
+   ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+3. **Inicie o servidor de desenvolvimento:**
+   ```bash
+   npm run dev
+   ```
+   Abra [http://localhost:3000](http://localhost:3000) no navegador para ver o resultado.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## ⚙️ Painel Admin (/admin)
+Para facilitar o upload de imagens sem precisar de um CMS robusto nesta etapa:
+1. Acesse `http://localhost:3000/admin`.
+2. Insira a **Senha de Acesso** correspondente à variável `ADMIN_PASSWORD`.
+3. Selecione a imagem e clique em enviar.
+4. O link público direto da Vercel Blob será exibido logo abaixo, que pode ser copiado e utilizado nos códigos das páginas ou no banco de dados futuramente.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 📚 Tecnologias Utilizadas
+- **Next.js 15+** (App Router, Server Actions, Tipagem estrita)
+- **Tailwind CSS v4** (Variáveis em globals.css usando a paleta oficial da marca)
+- **Framer Motion** (Animações premium como hover, botões flutuantes e scroll reveal)
+- **next-themes** (Modo Escuro Global)
+- **Vercel Blob** (Armazenamento estático)
+- **Resend** (Infraestrutura de e-mails para prospecção)
+- **Lucide React** (Ícones padrão minimalista)
