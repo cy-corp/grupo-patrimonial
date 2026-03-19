@@ -70,11 +70,11 @@ export function Hero() {
           >
             <Suspense fallback={null}>
               <ambientLight intensity={1.2} />
-              <directionalLight 
-                position={[10, 20, 10]} 
-                intensity={1.5} 
-                color="#FFFAF0" 
-                castShadow 
+              <directionalLight
+                position={[10, 20, 10]}
+                intensity={1.5}
+                color="#FFFAF0"
+                castShadow
               />
               <Environment preset="sunset" />
 
@@ -92,17 +92,46 @@ export function Hero() {
           </Canvas>
           <Loader />
         </div>
+
+        {/* Scroll Indicator (Custom Mouse) */}
+        <motion.div
+          style={{ opacity: textOpacity }}
+          className="scroll-container"
+        >
+          <svg
+            width="30"
+            height="50"
+            viewBox="0 0 30 50"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            className="scroll-icon"
+          >
+            {/* Estrutura Externa (Corpo do Mouse) */}
+            <rect
+              x="1"
+              y="1"
+              width="28"
+              height="48"
+              rx="14"
+              stroke="var(--primary)"
+              strokeWidth="2"
+              className="mouse-body"
+            />
+            {/* Roda de Scroll (Animada) */}
+            <rect
+              x="13"
+              y="8"
+              width="4"
+              height="10"
+              rx="2"
+              fill="var(--accent)"
+              className="scroll-wheel"
+            />
+          </svg>
+          <span className="scroll-text">DESÇA</span>
+        </motion.div>
       </div>
 
-      {/* Decorative Golden Ray (Scroll Indicator hint) */}
-      <motion.div
-        animate={{ y: [0, 20, 0] }}
-        transition={{ duration: 2, repeat: Infinity }}
-        className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-50"
-      >
-        <span className="text-[10px] uppercase tracking-[0.4em] text-primary">SCROLL</span>
-        <div className="w-[1px] h-10 bg-primary/30" />
-      </motion.div>
     </section>
   );
 }
