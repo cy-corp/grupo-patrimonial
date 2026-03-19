@@ -3,8 +3,7 @@
 import * as React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Moon, Sun, ShieldCheck, Menu, X } from "lucide-react";
-import { useTheme } from "next-themes";
+import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
@@ -20,20 +19,17 @@ const navLinks = [
 ];
 
 export function Navbar() {
-  const { setTheme, theme } = useTheme();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
   const pathname = usePathname();
 
   return (
     <nav className="fixed top-0 z-[100] w-full bg-background/80 backdrop-blur-md border-b border-primary/10">
-      <div className="container mx-auto flex h-20 items-center justify-between px-6">
+      <div className="container mx-auto flex h-24 items-center justify-between px-6">
         
         {/* Logo */}
-        <Link href="/" className="flex items-center gap-2 group">
-          <ShieldCheck className="h-8 w-8 text-primary transition-transform group-hover:scale-110" />
-          <span className="font-heading text-xl font-bold tracking-[0.2em] uppercase text-primary">
-            PATrim<span className="text-[#0F172A]">ONIAL</span>
-          </span>
+        <Link href="/" className="flex items-center group">
+          <img src="/patrimonial-logo-png.png" alt="Grupo Patrimonial" className="h-20 w-auto" />
+          <img src="/patrimonial-text-png.png" alt="Patrimonial" className="h-18 w-auto -ml-5" />
         </Link>
 
         {/* Desktop Nav */}
@@ -58,17 +54,6 @@ export function Navbar() {
 
         {/* Desktop CTA */}
         <div className="hidden lg:flex items-center gap-4">
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={() => setTheme(theme === "light" ? "dark" : "light")}
-            className="text-primary hover:bg-primary/10"
-          >
-            <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-            <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
-            <span className="sr-only">Toggle theme</span>
-          </Button>
-          
           <Link href="/contato">
             <motion.button
               whileHover={{ scale: 1.05, boxShadow: "0 0 15px rgba(201,161,74,0.3)" }}
@@ -82,15 +67,6 @@ export function Navbar() {
 
         {/* Mobile menu button */}
         <div className="lg:hidden flex items-center gap-4">
-           <Button
-            variant="ghost"
-            size="icon"
-            onClick={() => setTheme(theme === "light" ? "dark" : "light")}
-            className="text-primary"
-          >
-            <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-            <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
-          </Button>
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             className="text-[#0F172A]"

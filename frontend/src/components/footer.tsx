@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { ShieldCheck } from "lucide-react";
 
 export function Footer() {
   return (
@@ -8,10 +7,7 @@ export function Footer() {
         <div className="grid grid-cols-1 gap-8 md:grid-cols-4">
           <div className="col-span-1 md:col-span-2">
             <Link href="/" className="mb-4 flex items-center gap-2">
-              <ShieldCheck className="h-8 w-8 text-primary" />
-              <span className="font-heading text-xl font-bold tracking-tight uppercase">
-                Grupo Patrimonial
-              </span>
+              <img src="/patrimonial-logo-png.png" alt="Grupo Patrimonial" className="h-16 w-auto" />
             </Link>
             <p className="mt-4 max-w-xs text-sm text-muted-foreground">
               Soluções completas para desenvolver, proteger, valorizar e perpetuar patrimônios imobiliários.

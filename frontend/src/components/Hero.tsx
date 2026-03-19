@@ -46,11 +46,9 @@ export function Hero() {
           className="relative z-10 w-full md:w-1/2 flex flex-col items-start gap-6 pointer-events-none"
         >
           {/* Logo/Badge */}
-          <div className="flex items-center gap-2 mb-2">
-            <div className="w-10 h-1px bg-primary/40 block" />
-            <span className="text-xs tracking-[0.3em] uppercase text-primary font-semibold">
-              Grupo Patrimonial
-            </span>
+          <div className="flex items-center gap-4 mb-2">
+            <div className="w-10 h-[1px] bg-primary/40 block" />
+            <img src="/patrimonial-logo-png.png" alt="Grupo Patrimonial" className="h-12 w-auto" />
           </div>
 
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-heading font-black leading-[1.1] text-[#0F172A] uppercase">
