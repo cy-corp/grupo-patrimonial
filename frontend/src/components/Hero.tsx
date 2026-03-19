@@ -90,7 +90,7 @@ export function Hero() {
               />
             </Suspense>
           </Canvas>
-          <Loader />
+
         </div>
 
         {/* Scroll Indicator (Custom Mouse) */}

@@ -47,6 +47,15 @@
   --radius-4xl: calc(var(--radius) * 2.6);
 }
 
+@keyframes fill-anim {
+  from { width: 0%; }
+  to { width: 100%; }
+}
+
+.loading-fill-premium {
+  animation: fill-anim 2.5s linear forwards;
+}
+
 :root {
   --background: #FFFFFF;
   --foreground: #0F172A;
