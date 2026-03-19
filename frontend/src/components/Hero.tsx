@@ -24,9 +24,9 @@ export function Hero() {
     restDelta: 0.001
   });
 
-  // Text Animations (0% to 70%)
-  const textOpacity = useTransform(scrollYProgress, [0, 0.7], [1, 0]);
-  const textTranslateX = useTransform(scrollYProgress, [0, 0.7], ["0%", "-30%"]);
+  // Text Animations disappear early (0% to 40%)
+  const textOpacity = useTransform(smoothProgress, [0, 0.4], [1, 0]);
+  const textTranslateX = useTransform(smoothProgress, [0, 0.4], ["0%", "-60%"]);
 
   // 3D Model progress (directly passed to Model3D as a number)
   // We'll use a listener to pass progress to the R3F component via state if needed,
@@ -35,7 +35,7 @@ export function Hero() {
   return (
     <section
       ref={containerRef}
-      className="relative h-[500vh] bg-[#F8F1E3] overflow-clip"
+      className="relative h-[200vh] bg-[#F8F1E3]"
     >
       {/* Sticky Content Wrap */}
       <div className="sticky top-0 h-screen w-full flex flex-col md:flex-row items-center justify-between px-6 md:px-12 lg:px-24">
@@ -156,18 +156,20 @@ const Model3DWithInternalRef = React.forwardRef((props, ref) => {
     updateScroll: (v: number) => {
       if (!groupRef.current) return;
 
-      // 1. Position/Translate Animation
-      const targetX = THREE.MathUtils.lerp(0, 0, v); // Start at center
-      groupRef.current.position.x = targetX;
+      // 1. Rotation: Subtle rotation (reduced multiplier to avoid "spinning too much")
+      const rotationV = Math.min(v / 0.9, 1);
+      groupRef.current.rotation.y = (rotationV * Math.PI * 0.8) + 1.07;
 
-      // 2. Scale (Increased for a powerful, well-lit view)
-      const targetScale = 0.05;
+      // 2. Dive (Vertical Displacement): Starts a bit earlier at 60% scroll
+      const diveV = Math.max(0, (v - 0.6) / 0.4);
+      const targetY = THREE.MathUtils.lerp(-0.5, -25, Math.pow(diveV, 2.5));
+      groupRef.current.position.y = targetY;
+
+      // 3. Scale: Stays solid while rotating, zooms slightly while diving
+      const targetScale = THREE.MathUtils.lerp(0.05, 0.045, diveV);
       groupRef.current.scale.setScalar(targetScale);
 
-      // 3. Rotation (Expanded to near 360 degrees)
-      groupRef.current.rotation.y = v * Math.PI * 1.8 - 0.5;
-
-      // Update local state if needed for lights or other components
+      // Update local state if needed
       setCurrentProgress(v);
     }
   }));

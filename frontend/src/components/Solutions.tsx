@@ -47,7 +47,7 @@ const solutions = [
 
 export function Solutions() {
   return (
-    <section className="py-24 bg-[#F8F1E3] relative z-10">
+    <section className="py-24 bg-[#F8F1E3] relative z-10 shadow-[0_-30px_60px_-15px_rgba(0,0,0,0.1)]">
       <div className="container mx-auto px-6 h-full">
         <div className="flex flex-col mb-16 px-4">
           <span className="text-primary font-bold tracking-[.3em] uppercase text-xs mb-4">
