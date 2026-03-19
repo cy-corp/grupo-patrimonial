@@ -8,6 +8,7 @@ export function LoadingScreen({ onFinished }: { onFinished?: () => void }) {
   const { progress, active } = useProgress();
   const [isFinished, setIsFinished] = useState(false);
   const [visualDone, setVisualDone] = useState(false);
+  const [actuallyDone, setActuallyDone] = useState(false);
 
   // Simple timer to synchronize JS with CSS animation (2.5s)
   useEffect(() => {
@@ -29,20 +30,31 @@ export function LoadingScreen({ onFinished }: { onFinished?: () => void }) {
   }, [isReadyToHide, onFinished]);
 
   // If loading is finished and we've hidden it, don't render anything
-  if (isFinished && progress === 100) return null;
+  if (actuallyDone) return null;
 
   return (
-    <AnimatePresence>
+    <AnimatePresence onExitComplete={() => setActuallyDone(true)}>
       {!isFinished && (
         <motion.div
           initial={{ opacity: 1 }}
           exit={{ 
             opacity: 0,
-            transition: { duration: 0.8, ease: "easeInOut" }
+            transition: { duration: 1, ease: [0.76, 0, 0.24, 1], delay: 0.2 }
           }}
           className="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-[#F8F1E3]"
         >
-          <div className="relative flex flex-col items-center">
+          <motion.div 
+            initial={{ scale: 1, opacity: 1 }}
+            exit={{ 
+              scale: 15,
+              opacity: 0,
+              transition: { 
+                duration: 1.2, 
+                ease: [0.76, 0, 0.24, 1],
+              }
+            }}
+            className="relative flex flex-col items-center"
+          >
             {/* Logo Container */}
             <div className="relative w-72 h-32 md:w-[400px] md:h-48">
               {/* Background Logo (Pale/White version) */}
@@ -67,12 +79,13 @@ export function LoadingScreen({ onFinished }: { onFinished?: () => void }) {
                 </div>
               </div>
             </div>
-          </div>
+          </motion.div>
           
           {/* Decorative element */}
           <motion.div 
             initial={{ opacity: 0 }}
             animate={{ opacity: 0.03 }}
+            exit={{ opacity: 0, scale: 1.5, transition: { duration: 1 } }}
             className="absolute inset-0 pointer-events-none"
             style={{
               backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23C9A14A' fill-opacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,

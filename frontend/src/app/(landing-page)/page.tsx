@@ -14,9 +14,17 @@ export default function Home() {
       <LoadingScreen onFinished={() => setIsLoading(false)} />
       
       <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: isLoading ? 0 : 1 }}
-        transition={{ duration: 0.8, ease: "easeOut" }}
+        initial={{ opacity: 0, scale: 1.15, filter: "blur(10px)" }}
+        animate={{ 
+          opacity: isLoading ? 0 : 1,
+          scale: isLoading ? 1.15 : 1,
+          filter: isLoading ? "blur(10px)" : "blur(0px)"
+        }}
+        transition={{ 
+          duration: 1.5, 
+          ease: [0.76, 0, 0.24, 1],
+          delay: 0.3 
+        }}
       >
         <Hero />
         <Solutions />
