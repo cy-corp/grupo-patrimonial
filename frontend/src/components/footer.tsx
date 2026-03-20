@@ -12,29 +12,23 @@ export function Footer() {
           <span className="text-lg font-bold text-[#d9c58f] font-headline uppercase tracking-widest">Grupo Patrimonial</span>
         </div>
         <p className="font-body text-[#acabaa] text-[10px] md:text-xs text-center md:text-left">
-          Excellence in Structural Permanence.
+          Excelência em Perenidade Estrutural.
         </p>
       </div>
 
       <div className="flex flex-col items-center md:items-end gap-6">
         <div className="flex flex-wrap justify-center gap-6 md:gap-8">
-          <Link 
-            href="/politica-privacidade" 
+          <Link
+            href="/politica-privacidade"
             className="font-body tracking-[0.05em] text-[#acabaa] text-xs hover:text-[#d9c58f] transition-colors duration-200"
           >
-            Privacy Policy
+            Política de Privacidade
           </Link>
-          <Link 
-            href="/termos-servico" 
+          <Link
+            href="/termos-servico"
             className="font-body tracking-[0.05em] text-[#acabaa] text-xs hover:text-[#d9c58f] transition-colors duration-200"
           >
-            Terms of Service
-          </Link>
-          <Link 
-            href="/investidores" 
-            className="font-body tracking-[0.05em] text-[#acabaa] text-xs hover:text-[#d9c58f] transition-colors duration-200"
-          >
-            Investor Relations
+            Termos de Serviço
           </Link>
         </div>
         <p className="font-body tracking-[0.05em] text-[#acabaa] text-[10px] md:text-xs">
