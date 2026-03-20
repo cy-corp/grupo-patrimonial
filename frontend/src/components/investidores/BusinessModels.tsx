@@ -42,7 +42,7 @@ export function BusinessModels() {
     <section className="py-32 px-6 md:px-12 bg-surface-container-low overflow-hidden">
       <div className="max-w-7xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-12 items-end mb-24">
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
@@ -55,15 +55,12 @@ export function BusinessModels() {
               Flexibilidade estrutural para viabilizar empreendimentos de alto impacto. Atuamos em toda a cadeia de valor imobiliária.
             </p>
           </motion.div>
-          
-          <div className="md:col-span-4 text-right hidden md:block">
-            <span className="text-primary font-headline text-7xl opacity-10 font-bold">01 / 05</span>
-          </div>
+
         </div>
-        
+
         <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-outline-variant/10">
           {models.map((model, index) => (
-            <motion.div 
+            <motion.div
               key={index}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -73,15 +70,15 @@ export function BusinessModels() {
             >
               {model.image && (
                 <>
-                  <img 
-                    alt={model.title} 
-                    className="absolute inset-0 w-full h-full object-cover opacity-20 grayscale group-hover:grayscale-0 group-hover:opacity-60 group-hover:scale-110 transition-all duration-1000" 
+                  <img
+                    alt={model.title}
+                    className="absolute inset-0 w-full h-full object-cover opacity-20 grayscale group-hover:grayscale-0 group-hover:opacity-60 group-hover:scale-110 transition-all duration-1000"
                     src={model.image}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-surface to-transparent"></div>
                 </>
               )}
-              
+
               <div className="absolute top-10 right-10 opacity-20 group-hover:opacity-100 transition-opacity duration-500">
                 {model.icon && (
                   <span className="material-symbols-outlined text-primary text-4xl">
@@ -89,7 +86,7 @@ export function BusinessModels() {
                   </span>
                 )}
               </div>
-              
+
               <div className="relative z-10">
                 <h3 className={`font-headline ${model.image ? 'text-4xl' : 'text-2xl'} text-on-surface mb-4`}>{model.title}</h3>
                 <p className={`text-on-surface-variant text-sm leading-relaxed mb-6 transition-all duration-500 ${model.image ? 'opacity-100' : 'opacity-0 group-hover:opacity-100 translate-y-4 group-hover:translate-y-0'}`}>
