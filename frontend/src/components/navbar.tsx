@@ -36,8 +36,8 @@ export function Navbar() {
 
       {/* Desktop Navigation */}
       <div className="hidden md:flex items-center gap-10">
-        <Link 
-          href="/" 
+        <Link
+          href="/"
           className={cn(
             "font-headline font-light tracking-[0.15em] uppercase text-[10px] transition-all duration-500 cursor-pointer relative group/link",
             pathname === "/" ? "text-primary" : "text-on-surface-variant hover:text-on-surface"
@@ -49,8 +49,8 @@ export function Navbar() {
             pathname === "/" ? "w-full" : "w-0 group-hover/link:w-full"
           )} />
         </Link>
-        <Link 
-          href="/quem-somos" 
+        <Link
+          href="/quem-somos"
           className={cn(
             "font-headline font-light tracking-[0.15em] uppercase text-[10px] transition-all duration-500 cursor-pointer relative group/link",
             pathname === "/quem-somos" ? "text-primary" : "text-on-surface-variant hover:text-on-surface"
@@ -64,7 +64,7 @@ export function Navbar() {
         </Link>
 
         {/* Unidades de Negócio Dropdown */}
-        <div 
+        <div
           className="relative group h-full py-4"
           onMouseEnter={() => setIsDropdownOpen(true)}
           onMouseLeave={() => setIsDropdownOpen(false)}
@@ -73,10 +73,10 @@ export function Navbar() {
             Unidades de Negócio
             <ChevronDown className={cn("w-3 h-3 transition-transform duration-500", isDropdownOpen && "rotate-180")} />
           </button>
-          
+
           <AnimatePresence>
             {isDropdownOpen && (
-              <motion.div 
+              <motion.div
                 initial={{ opacity: 0, y: 10, scale: 0.98 }}
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 exit={{ opacity: 0, y: 10, scale: 0.98 }}
@@ -86,9 +86,9 @@ export function Navbar() {
                 <div className="bg-surface/95 dark:bg-[#0e0e0e]/95 backdrop-blur-3xl border border-outline-variant/20 shadow-[0_40px_80px_rgba(0,0,0,0.1)] dark:shadow-[0_40px_80px_rgba(0,0,0,0.5)] overflow-hidden rounded-xl">
                   <div className="p-8 grid grid-cols-2 gap-x-8 gap-y-6">
                     {businessUnits.map((unit) => (
-                      <Link 
+                      <Link
                         key={unit.id}
-                        href={unit.href} 
+                        href={unit.href}
                         className="group/item flex flex-col gap-1 transition-all duration-300"
                       >
                         <div className="flex items-center gap-3">
@@ -103,19 +103,14 @@ export function Navbar() {
                       </Link>
                     ))}
                   </div>
-                  <div className="bg-primary/5 border-t border-outline-variant/10 p-4 text-center">
-                    <Link href="/contato" className="text-[9px] uppercase tracking-[0.3em] text-primary hover:brightness-125 transition-all font-bold">
-                      Consultoria Estratégica &rarr;
-                    </Link>
-                  </div>
                 </div>
               </motion.div>
             )}
           </AnimatePresence>
         </div>
 
-        <Link 
-          href="/investidores" 
+        <Link
+          href="/investidores"
           className={cn(
             "font-headline font-light tracking-[0.15em] uppercase text-[10px] transition-all duration-500 cursor-pointer relative group/link",
             pathname === "/investidores" ? "text-primary" : "text-on-surface-variant hover:text-on-surface"
@@ -127,8 +122,8 @@ export function Navbar() {
             pathname === "/investidores" ? "w-full" : "w-0 group-hover/link:w-full"
           )} />
         </Link>
-        <Link 
-          href="/contato" 
+        <Link
+          href="/contato"
           className={cn(
             "font-headline font-light tracking-[0.15em] uppercase text-[10px] transition-all duration-500 cursor-pointer relative group/link",
             pathname === "/contato" ? "text-primary" : "text-on-surface-variant hover:text-on-surface"
@@ -145,7 +140,7 @@ export function Navbar() {
       {/* Desktop CTA, Theme Toggle & Mobile Menu Button */}
       <div className="flex items-center gap-4">
         <ThemeToggle />
-        
+
         <Link href="/orcamento" className="hidden md:block">
           <GoldButton className="rounded-full px-8 opacity-90 hover:opacity-100">
             Orçamento
@@ -164,7 +159,7 @@ export function Navbar() {
       {/* Mobile Menu */}
       <AnimatePresence>
         {isMobileMenuOpen && (
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
@@ -173,7 +168,7 @@ export function Navbar() {
             <div className="flex flex-col gap-4">
               <Link href="/" className="font-headline uppercase text-xs tracking-widest text-on-surface" onClick={() => setIsMobileMenuOpen(false)}>Home</Link>
               <Link href="/quem-somos" className="font-headline uppercase text-xs tracking-widest text-on-surface" onClick={() => setIsMobileMenuOpen(false)}>Quem Somos</Link>
-              
+
               <div className="flex flex-col gap-4 pt-6 border-t border-outline-variant/10">
                 <span className="text-[10px] uppercase tracking-[0.3em] text-primary font-bold">Unidades de Negócio</span>
                 <div className="grid grid-cols-1 gap-4 pl-2">
@@ -188,7 +183,7 @@ export function Navbar() {
               <Link href="/investidores" className="font-headline uppercase text-xs tracking-widest text-on-surface pt-6 border-t border-outline-variant/10" onClick={() => setIsMobileMenuOpen(false)}>Investidores</Link>
               <Link href="/contato" className="font-headline uppercase text-xs tracking-widest text-on-surface" onClick={() => setIsMobileMenuOpen(false)}>Contato</Link>
             </div>
-            
+
             <Link href="/orcamento" onClick={() => setIsMobileMenuOpen(false)} className="mt-4">
               <GoldButton className="w-full rounded-full py-4">
                 Orçamento

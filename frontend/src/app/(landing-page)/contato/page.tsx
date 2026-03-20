@@ -38,11 +38,9 @@ const offices = [
 ];
 
 const subjectOptions = [
-  "Wealth Management",
-  "Real Estate Advisory",
-  "Dubai Investment Hub",
-  "Engenharia & Construção",
+  "Gestão de Patrimônio",
   "Assessoria Imobiliária",
+  "Engenharia & Construção",
   "Outros Assuntos"
 ];
 
@@ -58,7 +56,7 @@ export default function Contato() {
 
     const formData = new FormData(e.currentTarget);
     formData.set("subject", subject);
-    
+
     // Simulate server action
     const result = await submitContact(formData);
     setStatus(result);
@@ -75,16 +73,16 @@ export default function Contato() {
       {/* Hero Section */}
       <section className="relative h-[60vh] md:h-[70vh] flex items-center px-6 md:px-12 overflow-hidden">
         <div className="absolute inset-0 z-0">
-          <img 
-            alt="Arquitetura de luxo" 
-            className="w-full h-full object-cover grayscale brightness-[0.4] dark:brightness-[0.3]" 
-            src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2070&auto=format&fit=crop" 
+          <img
+            alt="Arquitetura de luxo"
+            className="w-full h-full object-cover grayscale brightness-[0.4] dark:brightness-[0.3]"
+            src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2070&auto=format&fit=crop"
           />
           <div className="absolute inset-0 bg-gradient-to-r from-surface via-surface/60 to-transparent"></div>
         </div>
-        
+
         <div className="relative z-10 max-w-5xl">
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8 }}
@@ -93,8 +91,8 @@ export default function Contato() {
             <div className="w-16 h-[1px] bg-[#A1824A] dark:bg-primary"></div>
             <span className="text-[#A1824A] dark:text-primary font-headline tracking-[0.4em] uppercase text-[10px] font-bold">Estabelecendo Presença</span>
           </motion.div>
-          
-          <motion.h1 
+
+          <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
@@ -102,8 +100,8 @@ export default function Contato() {
           >
             Contato
           </motion.h1>
-          
-          <motion.p 
+
+          <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
@@ -118,7 +116,7 @@ export default function Contato() {
       <section className="py-24 px-6 md:px-24 bg-surface border-y border-outline-variant/10">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
           {offices.map((office, index) => (
-            <motion.div 
+            <motion.div
               key={office.city}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -136,7 +134,7 @@ export default function Contato() {
                 <h3 className="font-headline text-2xl text-on-surface mb-2 uppercase tracking-[0.2em] font-light">{office.city}</h3>
                 <p className="text-primary/70 text-[10px] tracking-[0.2em] uppercase font-bold mb-6">{office.subtitle}</p>
               </div>
-              
+
               <div className="space-y-4 text-xs font-light tracking-[0.15em] text-on-surface-variant relative z-10">
                 <p className="flex items-center gap-3 group-hover:text-on-surface transition-colors">
                   <Phone className="w-3.5 h-3.5 text-primary/60" />
@@ -156,10 +154,10 @@ export default function Contato() {
       <section className="py-32 px-6 md:px-24 bg-surface-container-lowest dark:bg-surface-container-lowest grid grid-cols-1 lg:grid-cols-2 gap-24 items-start relative overflow-hidden">
         {/* Abstract Background Element */}
         <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-primary/5 dark:bg-primary/5 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/3"></div>
-        
+
         <div className="space-y-16 relative z-10">
           <div>
-            <motion.div 
+            <motion.div
               initial={{ width: 0 }}
               whileInView={{ width: 100 }}
               viewport={{ once: true }}
@@ -173,16 +171,16 @@ export default function Contato() {
             </p>
           </div>
 
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
             className="relative h-80 w-full rounded-2xl overflow-hidden group shadow-2xl"
           >
-            <img 
-              alt="Luxury office" 
-              className="w-full h-full object-cover brightness-50 grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-1000" 
-              src="https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=2069&auto=format&fit=crop" 
+            <img
+              alt="Luxury office"
+              className="w-full h-full object-cover brightness-50 grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-1000"
+              src="https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=2069&auto=format&fit=crop"
             />
             <div className="absolute inset-0 flex items-center justify-center">
               <span className="text-on-surface text-[10px] tracking-[0.5em] uppercase font-bold bg-surface/60 dark:bg-[#0e0e0e]/60 px-8 py-3 backdrop-blur-md border border-outline-variant/30">
@@ -201,7 +199,7 @@ export default function Contato() {
         >
           <div className="bg-surface/95 dark:bg-surface-container/95 backdrop-blur-xl p-8 md:p-12 rounded-[inherit] space-y-10 border border-outline-variant/40 dark:border-white/5">
             {status?.success ? (
-              <motion.div 
+              <motion.div
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
                 className="flex flex-col items-center justify-center py-20 text-center space-y-6"
@@ -213,7 +211,7 @@ export default function Contato() {
                 <p className="text-on-surface-variant font-light tracking-widest max-w-sm">
                   {status.message}
                 </p>
-                <button 
+                <button
                   onClick={() => setStatus(null)}
                   className="text-primary text-[10px] uppercase font-bold tracking-[0.3em] hover:brightness-125 pt-4"
                 >
@@ -225,50 +223,50 @@ export default function Contato() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                   <div className="space-y-2 group">
                     <Label htmlFor="name" className="text-[10px] font-semibold text-on-surface-variant uppercase tracking-[0.2em] block ml-1 group-focus-within:text-primary transition-colors">Nome Completo</Label>
-                    <Input 
-                      id="name" 
-                      name="name" 
-                      required 
+                    <Input
+                      id="name"
+                      name="name"
+                      required
                       placeholder="Ex: Arthur Pendragon"
                       className="bg-transparent border-0 border-b border-outline-variant/30 rounded-none h-14 px-1 focus-visible:ring-0 focus-visible:border-primary transition-all text-lg font-light tracking-wide placeholder:text-outline/50"
                     />
                   </div>
-                  
+
                   <div className="space-y-2 group">
-                    <Label htmlFor="email" className="text-[10px] font-semibold text-on-surface-variant uppercase tracking-[0.2em] block ml-1 group-focus-within:text-primary transition-colors">E-mail Corporativo</Label>
-                    <Input 
-                      id="email" 
-                      name="email" 
-                      type="email" 
-                      required 
-                      placeholder="nome@empresa.com"
+                    <Label htmlFor="email" className="text-[10px] font-semibold text-on-surface-variant uppercase tracking-[0.2em] block ml-1 group-focus-within:text-primary transition-colors">E-mail</Label>
+                    <Input
+                      id="email"
+                      name="email"
+                      type="email"
+                      required
+                      placeholder="nome@email.com"
                       className="bg-transparent border-0 border-b border-outline-variant/30 rounded-none h-14 px-1 focus-visible:ring-0 focus-visible:border-primary transition-all text-lg font-light tracking-wide placeholder:text-outline/50"
                     />
                   </div>
                 </div>
 
-                <Select 
+                <Select
                   label="Assunto de Interesse"
-                  options={subjectOptions} 
-                  value={subject} 
+                  options={subjectOptions}
+                  value={subject}
                   onChange={setSubject}
                   placeholder="Selecione o tema da consultoria"
                 />
 
                 <div className="space-y-2 group">
                   <Label htmlFor="message" className="text-[10px] font-semibold text-on-surface-variant uppercase tracking-[0.2em] block ml-1 group-focus-within:text-primary transition-colors">Mensagem</Label>
-                  <Textarea 
-                    id="message" 
-                    name="message" 
-                    rows={6} 
-                    required 
+                  <Textarea
+                    id="message"
+                    name="message"
+                    rows={6}
+                    required
                     placeholder="Como podemos auxiliar na gestão do seu patrimônio?"
                     className="bg-transparent border-0 border-b border-outline-variant/30 rounded-none px-1 focus-visible:ring-0 focus-visible:border-primary transition-all text-lg font-light tracking-wide resize-none placeholder:text-outline/50"
                   />
                 </div>
 
-                <GoldButton 
-                  type="submit" 
+                <GoldButton
+                  type="submit"
                   disabled={isPending}
                   className="w-full py-6 text-sm font-bold uppercase tracking-[0.4em] rounded-xl flex items-center justify-center gap-4 group"
                 >
