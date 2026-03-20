@@ -1,33 +1,20 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { useProgress } from "@react-three/drei";
 import { motion, AnimatePresence } from "framer-motion";
 
 export function LoadingScreen({ onFinished }: { onFinished?: () => void }) {
-  const { progress, active } = useProgress();
   const [isFinished, setIsFinished] = useState(false);
-  const [visualDone, setVisualDone] = useState(false);
   const [actuallyDone, setActuallyDone] = useState(false);
 
   // Simple timer to synchronize JS with CSS animation (2.5s)
   useEffect(() => {
-    const timer = setTimeout(() => setVisualDone(true), 2500);
+    const timer = setTimeout(() => {
+      setIsFinished(true);
+      if (onFinished) onFinished();
+    }, 2500);
     return () => clearTimeout(timer);
-  }, []);
-
-  // Check if both the visual animation is done AND the heavy 3D assets are ready
-  const isReadyToHide = progress === 100 && !active && visualDone;
-
-  useEffect(() => {
-    if (isReadyToHide) {
-      const timer = setTimeout(() => {
-        setIsFinished(true);
-        if (onFinished) onFinished();
-      }, 200);
-      return () => clearTimeout(timer);
-    }
-  }, [isReadyToHide, onFinished]);
+  }, [onFinished]);
 
   // If loading is finished and we've hidden it, don't render anything
   if (actuallyDone) return null;
@@ -57,7 +44,7 @@ export function LoadingScreen({ onFinished }: { onFinished?: () => void }) {
           >
             {/* Logo Container */}
             <div className="relative w-72 h-32 md:w-[400px] md:h-48">
-              {/* Background Logo (Pale/White version) */}
+              {/* Background Logo (Pale version) */}
               <div className="absolute inset-0">
                 <img
                   src="/patrimonial-full.png"
@@ -66,7 +53,7 @@ export function LoadingScreen({ onFinished }: { onFinished?: () => void }) {
                 />
               </div>
               
-              {/* Progress Logo (Colored/Filling) - CSS PREMIUM DRIVEN */}
+              {/* Progress Logo (Filling) */}
               <div 
                 className="absolute inset-0 overflow-hidden pointer-events-none loading-fill-premium"
               >

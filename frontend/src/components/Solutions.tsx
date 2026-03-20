@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { motion } from "framer-motion";
+import { motion, Variants } from "framer-motion";
 
 const solutions = [
   {
@@ -37,68 +37,137 @@ const solutions = [
 ];
 
 export function Solutions() {
+  const level1 = solutions.filter(s => s.level === 1);
+  const level2 = solutions.filter(s => s.level === 2);
+
   return (
-    <section className="py-24 px-4 md:px-12 bg-surface-container-low">
-      <div className="mb-20 text-center">
+    <section className="py-24 px-4 md:px-12 bg-surface-container-low overflow-hidden">
+      <motion.div 
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6 }}
+        className="mb-20 text-center"
+      >
         <h2 className="font-headline text-2xl md:text-3xl mb-4 tracking-[0.1em] uppercase text-on-surface">Soluções Estruturais</h2>
         <div className="w-12 h-1 bg-primary mx-auto"></div>
-      </div>
+      </motion.div>
 
       <div className="max-w-7xl mx-auto flex flex-col items-center gap-8">
         {/* Level 1: 3 Cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 w-full">
-          {solutions.filter(s => s.level === 1).map((solution) => (
-            <motion.div 
-              key={solution.id}
-              whileHover={{ scale: 1.02 }}
-              className="group relative aspect-[4/5] overflow-hidden border border-[#484848]/30 hover:border-primary/50 transition-all duration-700 bg-black"
-            >
-              <img 
-                alt={solution.title} 
-                className="absolute inset-0 w-full h-full object-cover grayscale brightness-[0.4] group-hover:brightness-75 group-hover:scale-105 transition-all duration-1000" 
-                src={solution.image}
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent group-hover:from-black/80"></div>
-              <div className="absolute bottom-0 left-0 p-8 w-full">
-                <span className="block font-label text-primary text-sm tracking-[0.3em] mb-2">{solution.id}</span>
-                <h3 className="font-headline text-xl text-on-surface tracking-wide group-hover:text-primary transition-colors">{solution.title}</h3>
-              </div>
-            </motion.div>
-          ))}
+          {level1.map((solution, index) => {
+            const variants: Variants = {
+              hidden: { 
+                opacity: 0, 
+                x: index === 0 ? -60 : index === 2 ? 60 : 0,
+                y: index === 1 ? 30 : 0,
+                scale: index === 1 ? 0.9 : 1,
+                filter: "blur(10px)"
+              },
+              show: { 
+                opacity: 1, 
+                x: 0, 
+                y: 0, 
+                scale: 1,
+                filter: "blur(0px)",
+                transition: { 
+                  duration: 0.8, 
+                  ease: [0.22, 1, 0.36, 1] as const,
+                  delay: index * 0.1
+                } 
+              }
+            };
+
+            return (
+              <motion.div 
+                key={solution.id}
+                initial="hidden"
+                whileInView="show"
+                viewport={{ once: true, margin: "-100px" }}
+                variants={variants}
+                whileHover={{ y: -3 }}
+                className="group relative aspect-[4/5] overflow-hidden border border-[#484848]/30 hover:border-primary/50 hover:shadow-[0_10px_30px_rgba(217,197,143,0.15)] transition-all duration-500 bg-black cursor-pointer"
+              >
+                <img 
+                  alt={solution.title} 
+                  className="absolute inset-0 w-full h-full object-cover grayscale brightness-[0.4] group-hover:grayscale-0 group-hover:brightness-90 transition-all duration-700 ease-in-out" 
+                  src={solution.image}
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent group-hover:from-black/80"></div>
+                <div className="absolute bottom-0 left-0 p-8 w-full">
+                  <span className="block font-label text-primary text-sm tracking-[0.3em] mb-2">{solution.id}</span>
+                  <h3 className="font-headline text-xl text-on-surface tracking-wide group-hover:text-primary transition-colors">{solution.title}</h3>
+                </div>
+              </motion.div>
+            );
+          })}
         </div>
 
         {/* Level 2: 2 Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 w-full max-w-5xl">
-          {solutions.filter(s => s.level === 2).map((solution) => (
-            <motion.div 
-              key={solution.id}
-              whileHover={{ scale: 1.02 }}
-              className="group relative h-64 md:h-80 overflow-hidden border border-[#484848]/30 hover:border-primary/50 transition-all duration-700 bg-black"
-            >
-              <img 
-                alt={solution.title} 
-                className="absolute inset-0 w-full h-full object-cover grayscale brightness-[0.3] group-hover:brightness-60 group-hover:scale-105 transition-all duration-1000" 
-                src={solution.image}
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent group-hover:from-black/80"></div>
-              <div className="absolute bottom-0 left-0 p-8 w-full">
-                <span className="block font-label text-primary text-sm tracking-[0.3em] mb-2">{solution.id}</span>
-                <h3 className="font-headline text-xl text-on-surface tracking-wide group-hover:text-primary transition-colors">{solution.title}</h3>
-              </div>
-            </motion.div>
-          ))}
+          {level2.map((solution, index) => {
+            const variants: Variants = {
+              hidden: { 
+                opacity: 0, 
+                y: 40,
+                filter: "blur(20px)",
+                scale: 0.95
+              },
+              show: { 
+                opacity: 1, 
+                y: 0, 
+                filter: "blur(0px)",
+                scale: 1,
+                transition: { 
+                  duration: 0.9, 
+                  ease: [0.16, 1, 0.3, 1] as const,
+                  delay: 0.15 + (index * 0.15)
+                } 
+              }
+            };
+
+            return (
+              <motion.div 
+                key={solution.id}
+                initial="hidden"
+                whileInView="show"
+                viewport={{ once: true, margin: "-100px" }}
+                variants={variants}
+                whileHover={{ y: -2 }}
+                className="group relative h-64 md:h-80 overflow-hidden border border-[#484848]/30 hover:border-primary/50 hover:shadow-[0_10px_30px_rgba(217,197,143,0.15)] transition-all duration-500 bg-black cursor-pointer"
+              >
+                <img 
+                  alt={solution.title} 
+                  className="absolute inset-0 w-full h-full object-cover grayscale brightness-[0.3] group-hover:grayscale-0 group-hover:brightness-75 transition-all duration-700 ease-in-out" 
+                  src={solution.image}
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent group-hover:from-black/80"></div>
+                <div className="absolute bottom-0 left-0 p-8 w-full">
+                  <span className="block font-label text-primary text-sm tracking-[0.3em] mb-2">{solution.id}</span>
+                  <h3 className="font-headline text-xl text-on-surface tracking-wide group-hover:text-primary transition-colors">{solution.title}</h3>
+                </div>
+              </motion.div>
+            );
+          })}
         </div>
       </div>
 
       {/* Signature Section from HTML */}
-      <div className="py-32 text-center mt-20 border-t border-[#484848]/10">
+      <motion.div 
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 0.8, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 1.0, delay: 0.2 }}
+        className="py-32 text-center mt-20 border-t border-[#484848]/10"
+      >
         <div className="max-w-3xl mx-auto">
-          <p className="font-headline text-xl md:text-2xl text-on-surface mb-12 italic opacity-80 leading-relaxed px-4">
+          <p className="font-headline text-xl md:text-2xl text-on-surface mb-12 italic leading-relaxed px-4">
             "A permanência não é um acidente, é o resultado de uma engenharia precisa e uma visão de longo prazo."
           </p>
           <div className="inline-block h-24 w-[1px] bg-primary-dim"></div>
         </div>
-      </div>
+      </motion.div>
     </section>
   );
 }

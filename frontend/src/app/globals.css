@@ -199,13 +199,13 @@
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--secondary);
+  background: #131313;
 }
 
 ::-webkit-scrollbar-thumb {
   background: var(--primary);
   border-radius: 10px;
-  border: 2px solid var(--secondary);
+  border: 2px solid #131313;
 }
 
 ::-webkit-scrollbar-thumb:hover {
@@ -283,7 +283,7 @@
 }
 
 .gold-metallic-cta {
-  background: linear-gradient(45deg, #B8860B 0%, #C9A14A 25%, #E8C670 50%, #FFF 60%, #E8C670 75%, #B8860B 100%);
+  background: linear-gradient(45deg, #B8860B 0%, #C9A14A 20%, #E8C670 45%, #F9E7B3 55%, #E8C670 70%, #B8860B 100%);
   background-size: 200% 200%;
   color: #4c3f15;
   border-radius: 10px;

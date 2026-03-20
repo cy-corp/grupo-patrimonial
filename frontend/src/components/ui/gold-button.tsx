@@ -15,7 +15,7 @@ export function GoldButton({ children, className, ...props }: GoldButtonProps) {
       whileHover={{ y: -2 }}
       whileTap={{ scale: 0.98 }}
       className={cn(
-        "gold-metallic-cta px-6 py-2 font-headline tracking-[0.1em] uppercase text-xs font-bold transition-all duration-300",
+        "gold-metallic-cta px-6 py-2 font-headline tracking-[0.1em] uppercase text-xs font-bold transition-all duration-300 cursor-pointer",
         className
       )}
       {...props}
