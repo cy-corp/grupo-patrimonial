@@ -87,17 +87,17 @@ export function Solutions() {
                 viewport={{ once: true, margin: "-100px" }}
                 variants={variants}
                 whileHover={{ y: -3 }}
-                className="group relative aspect-[4/5] overflow-hidden border border-[#484848]/30 hover:border-primary/50 hover:shadow-[0_10px_30px_rgba(217,197,143,0.15)] transition-all duration-500 bg-black cursor-pointer"
+                className="group relative aspect-[4/5] overflow-hidden border border-outline-variant/30 hover:border-primary/50 hover:shadow-[0_10px_30px_rgba(217,197,143,0.15)] transition-all duration-500 bg-surface-container dark:bg-black cursor-pointer"
               >
                 <img 
                   alt={solution.title} 
-                  className="absolute inset-0 w-full h-full object-cover grayscale brightness-[0.4] group-hover:grayscale-0 group-hover:brightness-90 transition-all duration-700 ease-in-out" 
+                  className="absolute inset-0 w-full h-full object-cover grayscale brightness-[0.9] dark:brightness-[0.4] group-hover:grayscale-0 group-hover:brightness-95 transition-all duration-700 ease-in-out" 
                   src={solution.image}
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent group-hover:from-black/80"></div>
+                <div className="absolute inset-0 bg-gradient-to-t from-surface-container-highest/80 dark:from-black via-transparent to-transparent group-hover:from-surface-container-highest dark:group-hover:from-black/80"></div>
                 <div className="absolute bottom-0 left-0 p-8 w-full">
-                  <span className="block font-label text-primary text-sm tracking-[0.3em] mb-2">{solution.id}</span>
-                  <h3 className="font-headline text-xl text-on-surface tracking-wide group-hover:text-primary transition-colors">{solution.title}</h3>
+                  <span className="block font-label text-accent-gold text-sm tracking-[0.3em] mb-2">{solution.id}</span>
+                  <h3 className="font-headline text-xl text-on-surface tracking-wide group-hover:text-accent-gold transition-colors">{solution.title}</h3>
                 </div>
               </motion.div>
             );
@@ -135,17 +135,17 @@ export function Solutions() {
                 viewport={{ once: true, margin: "-100px" }}
                 variants={variants}
                 whileHover={{ y: -2 }}
-                className="group relative h-64 md:h-80 overflow-hidden border border-[#484848]/30 hover:border-primary/50 hover:shadow-[0_10px_30px_rgba(217,197,143,0.15)] transition-all duration-500 bg-black cursor-pointer"
+                className="group relative h-64 md:h-80 overflow-hidden border border-outline-variant/30 hover:border-primary/50 hover:shadow-[0_10px_30px_rgba(217,197,143,0.15)] transition-all duration-500 bg-surface-container dark:bg-black cursor-pointer"
               >
                 <img 
                   alt={solution.title} 
-                  className="absolute inset-0 w-full h-full object-cover grayscale brightness-[0.3] group-hover:grayscale-0 group-hover:brightness-75 transition-all duration-700 ease-in-out" 
+                  className="absolute inset-0 w-full h-full object-cover grayscale brightness-[0.8] dark:brightness-[0.3] group-hover:grayscale-0 group-hover:brightness-90 transition-all duration-700 ease-in-out" 
                   src={solution.image}
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent group-hover:from-black/80"></div>
+                <div className="absolute inset-0 bg-gradient-to-t from-surface-container-highest/80 dark:from-black via-transparent to-transparent group-hover:from-surface-container-highest dark:group-hover:from-black/80"></div>
                 <div className="absolute bottom-0 left-0 p-8 w-full">
-                  <span className="block font-label text-primary text-sm tracking-[0.3em] mb-2">{solution.id}</span>
-                  <h3 className="font-headline text-xl text-on-surface tracking-wide group-hover:text-primary transition-colors">{solution.title}</h3>
+                  <span className="block font-label text-accent-gold text-sm tracking-[0.3em] mb-2">{solution.id}</span>
+                  <h3 className="font-headline text-xl text-on-surface tracking-wide group-hover:text-accent-gold transition-colors">{solution.title}</h3>
                 </div>
               </motion.div>
             );

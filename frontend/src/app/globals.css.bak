@@ -5,9 +5,8 @@
 
 @theme {
   /* Project Colors */
-  --color-primary: var(--primary);
-  --color-primary-dim: var(--primary-dim);
-  --color-accent-gold: var(--accent-gold);
+  --color-primary: #d9c58f;
+  --color-primary-dim: #cbb782;
   
   /* Semantic Theme Variables */
   --color-background: var(--background);
@@ -39,9 +38,6 @@
 }
 
 :root {
-  --primary: #d9c58f;
-  --primary-dim: #cbb782;
-  --accent-gold: #A1824A;
   --background: #FFFFFF;
   --foreground: #1a1a1a;
   --surface: #FFFFFF;
@@ -59,9 +55,6 @@
 }
 
 .dark {
-  --primary: #d9c58f;
-  --primary-dim: #cbb782;
-  --accent-gold: #d9c58f;
   --background: #0e0e0e;
   --foreground: #e7e5e5;
   --surface: #0e0e0e;

@@ -9,7 +9,11 @@ export function InstitutionalHero() {
       <div className="absolute inset-0 z-0">
         <img
           alt="Modern high-rise architectural building exterior in grayscale"
-          className="w-full h-full object-cover opacity-25 grayscale brightness-[0.9]"
+          className="w-full h-full object-cover grayscale transition-all duration-700"
+          style={{ 
+            filter: "grayscale(100%) brightness(var(--hero-brightness))",
+            opacity: "var(--hero-opacity)"
+          }}
           src="https://lh3.googleusercontent.com/aida-public/AB6AXuAkTT1Tt34prZGqrVJ_93OTbaG-Jmex4B3wcT5CNEUyuzEmAdpVkavI2Nb76bqWmxvUW_ZWWqFs6JO7BNfUwEAh7ib-dguD5etqN9dzqr9mfy37JWr_mXlNDFrWPQN0uJsUgHtfwH1FExYLmajI5Oc2Srcbnr6tnMCwylQHRgsfxpmZYODNnrwNLGMZlOoBtxcz1EyeqAUvWUEtqsKkfhIOKPI_gM5AHU1TnKpn7lUjvNgX2uFkaqKdcw3i5Ll2XISaWuou_p-dkGph"
         />
         <div className="absolute inset-0 bg-gradient-to-r from-surface via-surface/80 to-transparent"></div>
@@ -54,7 +58,7 @@ export function InstitutionalHero() {
             { id: "03.", label: "Construtora" },
             { id: "04.", label: "Imobiliária" }
           ].map((item, index) => (
-            <div key={index} className="p-6 bg-surface-container-low border-l border-primary/20 backdrop-blur-sm hover:border-primary transition-colors cursor-default">
+            <div key={index} className="p-6 bg-surface-container-low border-l border-on-surface-variant/20 dark:border-primary/20 backdrop-blur-sm hover:border-primary transition-colors cursor-default">
               <span className="text-primary font-headline block mb-2">{item.id}</span>
               <span className="text-[10px] uppercase tracking-widest font-label text-on-surface-variant">{item.label}</span>
             </div>

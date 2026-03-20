@@ -8,6 +8,8 @@ import { GoldButton } from "@/components/ui/gold-button";
 import { cn } from "@/lib/utils";
 import { motion, AnimatePresence } from "framer-motion";
 
+import { ThemeToggle } from "@/components/theme-toggle";
+
 const businessUnits = [
   { id: "01", name: "Engenharia", href: "/engenharia" },
   { id: "02", name: "Incorporadora", href: "/incorporadora" },
@@ -22,12 +24,12 @@ export function Navbar() {
   const pathname = usePathname();
 
   return (
-    <nav className="fixed top-0 w-full z-50 bg-[#131313]/60 backdrop-blur-xl border-b border-[#484848]/20 shadow-[0_24px_24px_0_rgba(231,229,229,0.04)] flex justify-between items-center px-4 md:px-12 py-2 max-w-none">
+    <nav className="fixed top-0 w-full z-50 bg-surface/60 backdrop-blur-xl border-b border-outline-variant/10 shadow-[0_24px_24px_0_rgba(0,0,0,0.04)] flex justify-between items-center px-4 md:px-12 py-2 max-w-none">
       {/* Logo */}
       <Link href="/" className="flex items-center group">
         <div className="flex items-center">
           <img src="/patrimonial-logo-png.png" alt="Grupo Patrimonial" className="h-16 md:h-24 w-auto transition-transform group-hover:scale-105" />
-          <img src="/patrimonial-text-png.png" alt="Patrimonial" className="h-14 md:h-20 w-auto -ml-1 md:-ml-2 transition-transform group-hover:scale-105 invert brightness-200 contrast-75" />
+          <img src="/patrimonial-text-png.png" alt="Patrimonial" className="h-14 md:h-20 w-auto -ml-1 md:-ml-2 transition-transform group-hover:scale-105 dark:invert dark:brightness-200 dark:contrast-75" />
         </div>
       </Link>
 
@@ -37,7 +39,7 @@ export function Navbar() {
           href="/" 
           className={cn(
             "font-headline font-light tracking-[0.1em] uppercase text-xs transition-colors duration-300 cursor-pointer",
-            pathname === "/" ? "text-[#d9c58f] border-b border-[#d9c58f] pb-1" : "text-[#acabaa] hover:text-[#e7e5e5]"
+            pathname === "/" ? "text-primary border-b border-primary pb-1" : "text-on-surface-variant hover:text-on-surface"
           )}
         >
           Home
@@ -46,7 +48,7 @@ export function Navbar() {
           href="/quem-somos" 
           className={cn(
             "font-headline font-light tracking-[0.1em] uppercase text-xs transition-colors duration-300 cursor-pointer",
-            pathname === "/quem-somos" ? "text-[#d9c58f] border-b border-[#d9c58f] pb-1" : "text-[#acabaa] hover:text-[#e7e5e5]"
+            pathname === "/quem-somos" ? "text-primary border-b border-primary pb-1" : "text-on-surface-variant hover:text-on-surface"
           )}
         >
           Quem Somos
@@ -54,20 +56,20 @@ export function Navbar() {
 
         {/* Unidades de Negócio Dropdown */}
         <div className="relative group nav-dropdown">
-          <button className="flex items-center gap-1 font-headline font-light tracking-[0.1em] uppercase text-xs text-[#acabaa] group-hover:text-[#e7e5e5] transition-colors duration-300 cursor-pointer h-full py-4">
+          <button className="flex items-center gap-1 font-headline font-light tracking-[0.1em] uppercase text-xs text-on-surface-variant group-hover:text-on-surface transition-colors duration-300 cursor-pointer h-full py-4">
             Unidades de Negócio
             <span className="material-symbols-outlined text-[14px]">expand_more</span>
           </button>
           <div className="dropdown-content hidden absolute top-full left-1/2 -translate-x-1/2 w-[480px] pt-4 opacity-0 transform -translate-y-2 transition-all duration-300">
-            <div className="bg-[#131313]/95 backdrop-blur-2xl border border-[#484848]/30 shadow-2xl p-6 grid grid-cols-2 gap-4">
+            <div className="bg-surface/95 backdrop-blur-2xl border border-outline-variant/30 shadow-2xl p-6 grid grid-cols-2 gap-4">
               {businessUnits.map((unit) => (
                 <Link 
                   key={unit.id}
                   href={unit.href} 
-                  className="flex flex-col p-3 hover:bg-[#1f2020]/50 transition-colors group/item cursor-pointer"
+                  className="flex flex-col p-3 hover:bg-surface-container-high/50 transition-colors group/item cursor-pointer"
                 >
-                  <span className="text-[#d9c58f] text-[10px] tracking-[0.2em] font-bold uppercase mb-1">{unit.id}</span>
-                  <span className="font-headline text-sm text-[#e7e5e5] group-hover/item:text-[#d9c58f]">{unit.name}</span>
+                  <span className="text-primary text-[10px] tracking-[0.2em] font-bold uppercase mb-1">{unit.id}</span>
+                  <span className="font-headline text-sm text-on-surface group-hover/item:text-primary">{unit.name}</span>
                 </Link>
               ))}
             </div>
@@ -78,7 +80,7 @@ export function Navbar() {
           href="/investidores" 
           className={cn(
             "font-headline font-light tracking-[0.1em] uppercase text-xs transition-colors duration-300 cursor-pointer",
-            pathname === "/investidores" ? "text-[#d9c58f] border-b border-[#d9c58f] pb-1" : "text-[#acabaa] hover:text-[#e7e5e5]"
+            pathname === "/investidores" ? "text-primary border-b border-primary pb-1" : "text-on-surface-variant hover:text-on-surface"
           )}
         >
           Investidores
@@ -87,15 +89,17 @@ export function Navbar() {
           href="/contato" 
           className={cn(
             "font-headline font-light tracking-[0.1em] uppercase text-xs transition-colors duration-300 cursor-pointer",
-            pathname === "/contato" ? "text-[#d9c58f] border-b border-[#d9c58f] pb-1" : "text-[#acabaa] hover:text-[#e7e5e5]"
+            pathname === "/contato" ? "text-primary border-b border-primary pb-1" : "text-on-surface-variant hover:text-on-surface"
           )}
         >
           Contato
         </Link>
       </div>
 
-      {/* Desktop CTA & Mobile Menu Button */}
+      {/* Desktop CTA, Theme Toggle & Mobile Menu Button */}
       <div className="flex items-center gap-4">
+        <ThemeToggle />
+        
         <Link href="/orcamento" className="hidden md:block">
           <GoldButton>
             Orçamento
@@ -105,7 +109,7 @@ export function Navbar() {
         {/* Mobile menu button */}
         <button
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          className="md:hidden text-[#e7e5e5] cursor-pointer"
+          className="md:hidden text-on-surface cursor-pointer"
         >
           {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
@@ -118,22 +122,22 @@ export function Navbar() {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            className="md:hidden absolute top-full left-0 w-full bg-[#131313] border-b border-[#484848]/30 overflow-hidden flex flex-col p-6 gap-4"
+            className="md:hidden absolute top-full left-0 w-full bg-surface border-b border-outline-variant/30 overflow-hidden flex flex-col p-6 gap-4"
           >
-            <Link href="/" className="font-headline uppercase text-sm text-[#e7e5e5]" onClick={() => setIsMobileMenuOpen(false)}>Home</Link>
-            <Link href="/quem-somos" className="font-headline uppercase text-sm text-[#e7e5e5]" onClick={() => setIsMobileMenuOpen(false)}>Quem Somos</Link>
+            <Link href="/" className="font-headline uppercase text-sm text-foreground" onClick={() => setIsMobileMenuOpen(false)}>Home</Link>
+            <Link href="/quem-somos" className="font-headline uppercase text-sm text-foreground" onClick={() => setIsMobileMenuOpen(false)}>Quem Somos</Link>
             
-            <div className="flex flex-col gap-2 pt-2 border-t border-[#484848]/20">
-              <span className="text-[10px] uppercase tracking-widest text-[#acabaa]">Unidades de Negócio</span>
+            <div className="flex flex-col gap-2 pt-2 border-t border-outline-variant/20">
+              <span className="text-[10px] uppercase tracking-widest text-on-surface-variant">Unidades de Negócio</span>
               {businessUnits.map((unit) => (
-                <Link key={unit.id} href={unit.href} className="font-headline text-sm text-[#acabaa] pl-4" onClick={() => setIsMobileMenuOpen(false)}>
+                <Link key={unit.id} href={unit.href} className="font-headline text-sm text-on-surface-variant pl-4" onClick={() => setIsMobileMenuOpen(false)}>
                   {unit.name}
                 </Link>
               ))}
             </div>
 
-            <Link href="/investidores" className="font-headline uppercase text-sm text-[#e7e5e5]" onClick={() => setIsMobileMenuOpen(false)}>Investidores</Link>
-            <Link href="/contato" className="font-headline uppercase text-sm text-[#e7e5e5]" onClick={() => setIsMobileMenuOpen(false)}>Contato</Link>
+            <Link href="/investidores" className="font-headline uppercase text-sm text-foreground" onClick={() => setIsMobileMenuOpen(false)}>Investidores</Link>
+            <Link href="/contato" className="font-headline uppercase text-sm text-foreground" onClick={() => setIsMobileMenuOpen(false)}>Contato</Link>
             
             <Link href="/orcamento" onClick={() => setIsMobileMenuOpen(false)} className="mt-4">
               <GoldButton className="w-full">

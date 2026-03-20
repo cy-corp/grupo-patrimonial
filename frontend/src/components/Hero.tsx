@@ -11,7 +11,11 @@ export function Hero() {
       <div className="absolute inset-0 z-0">
         <img
           alt="Architectural background"
-          className="w-full h-full object-cover grayscale brightness-[0.25]"
+          className="w-full h-full object-cover grayscale transition-all duration-700"
+          style={{ 
+            filter: "grayscale(100%) brightness(var(--hero-brightness))",
+            opacity: "var(--hero-opacity)"
+          }}
           src="https://lh3.googleusercontent.com/aida-public/AB6AXuDHOGhjAPWosOO_TkxO1MqXh8n3K5HG6Y4z3X12g1HFnmW4OGj3ey79MUAL1uviZhVRnpq_GRZcthskaYQ9tlAlDcHmpySWlxWetSkfwfnAKbkKyLoQHlyGFf6QI4zj0xzam8zpGbTe-jfVttdg7t617yaWRSpllVUKJQxT_UXV80fXrcrwkBfXp3wZVfu6mSog-dLIvMTVV6ru6SYelgGo1R54YmYTvT28LaGpUCFvAFMX54G6Xqq2srsI_3tN7b3bdiKjUAiES5tN"
         />
         <div className="absolute inset-0 bg-gradient-to-r from-surface/60 via-surface/30 to-transparent"></div>
@@ -47,16 +51,16 @@ export function Hero() {
             Fale com um especialista
             <span className="material-symbols-outlined text-sm">arrow_forward</span>
           </GoldButton>
-          <button className="border border-outline-variant/20 text-on-surface px-8 py-4 text-xs font-bold uppercase tracking-[0.15em] hover:bg-primary/10 hover:border-primary/50 hover:scale-[1.02] active:scale-95 transition-all duration-300 cursor-pointer">
+          <button className="border border-on-surface-variant/30 dark:border-outline-variant/20 text-on-surface px-8 py-4 text-xs font-bold uppercase tracking-[0.15em] hover:bg-primary/10 hover:border-primary/50 hover:scale-[1.02] active:scale-95 transition-all duration-300 cursor-pointer">
             Solicite uma análise
           </button>
         </div>
       </motion.div>
 
       {/* Static Scroll Indicator from HTML style */}
-      <div className="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3 z-20 opacity-50">
-        <div className="w-[1px] h-12 bg-gradient-to-b from-primary to-transparent"></div>
-        <span className="font-label text-[10px] tracking-[0.3em] uppercase text-primary font-bold">Desça</span>
+      <div className="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3 z-20 opacity-80 dark:opacity-50 transition-opacity">
+        <div className="w-[1px] h-12 bg-gradient-to-b from-accent-gold to-transparent"></div>
+        <span className="font-label text-[10px] tracking-[0.3em] uppercase text-accent-gold font-bold">Desça</span>
       </div>
     </section>
   );

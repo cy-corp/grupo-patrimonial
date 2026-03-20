@@ -10,7 +10,11 @@ export function InvestorsHero() {
       <div className="absolute inset-0 z-0">
         <img
           alt="Monolithic skyscraper architecture in dramatic low light"
-          className="w-full h-full object-cover opacity-25 grayscale brightness-[1.6]"
+          className="w-full h-full object-cover grayscale transition-all duration-700"
+          style={{ 
+            filter: "grayscale(100%) brightness(var(--hero-brightness))",
+            opacity: "var(--hero-opacity)"
+          }}
           src="https://lh3.googleusercontent.com/aida-public/AB6AXuCeqdsLOOfmjOONOKUAEYy_tandQeYopNUCtb1CjG_vTdG1KUTZUuJSFJS-4-216beTcl7M5PTbrnufp1yhQNyzIJbgnid92zV0Odoobmak4ws9kwm4eXPTjBbx_XJx4z0zzKH0LlX6k_TgLZV5EhiurzCUE7Z_mSY-GR6Zv710rOODLxoCvfS9nySWtkkHeDY9nJzHGqw8FsfputjPrLXhOH1PDK4qqaCXhmuoVdaeWxzmowupztkcHOL9FWf4ibxpuyBCaddqMmkR"
         />
         <div className="absolute inset-0 bg-gradient-to-r from-surface via-surface/80 to-transparent"></div>
@@ -55,7 +59,7 @@ export function InvestorsHero() {
           <GoldButton className="px-10 py-5 font-bold text-xs tracking-[0.2em] uppercase rounded-lg shadow-2xl hover:scale-[1.05] transition-all">
             Seja um Parceiro Estratégico
           </GoldButton>
-          <button className="bg-surface-container-high border border-outline-variant/20 text-on-surface px-10 py-5 font-label text-xs tracking-[0.2em] uppercase rounded-lg hover:bg-surface-bright transition-all">
+          <button className="bg-surface-container-high border border-on-surface-variant/20 dark:border-outline-variant/20 text-on-surface px-10 py-5 font-label text-xs tracking-[0.2em] uppercase rounded-lg hover:bg-surface-bright transition-all">
             Portfólio de Ativos
           </button>
         </motion.div>
