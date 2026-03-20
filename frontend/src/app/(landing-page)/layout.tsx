@@ -4,6 +4,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
 import { WhatsAppButton } from "@/components/whatsapp-button";
+import { PreloadAssets } from "@/components/PreloadAssets";
 
 import "@/app/globals.css";
 
@@ -66,6 +67,7 @@ export default function RootLayout({
           forcedTheme="light"
           disableTransitionOnChange
         >
+          <PreloadAssets />
           <Navbar />
           <main className="min-h-screen flex flex-col">
             {children}

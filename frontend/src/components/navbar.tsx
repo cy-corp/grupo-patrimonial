@@ -3,14 +3,11 @@
 import * as React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, X } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { ChevronDown, Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 
-const navLinks = [
-  { name: "Home", href: "/" },
-  { name: "Quem Somos", href: "/quem-somos" },
+const unidades = [
   { name: "Engenharia", href: "/engenharia" },
   { name: "Incorporadora", href: "/incorporadora" },
   { name: "Construtora", href: "/construtora" },
@@ -18,49 +15,141 @@ const navLinks = [
   { name: "Patrimonial", href: "/patrimonial" },
 ];
 
+const mainLinks = [
+  { name: "Home", href: "/" },
+  { name: "Quem Somos", href: "/quem-somos" },
+  { name: "Investidores", href: "/investidores" },
+  { name: "Contato", href: "/contato" },
+];
+
 export function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
+  const [isUnidadesOpen, setIsUnidadesOpen] = React.useState(false);
   const pathname = usePathname();
 
   return (
-    <nav className="fixed top-0 z-[100] w-full bg-background/80 backdrop-blur-md border-b border-primary/10">
+    <nav className="fixed top-0 z-[100] w-full bg-white/90 backdrop-blur-md border-b border-slate-200/50">
       <div className="container mx-auto flex h-24 items-center justify-between px-6">
         
         {/* Logo */}
         <Link href="/" className="flex items-center group">
-          <img src="/patrimonial-logo-png.png" alt="Grupo Patrimonial" className="h-20 w-auto" />
-          <img src="/patrimonial-text-png.png" alt="Patrimonial" className="h-18 w-auto -ml-5" />
+          <img src="/patrimonial-logo-png.png" alt="Grupo Patrimonial" className="h-16 md:h-20 w-auto" />
+          <img src="/patrimonial-text-png.png" alt="Patrimonial" className="h-14 md:h-18 w-auto -ml-3 md:-ml-5" />
         </Link>
 
         {/* Desktop Nav */}
         <div className="hidden lg:flex items-center gap-8">
-          {navLinks.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
+          <Link
+            href="/"
+            className={cn(
+              "text-[10px] font-bold uppercase tracking-[0.2em] transition-all hover:text-primary relative group",
+              pathname === "/" ? "text-primary" : "text-[#0F172A]/70"
+            )}
+          >
+            Home
+            <span className={cn(
+              "absolute -bottom-1 left-0 w-0 h-[1.5px] bg-primary transition-all duration-300 group-hover:w-full",
+              pathname === "/" && "w-full"
+            )} />
+          </Link>
+
+          <Link
+            href="/quem-somos"
+            className={cn(
+              "text-[10px] font-bold uppercase tracking-[0.2em] transition-all hover:text-primary relative group",
+              pathname === "/quem-somos" ? "text-primary" : "text-[#0F172A]/70"
+            )}
+          >
+            Quem Somos
+            <span className={cn(
+              "absolute -bottom-1 left-0 w-0 h-[1.5px] bg-primary transition-all duration-300 group-hover:w-full",
+              pathname === "/quem-somos" && "w-full"
+            )} />
+          </Link>
+
+          {/* Unidades Dropdown */}
+          <div 
+            className="relative"
+            onMouseEnter={() => setIsUnidadesOpen(true)}
+            onMouseLeave={() => setIsUnidadesOpen(false)}
+          >
+            <button
               className={cn(
-                "text-xs font-bold uppercase tracking-[0.2em] transition-all hover:text-primary relative group",
-                pathname === link.href ? "text-primary" : "text-[#0F172A]/70"
+                "flex items-center gap-1 text-[10px] font-bold uppercase tracking-[0.2em] transition-all hover:text-primary cursor-pointer",
+                unidades.some(u => pathname === u.href) ? "text-primary" : "text-[#0F172A]/70"
               )}
             >
-              {link.name}
-              <span className={cn(
-                "absolute -bottom-1 left-0 w-0 h-[1px] bg-primary transition-all duration-300 group-hover:w-full",
-                pathname === link.href && "w-full"
-              )} />
-            </Link>
-          ))}
+              Unidades de Negócio
+              <ChevronDown className={cn("w-3 h-3 transition-transform duration-300", isUnidadesOpen && "rotate-180")} />
+            </button>
+
+            <AnimatePresence>
+              {isUnidadesOpen && (
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 10 }}
+                  transition={{ duration: 0.2 }}
+                  className="absolute top-full left-0 mt-2 w-64 bg-white border border-slate-200 shadow-2xl rounded-xl overflow-hidden py-4 z-50"
+                >
+                  <div className="px-6 py-2 border-b border-slate-100 mb-2">
+                    <span className="text-[9px] font-bold text-slate-300 uppercase tracking-widest">Nossa Expertise</span>
+                  </div>
+                  {unidades.map((unidade) => (
+                    <Link
+                      key={unidade.href}
+                      href={unidade.href}
+                      className={cn(
+                        "block px-6 py-3 text-[10px] font-bold uppercase tracking-wider transition-all hover:bg-slate-50 hover:text-primary",
+                        pathname === unidade.href ? "text-primary bg-primary/5" : "text-[#0F172A]/70"
+                      )}
+                    >
+                      {unidade.name}
+                    </Link>
+                  ))}
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+
+          <Link
+            href="/investidores"
+            className={cn(
+              "text-[10px] font-bold uppercase tracking-[0.2em] transition-all hover:text-primary relative group",
+              pathname === "/investidores" ? "text-primary" : "text-[#0F172A]/70"
+            )}
+          >
+            Investidores
+            <span className={cn(
+              "absolute -bottom-1 left-0 w-0 h-[1.5px] bg-primary transition-all duration-300 group-hover:w-full",
+              pathname === "/investidores" && "w-full"
+            )} />
+          </Link>
+
+          <Link
+            href="/contato"
+            className={cn(
+              "text-[10px] font-bold uppercase tracking-[0.2em] transition-all hover:text-primary relative group",
+              pathname === "/contato" ? "text-primary" : "text-[#0F172A]/70"
+            )}
+          >
+            Contato
+            <span className={cn(
+              "absolute -bottom-1 left-0 w-0 h-[1.5px] bg-primary transition-all duration-300 group-hover:w-full",
+              pathname === "/contato" && "w-full"
+            )} />
+          </Link>
         </div>
 
         {/* Desktop CTA */}
         <div className="hidden lg:flex items-center gap-4">
-          <Link href="/contato">
+          <Link href="/contato" className="cursor-pointer">
             <motion.button
-              whileHover={{ scale: 1.05, boxShadow: "0 0 15px rgba(201,161,74,0.3)" }}
-              whileTap={{ scale: 0.95 }}
-              className="bg-primary text-white text-[10px] font-bold uppercase tracking-[0.2em] px-6 py-3 rounded-none shadow-sm transition-all"
+              whileHover={{ y: -2 }}
+              whileTap={{ scale: 0.98 }}
+              className="bg-[#0F172A] text-white text-[10px] font-bold uppercase tracking-[0.3em] px-8 py-4 rounded-xl shadow-lg hover:shadow-primary/20 transition-all border border-white/10 cursor-pointer"
             >
-              Fale com um especialista
+              Consultoria Privada
             </motion.button>
           </Link>
         </div>
@@ -69,37 +158,60 @@ export function Navbar() {
         <div className="lg:hidden flex items-center gap-4">
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="text-[#0F172A]"
+            className="text-[#0F172A] p-2 hover:bg-slate-100 rounded-lg transition-colors"
           >
-            {isMobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
+            {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
         </div>
       </div>
 
       {/* Mobile Menu */}
-      {isMobileMenuOpen && (
-        <motion.div 
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="lg:hidden bg-background border-t border-primary/10 px-6 py-10 flex flex-col gap-6"
-        >
-          {navLinks.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              className="text-sm font-bold uppercase tracking-[0.2em] text-[#0F172A]"
-              onClick={() => setIsMobileMenuOpen(false)}
-            >
-              {link.name}
-            </Link>
-          ))}
-          <Link href="/contato" onClick={() => setIsMobileMenuOpen(false)}>
-            <button className="w-full bg-primary text-white text-[10px] font-bold uppercase tracking-[0.2em] py-4 rounded-none">
-              Fale com um especialista
-            </button>
-          </Link>
-        </motion.div>
-      )}
+      <AnimatePresence>
+        {isMobileMenuOpen && (
+          <motion.div 
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            className="lg:hidden bg-white border-t border-slate-200 overflow-hidden"
+          >
+            <div className="px-6 py-10 flex flex-col gap-6">
+              {[...mainLinks].map((link) => (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className={cn(
+                    "text-xs font-bold uppercase tracking-[0.2em] transition-colors",
+                    pathname === link.href ? "text-primary" : "text-[#0F172A]/70"
+                  )}
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  {link.name}
+                </Link>
+              ))}
+              
+              <div className="pt-4 border-t border-slate-100 flex flex-col gap-4">
+                <span className="text-[10px] font-bold text-slate-300 uppercase tracking-widest">Nossas Unidades</span>
+                {unidades.map((unidade) => (
+                  <Link
+                    key={unidade.href}
+                    href={unidade.href}
+                    className="text-xs font-bold uppercase tracking-[0.2em] text-[#0F172A]/50 hover:text-primary transition-colors"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
+                    {unidade.name}
+                  </Link>
+                ))}
+              </div>
+
+              <Link href="/contato" onClick={() => setIsMobileMenuOpen(false)} className="pt-4">
+                <button className="w-full bg-[#0F172A] text-white text-[10px] font-bold uppercase tracking-[0.3em] py-5 rounded-xl">
+                  Fale com um especialista
+                </button>
+              </Link>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </nav>
   );
 }

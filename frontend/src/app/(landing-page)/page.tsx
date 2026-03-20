@@ -8,13 +8,34 @@ import { motion } from "framer-motion";
 
 export default function Home() {
   const [isLoading, setIsLoading] = React.useState(true);
+  const [showLoading, setShowLoading] = React.useState(false);
+
+  React.useEffect(() => {
+    // Check if the loading screen has already been shown in this session
+    const hasLoaded = sessionStorage.getItem("gp_has_loaded");
+    if (hasLoaded) {
+      setIsLoading(false);
+      setShowLoading(false);
+    } else {
+      setShowLoading(true);
+    }
+  }, []);
+
+  const handleFinished = () => {
+    setIsLoading(false);
+    setShowLoading(false);
+    // Mark as loaded for the rest of the session
+    sessionStorage.setItem("gp_has_loaded", "true");
+  };
 
   return (
     <div className="w-full">
-      <LoadingScreen onFinished={() => setIsLoading(false)} />
+      {showLoading && (
+        <LoadingScreen onFinished={handleFinished} />
+      )}
       
       <motion.div
-        initial={{ opacity: 0, scale: 1.15, filter: "blur(10px)" }}
+        initial={showLoading ? { opacity: 0, scale: 1.15, filter: "blur(10px)" } : { opacity: 1, scale: 1, filter: "blur(0px)" }}
         animate={{ 
           opacity: isLoading ? 0 : 1,
           scale: isLoading ? 1.15 : 1,
@@ -23,7 +44,7 @@ export default function Home() {
         transition={{ 
           duration: 1.5, 
           ease: [0.76, 0, 0.24, 1],
-          delay: 0.3 
+          delay: showLoading ? 0.3 : 0 
         }}
       >
         <Hero />
