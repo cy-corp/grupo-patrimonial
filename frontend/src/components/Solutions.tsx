@@ -2,11 +2,11 @@
 
 import React from "react";
 import { motion } from "framer-motion";
-import { 
-  HardHat, 
-  Building2, 
-  Construction, 
-  Home, 
+import {
+  HardHat,
+  Building2,
+  Construction,
+  Home,
   TrendingUp,
   ChevronRight
 } from "lucide-react";
@@ -47,46 +47,81 @@ const solutions = [
 
 export function Solutions() {
   return (
-    <section className="py-24 bg-[#F8F1E3] relative z-10 shadow-[0_-30px_60px_-15px_rgba(0,0,0,0.1)]">
-      <div className="container mx-auto px-6 h-full">
-        <div className="flex flex-col mb-16 px-4">
-          <span className="text-primary font-bold tracking-[.3em] uppercase text-xs mb-4">
-            Expertise Integrada
-          </span>
-          <h2 className="text-4xl md:text-5xl font-heading font-black text-[#0F172A] uppercase">
-            Nossas <span className="text-primary">Soluções</span>
-          </h2>
+    <section className="py-32 bg-[#F8F9FA] relative overflow-hidden border-y border-slate-200/50">
+      {/* Background Decorative Elements */}
+      <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-primary/5 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/2"></div>
+
+      <div className="container mx-auto px-6 relative z-10">
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-24 gap-8">
+          <div className="max-w-2xl">
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              className="flex items-center gap-4 mb-6"
+            >
+              <div className="w-12 h-[1px] bg-primary"></div>
+              <span className="text-primary font-bold tracking-[0.4em] uppercase text-[10px]">
+                Expertise & Excelência
+              </span>
+            </motion.div>
+            <motion.h2
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.2 }}
+              className="text-5xl md:text-7xl font-light text-[#0F172A] leading-tight"
+            >
+              Ecossistema <span className="font-bold italic text-primary">Integrado</span>
+            </motion.h2>
+          </div>
+          <motion.p
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.4 }}
+            className="text-[#0F172A]/40 text-sm max-w-sm font-light tracking-wide leading-relaxed border-l border-[#0F172A]/10 pl-8 mb-4"
+          >
+            Soluções completas para desenvolver, proteger, valorizar e perpetuar patrimônios imobiliários.
+          </motion.p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-0 border border-slate-200 bg-white shadow-[0_20px_50px_rgba(0,0,0,0.02)]">
           {solutions.map((solution, index) => (
             <motion.div
               key={solution.title}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.1, duration: 0.8 }}
+              transition={{ delay: index * 0.1, duration: 0.6 }}
               viewport={{ once: true }}
-              className="group relative bg-[#FFFFFF] p-8 border border-primary/10 hover:border-primary/40 transition-all duration-500 overflow-hidden"
+              className="group relative p-10 border border-slate-100 hover:bg-slate-50/50 transition-all duration-700 flex flex-col h-full min-h-[400px]"
             >
-              {/* Decorative accent */}
-              <div className="absolute top-0 right-0 w-16 h-16 bg-primary/5 -mr-8 -mt-8 rotate-45 group-hover:bg-primary/20 transition-colors" />
-              
-              <div className={cn("inline-flex p-3 mb-6 transition-transform group-hover:scale-110 duration-500", solution.color)}>
-                <solution.icon className="w-8 h-8" />
+              {/* Vertical Number Indicator */}
+              <div className="absolute top-10 right-10 text-4xl font-bold font-heading text-slate-100 group-hover:text-primary/20 transition-colors duration-700">
+                0{index + 1}
               </div>
-              
-              <h3 className="text-xl font-heading font-bold mb-4 text-[#0F172A] uppercase tracking-wide">
+
+              <div className="mb-12 relative">
+                <div className="w-16 h-16 rounded-full bg-slate-100 flex items-center justify-center group-hover:bg-primary/10 transition-all duration-700 group-hover:scale-110">
+                  <solution.icon className="w-8 h-8 text-slate-300 group-hover:text-primary transition-colors duration-700" />
+                </div>
+              </div>
+
+              <h3 className="text-xl font-heading font-medium mb-6 text-[#0F172A] group-hover:text-primary transition-colors duration-500 uppercase tracking-widest">
                 {solution.title}
               </h3>
-              
-              <p className="text-[#0F172A]/70 text-sm leading-relaxed mb-6">
+
+              <p className="text-[#0F172A]/40 group-hover:text-[#0F172A]/70 text-sm leading-relaxed mb-10 font-light transition-colors duration-500">
                 {solution.description}
               </p>
-              
-              <div className="mt-auto flex items-center text-primary font-bold text-xs uppercase tracking-widest opacity-60 group-hover:opacity-100 transition-all group-hover:translate-x-2">
-                Saber Mais
-                <ChevronRight className="ml-1 w-3 h-3" />
+
+              <div className="mt-auto pt-8 flex items-center gap-3 text-primary text-[10px] uppercase font-bold tracking-[0.3em] opacity-0 group-hover:opacity-100 transition-all duration-500 group-hover:translate-x-2">
+                Conhecer Unidade
+                <ChevronRight className="w-3 h-3" />
               </div>
+
+              {/* Bottom Decorative Bar */}
+              <div className="absolute bottom-0 left-0 w-0 h-[2px] bg-primary group-hover:w-full transition-all duration-1000" />
             </motion.div>
           ))}
         </div>
