@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Playfair_Display } from "next/font/google";
+import { Inter, Noto_Serif } from "next/font/google";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
@@ -8,12 +8,12 @@ import { WhatsAppButton } from "@/components/whatsapp-button";
 import "@/app/globals.css";
 
 const inter = Inter({
-  variable: "--font-sans",
+  variable: "--font-body",
   subsets: ["latin"],
 });
 
-const playfair = Playfair_Display({
-  variable: "--font-heading",
+const notoSerif = Noto_Serif({
+  variable: "--font-headline",
   subsets: ["latin"],
 });
 
@@ -56,14 +56,17 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt-BR" suppressHydrationWarning>
+      <head>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" />
+      </head>
       <body
-        className={`${inter.variable} ${playfair.variable} font-sans antialiased`}
+        className={`${inter.variable} ${notoSerif.variable} font-body antialiased`}
       >
         <ThemeProvider
           attribute="class"
-          defaultTheme="light"
+          defaultTheme="dark"
           enableSystem={false}
-          forcedTheme="light"
+          forcedTheme="dark"
           disableTransitionOnChange
         >
           <Navbar />
@@ -77,3 +80,4 @@ export default function RootLayout({
     </html>
   );
 }
+

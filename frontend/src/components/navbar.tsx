@@ -4,18 +4,17 @@ import * as React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { GoldButton } from "@/components/ui/gold-button";
 import { cn } from "@/lib/utils";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 
-const navLinks = [
-  { name: "Home", href: "/" },
-  { name: "Quem Somos", href: "/quem-somos" },
-  { name: "Engenharia", href: "/engenharia" },
-  { name: "Incorporadora", href: "/incorporadora" },
-  { name: "Construtora", href: "/construtora" },
-  { name: "Imobiliária", href: "/imobiliaria" },
-  { name: "Patrimonial", href: "/patrimonial" },
+const businessUnits = [
+  { id: "01", name: "Engenharia", href: "/engenharia" },
+  { id: "02", name: "Incorporadora", href: "/incorporadora" },
+  { id: "03", name: "Construtora", href: "/construtora" },
+  { id: "04", name: "Imobiliária", href: "/imobiliaria" },
+  { id: "05", name: "Patrimonial", href: "/patrimonial" },
+  { id: "06", name: "Integração", href: "/integracao" },
 ];
 
 export function Navbar() {
@@ -23,83 +22,125 @@ export function Navbar() {
   const pathname = usePathname();
 
   return (
-    <nav className="fixed top-0 z-[100] w-full bg-background/80 backdrop-blur-md border-b border-primary/10">
-      <div className="container mx-auto flex h-24 items-center justify-between px-6">
-        
-        {/* Logo */}
-        <Link href="/" className="flex items-center group">
-          <img src="/patrimonial-logo-png.png" alt="Grupo Patrimonial" className="h-20 w-auto" />
-          <img src="/patrimonial-text-png.png" alt="Patrimonial" className="h-18 w-auto -ml-5" />
+    <nav className="fixed top-0 w-full z-50 bg-[#131313]/60 backdrop-blur-xl border-b border-[#484848]/20 shadow-[0_24px_24px_0_rgba(231,229,229,0.04)] flex justify-between items-center px-4 md:px-12 py-4 md:py-6 max-w-none">
+      {/* Logo */}
+      <Link href="/" className="flex items-center gap-4 group">
+        <div className="flex items-center">
+          <img src="/patrimonial-logo-png.png" alt="Grupo Patrimonial" className="h-10 md:h-12 w-auto" />
+          <img src="/patrimonial-text-png.png" alt="Patrimonial" className="h-8 md:h-10 w-auto -ml-3" />
+        </div>
+      </Link>
+
+      {/* Desktop Navigation */}
+      <div className="hidden md:flex items-center gap-10">
+        <Link 
+          href="/" 
+          className={cn(
+            "font-headline font-light tracking-[0.1em] uppercase text-xs transition-colors duration-300",
+            pathname === "/" ? "text-[#d9c58f] border-b border-[#d9c58f] pb-1" : "text-[#acabaa] hover:text-[#e7e5e5]"
+          )}
+        >
+          Home
+        </Link>
+        <Link 
+          href="/quem-somos" 
+          className={cn(
+            "font-headline font-light tracking-[0.1em] uppercase text-xs transition-colors duration-300",
+            pathname === "/quem-somos" ? "text-[#d9c58f] border-b border-[#d9c58f] pb-1" : "text-[#acabaa] hover:text-[#e7e5e5]"
+          )}
+        >
+          Quem Somos
         </Link>
 
-        {/* Desktop Nav */}
-        <div className="hidden lg:flex items-center gap-8">
-          {navLinks.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              className={cn(
-                "text-xs font-bold uppercase tracking-[0.2em] transition-all hover:text-primary relative group",
-                pathname === link.href ? "text-primary" : "text-[#0F172A]/70"
-              )}
-            >
-              {link.name}
-              <span className={cn(
-                "absolute -bottom-1 left-0 w-0 h-[1px] bg-primary transition-all duration-300 group-hover:w-full",
-                pathname === link.href && "w-full"
-              )} />
-            </Link>
-          ))}
+        {/* Unidades de Negócio Dropdown */}
+        <div className="relative group nav-dropdown">
+          <button className="flex items-center gap-1 font-headline font-light tracking-[0.1em] uppercase text-xs text-[#acabaa] group-hover:text-[#e7e5e5] transition-colors duration-300">
+            Unidades de Negócio
+            <span className="material-symbols-outlined text-[14px]">expand_more</span>
+          </button>
+          <div className="dropdown-content hidden absolute top-full left-1/2 -translate-x-1/2 mt-4 w-[480px] bg-[#131313]/95 backdrop-blur-2xl border border-[#484848]/30 shadow-2xl p-6 grid grid-cols-2 gap-4 opacity-0 transform -translate-y-2 transition-all duration-300">
+            {businessUnits.map((unit) => (
+              <Link 
+                key={unit.id}
+                href={unit.href} 
+                className="flex flex-col p-3 hover:bg-[#1f2020]/50 transition-colors group/item"
+              >
+                <span className="text-[#d9c58f] text-[10px] tracking-[0.2em] font-bold uppercase mb-1">{unit.id}</span>
+                <span className="font-headline text-sm text-[#e7e5e5] group-hover/item:text-[#d9c58f]">{unit.name}</span>
+              </Link>
+            ))}
+          </div>
         </div>
 
-        {/* Desktop CTA */}
-        <div className="hidden lg:flex items-center gap-4">
-          <Link href="/contato">
-            <motion.button
-              whileHover={{ scale: 1.05, boxShadow: "0 0 15px rgba(201,161,74,0.3)" }}
-              whileTap={{ scale: 0.95 }}
-              className="bg-primary text-white text-[10px] font-bold uppercase tracking-[0.2em] px-6 py-3 rounded-none shadow-sm transition-all"
-            >
-              Fale com um especialista
-            </motion.button>
-          </Link>
-        </div>
+        <Link 
+          href="/investidores" 
+          className={cn(
+            "font-headline font-light tracking-[0.1em] uppercase text-xs transition-colors duration-300",
+            pathname === "/investidores" ? "text-[#d9c58f] border-b border-[#d9c58f] pb-1" : "text-[#acabaa] hover:text-[#e7e5e5]"
+          )}
+        >
+          Investidores
+        </Link>
+        <Link 
+          href="/contato" 
+          className={cn(
+            "font-headline font-light tracking-[0.1em] uppercase text-xs transition-colors duration-300",
+            pathname === "/contato" ? "text-[#d9c58f] border-b border-[#d9c58f] pb-1" : "text-[#acabaa] hover:text-[#e7e5e5]"
+          )}
+        >
+          Contato
+        </Link>
+      </div>
+
+      {/* Desktop CTA & Mobile Menu Button */}
+      <div className="flex items-center gap-4">
+        <Link href="/orcamento" className="hidden md:block">
+          <GoldButton>
+            Orçamento
+          </GoldButton>
+        </Link>
 
         {/* Mobile menu button */}
-        <div className="lg:hidden flex items-center gap-4">
-          <button
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="text-[#0F172A]"
-          >
-            {isMobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
-          </button>
-        </div>
+        <button
+          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          className="md:hidden text-[#e7e5e5]"
+        >
+          {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+        </button>
       </div>
 
       {/* Mobile Menu */}
-      {isMobileMenuOpen && (
-        <motion.div 
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="lg:hidden bg-background border-t border-primary/10 px-6 py-10 flex flex-col gap-6"
-        >
-          {navLinks.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              className="text-sm font-bold uppercase tracking-[0.2em] text-[#0F172A]"
-              onClick={() => setIsMobileMenuOpen(false)}
-            >
-              {link.name}
+      <AnimatePresence>
+        {isMobileMenuOpen && (
+          <motion.div 
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            className="md:hidden absolute top-full left-0 w-full bg-[#131313] border-b border-[#484848]/30 overflow-hidden flex flex-col p-6 gap-4"
+          >
+            <Link href="/" className="font-headline uppercase text-sm text-[#e7e5e5]" onClick={() => setIsMobileMenuOpen(false)}>Home</Link>
+            <Link href="/quem-somos" className="font-headline uppercase text-sm text-[#e7e5e5]" onClick={() => setIsMobileMenuOpen(false)}>Quem Somos</Link>
+            
+            <div className="flex flex-col gap-2 pt-2 border-t border-[#484848]/20">
+              <span className="text-[10px] uppercase tracking-widest text-[#acabaa]">Unidades de Negócio</span>
+              {businessUnits.map((unit) => (
+                <Link key={unit.id} href={unit.href} className="font-headline text-sm text-[#acabaa] pl-4" onClick={() => setIsMobileMenuOpen(false)}>
+                  {unit.name}
+                </Link>
+              ))}
+            </div>
+
+            <Link href="/investidores" className="font-headline uppercase text-sm text-[#e7e5e5]" onClick={() => setIsMobileMenuOpen(false)}>Investidores</Link>
+            <Link href="/contato" className="font-headline uppercase text-sm text-[#e7e5e5]" onClick={() => setIsMobileMenuOpen(false)}>Contato</Link>
+            
+            <Link href="/orcamento" onClick={() => setIsMobileMenuOpen(false)} className="mt-4">
+              <GoldButton className="w-full">
+                Orçamento
+              </GoldButton>
             </Link>
-          ))}
-          <Link href="/contato" onClick={() => setIsMobileMenuOpen(false)}>
-            <button className="w-full bg-primary text-white text-[10px] font-bold uppercase tracking-[0.2em] py-4 rounded-none">
-              Fale com um especialista
-            </button>
-          </Link>
-        </motion.div>
-      )}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </nav>
   );
 }
