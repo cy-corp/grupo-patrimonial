@@ -40,7 +40,7 @@ export default function LoginPage() {
       <div className="bg-surface border border-outline-variant/20 p-8 rounded-xl shadow-[0_20px_50px_rgba(0,0,0,0.05)] dark:shadow-[0_20px_50px_rgba(0,0,0,0.3)] w-full max-w-md">
         <div className="flex flex-col items-center mb-8">
           <img src="/patrimonial-logo-png.png" alt="Grupo Patrimonial" className="h-16 w-auto mb-4" />
-          <h1 className="font-headline text-xl text-primary font-bold uppercase tracking-widest">Acesso Restrito</h1>
+          <h1 className="font-headline text-xl text-primary font-bold uppercase tracking-widest">Grupo Patrimonial</h1>
         </div>
         
         <form onSubmit={handleLogin} className="flex flex-col gap-6">

@@ -63,7 +63,7 @@ export default async function HistoryPage({
     <div className="p-8 max-w-5xl mx-auto w-full">
       <div className="mb-8 border-b border-outline-variant/20 pb-6">
         <Link href={`/admin/${slug}`} className="inline-flex items-center text-xs font-bold uppercase tracking-widest text-on-surface-variant hover:text-primary mb-6 transition-colors font-headline">
-          <ArrowLeft size={14} className="mr-2" /> Voltar para Slots
+          <ArrowLeft size={14} className="mr-2" /> Voltar
         </Link>
         <div>
           <h1 className="font-headline font-bold text-3xl text-primary mb-2">Histórico de Uploads</h1>
