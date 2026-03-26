@@ -1,7 +1,16 @@
 "use client";
 
 import React from "react";
-import { motion, Variants } from "framer-motion";
+import { motion } from "framer-motion";
+import {
+  HardHat,
+  Building2,
+  Construction,
+  Home,
+  TrendingUp,
+  ChevronRight
+} from "lucide-react";
+import { cn } from "@/lib/utils";
 
 const solutions = [
   {
@@ -41,115 +50,83 @@ export function Solutions() {
   const level2 = solutions.filter(s => s.level === 2);
 
   return (
-    <section className="py-24 px-4 md:px-12 bg-surface-container-low overflow-hidden">
-      <motion.div 
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.6 }}
-        className="mb-20 text-center"
-      >
-        <h2 className="font-headline text-2xl md:text-3xl mb-4 tracking-[0.1em] uppercase text-on-surface">Soluções Estruturais</h2>
-        <div className="w-12 h-1 bg-primary mx-auto"></div>
-      </motion.div>
+    <section className="py-32 bg-[#F8F9FA] relative overflow-hidden border-y border-slate-200/50">
+      {/* Background Decorative Elements */}
+      <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-primary/5 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/2"></div>
 
-      <div className="max-w-7xl mx-auto flex flex-col items-center gap-8">
-        {/* Level 1: 3 Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 w-full">
-          {level1.map((solution, index) => {
-            const variants: Variants = {
-              hidden: { 
-                opacity: 0, 
-                x: index === 0 ? -60 : index === 2 ? 60 : 0,
-                y: index === 1 ? 30 : 0,
-                scale: index === 1 ? 0.9 : 1,
-                filter: "blur(10px)"
-              },
-              show: { 
-                opacity: 1, 
-                x: 0, 
-                y: 0, 
-                scale: 1,
-                filter: "blur(0px)",
-                transition: { 
-                  duration: 0.8, 
-                  ease: [0.22, 1, 0.36, 1] as const,
-                  delay: index * 0.1
-                } 
-              }
-            };
-
-            return (
-              <motion.div 
-                key={solution.id}
-                initial="hidden"
-                whileInView="show"
-                viewport={{ once: true, margin: "-100px" }}
-                variants={variants}
-                whileHover={{ y: -3 }}
-                className="group relative aspect-[4/5] overflow-hidden border border-outline-variant/30 hover:border-primary/50 hover:shadow-[0_10px_30px_rgba(217,197,143,0.15)] transition-all duration-500 bg-surface-container dark:bg-black cursor-pointer"
-              >
-                <img 
-                  alt={solution.title} 
-                  className="absolute inset-0 w-full h-full object-cover grayscale brightness-[0.9] dark:brightness-[0.4] group-hover:grayscale-0 group-hover:brightness-95 transition-all duration-700 ease-in-out" 
-                  src={solution.image}
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-surface-container-highest/80 dark:from-black via-transparent to-transparent group-hover:from-surface-container-highest dark:group-hover:from-black/80"></div>
-                <div className="absolute bottom-0 left-0 p-8 w-full">
-                  <span className="block font-label text-accent-gold text-sm tracking-[0.3em] mb-2">{solution.id}</span>
-                  <h3 className="font-headline text-xl text-on-surface tracking-wide group-hover:text-accent-gold transition-colors">{solution.title}</h3>
-                </div>
-              </motion.div>
-            );
-          })}
+      <div className="container mx-auto px-6 relative z-10">
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-24 gap-8">
+          <div className="max-w-2xl">
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              className="flex items-center gap-4 mb-6"
+            >
+              <div className="w-12 h-[1px] bg-primary"></div>
+              <span className="text-primary font-bold tracking-[0.4em] uppercase text-[10px]">
+                Expertise & Excelência
+              </span>
+            </motion.div>
+            <motion.h2
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.2 }}
+              className="text-5xl md:text-7xl font-light text-[#0F172A] leading-tight"
+            >
+              Ecossistema <span className="font-bold italic text-primary">Integrado</span>
+            </motion.h2>
+          </div>
+          <motion.p
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.4 }}
+            className="text-[#0F172A]/40 text-sm max-w-sm font-light tracking-wide leading-relaxed border-l border-[#0F172A]/10 pl-8 mb-4"
+          >
+            Soluções completas para desenvolver, proteger, valorizar e perpetuar patrimônios imobiliários.
+          </motion.p>
         </div>
 
-        {/* Level 2: 2 Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 w-full max-w-5xl">
-          {level2.map((solution, index) => {
-            const variants: Variants = {
-              hidden: { 
-                opacity: 0, 
-                y: 40,
-                filter: "blur(20px)",
-                scale: 0.95
-              },
-              show: { 
-                opacity: 1, 
-                y: 0, 
-                filter: "blur(0px)",
-                scale: 1,
-                transition: { 
-                  duration: 0.9, 
-                  ease: [0.16, 1, 0.3, 1] as const,
-                  delay: 0.15 + (index * 0.15)
-                } 
-              }
-            };
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-0 border border-slate-200 bg-white shadow-[0_20px_50px_rgba(0,0,0,0.02)]">
+          {solutions.map((solution, index) => (
+            <motion.div
+              key={solution.title}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: index * 0.1, duration: 0.6 }}
+              viewport={{ once: true }}
+              className="group relative p-10 border border-slate-100 hover:bg-slate-50/50 transition-all duration-700 flex flex-col h-full min-h-[400px]"
+            >
+              {/* Vertical Number Indicator */}
+              <div className="absolute top-10 right-10 text-4xl font-bold font-heading text-slate-100 group-hover:text-primary/20 transition-colors duration-700">
+                0{index + 1}
+              </div>
 
-            return (
-              <motion.div 
-                key={solution.id}
-                initial="hidden"
-                whileInView="show"
-                viewport={{ once: true, margin: "-100px" }}
-                variants={variants}
-                whileHover={{ y: -2 }}
-                className="group relative h-64 md:h-80 overflow-hidden border border-outline-variant/30 hover:border-primary/50 hover:shadow-[0_10px_30px_rgba(217,197,143,0.15)] transition-all duration-500 bg-surface-container dark:bg-black cursor-pointer"
-              >
-                <img 
-                  alt={solution.title} 
-                  className="absolute inset-0 w-full h-full object-cover grayscale brightness-[0.8] dark:brightness-[0.3] group-hover:grayscale-0 group-hover:brightness-90 transition-all duration-700 ease-in-out" 
-                  src={solution.image}
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-surface-container-highest/80 dark:from-black via-transparent to-transparent group-hover:from-surface-container-highest dark:group-hover:from-black/80"></div>
-                <div className="absolute bottom-0 left-0 p-8 w-full">
-                  <span className="block font-label text-accent-gold text-sm tracking-[0.3em] mb-2">{solution.id}</span>
-                  <h3 className="font-headline text-xl text-on-surface tracking-wide group-hover:text-accent-gold transition-colors">{solution.title}</h3>
+              <div className="mb-12 relative">
+                <div className="w-16 h-16 rounded-full bg-slate-100 flex items-center justify-center group-hover:bg-primary/10 transition-all duration-700 group-hover:scale-110">
+                  <solution.icon className="w-8 h-8 text-slate-300 group-hover:text-primary transition-colors duration-700" />
                 </div>
-              </motion.div>
-            );
-          })}
+              </div>
+
+              <h3 className="text-xl font-heading font-medium mb-6 text-[#0F172A] group-hover:text-primary transition-colors duration-500 uppercase tracking-widest">
+                {solution.title}
+              </h3>
+
+              <p className="text-[#0F172A]/40 group-hover:text-[#0F172A]/70 text-sm leading-relaxed mb-10 font-light transition-colors duration-500">
+                {solution.description}
+              </p>
+
+              <div className="mt-auto pt-8 flex items-center gap-3 text-primary text-[10px] uppercase font-bold tracking-[0.3em] opacity-0 group-hover:opacity-100 transition-all duration-500 group-hover:translate-x-2">
+                Conhecer Unidade
+                <ChevronRight className="w-3 h-3" />
+              </div>
+
+              {/* Bottom Decorative Bar */}
+              <div className="absolute bottom-0 left-0 w-0 h-[2px] bg-primary group-hover:w-full transition-all duration-1000" />
+            </motion.div>
+          ))}
         </div>
       </div>
 
