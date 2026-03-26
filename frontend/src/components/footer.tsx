@@ -1,47 +1,39 @@
+"use client";
+
+import React from "react";
 import Link from "next/link";
 
 export function Footer() {
   return (
-    <footer className="border-t bg-muted/40 py-12">
-      <div className="container mx-auto px-4">
-        <div className="grid grid-cols-1 gap-8 md:grid-cols-4">
-          <div className="col-span-1 md:col-span-2">
-            <Link href="/" className="mb-4 flex items-center gap-2">
-              <img src="/patrimonial-logo-png.png" alt="Grupo Patrimonial" className="h-16 w-auto" />
-            </Link>
-            <p className="mt-4 max-w-xs text-sm text-muted-foreground">
-              Soluções completas para desenvolver, proteger, valorizar e perpetuar patrimônios imobiliários.
-            </p>
-          </div>
-          <div>
-            <h3 className="mb-4 font-heading font-semibold">Links Rápidos</h3>
-            <ul className="space-y-2 text-sm text-muted-foreground">
-              <li>
-                <Link href="/quem-somos" className="hover:text-primary">Quem Somos</Link>
-              </li>
-              <li>
-                <Link href="/engenharia" className="hover:text-primary">Engenharia</Link>
-              </li>
-              <li>
-                <Link href="/investidores" className="hover:text-primary">Investidores</Link>
-              </li>
-              <li>
-                <Link href="/contato" className="hover:text-primary">Contato</Link>
-              </li>
-            </ul>
-          </div>
-          <div>
-            <h3 className="mb-4 font-heading font-semibold">Contato</h3>
-            <ul className="space-y-2 text-sm text-muted-foreground">
-              <li>contato@grupopatrimonial.com.br</li>
-              <li>(11) 9999-9999</li>
-              <li>São Paulo, SP - Brasil</li>
-            </ul>
-          </div>
+    <footer className="bg-surface w-full py-12 px-6 md:px-12 mt-auto border-t border-outline-variant/10 flex flex-col md:flex-row justify-between items-center gap-8 md:gap-0">
+      <div className="flex flex-col items-center md:items-start gap-4">
+        <div className="flex items-center gap-2">
+          <img src="/patrimonial-logo-png.png" alt="Grupo Patrimonial" className="h-8 w-auto" />
+          <span className="text-lg font-bold text-primary font-headline uppercase tracking-widest">Grupo Patrimonial</span>
         </div>
-        <div className="mt-12 border-t pt-8 text-center text-sm text-muted-foreground">
-          &copy; {new Date().getFullYear()} Grupo Patrimonial. Todos os direitos reservados.
+        <p className="font-body text-on-surface-variant text-[10px] md:text-xs text-center md:text-left">
+          Excelência em Perenidade Estrutural.
+        </p>
+      </div>
+
+      <div className="flex flex-col items-center md:items-end gap-6">
+        <div className="flex flex-wrap justify-center gap-6 md:gap-8">
+          <Link
+            href="/politica-privacidade"
+            className="font-body tracking-[0.05em] text-on-surface-variant text-xs hover:text-primary transition-colors duration-200"
+          >
+            Política de Privacidade
+          </Link>
+          <Link
+            href="/termos-servico"
+            className="font-body tracking-[0.05em] text-on-surface-variant text-xs hover:text-primary transition-colors duration-200"
+          >
+            Termos de Serviço
+          </Link>
         </div>
+        <p className="font-body tracking-[0.05em] text-on-surface-variant text-[10px] md:text-xs">
+          © {new Date().getFullYear()} Grupo Patrimonial. Todos os direitos reservados.
+        </p>
       </div>
     </footer>
   );

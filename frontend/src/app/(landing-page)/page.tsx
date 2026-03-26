@@ -1,10 +1,9 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Hero } from "@/components/Hero";
 import { Solutions } from "@/components/Solutions";
 import { LoadingScreen } from "@/components/LoadingScreen";
-import { motion } from "framer-motion";
 
 export default function Home() {
   const [isLoading, setIsLoading] = React.useState(true);

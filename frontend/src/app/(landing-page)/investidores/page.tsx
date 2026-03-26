@@ -1,5 +1,7 @@
-"use client";
-
+import { InvestorsHero } from "@/components/investidores/InvestorsHero";
+import { BusinessModels } from "@/components/investidores/BusinessModels";
+import { InvestorsCTA } from "@/components/investidores/InvestorsCTA";
+import { Metadata } from "next";
 import { motion } from "framer-motion";
 import { ArrowRight, BarChart3, ShieldCheck, Globe, Landmark } from "lucide-react";
 import Link from "next/link";

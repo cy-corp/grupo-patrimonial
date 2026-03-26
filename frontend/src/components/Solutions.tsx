@@ -14,38 +14,41 @@ import { cn } from "@/lib/utils";
 
 const solutions = [
   {
-    title: "Engenharia",
-    description: "Soluções técnicas avançadas e rigor construtivo para projetos de alta complexidade.",
-    icon: HardHat,
-    color: "bg-blue-500/10 text-blue-500",
+    id: "01",
+    title: "Engenharia de Valor",
+    image: "https://lh3.googleusercontent.com/aida-public/AB6AXuDwmhfo5VO5azhdJ59VSp_GDpiaWRlreFvyGDiSvliGHDEE2tDj55T4eX7YYicSDQqSqjE6ULd1rcXA20A95bcHQmfwIwVC9UwkFvae6Xt_IZIZiGyaekm4AdGrgWy5VLfLPrm-3BCCFo2gXEeFHD3HvOvItMbmey-xYAfUAjMot4t5K2BYh6lSrOpfVuwLu4IRG5qjdSubBWsKRVyUxfKpGs_YqwkeEFNryzCDpk7xhHZDXP7KXPekXoZ195THWvgEs9S71WoH6zja",
+    level: 1
   },
   {
-    title: "Incorporadora",
-    description: "Desenvolvimento de produtos imobiliários inovadores e de alto padrão.",
-    icon: Building2,
-    color: "bg-amber-500/10 text-amber-500",
+    id: "02",
+    title: "Incorporação Imobiliária",
+    image: "https://lh3.googleusercontent.com/aida-public/AB6AXuBnYUxNlzu8SwPfc-1drAvb-FKkSsIvGmsNQdZjKHB1MmksD7_w1pfGlhC8lmC_IMBpJ3IG0HGuCRss9ADvmHPqLhGRpoxxB4vEQn0G4AB5n59wJQgJNBygrZ_H2jMxb3sHjTeqHwuRDMFaIMs5mHYfMazLsdM6MWb4NMZ6uS8SjVW3eUaXg_WRJ9GbRb5gan8oii1vKbL2C-jbB4i86e_Mjbt-vzTNMg9FrvnO60LvRyEqbVH05a7duYT0iS6-ZLdL3WjAxnZ0kJSp",
+    level: 1
   },
   {
-    title: "Construtora",
-    description: "Execução impecável com tecnologia de ponta e foco total em qualidade.",
-    icon: Construction,
-    color: "bg-emerald-500/10 text-emerald-500",
+    id: "03",
+    title: "Construção de Alto Padrão",
+    image: "https://lh3.googleusercontent.com/aida-public/AB6AXuDGUM4Dl1rGMeef9moXK_QpyQKqCCtKnDfgWDU6CrXfZaVZspRvmz7IKANRFAWH6cAaE2rWO1CHDpwX2gdAX069SgnkW15GUDGJJgR_UMhVsjgKC_7_75QJ3kenK9kVyk2RRFXO8XZS_mbbZ-aitRDW-GQw8-NkaGb-aUq94L4G3w_xeEbQ84JaMqVM3j5GtVUWT0Q9x4sVYizd6MG6yb73UaoPA3a8CEb9R79lM1c6Mg1uqCoeBpkQoUfKuNxY_ravreTD8c0Bojez",
+    level: 1
   },
   {
-    title: "Imobiliária",
-    description: "Comercialização estratégica e curadoria de ativos para clientes exigentes.",
-    icon: Home,
-    color: "bg-purple-500/10 text-purple-500",
+    id: "04",
+    title: "Consultoria Imobiliária",
+    image: "https://lh3.googleusercontent.com/aida-public/AB6AXuCxuSIWMnlTiMXPZk10g8GrupAJgDdyuVBeo7QEiS1NriT1b86Z_lTr48Rn-xjtxtvF58Uf73LRfwEJ7_ArJrBeQlLZXhjMziPlDY7U83PxVZShOEk1nXofIWV70d3nJGRfyx14x1w7WcItjDNhj8hCtBiN5ziC5619RODP7mlskfIu9lLiUDjbhWno57L00BGVXD56NIIW2myJlHjBOjoAkykVZYeTgyofhOkd7K205rCZcSjj1dsu3MNRR2aD_hP2ejPhFBl-5PRh",
+    level: 2
   },
   {
+    id: "05",
     title: "Gestão Patrimonial",
-    description: "Preservação e valorização de patrimônios através de gestão profissional.",
-    icon: TrendingUp,
-    color: "bg-rose-500/10 text-rose-500",
-  },
+    image: "https://lh3.googleusercontent.com/aida-public/AB6AXuAadLuNLQ2k1tMM8eCzQ8h488Ap5Ufv8EoGv8RhM9em2RmSIjwc4pJfSOvoqyPtR_Rx4lKipPzlycw7cgQVZsKQsmfbuew6lExt2PAGXB7-2Q81xHpci-o0wTtg_vg177sxveGYjK38p_HJUGY5J6XcpykjVKyY3E2YwidsW98AXIic5dRhhi22gBHZciaJi7R3UEiv8uxTKww_iMdbPnm1lBZNyzuvAc676ZsQzXh3B9n69RtMQ4cFH-pLmKNnPi3pBkdd0AhtPd4a",
+    level: 2
+  }
 ];
 
 export function Solutions() {
+  const level1 = solutions.filter(s => s.level === 1);
+  const level2 = solutions.filter(s => s.level === 2);
+
   return (
     <section className="py-32 bg-[#F8F9FA] relative overflow-hidden border-y border-slate-200/50">
       {/* Background Decorative Elements */}
@@ -126,6 +129,22 @@ export function Solutions() {
           ))}
         </div>
       </div>
+
+      {/* Signature Section from HTML */}
+      <motion.div 
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 0.8, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 1.0, delay: 0.2 }}
+        className="py-32 text-center mt-20 border-t border-[#484848]/10"
+      >
+        <div className="max-w-3xl mx-auto">
+          <p className="font-headline text-xl md:text-2xl text-on-surface mb-12 italic leading-relaxed px-4">
+            "A permanência não é um acidente, é o resultado de uma engenharia precisa e uma visão de longo prazo."
+          </p>
+          <div className="inline-block h-24 w-[1px] bg-primary-dim"></div>
+        </div>
+      </motion.div>
     </section>
   );
 }

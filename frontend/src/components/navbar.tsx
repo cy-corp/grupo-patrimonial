@@ -154,6 +154,44 @@ export function Navbar() {
           </Link>
         </div>
 
+        <Link
+          href="/investidores"
+          className={cn(
+            "font-headline font-light tracking-[0.15em] uppercase text-[10px] transition-all duration-500 cursor-pointer relative group/link",
+            pathname === "/investidores" ? "text-primary" : "text-on-surface-variant hover:text-on-surface"
+          )}
+        >
+          Investidores
+          <span className={cn(
+            "absolute -bottom-1 left-0 h-[1px] bg-primary transition-all duration-500",
+            pathname === "/investidores" ? "w-full" : "w-0 group-hover/link:w-full"
+          )} />
+        </Link>
+        <Link
+          href="/contato"
+          className={cn(
+            "font-headline font-light tracking-[0.15em] uppercase text-[10px] transition-all duration-500 cursor-pointer relative group/link",
+            pathname === "/contato" ? "text-primary" : "text-on-surface-variant hover:text-on-surface"
+          )}
+        >
+          Contato
+          <span className={cn(
+            "absolute -bottom-1 left-0 h-[1px] bg-primary transition-all duration-500",
+            pathname === "/contato" ? "w-full" : "w-0 group-hover/link:w-full"
+          )} />
+        </Link>
+      </div>
+
+      {/* Desktop CTA, Theme Toggle & Mobile Menu Button */}
+      <div className="flex items-center gap-4">
+        <ThemeToggle />
+
+        <Link href="/orcamento" className="hidden md:block">
+          <GoldButton className="rounded-full px-8 opacity-90 hover:opacity-100">
+            Orçamento
+          </GoldButton>
+        </Link>
+
         {/* Mobile menu button */}
         <div className="lg:hidden flex items-center gap-4">
           <button
