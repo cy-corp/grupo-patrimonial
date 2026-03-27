@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import { ChevronDown, Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { motion, AnimatePresence } from "framer-motion";
+import { GoldButton } from "./ui/gold-button";
 
 const unidades = [
   { name: "Engenharia", href: "/engenharia" },
@@ -143,14 +144,10 @@ export function Navbar() {
 
         {/* Desktop CTA */}
         <div className="hidden lg:flex items-center gap-4">
-          <Link href="/contato" className="cursor-pointer">
-            <motion.button
-              whileHover={{ y: -2 }}
-              whileTap={{ scale: 0.98 }}
-              className="bg-[#0F172A] text-white text-[10px] font-bold uppercase tracking-[0.3em] px-8 py-4 rounded-xl shadow-lg hover:shadow-primary/20 transition-all border border-white/10 cursor-pointer"
-            >
+          <Link href="/contato">
+            <GoldButton className="px-8 py-4 text-[10px] tracking-[0.3em]">
               Solicite uma Análise
-            </motion.button>
+            </GoldButton>
           </Link>
         </div>
 
@@ -204,9 +201,9 @@ export function Navbar() {
               </div>
 
               <Link href="/contato" onClick={() => setIsMobileMenuOpen(false)} className="pt-4">
-                <button className="w-full bg-[#0F172A] text-white text-[10px] font-bold uppercase tracking-[0.3em] py-5 rounded-xl">
+                <GoldButton className="w-full py-5 text-[10px] tracking-[0.3em]">
                   Fale com um especialista
-                </button>
+                </GoldButton>
               </Link>
             </div>
           </motion.div>
