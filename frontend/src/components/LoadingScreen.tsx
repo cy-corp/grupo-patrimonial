@@ -4,15 +4,21 @@ import React, { useEffect, useState } from "react";
 import { useProgress } from "@react-three/drei";
 import { motion, AnimatePresence } from "framer-motion";
 
-export function LoadingScreen({ onFinished }: { onFinished?: () => void }) {
+export function LoadingScreen({ 
+  onFinished,
+  onExitComplete
+}: { 
+  onFinished?: () => void;
+  onExitComplete?: () => void;
+}) {
   const { progress, active } = useProgress();
   const [isFinished, setIsFinished] = useState(false);
   const [visualDone, setVisualDone] = useState(false);
   const [actuallyDone, setActuallyDone] = useState(false);
 
-  // Simple timer to synchronize JS with CSS animation (2.5s)
+  // Simple timer to synchronize JS with CSS animation (min 1.8s)
   useEffect(() => {
-    const timer = setTimeout(() => setVisualDone(true), 2500);
+    const timer = setTimeout(() => setVisualDone(true), 1800);
     return () => clearTimeout(timer);
   }, []);
 
@@ -20,41 +26,54 @@ export function LoadingScreen({ onFinished }: { onFinished?: () => void }) {
   const isReadyToHide = progress === 100 && !active && visualDone;
 
   useEffect(() => {
-    if (isReadyToHide) {
+    if (isReadyToHide && !isFinished) {
       const timer = setTimeout(() => {
-        setIsFinished(true);
-        if (onFinished) onFinished();
-      }, 200);
+        setIsFinished(true); // <--- Triggers the exit animation
+        if (onFinished) onFinished(); // <--- Notifies parent to start page entrance
+      }, 100);
       return () => clearTimeout(timer);
     }
-  }, [isReadyToHide, onFinished]);
+  }, [isReadyToHide, isFinished, onFinished]);
+
+  const handleAllComplete = () => {
+    setActuallyDone(true);
+    if (onExitComplete) onExitComplete();
+  };
 
   // If loading is finished and we've hidden it, don't render anything
   if (actuallyDone) return null;
 
   return (
-    <AnimatePresence onExitComplete={() => setActuallyDone(true)}>
+    <AnimatePresence onExitComplete={handleAllComplete}>
       {!isFinished && (
         <motion.div
-          initial={{ opacity: 1 }}
-          exit={{ 
-            opacity: 0,
-            transition: { duration: 1, ease: [0.76, 0, 0.24, 1], delay: 0.2 }
-          }}
-          className="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-[#F8F1E3]"
-        >
-          <motion.div 
-            initial={{ scale: 1, opacity: 1 }}
-            exit={{ 
-              scale: 15,
-              opacity: 0,
-              transition: { 
-                duration: 1.2, 
-                ease: [0.76, 0, 0.24, 1],
-              }
-            }}
-            className="relative flex flex-col items-center"
-          >
+           initial={{ opacity: 1 }}
+           exit={{ 
+             opacity: 0,
+             scale: 1.05,
+             transition: { 
+               duration: 0.5, 
+               ease: [0.76, 0, 0.24, 1], 
+               delay: 0.4
+             }
+           }}
+           className="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-[#F8F1E3]"
+         >
+           <motion.div 
+             initial={{ scale: 1, opacity: 1, filter: "blur(0px)" }}
+             exit={{ 
+               scale: 80,
+               opacity: [1, 1, 0],
+               filter: "blur(4px)",
+               transition: { 
+                 duration: 0.8, 
+                 ease: [0.7, 0, 0.3, 1],
+                 opacity: { times: [0, 0.6, 1], duration: 0.8 }
+               }
+             }}
+             style={{ willChange: "transform" }}
+             className="relative flex flex-col items-center"
+           >
             {/* Logo Container */}
             <div className="relative w-72 h-32 md:w-[400px] md:h-48">
               {/* Background Logo (Pale/White version) */}

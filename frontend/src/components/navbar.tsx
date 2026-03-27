@@ -30,7 +30,7 @@ export function Navbar() {
   return (
     <nav className="fixed top-0 z-[100] w-full bg-white/90 backdrop-blur-md border-b border-slate-200/50">
       <div className="container mx-auto flex h-24 items-center justify-between px-6">
-        
+
         {/* Logo */}
         <Link href="/" className="flex items-center group">
           <img src="/patrimonial-logo-png.png" alt="Grupo Patrimonial" className="h-16 md:h-20 w-auto" />
@@ -68,7 +68,7 @@ export function Navbar() {
           </Link>
 
           {/* Unidades Dropdown */}
-          <div 
+          <div
             className="relative"
             onMouseEnter={() => setIsUnidadesOpen(true)}
             onMouseLeave={() => setIsUnidadesOpen(false)}
@@ -149,7 +149,7 @@ export function Navbar() {
               whileTap={{ scale: 0.98 }}
               className="bg-[#0F172A] text-white text-[10px] font-bold uppercase tracking-[0.3em] px-8 py-4 rounded-xl shadow-lg hover:shadow-primary/20 transition-all border border-white/10 cursor-pointer"
             >
-              Consultoria Privada
+              Solicite uma Análise
             </motion.button>
           </Link>
         </div>
@@ -168,7 +168,7 @@ export function Navbar() {
       {/* Mobile Menu */}
       <AnimatePresence>
         {isMobileMenuOpen && (
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
@@ -188,7 +188,7 @@ export function Navbar() {
                   {link.name}
                 </Link>
               ))}
-              
+
               <div className="pt-4 border-t border-slate-100 flex flex-col gap-4">
                 <span className="text-[10px] font-bold text-slate-300 uppercase tracking-widest">Nossas Unidades</span>
                 {unidades.map((unidade) => (
