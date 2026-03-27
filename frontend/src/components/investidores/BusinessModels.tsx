@@ -3,6 +3,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { Handshake, Building2, Map, Layout, LineChart } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 const models = [
   {
@@ -67,7 +68,7 @@ export function BusinessModels() {
               key={index}
               initial={{ opacity: 0, scale: 0.99 }}
               whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
+              viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 0.6, delay: index * 0.1 }}
               className={`group relative ${model.bg} min-h-[350px] overflow-hidden p-10 lg:p-12 flex flex-col justify-end transition-all duration-700 ${model.span || ""}`}
             >
@@ -77,10 +78,25 @@ export function BusinessModels() {
 
               <div className="relative z-10">
                 <h3 className={`font-heading ${model.span ? 'text-4xl' : 'text-3xl'} text-[#0F172A] mb-4 font-black uppercase leading-tight tracking-tighter`}>{model.title}</h3>
-                <p className={`font-sans text-[#0F172A]/60 text-sm leading-relaxed mb-6 transition-all duration-500 font-bold opacity-0 group-hover:opacity-100 translate-y-4 group-hover:translate-y-0 max-w-lg`}>
+                
+                {/* Responsive Reveal: Always visible on mobile (with entrance animation), Hover-only on Desktop */}
+                <motion.p 
+                  initial={{ opacity: 0, y: 10 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-50px" }}
+                  transition={{ duration: 0.7, delay: 0.3 }}
+                  className={cn(
+                    "font-sans text-[#0F172A]/60 text-sm leading-relaxed mb-6 transition-all duration-500 font-bold max-w-lg",
+                    "opacity-100 translate-y-0",
+                    "md:opacity-0 md:translate-y-4 md:group-hover:opacity-100 md:group-hover:translate-y-0"
+                  )}
+                >
                   {model.description}
-                </p>
-                <div className={`h-[1.5px] w-0 group-hover:w-full bg-primary transition-all duration-700`}></div>
+                </motion.p>
+                <div className={cn(
+                  "h-[1.5px] bg-primary transition-all duration-700",
+                  "w-full md:w-0 md:group-hover:w-full"
+                )}></div>
               </div>
             </motion.div>
           ))}
