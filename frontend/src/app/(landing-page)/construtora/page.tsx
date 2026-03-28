@@ -23,8 +23,6 @@ export default function ConstrutoraPage() {
       {/* ─── Service Pillars Section (Refined Puzzle) ─── */}
       <Pillars />
 
-      {/* ─── Final CTA Section ─── */}
-      <CTA />
     </main>
   );
 }
