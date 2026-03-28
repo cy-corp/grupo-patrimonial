@@ -11,7 +11,7 @@ export function InstitutionalHero() {
         <img
           alt="Modern prestigious building architecture"
           className="w-full h-full object-cover transition-all duration-700"
-          src="https://images.unsplash.com/photo-1757924432508-d4e92411caeb?q=80&w=1932&auto=format&fit=crop"
+          src="/quem-somos-hero.jpg"
         />
         {/* Horizontal Gradient (Desktop Only) */}
         <div className="hidden md:block absolute inset-0 bg-gradient-to-r from-[#F8F1E3] via-[#F8F1E3]/85 to-transparent"></div>
