@@ -67,7 +67,7 @@ export default function Patrimonial() {
               Ajudamos famílias, empresários e investidores a organizar, proteger e perpetuar seu patrimônio imobiliário com visão de longo prazo.
             </p>
             <div className="mt-8 flex flex-wrap gap-4">
-              <Link href="/contato" className={buttonVariants({ size: "lg", className: "h-12 px-7" })}>
+              <Link href="/contato#form-contato" className={buttonVariants({ size: "lg", className: "h-12 px-7" })}>
                 Agendar diagnóstico <ArrowRight className="ml-2 h-4 w-4" />
               </Link>
               <Link href="/quem-somos" className={buttonVariants({ variant: "outline", size: "lg", className: "h-12 px-7" })}>
@@ -126,7 +126,7 @@ export default function Patrimonial() {
               <p className="mt-4 text-lg leading-relaxed text-muted-foreground">
                 Nosso processo começa com um diagnóstico completo do portfólio atual, identificando vulnerabilidades e oportunidades de otimização.
               </p>
-              <Link href="/contato" className={buttonVariants({ className: "mt-8 h-12 px-7" })}>
+              <Link href="/contato#form-contato" className={buttonVariants({ className: "mt-8 h-12 px-7" })}>
                 Solicitar diagnóstico gratuito
               </Link>
             </motion.div>

@@ -74,7 +74,7 @@ export default function Incorporadora() {
               <Link href="/investidores" className={buttonVariants({ size: "lg", className: "h-12 px-7" })}>
                 Ver oportunidades <ArrowRight className="ml-2 h-4 w-4" />
               </Link>
-              <Link href="/contato" className={buttonVariants({ variant: "outline", size: "lg", className: "h-12 px-7" })}>
+              <Link href="/contato#form-contato" className={buttonVariants({ variant: "outline", size: "lg", className: "h-12 px-7" })}>
                 Fale com um especialista
               </Link>
             </div>
@@ -122,10 +122,10 @@ export default function Incorporadora() {
             );
           })}
         </div>
-      </section>
+      </section >
 
       {/* CTA */}
-      <section className="bg-primary/5 py-20">
+      < section className="bg-primary/5 py-20" >
         <div className="container mx-auto px-4 text-center">
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp}>
             <h2 className="font-heading text-4xl font-bold uppercase tracking-tight">
@@ -139,7 +139,7 @@ export default function Incorporadora() {
             </Link>
           </motion.div>
         </div>
-      </section>
-    </div>
+      </section >
+    </div >
   );
 }

@@ -70,7 +70,7 @@ export default function Construtora() {
               <Link href="/orcamento" className={buttonVariants({ size: "lg", className: "h-12 px-7" })}>
                 Solicitar orçamento <ArrowRight className="ml-2 h-4 w-4" />
               </Link>
-              <Link href="/contato" className={buttonVariants({ variant: "outline", size: "lg", className: "h-12 px-7" })}>
+              <Link href="/contato#form-contato" className={buttonVariants({ variant: "outline", size: "lg", className: "h-12 px-7" })}>
                 Fale conosco
               </Link>
             </div>
@@ -123,7 +123,7 @@ export default function Construtora() {
               <p className="mt-4 text-lg leading-relaxed text-muted-foreground">
                 Cada obra recebe um gestor dedicado responsável pela qualidade, segurança e comunicação com o contratante.
               </p>
-              <Link href="/contato" className={buttonVariants({ className: "mt-8 h-12 px-7" })}>
+              <Link href="/contato#form-contato" className={buttonVariants({ className: "mt-8 h-12 px-7" })}>
                 Converse com um gestor
               </Link>
             </motion.div>

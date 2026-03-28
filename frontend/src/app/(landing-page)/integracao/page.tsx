@@ -70,7 +70,7 @@ export default function Integracao() {
               <Link href="/quem-somos" className={buttonVariants({ size: "lg", className: "h-12 px-7" })}>
                 Conheça o grupo <ArrowRight className="ml-2 h-4 w-4" />
               </Link>
-              <Link href="/contato" className={buttonVariants({ variant: "outline", size: "lg", className: "h-12 px-7" })}>
+              <Link href="/contato#form-contato" className={buttonVariants({ variant: "outline", size: "lg", className: "h-12 px-7" })}>
                 Fale conosco
               </Link>
             </div>
@@ -138,7 +138,7 @@ export default function Integracao() {
                 </motion.div>
               ))}
             </div>
-            <Link href="/contato" className={buttonVariants({ size: "lg", className: "mt-10 h-12 px-8" })}>
+            <Link href="/contato#form-contato" className={buttonVariants({ size: "lg", className: "mt-10 h-12 px-8" })}>
               Inicie sua jornada conosco
             </Link>
           </motion.div>

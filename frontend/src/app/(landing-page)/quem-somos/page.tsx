@@ -2,6 +2,7 @@
 
 import React from "react";
 import { motion } from "framer-motion";
+import Link from "next/link";
 import { InstitutionalHero } from "@/components/quem-somos/InstitutionalHero";
 import { MissionAndPublic } from "@/components/quem-somos/MissionAndPublic";
 import { Leadership } from "@/components/quem-somos/Leadership";
@@ -38,9 +39,11 @@ export default function QuemSomos() {
             Explore as oportunidades de investimento e parceria com o Grupo Patrimonial.
           </p>
           <div className="flex justify-center">
-            <GoldButton className="px-12 py-8 text-sm font-bold uppercase tracking-[0.2em]">
-              Fale com um Especialista
-            </GoldButton>
+            <Link href="/contato#form-contato">
+              <GoldButton className="px-12 py-8 text-sm font-bold uppercase tracking-[0.2em]">
+                Fale com um Especialista
+              </GoldButton>
+            </Link>
           </div>
         </motion.div>
       </section>

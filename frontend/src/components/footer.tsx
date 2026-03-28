@@ -26,7 +26,7 @@ export function Footer() {
                 <Link href="/investidores" className="hover:text-primary">Investidores</Link>
               </li>
               <li>
-                <Link href="/contato" className="hover:text-primary">Contato</Link>
+                <Link href="/contato#form-contato" className="hover:text-primary">Contato</Link>
               </li>
             </ul>
           </div>

@@ -2,6 +2,7 @@
 
 import React from "react";
 import { motion } from "framer-motion";
+import Link from "next/link";
 import { GoldButton } from "@/components/ui/gold-button";
 import { Landmark } from "lucide-react";
 
@@ -33,9 +34,11 @@ export function InvestorsCTA() {
         </p>
 
         <div className="flex justify-center">
-          <GoldButton className="px-12 py-6 font-bold text-xs tracking-[0.4em] uppercase rounded-xl">
-            Falar com um Consultor
-          </GoldButton>
+          <Link href="/contato#form-contato">
+            <GoldButton className="px-12 py-6 font-bold text-xs tracking-[0.4em] uppercase rounded-xl">
+              Falar com um Consultor
+            </GoldButton>
+          </Link>
         </div>
       </motion.div>
     </section>

@@ -80,16 +80,16 @@ export function ContactForm() {
   }
 
   return (
-    <section className="py-24 md:py-48 px-6 md:px-24 bg-[#F8F1E3] relative overflow-hidden">
+    <section id="form-contato" className="py-24 md:py-48 px-6 md:px-24 bg-[#F8F1E3] relative overflow-hidden">
       {/* Background Mark */}
       <div className="absolute inset-0 z-0 flex items-center justify-center opacity-[0.03] select-none pointer-events-none overflow-hidden text-center">
         <span className="font-heading text-[25vw] font-black text-primary whitespace-nowrap leading-none uppercase tracking-tighter italic">CONSULTORIA</span>
       </div>
 
-      <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-16 md:gap-24 relative z-10 items-start">
+      <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-x-16 md:gap-x-24 gap-y-12 md:gap-y-16 relative z-10 items-start">
 
         {/* Wrapper for Title (Desktop: Left Column Top) */}
-        <div className="lg:col-span-5 space-y-8 md:space-y-12 lg:-mt-24 order-1">
+        <div className="lg:col-span-5 space-y-8 md:space-y-12 order-1">
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -105,7 +105,7 @@ export function ContactForm() {
         </div>
 
         {/* Form Container (Desktop: Right Column, Mobile: Below Title) */}
-        <div className="lg:col-span-7 lg:row-span-2 order-2 lg:mt-16">
+        <div className="lg:col-span-7 lg:row-span-2 order-2">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -224,7 +224,7 @@ export function ContactForm() {
         </div>
 
         {/* Address Card and Map (Desktop: Left Column Bottom, Mobile: Below Form) */}
-        <div className="lg:col-span-5 space-y-8 md:space-y-12 order-3">
+        <div className="lg:col-span-5 space-y-8 md:space-y-12 order-3 lg:-mt-16">
           <div
             onClick={handleCopy}
             className="flex items-center justify-between group p-6 bg-white/50 backdrop-blur-sm border-l-4 border-primary rounded-r-xl cursor-pointer hover:bg-white transition-all duration-300 shadow-lg shadow-primary/5 active:scale-[0.98]"

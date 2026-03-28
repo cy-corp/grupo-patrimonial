@@ -85,7 +85,7 @@ export default function Engenharia() {
               <Link href="/orcamento" className={buttonVariants({ size: "lg", className: "h-12 px-7" })}>
                 Solicitar orçamento <ArrowRight className="ml-2 h-4 w-4" />
               </Link>
-              <Link href="/contato" className={buttonVariants({ variant: "outline", size: "lg", className: "h-12 px-7" })}>
+              <Link href="/contato#form-contato" className={buttonVariants({ variant: "outline", size: "lg", className: "h-12 px-7" })}>
                 Fale com um engenheiro
               </Link>
             </div>
@@ -158,7 +158,7 @@ export default function Engenharia() {
               <p className="mt-4 text-lg leading-relaxed text-muted-foreground">
                 Da fase de diagnóstico até a entrega final, nossos engenheiros acompanham cada etapa com rigor, transparência e compromisso com a qualidade.
               </p>
-              <Link href="/contato" className={buttonVariants({ className: "mt-8 h-12 px-7" })}>
+              <Link href="/contato#form-contato" className={buttonVariants({ className: "mt-8 h-12 px-7" })}>
                 Agende uma consulta
               </Link>
             </motion.div>

@@ -128,7 +128,7 @@ export function Navbar() {
           </Link>
 
           <Link
-            href="/contato"
+            href="/contato#form-contato"
             className={cn(
               "text-[10px] font-bold uppercase tracking-[0.2em] transition-all hover:text-primary relative group",
               pathname === "/contato" ? "text-primary" : "text-[#0F172A]/70"
@@ -144,7 +144,7 @@ export function Navbar() {
 
         {/* Desktop CTA */}
         <div className="hidden lg:flex items-center gap-4">
-          <Link href="/contato">
+          <Link href="/contato#form-contato">
             <GoldButton className="px-8 py-4 text-[10px] tracking-[0.3em]">
               Solicite uma Análise
             </GoldButton>
@@ -200,7 +200,7 @@ export function Navbar() {
                 ))}
               </div>
 
-              <Link href="/contato" onClick={() => setIsMobileMenuOpen(false)} className="pt-4">
+              <Link href="/contato#form-contato" onClick={() => setIsMobileMenuOpen(false)} className="pt-4">
                 <GoldButton className="w-full py-5 text-[10px] tracking-[0.3em]">
                   Fale com um especialista
                 </GoldButton>
