@@ -86,29 +86,31 @@ export function Navbar() {
 
             <AnimatePresence>
               {isUnidadesOpen && (
-                <motion.div
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: 10 }}
-                  transition={{ duration: 0.2 }}
-                  className="absolute top-full left-0 mt-2 w-64 bg-white border border-slate-200 shadow-2xl rounded-xl overflow-hidden py-4 z-50"
-                >
-                  <div className="px-6 py-2 border-b border-slate-100 mb-2">
-                    <span className="text-[9px] font-bold text-slate-300 uppercase tracking-widest">Nossa Expertise</span>
-                  </div>
-                  {unidades.map((unidade) => (
-                    <Link
-                      key={unidade.href}
-                      href={unidade.href}
-                      className={cn(
-                        "block px-6 py-3 text-[10px] font-bold uppercase tracking-wider transition-all hover:bg-slate-50 hover:text-primary",
-                        pathname === unidade.href ? "text-primary bg-primary/5" : "text-[#0F172A]/70"
-                      )}
-                    >
-                      {unidade.name}
-                    </Link>
-                  ))}
-                </motion.div>
+                <div className="absolute top-full left-0 pt-2 z-50">
+                  <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 10 }}
+                    transition={{ duration: 0.2 }}
+                    className="w-64 bg-white border border-slate-200 shadow-2xl rounded-xl overflow-hidden py-4"
+                  >
+                    <div className="px-6 py-2 border-b border-slate-100 mb-2">
+                      <span className="text-[9px] font-bold text-slate-300 uppercase tracking-widest">Nossa Expertise</span>
+                    </div>
+                    {unidades.map((unidade) => (
+                      <Link
+                        key={unidade.href}
+                        href={unidade.href}
+                        className={cn(
+                          "block px-6 py-3 text-[10px] font-bold uppercase tracking-wider transition-all hover:bg-slate-50 hover:text-primary",
+                          pathname === unidade.href ? "text-primary bg-primary/5" : "text-[#0F172A]/70"
+                        )}
+                      >
+                        {unidade.name}
+                      </Link>
+                    ))}
+                  </motion.div>
+                </div>
               )}
             </AnimatePresence>
           </div>
@@ -128,7 +130,7 @@ export function Navbar() {
           </Link>
 
           <Link
-            href="/contato#form-contato"
+            href="/contato"
             className={cn(
               "text-[10px] font-bold uppercase tracking-[0.2em] transition-all hover:text-primary relative group",
               pathname === "/contato" ? "text-primary" : "text-[#0F172A]/70"
