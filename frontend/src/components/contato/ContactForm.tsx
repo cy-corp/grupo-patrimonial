@@ -16,7 +16,8 @@ const subjectOptions = [
   "Desenvolvimento & Incorporação",
   "Asset Management Privado",
   "Engenharia de Valor",
-  "Consulta Institucional"
+  "Consulta Institucional",
+  "Outros"
 ];
 
 export function ContactForm() {

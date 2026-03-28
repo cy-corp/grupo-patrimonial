@@ -8,11 +8,13 @@ const resend = new Resend(process.env.RESEND_API_KEY || "re_123");
 export async function submitContact(formData: FormData) {
   const name = formData.get("name") as string;
   const email = formData.get("email") as string;
+  const phone = formData.get("phone") as string;
+  const subject = formData.get("subject") as string;
   const message = formData.get("message") as string;
 
   try {
     // Placeholder implementation
-    console.log("Contact submission:", { name, email, message });
+    console.log("Contact submission:", { name, email, phone, subject, message });
     // await resend.emails.send({ ... })
     return { success: true, message: "Mensagem enviada com sucesso!" };
   } catch (error) {
