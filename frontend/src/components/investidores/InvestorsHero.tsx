@@ -35,7 +35,7 @@ export function InvestorsHero() {
           transition={{ duration: 0.8, delay: 0.2 }}
           className="font-heading text-4xl md:text-8xl font-black text-[#0F172A] leading-none mb-10 uppercase tracking-tighter"
         >
-          Investidores &<br />
+          Investidores E<br />
           <span className="text-primary italic font-light lowercase">Parcerias</span>
         </motion.h1>
 

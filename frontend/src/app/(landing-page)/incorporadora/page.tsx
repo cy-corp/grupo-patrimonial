@@ -77,7 +77,7 @@ export default function IncorporadoraPage() {
               src="/incorporadora-hero.jpg"
               alt="Incorporadora"
               fill
-              className="object-cover grayscale brightness-75"
+              className="object-cover brightness-75"
               priority
             />
             <div className="absolute inset-0 bg-gradient-to-r from-[#F8F1E3] via-[#F8F1E3]/90 to-transparent" />
@@ -114,7 +114,7 @@ export default function IncorporadoraPage() {
               src="/incorporadora-hero.jpg"
               alt="Incorporadora"
               fill
-              className="object-cover grayscale brightness-90"
+              className="object-cover brightness-90"
             />
           </div>
           <div className="relative -mt-28 bg-[#F8F1E3] rounded-t-[3rem] px-8 pt-12 pb-16 z-10">

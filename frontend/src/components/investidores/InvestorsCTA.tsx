@@ -24,7 +24,7 @@ export function InvestorsCTA() {
           <Landmark className="text-primary w-16 h-16 opacity-80" />
         </div>
 
-        <h3 className="font-heading text-4xl md:text-6xl text-[#0F172A] mb-10 font-black uppercase tracking-tighter leading-tight italic">
+        <h3 className="font-heading text-4xl md:text-6xl text-[#0F172A] mb-10 font-black uppercase tracking-tighter leading-tight">
           Quer Estruturar uma <br />
           <span className="font-light not-italic text-primary">Parceria</span>?
         </h3>
