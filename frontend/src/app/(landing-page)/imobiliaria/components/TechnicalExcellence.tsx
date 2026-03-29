@@ -18,7 +18,7 @@ export function TechnicalExcellence() {
             className="relative h-[450px] md:h-[650px] w-full rounded-2xl overflow-hidden shadow-2xl"
           >
             <Image
-              src="https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?q=80&w=2000&auto=format&fit=crop"
+              src="/imobiliaria/arquitetura-negocio.jpg"
               alt="Arquitetura de Negócio"
               fill
               className="object-cover"

@@ -11,7 +11,7 @@ export function InstitutionalHero() {
         <img
           alt="Modern prestigious building architecture"
           className="w-full h-full object-cover transition-all duration-700"
-          src="/quem-somos-hero.jpg"
+          src="/quem-somos/quem-somos-hero.jpg"
         />
         {/* Horizontal Gradient (Desktop Only) */}
         <div className="hidden md:block absolute inset-0 bg-gradient-to-r from-[#F8F1E3] via-[#F8F1E3]/85 to-transparent"></div>

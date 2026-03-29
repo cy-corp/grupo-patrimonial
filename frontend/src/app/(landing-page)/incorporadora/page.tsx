@@ -74,7 +74,7 @@ export default function IncorporadoraPage() {
         <div className="hidden md:flex relative min-h-[85vh] items-center">
           <div className="absolute inset-0 z-0">
             <Image
-              src="/incorporadora-hero.jpg"
+              src="/incorporadora/incorporadora-hero.jpg"
               alt="Incorporadora"
               fill
               className="object-cover brightness-75"
@@ -111,7 +111,7 @@ export default function IncorporadoraPage() {
         <div className="md:hidden flex flex-col">
           <div className="relative h-[45vh] w-full">
             <Image
-              src="/incorporadora-hero.jpg"
+              src="/incorporadora/incorporadora-hero.jpg"
               alt="Incorporadora"
               fill
               className="object-cover brightness-90"

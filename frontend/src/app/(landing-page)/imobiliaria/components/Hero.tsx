@@ -10,7 +10,7 @@ export function Hero() {
       <div className="hidden md:flex relative min-h-[90vh] items-center">
         <div className="absolute inset-0 z-0">
           <Image
-            src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?q=80&w=2000&auto=format&fit=crop"
+            src="/imobiliaria/imobiliaria-hero.jpg"
             alt="Divisão Imobiliária"
             fill
             className="object-cover"
@@ -48,7 +48,7 @@ export function Hero() {
       <div className="md:hidden flex flex-col">
         <div className="relative h-[45vh] w-full">
           <Image
-            src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?q=80&w=2000&auto=format&fit=crop"
+            src="/imobiliaria/imobiliaria-hero.jpg"
             alt="Divisão Imobiliária"
             fill
             className="object-cover brightness-90"

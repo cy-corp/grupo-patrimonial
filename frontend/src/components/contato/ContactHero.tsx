@@ -11,7 +11,7 @@ export function ContactHero() {
         <img
           alt="Luxury office architecture headquarters"
           className="w-full h-full object-cover transition-all duration-700"
-          src="/contact-hero.jpg"
+          src="/contato/contact-hero.jpg"
         />
         {/* Horizontal Gradient (Desktop Only) */}
         <div className="hidden md:block absolute inset-0 bg-gradient-to-r from-[#F8F1E3] via-[#F8F1E3]/85 to-transparent"></div>
