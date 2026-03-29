@@ -14,6 +14,7 @@ const unidades = [
   { name: "Construtora", href: "/construtora" },
   { name: "Imobiliária", href: "/imobiliaria" },
   { name: "Patrimonial", href: "/patrimonial" },
+  { name: "Integração", href: "/integracao" },
 ];
 
 const mainLinks = [

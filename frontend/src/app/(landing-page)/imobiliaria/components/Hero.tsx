@@ -29,12 +29,11 @@ export function Hero() {
             <div className="flex items-center gap-4 mb-8">
               <div className="w-16 h-[1px] bg-[#C9A14A]" />
               <span className="font-sans text-[10px] tracking-[0.4em] uppercase font-bold text-[#C9A14A] opacity-80">
-                REAL ESTATE DIVISION
+                INTEGRAÇÃO IMOBILIÁRIA
               </span>
             </div>
             <h1 className="font-heading text-6xl lg:text-[10rem] font-black uppercase tracking-tighter leading-none text-[#0F172A] mb-8">
-              IMOBILIÁRIA<br />
-              <span className="text-[#C9A14A] italic">PATRIMONIAL</span>
+              IMOBIL<span className="text-[#C9A14A]">IÁRIA</span>
             </h1>
             <div className="w-24 h-1 bg-[#C9A14A] mb-8" />
             <p className="font-sans text-[#0F172A]/70 text-xl leading-relaxed tracking-wide max-w-xl border-l-2 border-[#C9A14A]/30 pl-8">
@@ -58,12 +57,11 @@ export function Hero() {
           <div className="flex items-center gap-3 mb-4">
             <div className="w-10 h-[1px] bg-[#C9A14A]" />
             <span className="font-sans text-[8px] tracking-[0.3em] uppercase font-bold text-[#C9A14A]">
-              REAL ESTATE DIVISION
+              INTEGRAÇÃO IMOBILIÁRIA
             </span>
           </div>
           <h1 className="font-heading text-4xl sm:text-5xl font-black uppercase tracking-tight md:tracking-tighter leading-tight md:leading-none text-[#0F172A] mb-6">
-            IMOBILIÁRIA<br />
-            <span className="text-[#C9A14A] italic">PATRIMONIAL</span>
+            IMOBIL<span className="text-[#C9A14A]">IÁRIA</span>
           </h1>
           <div className="w-16 h-1 bg-[#C9A14A] mb-6" />
           <p className="font-sans text-[#0F172A]/80 text-lg leading-relaxed">
