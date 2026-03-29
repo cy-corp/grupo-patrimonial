@@ -34,8 +34,8 @@ export function Footer() {
             <h3 className="mb-4 font-heading font-semibold">Contato</h3>
             <ul className="space-y-2 text-sm text-muted-foreground">
               <li>contato@grupopatrimonial.com.br</li>
-              <li>(11) 9999-9999</li>
-              <li>São Paulo, SP - Brasil</li>
+              <li>(19) 99999-9999</li>
+              <li>Rua Dr. João Alves dos Santos, 332, Jardim Paineiras, Campinas-SP</li>
             </ul>
           </div>
         </div>

@@ -228,7 +228,10 @@ export function Navbar() {
                   <Link
                     key={unidade.href}
                     href={unidade.href}
-                    className="text-xs font-bold uppercase tracking-[0.2em] text-[#0F172A]/50 hover:text-primary transition-colors"
+                    className={cn(
+                      "text-xs font-bold uppercase tracking-[0.2em] transition-colors",
+                      pathname === unidade.href ? "text-primary" : "text-[#0F172A]/50"
+                    )}
                     onClick={() => setIsMobileMenuOpen(false)}
                   >
                     {unidade.name}

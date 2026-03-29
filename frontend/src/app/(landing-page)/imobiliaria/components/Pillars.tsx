@@ -75,11 +75,11 @@ export function Pillars() {
         <div className="grid grid-cols-1 lg:grid-cols-6 border border-[#0F172A]/10 bg-white">
           {pillars.map((pillar, idx) => {
             const Icon = pillar.icon;
-            
+
             // Grid spanning logic: 
             // 2 items top row (span 3/6), 3 items bottom row (span 2/6)
             const spanClass = idx < 2 ? "lg:col-span-3" : "lg:col-span-2";
-            
+
             // Border logic to prevent doubling
             // Desktop (lg): 
             // - Right border for card 0 (idx 0)
@@ -107,20 +107,15 @@ export function Pillars() {
                 <div className="mb-10 text-[#C9A14A]">
                   <Icon className="w-8 h-8" strokeWidth={1.5} />
                 </div>
-                
+
                 <h3 className="font-heading text-2xl md:text-3xl font-black uppercase tracking-tight text-[#0F172A] mb-6 leading-tight">
                   {pillar.title}
                 </h3>
-                
+
                 <p className="font-sans text-[#0F172A]/70 text-base md:text-lg leading-relaxed mb-10 max-w-[360px]">
                   {pillar.description}
                 </p>
 
-                {pillar.hasLink && (
-                  <button className="group/link flex items-center gap-2 font-sans text-[10px] tracking-[0.3em] font-bold text-[#C9A14A] uppercase hover:gap-3 transition-all duration-300">
-                    SABER MAIS <ArrowRight className="w-3 h-3 group-hover/link:translate-x-1 transition-transform" />
-                  </button>
-                )}
               </motion.div>
             );
           })}
