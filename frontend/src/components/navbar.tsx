@@ -14,12 +14,13 @@ const unidades = [
   { name: "Construtora", href: "/construtora" },
   { name: "Imobiliária", href: "/imobiliaria" },
   { name: "Patrimonial", href: "/patrimonial" },
-  { name: "Integração", href: "/integracao" },
 ];
 
 const mainLinks = [
   { name: "Home", href: "/" },
   { name: "Quem Somos", href: "/quem-somos" },
+  { name: "Processos", href: "/processos" },
+  { name: "Integração", href: "/integracao" },
   { name: "Investidores", href: "/investidores" },
   { name: "Contato", href: "/contato" },
 ];
@@ -55,6 +56,7 @@ export function Navbar() {
             )} />
           </Link>
 
+          {/* Quem Somos */}
           <Link
             href="/quem-somos"
             className={cn(
@@ -66,6 +68,21 @@ export function Navbar() {
             <span className={cn(
               "absolute -bottom-1 left-0 w-0 h-[1.5px] bg-primary transition-all duration-300 group-hover:w-full",
               pathname === "/quem-somos" && "w-full"
+            )} />
+          </Link>
+
+          {/* Processos */}
+          <Link
+            href="/processos"
+            className={cn(
+              "text-[10px] font-bold uppercase tracking-[0.2em] transition-all hover:text-primary relative group",
+              pathname === "/processos" ? "text-primary" : "text-[#0F172A]/70"
+            )}
+          >
+            Processos
+            <span className={cn(
+              "absolute -bottom-1 left-0 w-0 h-[1.5px] bg-primary transition-all duration-300 group-hover:w-full",
+              pathname === "/processos" && "w-full"
             )} />
           </Link>
 
@@ -81,7 +98,7 @@ export function Navbar() {
                 unidades.some(u => pathname === u.href) ? "text-primary" : "text-[#0F172A]/70"
               )}
             >
-              Unidades de Negócio
+              Unidades
               <ChevronDown className={cn("w-3 h-3 transition-transform duration-300", isUnidadesOpen && "rotate-180")} />
             </button>
 
@@ -116,6 +133,22 @@ export function Navbar() {
             </AnimatePresence>
           </div>
 
+          {/* Integração */}
+          <Link
+            href="/integracao"
+            className={cn(
+              "text-[10px] font-bold uppercase tracking-[0.2em] transition-all hover:text-primary relative group",
+              pathname === "/integracao" ? "text-primary" : "text-[#0F172A]/70"
+            )}
+          >
+            Integração
+            <span className={cn(
+              "absolute -bottom-1 left-0 w-0 h-[1.5px] bg-primary transition-all duration-300 group-hover:w-full",
+              pathname === "/integracao" && "w-full"
+            )} />
+          </Link>
+
+          {/* Investidores */}
           <Link
             href="/investidores"
             className={cn(
