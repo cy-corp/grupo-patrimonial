@@ -5,7 +5,7 @@ import { useScroll, useTransform, motion, useSpring } from "framer-motion";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { Environment, ContactShadows, Loader, useGLTF, Center } from "@react-three/drei";
 import { Button } from "@/components/ui/button";
-import { ArrowRight } from "lucide-react";
+import { ArrowDown, ArrowRight } from "lucide-react";
 import * as THREE from "three";
 
 export function Hero() {
@@ -19,8 +19,8 @@ export function Hero() {
 
   // Smooth the scroll progress for R3F (using spring for better momentum)
   const smoothProgress = useSpring(scrollYProgress, {
-    stiffness: 100,
-    damping: 30,
+    stiffness: typeof window !== "undefined" && window.innerWidth < 768 ? 160 : 100,
+    damping: typeof window !== "undefined" && window.innerWidth < 768 ? 22 : 30,
     restDelta: 0.001
   });
 
@@ -35,68 +35,85 @@ export function Hero() {
   return (
     <section
       ref={containerRef}
-      className="relative h-[200vh] bg-[#F8F1E3]"
+      className="relative h-[350vh] md:h-[200vh] bg-[#F8F1E3]"
     >
       {/* Sticky Content Wrap */}
-      <div className="sticky top-0 h-screen w-full flex flex-col md:flex-row items-center justify-between px-6 md:px-12 lg:px-24">
+      <div className="sticky top-0 h-screen w-full flex flex-col md:flex-row items-center justify-between px-6 md:px-12 lg:px-24 pt-32 pb-12 md:py-0 overflow-hidden">
 
         {/* Left Column: Text (50%) */}
         <motion.div
           style={{ opacity: textOpacity, x: textTranslateX }}
-          className="relative z-10 w-full md:w-1/2 flex flex-col items-start gap-6 pointer-events-none"
+          className="relative z-10 w-full md:w-1/2 flex flex-col items-start gap-4 md:gap-6"
         >
           {/* Logo/Badge */}
           <div className="flex items-center gap-4 mb-2">
             <div className="w-10 h-[1px] bg-primary/40 block" />
-            <img src="/patrimonial-logo-png.png" alt="Grupo Patrimonial" className="h-12 w-auto" />
+            <img src="/patrimonial-logo-png.png" alt="Grupo Patrimonial" className="h-10 md:h-12 w-auto" />
           </div>
 
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-heading font-black leading-[1.1] text-[#0F172A] uppercase">
+          <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-heading font-black leading-[1.1] text-[#0F172A] uppercase">
             Engenharia, <br />
             Incorporação, <br />
             <span className="text-primary">Construção,</span> <br />
             Imobiliária e <br />
             Gestão Patrimonial
           </h1>
+
+          {/* mobile trigger button - Back above model for consistency */}
+          <Button
+            onClick={() => {
+              // Scroll to the end of the Hero section precisely
+              const targetScroll = window.innerHeight * 3.4;
+              window.scrollTo({
+                top: targetScroll,
+                behavior: "smooth"
+              });
+            }}
+            className="md:hidden mt-6 bg-primary text-[#F8F1E3] hover:bg-primary/90 rounded-full px-8 py-6 text-base font-bold uppercase tracking-wider group w-full sm:w-auto"
+          >
+            Ver Mais
+            <ArrowDown className="ml-2 w-5 h-5 transition-transform group-hover:translate-x-1" />
+          </Button>
         </motion.div>
 
         {/* Right Column: 3D Canvas (50% or Full background) */}
-        <div className="absolute inset-0 md:relative md:w-1/2 h-full z-0">
-          <Canvas
-            shadows
-            camera={{ position: [0, 5, 25], fov: 40 }}
-            dpr={[1, 2]}
-            className="w-full h-full"
-          >
-            <Suspense fallback={null}>
-              <ambientLight intensity={1.2} />
-              <directionalLight
-                position={[10, 20, 10]}
-                intensity={1.5}
-                color="#FFFAF0"
-                castShadow
-              />
-              <Environment preset="sunset" />
+        <div className="relative w-full h-[40vh] md:h-full md:w-1/2 z-0 mt-4 md:mt-0 flex items-center justify-center">
+          <div className="absolute inset-0 md:relative w-full h-full">
+            <Canvas
+              shadows
+              camera={{ position: [0, 5, 25], fov: 45 }}
+              dpr={[1, 2]}
+              className="w-full h-full"
+            >
+              <Suspense fallback={null}>
+                <ambientLight intensity={1.2} />
+                <directionalLight
+                  position={[10, 20, 10]}
+                  intensity={1.5}
+                  color="#FFFAF0"
+                  castShadow
+                />
+                <Environment preset="sunset" />
 
-              {/* Pass the smoothed scroll progress to the model */}
-              <ScrollAwareModel progress={smoothProgress} />
+                {/* Pass the smoothed scroll progress to the model */}
+                <ScrollAwareModel progress={smoothProgress} />
 
-              <ContactShadows
-                position={[0, -1, 0]}
-                opacity={0.4}
-                scale={10}
-                blur={2.5}
-                far={4}
-              />
-            </Suspense>
-          </Canvas>
-
+                <ContactShadows
+                  position={[0, -1, 0]}
+                  opacity={0.4}
+                  scale={10}
+                  blur={2.5}
+                  far={4}
+                />
+              </Suspense>
+            </Canvas>
+          </div>
         </div>
 
-        {/* Scroll Indicator (Custom Mouse) */}
+        {/* Scroll Indicator (Custom Mouse) - Desktop */}
         <motion.div
           style={{ opacity: textOpacity }}
-          className="scroll-container"
+          className="scroll-container hidden md:flex"
         >
           <svg
             width="30"
@@ -106,7 +123,6 @@ export function Hero() {
             xmlns="http://www.w3.org/2000/svg"
             className="scroll-icon"
           >
-            {/* Estrutura Externa (Corpo do Mouse) */}
             <rect
               x="1"
               y="1"
@@ -117,7 +133,6 @@ export function Hero() {
               strokeWidth="2"
               className="mouse-body"
             />
-            {/* Roda de Scroll (Animada) */}
             <rect
               x="13"
               y="8"
@@ -129,6 +144,25 @@ export function Hero() {
             />
           </svg>
           <span className="scroll-text">DESÇA</span>
+        </motion.div>
+
+        {/* Sneaky Peak (Mobile) - Static Literal Copy of Solutions Top */}
+        <motion.div
+          style={{ opacity: textOpacity }}
+          className="md:hidden absolute bottom-0 left-0 w-full h-[6vh] bg-[#F8F9FA] border-t border-slate-200/50 z-30 pt-3 px-8 overflow-hidden pointer-events-none shadow-[0_-5px_15px_rgba(0,0,0,0.02)]"
+        >
+          {/* Replica of Solutions header badge */}
+          <div className="flex items-center gap-2 mb-1 text-[6px]">
+            <div className="w-4 h-[1px] bg-primary"></div>
+            <span className="text-primary font-bold tracking-[0.4em] uppercase">
+              Expertise
+            </span>
+          </div>
+          
+          {/* Replica of Solutions H2 */}
+          <h2 className="text-lg font-light text-[#0F172A] leading-tight whitespace-nowrap">
+            Ecossistema <span className="font-bold italic text-primary">Integrado</span>
+          </h2>
         </motion.div>
       </div>
 
