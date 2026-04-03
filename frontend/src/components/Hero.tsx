@@ -11,15 +11,37 @@ export function Hero() {
   return (
     <section
       ref={containerRef}
-      className="relative min-h-screen flex items-center justify-center overflow-hidden bg-slate-900 px-6 py-24 md:py-0"
+      className="relative min-h-screen flex items-center justify-center overflow-hidden bg-slate-900 py-24 md:py-0"
     >
+      {/* WHITE SIDE BORDERS (straight edges down the sides) */}
+      <div className="absolute left-0 top-0 bottom-0 w-4 md:w-6 bg-white z-[60] pointer-events-none" />
+      <div className="absolute right-0 top-0 bottom-0 w-4 md:w-6 bg-white z-[60] pointer-events-none" />
 
-      {/* 1. LAYER 0: FULL-SCREEN BACKGROUND SCENERY (Visible through the hole) */}
+      {/* CONCAVE CORNERS (SVG Fillets) for perfectly smooth structural transitions */}
+      {/* Top Left Fillet */}
+      <svg 
+        className="absolute left-4 md:left-6 top-24 w-8 h-8 md:w-12 md:h-12 z-[60] pointer-events-none text-white fill-current"
+        viewBox="0 0 100 100"
+        preserveAspectRatio="none"
+      >
+        <path d="M0,0 L100,0 A100,100 0 0,0 0,100 Z" />
+      </svg>
+      
+      {/* Top Right Fillet */}
+      <svg 
+        className="absolute right-4 md:right-6 top-24 w-8 h-8 md:w-12 md:h-12 z-[60] pointer-events-none text-white fill-current"
+        viewBox="0 0 100 100"
+        preserveAspectRatio="none"
+      >
+        <path d="M100,0 L0,0 A100,100 0 0,1 100,100 Z" />
+      </svg>
+
+      {/* 1. LAYER 0: FULL-SCREEN BACKGROUND SCENERY */}
       <motion.div
         initial={{ scale: 1.1, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
         transition={{ duration: 1.5, ease: "easeOut" }}
-        className="absolute inset-0 z-0"
+        className="absolute inset-0 z-0 overflow-hidden"
       >
         <img
           src="/house-with-background.png"

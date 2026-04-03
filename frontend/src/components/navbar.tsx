@@ -31,7 +31,7 @@ export function Navbar() {
   const pathname = usePathname();
 
   return (
-    <nav className="fixed top-0 z-[100] w-full bg-white/90 backdrop-blur-md border-b border-slate-200/50">
+    <nav className="fixed top-0 z-[100] w-full bg-white">
       <div className="container mx-auto flex h-24 items-center justify-between px-6">
 
         {/* Logo */}
