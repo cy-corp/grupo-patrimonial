@@ -19,16 +19,16 @@ export function Hero() {
 
       {/* CONCAVE CORNERS (SVG Fillets) for perfectly smooth structural transitions */}
       {/* Top Left Fillet */}
-      <svg 
+      <svg
         className="absolute left-4 md:left-6 top-24 w-8 h-8 md:w-12 md:h-12 z-[60] pointer-events-none text-white fill-current"
         viewBox="0 0 100 100"
         preserveAspectRatio="none"
       >
         <path d="M0,0 L100,0 A100,100 0 0,0 0,100 Z" />
       </svg>
-      
+
       {/* Top Right Fillet */}
-      <svg 
+      <svg
         className="absolute right-4 md:right-6 top-24 w-8 h-8 md:w-12 md:h-12 z-[60] pointer-events-none text-white fill-current"
         viewBox="0 0 100 100"
         preserveAspectRatio="none"
@@ -36,19 +36,23 @@ export function Hero() {
         <path d="M100,0 L0,0 A100,100 0 0,1 100,100 Z" />
       </svg>
 
-      {/* 1. LAYER 0: FULL-SCREEN BACKGROUND SCENERY */}
+      {/* 1. LAYER 0: FULL-SCREEN BACKGROUND + FOREGROUND ALINHADOS */}
       <motion.div
         initial={{ scale: 1.1, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
         transition={{ duration: 1.5, ease: "easeOut" }}
         className="absolute inset-0 z-0 overflow-hidden"
       >
+        {/* Imagem base — define o sistema de coordenadas */}
         <img
           src="/house-with-background.png"
           alt="Original Scenario"
-          className="w-full h-full object-cover filter brightness-[0.75]"
+          className="absolute inset-0 w-full h-full object-cover object-center filter brightness-[0.75]"
         />
-        <div className="absolute inset-0 bg-black/10 pointer-events-none" />
+
+
+
+        <div className="absolute inset-0 bg-black/10 pointer-events-none" style={{ zIndex: 20 }} />
       </motion.div>
 
       {/* BACKGROUND DECORATION */}
@@ -69,16 +73,16 @@ export function Hero() {
               This div is the transparent hole. 
               Its ridiculously huge white shadow fills everything else.
           */}
-          <div className="hidden md:block absolute right-6 top-6 bottom-6 md:right-8 md:top-8 md:bottom-8 w-[52%] rounded-[30px] md:rounded-[50px] shadow-[0_0_0_9999px_white] z-0 pointer-events-none" />
-          
+          <div className="hidden md:block absolute right-6 top-6 bottom-6 md:right-8 md:top-8 md:bottom-8 w-[42%] rounded-[30px] md:rounded-[50px] shadow-[0_0_0_9999px_white] z-0 pointer-events-none" />
+
           {/* Mobile Fallback Background (since shadow logic is tricky on mobile) */}
           <div className="md:hidden absolute inset-0 bg-white z-0" />
 
           {/* CONTENT LAYER */}
           <div className="relative z-10 flex flex-col md:flex-row items-stretch h-full min-h-[60vh] md:min-h-[75vh]">
-            
-            {/* LEFT SIDE: TEXTUAL CONTENT (48%) */}
-            <div className="w-full md:w-[48%] flex flex-col justify-center p-8 md:p-12 lg:p-16">
+
+            {/* LEFT SIDE: TEXTUAL CONTENT (58%) */}
+            <div className="w-full md:w-[58%] flex flex-col justify-center p-8 md:p-12 lg:p-16">
               <motion.div
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
@@ -122,37 +126,38 @@ export function Hero() {
               </motion.div>
             </div>
 
-            {/* RIGHT SIDE: THE HOLE (52%)
+            {/* RIGHT SIDE: THE HOLE (42%)
                 Just empty space to let the shadow cutout work.
             */}
-            <div className="hidden md:block w-[52%] pointer-events-none" />
+            <div className="hidden md:block w-[42%] pointer-events-none" />
 
           </div>
 
         </motion.div>
 
-        {/* 3. FOREGROUND LAYER (3D EFFECT): Transparent Building 
-            Positioned to pop out of the frame and overlap the card.
-        */}
-        <motion.div
-          initial={{ opacity: 0, scale: 1.1, y: 50 }}
-          animate={{ opacity: 1, scale: 1, y: 0 }}
-          transition={{ duration: 1.8, ease: [0.16, 1, 0.3, 1], delay: 1 }}
-          className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[70%] md:w-[60%] lg:w-[55%] pointer-events-none z-20 select-none hidden md:block"
-        >
-          <img
-            src="/hero-building-transparent.png"
-            alt="Foreground Building"
-            className="w-full h-auto object-contain drop-shadow-[0_50px_100px_rgba(0,0,0,0.4)]"
-          />
-        </motion.div>
-
-        {/* Minimal Scroll Line Indicator */}
-        <div className="absolute -bottom-24 left-1/2 -translate-x-1/2 flex flex-col items-center gap-6 opacity-20">
-          <div className="w-[1.5px] h-32 bg-gradient-to-b from-[#0F172A] to-transparent" />
-        </div>
+        {/* no foreground here — moved to section level */}
 
       </div>
+
+      {/* FOREGROUND PNG — filho direto da section, z-[50] fica na frente dos cards */}
+      <motion.img
+        src="/house-transparent.png"
+        alt="Foreground Building"
+        initial={{ opacity: 0, y: 60 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 1.8, ease: [0.16, 1, 0.3, 1], delay: 1 }}
+        className="absolute pointer-events-none select-none hidden md:block z-[50]"
+        style={{
+          filter: "drop-shadow(0 60px 120px rgba(0,0,0,0.5))",
+          width: "90%",
+          height: "auto",
+          right: "0%",
+          bottom: "0%",
+          top: "auto",
+          left: "auto",
+        }}
+      />
+
 
     </section>
   );
