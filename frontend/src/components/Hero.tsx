@@ -1,258 +1,137 @@
 "use client";
 
-import React, { useRef, Suspense } from "react";
-import { useScroll, useTransform, motion, useSpring } from "framer-motion";
-import { Canvas, useFrame } from "@react-three/fiber";
-import { Environment, ContactShadows, Loader, useGLTF, Center } from "@react-three/drei";
+import React, { useRef } from "react";
+import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { ArrowDown, ArrowRight } from "lucide-react";
-import * as THREE from "three";
+import { MoveUpRight } from "lucide-react";
 
 export function Hero() {
   const containerRef = useRef<HTMLDivElement>(null);
 
-  // Track scroll from "start start" to "end end" (sticky duration)
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start start", "end end"],
-  });
-
-  // Smooth the scroll progress for R3F (using spring for better momentum)
-  const smoothProgress = useSpring(scrollYProgress, {
-    stiffness: typeof window !== "undefined" && window.innerWidth < 768 ? 160 : 100,
-    damping: typeof window !== "undefined" && window.innerWidth < 768 ? 22 : 30,
-    restDelta: 0.001
-  });
-
-  // Text Animations disappear early (0% to 40%)
-  const textOpacity = useTransform(smoothProgress, [0, 0.4], [1, 0]);
-  const textTranslateX = useTransform(smoothProgress, [0, 0.4], ["0%", "-60%"]);
-
-  // 3D Model progress (directly passed to Model3D as a number)
-  // We'll use a listener to pass progress to the R3F component via state if needed,
-  // but let's try passing the scrollYProgress directly or useFrame in Model3D with a ref.
-
   return (
     <section
       ref={containerRef}
-      className="relative h-[350vh] md:h-[200vh] bg-[#F8F1E3]"
+      className="relative min-h-screen flex items-center justify-center overflow-hidden bg-slate-900 px-6 py-24 md:py-0"
     >
-      {/* Sticky Content Wrap */}
-      <div className="sticky top-0 h-screen w-full flex flex-col md:flex-row items-center justify-between px-6 md:px-12 lg:px-24 pt-32 pb-12 md:py-0 overflow-hidden">
 
-        {/* Left Column: Text (50%) */}
+      {/* 1. LAYER 0: FULL-SCREEN BACKGROUND SCENERY (Visible through the hole) */}
+      <motion.div
+        initial={{ scale: 1.1, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        transition={{ duration: 1.5, ease: "easeOut" }}
+        className="absolute inset-0 z-0"
+      >
+        <img
+          src="/house-with-background.png"
+          alt="Original Scenario"
+          className="w-full h-full object-cover filter brightness-[0.75]"
+        />
+        <div className="absolute inset-0 bg-black/10 pointer-events-none" />
+      </motion.div>
+
+      {/* BACKGROUND DECORATION */}
+      <div className="absolute top-0 right-0 w-[50vw] h-full bg-white/5 skew-x-[-12deg] translate-x-[20%] pointer-events-none z-1" />
+
+      {/* MAIN CONTAINER */}
+      <div className="relative w-full max-w-[1400px] z-10 translate-y-10">
+
+        {/* THE FUSION CANVAS (Punch-through shadow technique) */}
         <motion.div
-          style={{ opacity: textOpacity, x: textTranslateX }}
-          className="relative z-10 w-full md:w-1/2 flex flex-col items-start gap-4 md:gap-6"
+          initial={{ opacity: 0, scale: 0.98, y: 20 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
+          className="relative min-h-[60vh] md:min-h-[75vh] w-full rounded-[40px] md:rounded-[60px] overflow-hidden drop-shadow-[0_45px_100px_rgba(0,0,0,0.15)] isolate"
         >
-          {/* Logo/Badge */}
-          <div className="flex items-center gap-4 mb-2">
-            <div className="w-10 h-[1px] bg-primary/40 block" />
-            <img src="/patrimonial-logo-png.png" alt="Grupo Patrimonial" className="h-10 md:h-12 w-auto" />
+
+          {/* THE HOLE & THE WHITE BACKGROUND 
+              This div is the transparent hole. 
+              Its ridiculously huge white shadow fills everything else.
+          */}
+          <div className="hidden md:block absolute right-6 top-6 bottom-6 md:right-8 md:top-8 md:bottom-8 w-[52%] rounded-[30px] md:rounded-[50px] shadow-[0_0_0_9999px_white] z-0 pointer-events-none" />
+          
+          {/* Mobile Fallback Background (since shadow logic is tricky on mobile) */}
+          <div className="md:hidden absolute inset-0 bg-white z-0" />
+
+          {/* CONTENT LAYER */}
+          <div className="relative z-10 flex flex-col md:flex-row items-stretch h-full min-h-[60vh] md:min-h-[75vh]">
+            
+            {/* LEFT SIDE: TEXTUAL CONTENT (48%) */}
+            <div className="w-full md:w-[48%] flex flex-col justify-center p-8 md:p-12 lg:p-16">
+              <motion.div
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.4, duration: 0.8 }}
+                className="flex items-center gap-4 mb-10"
+              >
+                <div className="w-12 h-[2px] bg-primary" />
+                <span className="text-primary font-sans text-xs md:text-sm tracking-[0.5em] uppercase font-bold">
+                  Real Estate & Incorporação
+                </span>
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.6, duration: 0.8 }}
+              >
+                <h1 className="text-6xl sm:text-7xl md:text-8xl lg:text-[110px] font-heading font-black leading-[0.85] text-[#0F172A] mb-12 uppercase tracking-tight">
+                  GRUPO <br />
+                  <span
+                    style={{ WebkitTextStroke: "1px rgba(15, 23, 42, 0.1)", color: "transparent" }}
+                    className="italic inline-block"
+                  >
+                    PATRIMONIAL
+                  </span>
+                </h1>
+
+                <div className="flex flex-col sm:flex-row items-start sm:items-center gap-12 mt-10">
+                  <Button
+                    size="lg"
+                    className="bg-primary text-white hover:bg-[#0F172A] transition-all duration-500 rounded-full px-14 py-8 text-xs md:text-sm font-bold uppercase tracking-[0.4em] group shadow-xl shadow-primary/20"
+                  >
+                    Ver Projetos
+                    <MoveUpRight className="ml-3 w-4 h-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
+                  </Button>
+
+                  <p className="text-[#0F172A]/40 text-xs md:text-sm max-w-[280px] font-bold leading-relaxed uppercase tracking-widest border-l border-[#0F172A]/10 pl-8">
+                    Excelência técnica e visão estratégica.
+                  </p>
+                </div>
+              </motion.div>
+            </div>
+
+            {/* RIGHT SIDE: THE HOLE (52%)
+                Just empty space to let the shadow cutout work.
+            */}
+            <div className="hidden md:block w-[52%] pointer-events-none" />
+
           </div>
 
-          <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-heading font-black leading-[1.1] text-[#0F172A] uppercase">
-            Engenharia, <br />
-            Incorporação, <br />
-            <span className="text-primary">Construção,</span> <br />
-            Imobiliária e <br />
-            Gestão Patrimonial
-          </h1>
-
-          {/* mobile trigger button - Back above model for consistency */}
-          <Button
-            onClick={() => {
-              // Scroll to the end of the Hero section precisely
-              const targetScroll = window.innerHeight * 3.4;
-              window.scrollTo({
-                top: targetScroll,
-                behavior: "smooth"
-              });
-            }}
-            className="md:hidden mt-6 bg-primary text-[#F8F1E3] hover:bg-primary/90 rounded-full px-8 py-6 text-base font-bold uppercase tracking-wider group w-full sm:w-auto"
-          >
-            Ver Mais
-            <ArrowDown className="ml-2 w-5 h-5 transition-transform group-hover:translate-x-1" />
-          </Button>
         </motion.div>
 
-        {/* Right Column: 3D Canvas (50% or Full background) */}
-        <div className="relative w-full h-[40vh] md:h-full md:w-1/2 z-0 mt-4 md:mt-0 flex items-center justify-center">
-          <div className="absolute inset-0 md:relative w-full h-full">
-            <Canvas
-              shadows
-              camera={{ position: [0, 5, 25], fov: 45 }}
-              dpr={[1, 2]}
-              className="w-full h-full"
-            >
-              <Suspense fallback={null}>
-                <ambientLight intensity={1.2} />
-                <directionalLight
-                  position={[10, 20, 10]}
-                  intensity={1.5}
-                  color="#FFFAF0"
-                  castShadow
-                />
-                <Environment preset="sunset" />
+        {/* 3. FOREGROUND LAYER (3D EFFECT): Transparent Building 
+            Positioned to pop out of the frame and overlap the card.
+        */}
+        <motion.div
+          initial={{ opacity: 0, scale: 1.1, y: 50 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          transition={{ duration: 1.8, ease: [0.16, 1, 0.3, 1], delay: 1 }}
+          className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[70%] md:w-[60%] lg:w-[55%] pointer-events-none z-20 select-none hidden md:block"
+        >
+          <img
+            src="/hero-building-transparent.png"
+            alt="Foreground Building"
+            className="w-full h-auto object-contain drop-shadow-[0_50px_100px_rgba(0,0,0,0.4)]"
+          />
+        </motion.div>
 
-                {/* Pass the smoothed scroll progress to the model */}
-                <ScrollAwareModel progress={smoothProgress} />
-
-                <ContactShadows
-                  position={[0, -1, 0]}
-                  opacity={0.4}
-                  scale={10}
-                  blur={2.5}
-                  far={4}
-                />
-              </Suspense>
-            </Canvas>
-          </div>
+        {/* Minimal Scroll Line Indicator */}
+        <div className="absolute -bottom-24 left-1/2 -translate-x-1/2 flex flex-col items-center gap-6 opacity-20">
+          <div className="w-[1.5px] h-32 bg-gradient-to-b from-[#0F172A] to-transparent" />
         </div>
 
-        {/* Scroll Indicator (Custom Mouse) - Desktop */}
-        <motion.div
-          style={{ opacity: textOpacity }}
-          className="scroll-container hidden md:flex"
-        >
-          <svg
-            width="30"
-            height="50"
-            viewBox="0 0 30 50"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-            className="scroll-icon"
-          >
-            <rect
-              x="1"
-              y="1"
-              width="28"
-              height="48"
-              rx="14"
-              stroke="var(--primary)"
-              strokeWidth="2"
-              className="mouse-body"
-            />
-            <rect
-              x="13"
-              y="8"
-              width="4"
-              height="10"
-              rx="2"
-              fill="var(--accent)"
-              className="scroll-wheel"
-            />
-          </svg>
-          <span className="scroll-text">DESÇA</span>
-        </motion.div>
-
-        {/* Sneaky Peak (Mobile) - Static Literal Copy of Solutions Top */}
-        <motion.div
-          style={{ opacity: textOpacity }}
-          className="md:hidden absolute bottom-0 left-0 w-full h-[6vh] bg-[#F8F9FA] border-t border-slate-200/50 z-30 pt-3 px-8 overflow-hidden pointer-events-none shadow-[0_-5px_15px_rgba(0,0,0,0.02)]"
-        >
-          {/* Replica of Solutions header badge */}
-          <div className="flex items-center gap-2 mb-1 text-[6px]">
-            <div className="w-4 h-[1px] bg-primary"></div>
-            <span className="text-primary font-bold tracking-[0.4em] uppercase">
-              Expertise
-            </span>
-          </div>
-          
-          {/* Replica of Solutions H2 */}
-          <h2 className="text-lg font-light text-[#0F172A] leading-tight whitespace-nowrap">
-            Ecossistema <span className="font-bold italic text-primary">Integrado</span>
-          </h2>
-        </motion.div>
       </div>
 
     </section>
   );
 }
-
-// Wrapper to bridge Framer Motion scroll to R3F model
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-function ScrollAwareModel({ progress }: { progress: any }) {
-  const modelRef = useRef<any>(null);
-
-  useFrame(() => {
-    if (modelRef.current) {
-      // Get the value from the motion value
-      const val = progress.get();
-      modelRef.current.updateScroll(val);
-    }
-  });
-
-  return <Model3DWithInternalRef ref={modelRef} />;
-}
-
-// Model3D optimized for scroll updates via ref
-const Model3DWithInternalRef = React.forwardRef((props, ref) => {
-  const { scene } = useGLTF("/models/condominio.glb");
-  const groupRef = useRef<THREE.Group>(null);
-  const [currentProgress, setCurrentProgress] = React.useState(0);
-
-  // Setup initial state and materials (user's guide)
-  React.useMemo(() => {
-    scene.traverse((child: any) => {
-      if (child.isMesh) {
-        // Fix inverted textures
-        if (child.material.map) child.material.map.flipY = false;
-
-        // Fix vertex colors if needed
-        if (child.geometry.attributes.color) {
-          child.material.vertexColors = true;
-        }
-
-        child.material.needsUpdate = true;
-        child.castShadow = true;
-        child.receiveShadow = true;
-      }
-    });
-  }, [scene]);
-
-  // Expose the update method
-  React.useImperativeHandle(ref, () => ({
-    updateScroll: (v: number) => {
-      if (!groupRef.current) return;
-
-      // 1. Rotation: Subtle rotation (reduced multiplier to avoid "spinning too much")
-      const rotationV = Math.min(v / 0.9, 1);
-      groupRef.current.rotation.y = (rotationV * Math.PI * 0.8) + 1.07;
-
-      // 2. Dive (Vertical Displacement): Starts a bit earlier at 60% scroll
-      const diveV = Math.max(0, (v - 0.6) / 0.4);
-      const targetY = THREE.MathUtils.lerp(-0.5, -25, Math.pow(diveV, 2.5));
-      groupRef.current.position.y = targetY;
-
-      // 3. Scale: Stays solid while rotating, zooms slightly while diving
-      const targetScale = THREE.MathUtils.lerp(0.05, 0.045, diveV);
-      groupRef.current.scale.setScalar(targetScale);
-
-      // Update local state if needed
-      setCurrentProgress(v);
-    }
-  }));
-
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  useFrame((state: any) => {
-    if (!groupRef.current) return;
-    // Add subtle mouse parallax on top of scroll rotation
-    groupRef.current.rotation.y += state.mouse.x * 0.05;
-    groupRef.current.rotation.x = state.mouse.y * 0.03;
-  });
-
-  return (
-    <group ref={groupRef} position={[0, -0.5, 0]}>
-      <Center>
-        <primitive object={scene} />
-      </Center>
-    </group>
-  );
-});
-
-Model3DWithInternalRef.displayName = "Model3DWithInternalRef";
-
-// Preload the model
-useGLTF.preload("/models/condominio.glb");
