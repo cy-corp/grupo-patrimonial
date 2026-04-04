@@ -139,24 +139,20 @@ export function Hero() {
 
       </div>
 
-      {/* FOREGROUND PNG — filho direto da section, z-[50] fica na frente dos cards */}
-      <motion.img
-        src="/house-transparent.png"
-        alt="Foreground Building"
-        initial={{ opacity: 0, y: 60 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1.8, ease: [0.16, 1, 0.3, 1], delay: 1 }}
-        className="absolute pointer-events-none select-none hidden md:block z-[50]"
-        style={{
-          filter: "drop-shadow(0 60px 120px rgba(0,0,0,0.5))",
-          width: "90%",
-          height: "auto",
-          right: "0%",
-          bottom: "0%",
-          top: "auto",
-          left: "auto",
-        }}
-      />
+      {/* FOREGROUND PNG — Sincronizado com o background para alinhamento perfeito */}
+      <div className="absolute inset-0 pointer-events-none z-[50] overflow-hidden hidden md:block">
+        <motion.img
+          src="/house-transparent.png"
+          alt="Foreground Building"
+          initial={{ opacity: 0, y: 60 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1.8, ease: [0.16, 1, 0.3, 1], delay: 1 }}
+          className="w-full h-full object-cover object-center select-none"
+          style={{
+            filter: "drop-shadow(0 60px 120px rgba(0,0,0,0.5))",
+          }}
+        />
+      </div>
 
 
     </section>
