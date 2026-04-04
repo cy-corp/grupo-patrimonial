@@ -47,7 +47,7 @@ const solutions = [
 
 export function Solutions() {
   return (
-    <section className="py-32 bg-[#F8F9FA] relative overflow-hidden border-y border-slate-200/50">
+    <section className="py-32 bg-[#F8F9FA] relative overflow-hidden border-y border-slate-200/50 -mt-6 md:-mt-10 rounded-t-[40px] md:rounded-t-[60px] shadow-[0_-20px_50px_rgba(0,0,0,0.15)] z-[60]">
       {/* Background Decorative Elements */}
       <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-primary/5 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/2"></div>
 

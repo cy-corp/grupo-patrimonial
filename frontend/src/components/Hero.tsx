@@ -3,7 +3,7 @@
 import React, { useRef, useState, useEffect, useCallback } from "react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { MoveUpRight } from "lucide-react";
+import { ArrowDown } from "lucide-react";
 
 export function Hero() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -53,7 +53,7 @@ export function Hero() {
   return (
     <section
       ref={containerRef}
-      className="relative min-h-screen flex items-center justify-center overflow-hidden bg-slate-900 py-24 md:py-0"
+      className="relative min-h-screen flex items-center justify-center overflow-hidden bg-white py-24 md:py-0"
     >
       {/* WHITE SIDE BORDERS (straight edges down the sides) */}
       <div className="absolute left-0 top-0 bottom-0 w-4 md:w-6 bg-white z-[60] pointer-events-none" />
@@ -158,10 +158,11 @@ export function Hero() {
 
                   <Button
                     size="lg"
-                    className="bg-primary text-white hover:bg-[#0F172A] transition-all duration-500 rounded-full px-12 py-8 text-xs md:text-sm font-bold uppercase tracking-[0.4em] group shadow-xl shadow-primary/20"
+                    className="bg-primary text-white hover:bg-[#0F172A] transition-all duration-500 rounded-full px-12 py-8 text-xs md:text-sm font-bold uppercase tracking-[0.4em] group shadow-xl shadow-primary/20 cursor-pointer"
+                    onClick={() => window.scrollBy({ top: window.innerHeight, behavior: 'smooth' })}
                   >
                     Ver Projetos
-                    <MoveUpRight className="ml-3 w-4 h-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
+                    <ArrowDown className="ml-3 w-4 h-4 transition-transform group-hover:translate-y-1" />
                   </Button>
                 </div>
               </motion.div>
@@ -199,7 +200,7 @@ export function Hero() {
         />
       </motion.div>
 
-
+      {/* NO FADE REQUIRED - Overlap Approach */}
     </section>
   );
 }
