@@ -36,7 +36,7 @@ export function Hero() {
         <path d="M100,0 L0,0 A100,100 0 0,1 100,100 Z" />
       </svg>
 
-      {/* 1. LAYER 0: FULL-SCREEN BACKGROUND + FOREGROUND ALINHADOS */}
+      {/* 1. LAYER 0: FULL-SCREEN BACKGROUND */}
       <motion.div
         initial={{ scale: 1.1, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
@@ -49,8 +49,6 @@ export function Hero() {
           alt="Original Scenario"
           className="absolute inset-0 w-full h-full object-cover object-center filter brightness-[0.75]"
         />
-
-
 
         <div className="absolute inset-0 bg-black/10 pointer-events-none" style={{ zIndex: 20 }} />
       </motion.div>
@@ -69,13 +67,10 @@ export function Hero() {
           className="relative min-h-[60vh] md:min-h-[75vh] w-full rounded-[40px] md:rounded-[60px] overflow-hidden drop-shadow-[0_45px_100px_rgba(0,0,0,0.15)] isolate"
         >
 
-          {/* THE HOLE & THE WHITE BACKGROUND 
-              This div is the transparent hole. 
-              Its ridiculously huge white shadow fills everything else.
-          */}
+          {/* THE HOLE & THE WHITE BACKGROUND */}
           <div className="hidden md:block absolute right-6 top-6 bottom-6 md:right-8 md:top-8 md:bottom-8 w-[42%] rounded-[30px] md:rounded-[50px] shadow-[0_0_0_9999px_white] z-0 pointer-events-none" />
 
-          {/* Mobile Fallback Background (since shadow logic is tricky on mobile) */}
+          {/* Mobile Fallback Background */}
           <div className="md:hidden absolute inset-0 bg-white z-0" />
 
           {/* CONTENT LAYER */}
@@ -126,34 +121,34 @@ export function Hero() {
               </motion.div>
             </div>
 
-            {/* RIGHT SIDE: THE HOLE (42%)
-                Just empty space to let the shadow cutout work.
-            */}
+            {/* RIGHT SIDE: THE HOLE (42%) */}
             <div className="hidden md:block w-[42%] pointer-events-none" />
 
           </div>
 
         </motion.div>
 
-        {/* no foreground here — moved to section level */}
-
       </div>
 
-      {/* FOREGROUND PNG — Sincronizado com o background para alinhamento perfeito */}
-      <div className="absolute inset-0 pointer-events-none z-[50] overflow-hidden hidden md:block">
+      {/* FOREGROUND PNG — duas camadas para transição sem flicker */}
+      {/* Wrapper: drop-shadow estático + opacity suave */}
+      <motion.div
+        className="absolute inset-0 pointer-events-none hidden md:block"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 2.5, ease: "easeOut", delay: 0.3 }}
+        style={{ filter: "drop-shadow(0 50px 100px rgba(0,0,0,0.5))", zIndex: 50 }}
+      >
+        {/* Imagem: brightness parte idêntico ao fundo (0.75) e vai clareando */}
         <motion.img
           src="/house-transparent.png"
           alt="Foreground Building"
-          initial={{ opacity: 0, y: 60 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1.8, ease: [0.16, 1, 0.3, 1], delay: 1 }}
+          initial={{ filter: "brightness(0.75)" }}
+          animate={{ filter: "brightness(1)" }}
+          transition={{ duration: 3, ease: "easeOut", delay: 0.3 }}
           className="w-full h-full object-cover object-center select-none"
-          style={{
-            filter: "drop-shadow(0 60px 120px rgba(0,0,0,0.5))",
-          }}
         />
-      </div>
-
+      </motion.div>
 
     </section>
   );
