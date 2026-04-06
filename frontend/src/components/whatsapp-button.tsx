@@ -18,7 +18,7 @@ export const WhatsAppIcon = ({ className, ...props }: LucideProps) => (
 
 export function WhatsAppButton() {
   return (
-    <div className="fixed bottom-6 right-6 z-50">
+    <div className="fixed bottom-6 right-6 z-[200]">
       <Link
         href="https://wa.me/5511999999999" // Placeholder phone number
         target="_blank"
