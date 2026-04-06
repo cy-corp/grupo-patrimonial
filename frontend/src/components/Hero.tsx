@@ -175,14 +175,17 @@ export function Hero() {
         </motion.div>
 
         {/* Foreground building PNG — its tip touching the card */}
-        {/* NOTE: filter must be on the <img> itself, NOT the container div.
-             Animating filter on a parent creates a CSS stacking context that
-             renders transparent PNG pixels with a frosted/hazy tint. */}
+        {/* Positioning via style (not animated). Only opacity fades in.
+            Because opacity=0 + 0.4s delay, useEffect corrects x/y before
+            the element ever becomes visible — no slide artifact. */}
         <motion.div
           className="relative z-20 flex-1 w-full flex items-end justify-center pointer-events-none mt-[-20px] sm:mt-[-10px]"
-          initial={{ opacity: 0, x: mobileOffset.x, y: mobileOffset.y }}
-          animate={{ opacity: 1, x: mobileOffset.x, y: mobileOffset.y }}
-          transition={{ duration: 2.5, ease: "easeOut", delay: 0.4 }}
+          style={{
+            transform: `translateX(${mobileOffset.x}px) translateY(${mobileOffset.y}px)`,
+          }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 2, ease: "easeOut", delay: 0.4 }}
         >
           <motion.img
             src="/house-transparent-mobile.png"
