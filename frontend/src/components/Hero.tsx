@@ -98,6 +98,26 @@ export function Hero() {
       {/* ===================== */}
       <div ref={mobileContainerRef} className="block md:hidden relative w-full h-[100svh] overflow-hidden flex flex-col pt-28 px-4 pb-0">
 
+        {/* Thin side borders — mobile only */}
+        <div className="absolute left-0 top-0 bottom-0 w-1 bg-white z-[60] pointer-events-none" />
+        <div className="absolute right-0 top-0 bottom-0 w-1 bg-white z-[60] pointer-events-none" />
+
+        {/* Concave corner fillets — mobile only, alinhados com as bordas */}
+        <svg
+          className="absolute left-1 top-24 w-6 h-6 z-[60] pointer-events-none text-white fill-current"
+          viewBox="0 0 100 100"
+          preserveAspectRatio="none"
+        >
+          <path d="M0,0 L100,0 A100,100 0 0,0 0,100 Z" />
+        </svg>
+        <svg
+          className="absolute right-1 top-24 w-6 h-6 z-[60] pointer-events-none text-white fill-current"
+          viewBox="0 0 100 100"
+          preserveAspectRatio="none"
+        >
+          <path d="M100,0 L0,0 A100,100 0 0,1 100,100 Z" />
+        </svg>
+
         {/* Background mobile — full screen */}
         <motion.div
           initial={{ scale: 1.06, opacity: 0 }}
@@ -171,7 +191,7 @@ export function Hero() {
             animate={{ filter: "brightness(1)" }}
             transition={{ duration: 2.5, ease: "easeOut", delay: 0.4 }}
             className="w-full h-full object-cover object-top scale-[1.25] select-none drop-shadow-[0_-15px_35px_rgba(0,0,0,0.4)]"
-            style={{ 
+            style={{
               objectPosition: "50% top",
               maskImage: "linear-gradient(to bottom, black 0%, black 75%, transparent 100%)",
               WebkitMaskImage: "linear-gradient(to bottom, black 0%, black 75%, transparent 100%)",
