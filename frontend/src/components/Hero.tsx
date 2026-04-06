@@ -17,13 +17,34 @@ export function Hero() {
   const [maskValue, setMaskValue] = useState("none");
 
   // Mobile foreground offset — calibrated on S10 (360×760)
-  // x = -70/360 = -19.44% vw | y = -140/760 = -18.42% svh
   const [mobileOffset, setMobileOffset] = useState({ x: -70, y: -140 });
+
+  // Mobile height lock to prevent address bar layout shifts
+  const [mobileHeight, setMobileHeight] = useState("100dvh");
+  const [extendedHeight, setExtendedHeight] = useState("100dvh");
+  const lastWidthRef = useRef(0);
+
+  // Expansão do background para baixo (faz o background dar zoom natural e se alinhar ao scale-1.25)
+  const EXTEND_BG_PX = 200;
 
   useEffect(() => {
     const calcMobileOffset = () => {
-      if (window.innerWidth >= 768) return;
+      if (typeof window === "undefined") return;
+      if (window.innerWidth >= 768) {
+        setMobileHeight("auto");
+        setExtendedHeight("auto");
+        return;
+      }
       const vw = window.innerWidth;
+      const vh = window.innerHeight;
+
+      // Congela a altura se for mobile puro (Apenas roda no primeiro Load devida 
+      // ao lastWidthRef iniciar em zero). Ignora todos os resizes verticais pós load.
+      if (vw !== lastWidthRef.current) {
+        setMobileHeight(`${vh}px`);
+        setExtendedHeight(`${vh + EXTEND_BG_PX}px`);
+        lastWidthRef.current = vw;
+      }
       // y is anchored to the card height, not the viewport height.
       // The card has nearly fixed height (content-driven), so the visual
       // overlap stays constant across any phone — tall or short.
@@ -90,13 +111,21 @@ export function Hero() {
   return (
     <section
       ref={containerRef}
-      className="relative h-[100svh] md:h-auto md:min-h-screen overflow-hidden bg-white"
+      className="relative md:min-h-screen overflow-hidden bg-white md:!h-auto"
+      style={{ height: extendedHeight }}
     >
 
       {/* ===================== */}
       {/* === MOBILE LAYOUT === */}
       {/* ===================== */}
-      <div ref={mobileContainerRef} className="block md:hidden relative w-full h-[100svh] overflow-hidden flex flex-col pt-28 px-4 pb-0">
+      <div
+        ref={mobileContainerRef}
+        className="block md:hidden relative w-full overflow-hidden flex flex-col pt-28 px-4"
+        style={{
+          height: extendedHeight,
+          paddingBottom: "env(safe-area-inset-bottom, 0px)"
+        }}
+      >
 
         {/* Thin side borders — mobile only */}
         <div className="absolute left-0 top-0 bottom-0 w-1 bg-white z-[60] pointer-events-none" />
@@ -201,6 +230,12 @@ export function Hero() {
             }}
           />
         </motion.div>
+
+        {/* Espaçador Fantasma - Ele ocupa a altura extra da seção criada acima.
+            Isso trava a imagem da frente no tamanho exato original, impedindo 
+            que ela bugar de vez, mas permitindo que o Background (que é absoluto) 
+            ocupe os 200px extras, ganhe zoom natural e desça cobrindo a seção de baixo! */}
+        <div style={{ height: `${EXTEND_BG_PX}px` }} className="w-full flex-shrink-0" />
 
       </div>
 

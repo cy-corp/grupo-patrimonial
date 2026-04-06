@@ -34,8 +34,23 @@ export function Navbar() {
     <nav className="fixed top-0 z-[100] w-full bg-white">
       <div className="container mx-auto flex h-24 items-center justify-between px-6">
 
-        {/* Logo */}
-        <Link href="/" className="flex items-center group">
+        {/* Mobile: hambúrguer à esquerda | Desktop: logo à esquerda */}
+        {/* Mobile menu button — visível só no mobile, fica à esquerda */}
+        <div className="lg:hidden flex items-center">
+          <button
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            className="flex items-center gap-2 text-[#0F172A] p-2 hover:bg-slate-100 rounded-lg transition-colors"
+            aria-label="Abrir menu"
+          >
+            {isMobileMenuOpen ? <X size={22} /> : <Menu size={22} />}
+            <span className="text-[9px] font-bold uppercase tracking-[0.2em] text-[#0F172A]/60 select-none">
+              {isMobileMenuOpen ? "Fechar" : "Menu"}
+            </span>
+          </button>
+        </div>
+
+        {/* Logo — no mobile fica à direita, no desktop à esquerda */}
+        <Link href="/" className="flex items-center group lg:order-none order-last">
           <img src="/patrimonial-logo-png.png" alt="Grupo Patrimonial" className="h-16 md:h-20 w-auto" />
           <img src="/patrimonial-text-png.png" alt="Patrimonial" className="h-14 md:h-18 w-auto -ml-3 md:-ml-5" />
         </Link>
@@ -187,15 +202,9 @@ export function Navbar() {
           </Link>
         </div>
 
-        {/* Mobile menu button */}
-        <div className="lg:hidden flex items-center gap-4">
-          <button
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="text-[#0F172A] p-2 hover:bg-slate-100 rounded-lg transition-colors"
-          >
-            {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-          </button>
-        </div>
+        {/* Mobile menu button placeholder — o botão real está à esquerda acima */}
+        {/* Placeholder invisível para manter justify-between no desktop */}
+        <div className="hidden lg:flex items-center" />
       </div>
 
       {/* Mobile Menu */}
