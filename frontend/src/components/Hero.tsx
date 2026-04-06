@@ -90,7 +90,7 @@ export function Hero() {
   return (
     <section
       ref={containerRef}
-      className="relative min-h-screen overflow-hidden bg-white"
+      className="relative h-[100svh] md:h-auto md:min-h-screen overflow-hidden bg-white"
     >
 
       {/* ===================== */}
