@@ -16,25 +16,25 @@ const partners: Partner[] = [
   {
     name: "Dener Lopes",
     role: "Engenheiro Ambiental e Agrimensor | Incorporação | Regularização Fundiária",
-    description: "Com 17 anos de atuação no mercado imobiliário, Dener Lopes é especialista em incorporação, licenciamento e regularização de empreendimentos. Ao longo de sua trajetória, participou da aprovação de mais de 70 loteamentos, além de inúmeras regularizações fundiárias, ambientais e urbanísticas em diferentes escalas.",
-    extraInfo: "É o responsável por integrar engenharia, legislação, viabilidade econômica e estratégia imobiliária, assegurando que cada projeto nasça juridicamente sólido, tecnicamente viável e financeiramente eficiente. Proprietário da URBASTRUCTOR.",
-    company: "Proprietário da URBASTRUCTOR",
+    description: "Incorporador desde 2008, especialista na área ambiental e agrimensura. Cursou Engenharia Ambiental na UEMG (Universidade do Estado de Minas Gerais), é Agrimensor pela Faculdade Pitágoras, Diretor comercial Da Urbastructor Urbanismo E Incorporações e aqui como CEO da Patrimonial. Participou de 73 loteamentos em São Paulo, Minas Gerais e Goiás, além de inúmeras regularizações fundiárias, ambientais e urbanísticas em diferentes escalas.",
+    extraInfo: "É o responsável por integrar engenharia, legislação, viabilidade econômica e estratégia imobiliária, assegurando que cada projeto nasça juridicamente sólido, tecnicamente viável e financeiramente eficiente.",
+    company: "Diretor Comercial da URBASTRUCTOR",
     image: "/quem-somos/dener-lopes.png"
   },
   {
     name: "Lucas Azevedo",
     role: "Engenheiro Civil | Execução | Projetos",
     description: "Engenheiro civil atuante desde os 11 anos de idade, Lucas Azevedo cresceu dentro da construção civil, em uma empresa familiar com mais de 27 anos de atuação no mercado.",
-    extraInfo: "Une conhecimento técnico profundo, visão prática de obra e domínio de projetos, sendo responsável por transformar conceito em estrutura, desempenho e durabilidade. Sua atuação garante construções bem resolvidas, econômicas e tecnicamente superiores. Proprietário da C.A.C Prime Corp.",
-    company: "Proprietário da C.A.C PRIME CORP.",
+    extraInfo: "Une conhecimento técnico profundo, visão prática de obra e domínio de projetos, sendo responsável por transformar conceito em estrutura, desempenho e durabilidade. Sua atuação garante construções bem resolvidas, econômicas e tecnicamente superiores. Diretor Executivo da C.A.C Prime Corp.",
+    company: "Diretor Executivo da C.A.C PRIME CORP.",
     image: "/quem-somos/lucas-azevedo.png"
   },
   {
     name: "Adermis Marini",
     role: "Empresário | Corretor de Imóveis | Estratégia Comercial",
     description: "Empresário, corretor de imóveis e ex-deputado federal, Adermis Marini atua no ramo imobiliário há mais de 8 anos, com participação direta no lançamento e desenvolvimento de diversos empreendimentos.",
-    extraInfo: "Possui forte visão de mercado, relacionamento institucional e capacidade estratégica para posicionamento comercial, vendas e articulação de negócios, conectando o produto certo ao público certo. Proprietário da Marini Imóveis.",
-    company: "Proprietário da MARINI IMÓVEIS.",
+    extraInfo: "Possui forte visão de mercado, relacionamento institucional e capacidade estratégica para posicionamento comercial, vendas e articulação de negócios, conectando o produto certo ao público certo. Diretor Executivo da Marini Imóveis.",
+    company: "Diretor Executivo da MARINI IMÓVEIS.",
     image: "/quem-somos/adermis-marini.png"
   },
   {
@@ -44,6 +44,14 @@ const partners: Partner[] = [
     extraInfo: "Assina projetos executados no Brasil e no exterior, incluindo Estados Unidos, Espanha, Dubai, Londres, entre outros mercados exigentes. Sua arquitetura une estética, funcionalidade e identidade, elevando o padrão do produto imobiliário e agregando valor real ao empreendimento. Proprietário da Gallo Decor.",
     company: "Proprietário da GALLO DECOR.",
     image: "/quem-somos/beto-gallo.png"
+  },
+  {
+    name: "Osmar",
+    role: "Sócio-Diretor | Estratégia e Novos Negócios",
+    description: "Bio em desenvolvimento. Osmar traz sua experiência em gestão e visão estratégica para o fortalecimento do Grupo Patrimonial.",
+    extraInfo: "Atuando na identificação de oportunidades de mercado e consolidação de parcerias estratégicas que impulsionam o crescimento sustentável da empresa.",
+    company: "GRUPO PATRIMONIAL",
+    image: "/quem-somos/osmar.png"
   }
 ];
 
@@ -81,7 +89,7 @@ export function Leadership() {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto items-start">
+      <div className="flex flex-wrap justify-center gap-8 max-w-7xl mx-auto items-start">
         {partners.map((partner, index) => {
           const isExpanded = expandedIndex === index;
 
@@ -93,7 +101,7 @@ export function Leadership() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8, delay: index * 0.15 }}
-              className="bg-white border border-primary/10 group overflow-hidden hover:border-primary/30 transition-all duration-500 flex flex-col self-start w-full"
+              className="bg-white border border-primary/10 group overflow-hidden hover:border-primary/30 transition-all duration-500 flex flex-col self-start w-full md:w-[calc(50%-1rem)] lg:w-[calc(33.333%-1.5rem)]"
             >
               <div className="aspect-[3/4] overflow-hidden grayscale hover:grayscale-0 transition-all duration-700 relative">
                 <img

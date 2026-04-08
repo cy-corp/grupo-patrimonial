@@ -35,8 +35,8 @@ export function Navbar() {
       <div className="container mx-auto flex h-24 items-center justify-between px-6">
 
         {/* Mobile: hambúrguer à esquerda | Desktop: logo à esquerda */}
-        {/* Mobile menu button — visível só no mobile, fica à esquerda */}
-        <div className="lg:hidden flex items-center">
+        {/* Mobile menu button — visível até 1150px */}
+        <div className="min-[1150px]:hidden flex items-center">
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             className="flex items-center gap-2 text-[#0F172A] p-2 hover:bg-slate-100 rounded-lg transition-colors"
@@ -50,17 +50,17 @@ export function Navbar() {
         </div>
 
         {/* Logo — no mobile fica à direita, no desktop à esquerda */}
-        <Link href="/" className="flex items-center group lg:order-none order-last">
-          <img src="/patrimonial-logo-png.png" alt="Grupo Patrimonial" className="h-16 md:h-20 w-auto" />
-          <img src="/patrimonial-text-png.png" alt="Patrimonial" className="h-14 md:h-18 w-auto -ml-3 md:-ml-5" />
+        <Link href="/" className="flex items-center group min-[1150px]:order-none order-last">
+          <img src="/patrimonial-logo-png.png" alt="Grupo Patrimonial" className="h-14 min-[1150px]:h-16 xl:h-20 w-auto transition-all" />
+          <img src="/patrimonial-text-png.png" alt="Patrimonial" className="h-12 min-[1150px]:h-14 xl:h-18 w-auto -ml-3 md:-ml-5 transition-all" />
         </Link>
 
         {/* Desktop Nav */}
-        <div className="hidden lg:flex items-center gap-8">
+        <div className="hidden min-[1150px]:flex items-center gap-4 xl:gap-8">
           <Link
             href="/"
             className={cn(
-              "text-[10px] font-bold uppercase tracking-[0.2em] transition-all hover:text-primary relative group",
+              "text-[9px] xl:text-[10px] font-bold uppercase tracking-[0.1em] xl:tracking-[0.2em] transition-all hover:text-primary relative group",
               pathname === "/" ? "text-primary" : "text-[#0F172A]/70"
             )}
           >
@@ -75,7 +75,7 @@ export function Navbar() {
           <Link
             href="/quem-somos"
             className={cn(
-              "text-[10px] font-bold uppercase tracking-[0.2em] transition-all hover:text-primary relative group",
+              "text-[9px] xl:text-[10px] font-bold uppercase tracking-[0.1em] xl:tracking-[0.2em] transition-all hover:text-primary relative group",
               pathname === "/quem-somos" ? "text-primary" : "text-[#0F172A]/70"
             )}
           >
@@ -90,7 +90,7 @@ export function Navbar() {
           <Link
             href="/processos"
             className={cn(
-              "text-[10px] font-bold uppercase tracking-[0.2em] transition-all hover:text-primary relative group",
+              "text-[9px] xl:text-[10px] font-bold uppercase tracking-[0.1em] xl:tracking-[0.2em] transition-all hover:text-primary relative group",
               pathname === "/processos" ? "text-primary" : "text-[#0F172A]/70"
             )}
           >
@@ -109,7 +109,7 @@ export function Navbar() {
           >
             <button
               className={cn(
-                "flex items-center gap-1 text-[10px] font-bold uppercase tracking-[0.2em] transition-all hover:text-primary cursor-pointer",
+                "flex items-center gap-1 text-[9px] xl:text-[10px] font-bold uppercase tracking-[0.1em] xl:tracking-[0.2em] transition-all hover:text-primary cursor-pointer",
                 unidades.some(u => pathname === u.href) ? "text-primary" : "text-[#0F172A]/70"
               )}
             >
@@ -152,7 +152,7 @@ export function Navbar() {
           <Link
             href="/integracao"
             className={cn(
-              "text-[10px] font-bold uppercase tracking-[0.2em] transition-all hover:text-primary relative group",
+              "text-[9px] xl:text-[10px] font-bold uppercase tracking-[0.1em] xl:tracking-[0.2em] transition-all hover:text-primary relative group",
               pathname === "/integracao" ? "text-primary" : "text-[#0F172A]/70"
             )}
           >
@@ -167,7 +167,7 @@ export function Navbar() {
           <Link
             href="/investidores"
             className={cn(
-              "text-[10px] font-bold uppercase tracking-[0.2em] transition-all hover:text-primary relative group",
+              "text-[9px] xl:text-[10px] font-bold uppercase tracking-[0.1em] xl:tracking-[0.2em] transition-all hover:text-primary relative group",
               pathname === "/investidores" ? "text-primary" : "text-[#0F172A]/70"
             )}
           >
@@ -181,7 +181,7 @@ export function Navbar() {
           <Link
             href="/contato"
             className={cn(
-              "text-[10px] font-bold uppercase tracking-[0.2em] transition-all hover:text-primary relative group",
+              "text-[9px] xl:text-[10px] font-bold uppercase tracking-[0.1em] xl:tracking-[0.2em] transition-all hover:text-primary relative group",
               pathname === "/contato" ? "text-primary" : "text-[#0F172A]/70"
             )}
           >
@@ -194,17 +194,16 @@ export function Navbar() {
         </div>
 
         {/* Desktop CTA */}
-        <div className="hidden lg:flex items-center gap-4">
+        <div className="hidden min-[1150px]:flex items-center gap-4">
           <Link href="/contato#form-contato">
-            <GoldButton className="px-8 py-4 text-[10px] tracking-[0.3em]">
+            <GoldButton className="px-4 xl:px-8 py-4 text-[9px] xl:text-[10px] tracking-[0.2em] xl:tracking-[0.3em]">
               Solicite uma Análise
             </GoldButton>
           </Link>
         </div>
 
-        {/* Mobile menu button placeholder — o botão real está à esquerda acima */}
-        {/* Placeholder invisível para manter justify-between no desktop */}
-        <div className="hidden lg:flex items-center" />
+        {/* Mobile menu button placeholder */}
+        <div className="hidden min-[1150px]:flex items-center" />
       </div>
 
       {/* Mobile Menu */}
@@ -214,7 +213,7 @@ export function Navbar() {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            className="lg:hidden bg-white border-t border-slate-200 overflow-hidden"
+            className="min-[1150px]:hidden bg-white border-t border-slate-200 overflow-hidden"
           >
             <div className="px-6 py-10 flex flex-col gap-6">
               {[...mainLinks].map((link) => (
