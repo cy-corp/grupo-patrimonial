@@ -33,16 +33,16 @@ const partners: Partner[] = [
     name: "Adermis Marini",
     role: "Empresário | Corretor de Imóveis | Estratégia Comercial",
     description: "Empresário, corretor de imóveis e ex-deputado federal, Adermis Marini atua no ramo imobiliário há mais de 8 anos, com participação direta no lançamento e desenvolvimento de diversos empreendimentos.",
-    extraInfo: "Possui forte visão de mercado, relacionamento institucional e capacidade estratégica para posicionamento comercial, vendas e articulação de negócios, conectando o produto certo ao público certo. Diretor Executivo da Marini Imóveis.",
+    extraInfo: "Economista com pós-graduações em Administração de Empresas e Gestão Empresarial pela UniFACEF, possui ainda formação em Gestão de Negócios Imobiliários pela Escola Técnica Federal de Minas Gerais e especialização em Gestão de Cidades pela Fundação do Instituto Latino Americano. Possui forte visão de mercado, relacionamento institucional e capacidade estratégica para posicionamento comercial, vendas e articulação de negócios, conectando o produto certo ao público certo. Diretor Executivo da Marini Imóveis.",
     company: "Diretor Executivo da MARINI IMÓVEIS.",
     image: "/quem-somos/adermis-marini.png"
   },
   {
     name: "Beto Gallo",
     role: "Empresário | Arquiteto | Design | Arquitetura Internacional",
-    description: "Arquiteto com mais de 30 anos de atuação, Carlos Alberto Gallo é reconhecido internacionalmente, tendo sido premiado como Arquiteto do Ano em Dubai e Londres.",
-    extraInfo: "Assina projetos executados no Brasil e no exterior, incluindo Estados Unidos, Espanha, Dubai, Londres, entre outros mercados exigentes. Sua arquitetura une estética, funcionalidade e identidade, elevando o padrão do produto imobiliário e agregando valor real ao empreendimento. Proprietário da Gallo Decor.",
-    company: "Proprietário da GALLO DECOR.",
+    description: "Arquiteto com mais de 30 anos de atuação e graduado pela PUC Campinas, Carlos Alberto Gallo é reconhecido internacionalmente, tendo sido premiado como Arquiteto do Ano em Dubai e Londres.",
+    extraInfo: "Assina projetos executados no Brasil e no exterior, incluindo Estados Unidos, Espanha, Dubai, Londres, entre outros mercados exigentes. Sua arquitetura une estética, funcionalidade e identidade, elevando o padrão do produto imobiliário e agregando valor real ao empreendimento. Diretor de Projetos da Gallo Decor.",
+    company: "Diretor de Projetos da GALLO DECOR.",
     image: "/quem-somos/beto-gallo.png"
   },
   {
@@ -101,7 +101,7 @@ export function Leadership() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8, delay: index * 0.15 }}
-              className="bg-white border border-primary/10 group overflow-hidden hover:border-primary/30 transition-all duration-500 flex flex-col self-start w-full md:w-[calc(50%-1rem)] lg:w-[calc(33.333%-1.5rem)]"
+              className="bg-white border border-primary/10 group overflow-hidden hover:border-primary/30 transition-all duration-500 flex flex-col self-start w-full md:w-[calc(50%-1rem)] lg:w-[calc(20%-1.6rem)]"
             >
               <div className="aspect-[3/4] overflow-hidden grayscale hover:grayscale-0 transition-all duration-700 relative">
                 <img
