@@ -1,11 +1,11 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { 
-  History, 
-  Building2, 
-  Hammer, 
-  Handshake, 
+import {
+  History,
+  Building2,
+  Hammer,
+  Handshake,
   ShieldCheck,
   ChevronRight
 } from "lucide-react";
@@ -38,7 +38,7 @@ export function Sinergia() {
             Ciclo de Excelência
           </span>
           <h2 className="mt-6 font-heading text-5xl lg:text-[7rem] font-black uppercase tracking-tighter leading-none">
-            A Sinergia do Grupo
+            A Sinergia da Patrimonial
           </h2>
           <div className="mt-12 flex justify-center items-center gap-6">
             <div className="h-[1px] w-24 bg-primary/40" />
@@ -80,12 +80,12 @@ export function Sinergia() {
         >
           <div className="max-w-3xl mx-auto space-y-10">
             <p className="text-[#F8F1E3]/40 text-lg lg:text-2xl font-light leading-relaxed">
-              Ao contrário de atuações isoladas, o <span className="text-primary italic font-medium">Grupo Patrimonial</span> elimina a fragmentação.
+              Ao contrário de atuações isoladas, a <span className="text-primary italic font-medium">Patrimonial Inc.</span> elimina a fragmentação.
               Cada decisão tomada na fase de Engenharia já contempla a futura gestão do patrimônio familiar.
             </p>
-            
-            <Link 
-              href="/contato#form-contato" 
+
+            <Link
+              href="/contato#form-contato"
               className="mt-20 inline-flex flex-col items-center group gap-6"
             >
               <span className="text-xs font-bold uppercase tracking-[0.4em] text-white group-hover:text-primary transition-colors">

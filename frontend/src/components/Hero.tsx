@@ -184,8 +184,8 @@ export function Hero() {
             className="text-[2.6rem] sm:text-5xl leading-[0.9] text-[#0F172A] mb-4 uppercase tracking-tighter"
             style={{ fontFamily: "'Anglecia Pro Display', serif", fontWeight: "normal" }}
           >
-            GRUPO <br />
-            <span className="inline-block mt-1">PATRIMONIAL</span>
+            PATRIMONIAL <br />
+            <span className="inline-block mt-1">INCORPORAÇÕES</span>
           </h1>
 
           {/* Subtitle */}

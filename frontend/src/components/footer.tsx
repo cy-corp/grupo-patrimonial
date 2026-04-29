@@ -7,7 +7,7 @@ export function Footer() {
         <div className="grid grid-cols-1 gap-8 md:grid-cols-4">
           <div className="col-span-1 md:col-span-2">
             <Link href="/" className="mb-4 flex items-center gap-2">
-              <img src="/patrimonial-logo-png.png" alt="Grupo Patrimonial" className="h-16 w-auto" />
+              <img src="/patrimonial-logo-png.png" alt="Patrimonial Incorporações" className="h-16 w-auto" />
             </Link>
             <p className="mt-4 max-w-xs text-sm text-muted-foreground">
               Soluções completas para desenvolver, proteger, valorizar e perpetuar patrimônios imobiliários.
@@ -40,7 +40,8 @@ export function Footer() {
           </div>
         </div>
         <div className="mt-12 border-t pt-8 text-center text-sm text-muted-foreground">
-          &copy; {new Date().getFullYear()} Grupo Patrimonial. Todos os direitos reservados.
+          <p>&copy; {new Date().getFullYear()} Patrimonial Incorporações. Todos os direitos reservados.</p>
+          <p className="mt-2 text-xs opacity-75">Uma empresa do Grupo I3 Participações.</p>
         </div>
       </div>
     </footer>

@@ -51,7 +51,7 @@ export function Navbar() {
 
         {/* Logo — no mobile fica à direita, no desktop à esquerda */}
         <Link href="/" className="flex items-center group min-[1150px]:order-none order-last">
-          <img src="/patrimonial-logo-png.png" alt="Grupo Patrimonial" className="h-14 min-[1150px]:h-16 xl:h-20 w-auto transition-all" />
+          <img src="/patrimonial-logo-png.png" alt="Patrimonial Incorporações" className="h-14 min-[1150px]:h-16 xl:h-20 w-auto transition-all" />
           <img src="/patrimonial-text-png.png" alt="Patrimonial" className="h-12 min-[1150px]:h-14 xl:h-18 w-auto -ml-3 md:-ml-5 transition-all" />
         </Link>
 

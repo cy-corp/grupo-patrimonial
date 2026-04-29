@@ -20,8 +20,8 @@ const playfair = Playfair_Display({
 
 export const metadata: Metadata = {
   title: {
-    default: "Grupo Patrimonial",
-    template: "%s | Grupo Patrimonial",
+    default: "Patrimonial Incorporações",
+    template: "%s | Patrimonial Incorporações",
   },
   description:
     "Soluções completas em Engenharia, Incorporação, Construção, Imobiliária e Gestão Patrimonial. Transformamos imóveis em ativos sólidos e rentáveis com visão de longo prazo.",
@@ -37,14 +37,14 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "pt_BR",
-    siteName: "Grupo Patrimonial",
-    title: "Grupo Patrimonial",
+    siteName: "Patrimonial Incorporações",
+    title: "Patrimonial Incorporações",
     description:
       "Soluções completas em Engenharia, Incorporação, Construção, Imobiliária e Gestão Patrimonial.",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Grupo Patrimonial",
+    title: "Patrimonial Incorporações",
     description:
       "Soluções completas em Engenharia, Incorporação, Construção, Imobiliária e Gestão Patrimonial.",
   },

@@ -252,7 +252,7 @@ export default function EngenhariaPage() {
             </h2>
             <div className="flex flex-col items-center gap-12">
               <p className="font-sans text-[#0F172A]/40 text-[10px] uppercase font-bold tracking-[0.5em]">
-                FUNDAMENTOS GRUPO PATRIMONIAL
+                FUNDAMENTOS PATRIMONIAL INC.
               </p>
               <Link
                 href="/contato#form-contato"

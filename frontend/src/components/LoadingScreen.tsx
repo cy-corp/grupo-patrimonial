@@ -4,10 +4,10 @@ import React, { useEffect, useState } from "react";
 import { useProgress } from "@react-three/drei";
 import { motion, AnimatePresence } from "framer-motion";
 
-export function LoadingScreen({ 
+export function LoadingScreen({
   onFinished,
   onExitComplete
-}: { 
+}: {
   onFinished?: () => void;
   onExitComplete?: () => void;
 }) {
@@ -47,61 +47,61 @@ export function LoadingScreen({
     <AnimatePresence onExitComplete={handleAllComplete}>
       {!isFinished && (
         <motion.div
-           initial={{ opacity: 1 }}
-           exit={{ 
-             opacity: 0,
-             scale: 1.05,
-             transition: { 
-               duration: 0.5, 
-               ease: [0.76, 0, 0.24, 1], 
-               delay: 0.4
-             }
-           }}
-           className="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-[#F8F1E3]"
-         >
-           <motion.div 
-             initial={{ scale: 1, opacity: 1, filter: "blur(0px)" }}
-             exit={{ 
-               scale: 80,
-               opacity: [1, 1, 0],
-               filter: "blur(4px)",
-               transition: { 
-                 duration: 0.8, 
-                 ease: [0.7, 0, 0.3, 1],
-                 opacity: { times: [0, 0.6, 1], duration: 0.8 }
-               }
-             }}
-             style={{ willChange: "transform" }}
-             className="relative flex flex-col items-center"
-           >
+          initial={{ opacity: 1 }}
+          exit={{
+            opacity: 0,
+            scale: 1.05,
+            transition: {
+              duration: 0.5,
+              ease: [0.76, 0, 0.24, 1],
+              delay: 0.4
+            }
+          }}
+          className="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-[#F8F1E3]"
+        >
+          <motion.div
+            initial={{ scale: 1, opacity: 1, filter: "blur(0px)" }}
+            exit={{
+              scale: 80,
+              opacity: [1, 1, 0],
+              filter: "blur(4px)",
+              transition: {
+                duration: 0.8,
+                ease: [0.7, 0, 0.3, 1],
+                opacity: { times: [0, 0.6, 1], duration: 0.8 }
+              }
+            }}
+            style={{ willChange: "transform" }}
+            className="relative flex flex-col items-center"
+          >
             {/* Logo Container */}
             <div className="relative w-72 h-32 md:w-[400px] md:h-48">
               {/* Background Logo (Pale/White version) */}
               <div className="absolute inset-0">
                 <img
                   src="/patrimonial-full.png"
-                  alt="Grupo Patrimonial"
+                  alt="Patrimonial Incorporações"
                   className="w-full h-full object-contain opacity-10 contrast-0 brightness-200"
                 />
               </div>
-              
+
               {/* Progress Logo (Colored/Filling) - CSS PREMIUM DRIVEN */}
-              <div 
+              <div
                 className="absolute inset-0 overflow-hidden pointer-events-none loading-fill-premium"
               >
                 <div className="w-72 h-32 md:w-[400px] md:h-48">
                   <img
                     src="/patrimonial-full.png"
-                    alt="Grupo Patrimonial"
+                    alt="Patrimonial Incorporações"
                     className="w-full h-full object-contain"
                   />
                 </div>
               </div>
             </div>
           </motion.div>
-          
+
           {/* Decorative element */}
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 0.03 }}
             exit={{ opacity: 0, scale: 1.5, transition: { duration: 1 } }}

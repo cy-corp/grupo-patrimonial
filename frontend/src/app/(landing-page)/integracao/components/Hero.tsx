@@ -39,7 +39,7 @@ export function Hero() {
 
           <div className="mt-8 lg:mt-12 max-w-lg">
             <p className="text-[#0F172A]/70 text-lg md:text-xl lg:text-2xl leading-relaxed font-sans">
-              A força do <span className="text-[#0F172A] font-bold">Grupo Patrimonial</span> reside na conexão total entre inteligência estratégica e execução técnica. Um único grupo, todas as soluções.
+              A força da <span className="text-[#0F172A] font-bold">Patrimonial Incorporações</span> reside na conexão total entre inteligência estratégica e execução técnica. Um único grupo, todas as soluções.
             </p>
           </div>
 

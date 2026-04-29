@@ -32,7 +32,7 @@ export function InstitutionalHero() {
           transition={{ duration: 0.8, delay: 0.2 }}
           className="font-heading text-4xl md:text-7xl text-[#0F172A] mb-8 leading-tight tracking-tight uppercase font-black"
         >
-          Grupo Patrimonial:<br />
+          Patrimonial Incorporações:<br />
           <span className="text-primary italic font-light lowercase block mt-2">Solidez e Visão de Futuro</span>
         </motion.h1>
 

@@ -36,7 +36,7 @@ export default function QuemSomos() {
         >
           <h2 className="font-heading text-3xl md:text-5xl text-[#0F172A] mb-8 tracking-tight uppercase font-black">Interessado em nossa visão?</h2>
           <p className="font-sans text-[#0F172A]/70 mb-12 max-w-xl mx-auto text-lg leading-relaxed font-bold">
-            Explore as oportunidades de investimento e parceria com o Grupo Patrimonial.
+            Explore as oportunidades de investimento e parceria com a Patrimonial Incorporações.
           </p>
           <div className="flex justify-center">
             <Link href="/contato#form-contato">

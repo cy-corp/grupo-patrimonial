@@ -10,15 +10,15 @@ const faqs = [
     answer: "Atuamos em toda a cadeia: desde o estudo de viabilidade técnica e jurídica até a entrega final. Integramos engenharia de precisão e inteligência de mercado para maximizar o VGV e garantir segurança aos investidores."
   },
   {
-    question: "Quais são os critérios do Grupo para parcerias em novos terrenos?",
+    question: "Quais são os critérios da Patrimonial Inc. para parcerias em novos terrenos?",
     answer: "Buscamos áreas com potencial estratégico de valorização, preferencialmente em localizações consagradas ou de expansão planejada. Analisamos metragem, zoneamento e liquidez imobiliária do entorno."
   },
   {
-    question: "Como o Grupo Patrimonial garante a segurança jurídica dos investimentos?",
+    question: "Como a Patrimonial Inc. garante a segurança jurídica dos investimentos?",
     answer: "Utilizamos estruturas de SPE (Sociedade de Propósito Específico) para cada projeto, garantindo segregação patrimonial. Contamos com auditoria jurídica permanente e transparência total na governança das parcerias."
   },
   {
-    question: "Qual o perfil de investidor atendido pelo Grupo?",
+    question: "Qual o perfil de investidor atendido pela Patrimonial Inc.?",
     answer: "Atendemos investidores institucionais, Family Offices e investidores privados de alta renda que buscam diversificação em ativos reais com foco em preservação e expansão de capital no longo prazo."
   },
   {
@@ -34,7 +34,7 @@ export function FAQ() {
     <section className="py-24 px-6 md:px-24 bg-white relative overflow-hidden">
       <div className="max-w-4xl mx-auto relative z-10">
         <div className="text-center mb-16">
-          <motion.span 
+          <motion.span
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
@@ -42,7 +42,7 @@ export function FAQ() {
           >
             Esclarecimentos
           </motion.span>
-          <motion.h2 
+          <motion.h2
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -52,7 +52,7 @@ export function FAQ() {
             Perguntas Frequentes
           </motion.h2>
           <div className="mt-8 flex justify-center">
-            <motion.div 
+            <motion.div
               initial={{ width: 0 }}
               whileInView={{ width: 60 }}
               viewport={{ once: true }}

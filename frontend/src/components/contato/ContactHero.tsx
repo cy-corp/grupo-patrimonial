@@ -44,7 +44,7 @@ export function ContactHero() {
           transition={{ duration: 0.8, delay: 0.4 }}
           className="font-sans text-[#0F172A]/70 text-base md:text-xl max-w-2xl leading-relaxed tracking-wide font-medium border-l-2 border-primary/20 pl-8 md:pl-10"
         >
-          Inicie uma parceria estratégica com o Grupo Patrimonial. Nossa equipe executiva está à disposição para analisar novas oportunidades e viabilizar empreendimentos de alto impacto.
+          Inicie uma parceria estratégica com a Patrimonial Incorporações. Nossa equipe executiva está à disposição para analisar novas oportunidades e viabilizar empreendimentos de alto impacto.
         </motion.p>
       </div>
     </section>

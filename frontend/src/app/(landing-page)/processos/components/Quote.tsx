@@ -31,7 +31,7 @@ export function Quote() {
           <div className="flex flex-col items-center gap-4">
             <div className="h-[2px] w-12 bg-primary" />
             <div className="text-[12px] lg:text-[14px] font-bold uppercase tracking-[0.5em] text-[#0F172A]">
-              Grupo Patrimonial
+              Patrimonial Inc.
             </div>
           </div>
         </motion.div>
