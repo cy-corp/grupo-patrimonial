@@ -31,8 +31,8 @@ const partners: Partner[] = [
   },
   {
     name: "Lucas Azevedo",
-    role: "Engenheiro Civil | Execução | Projetos",
-    description: "Engenheiro civil atuante desde os 11 anos de idade, Lucas Azevedo cresceu dentro da construção civil, em uma empresa familiar com mais de 27 anos de atuação no mercado.",
+    role: "Construtor | Execução | Projetos",
+    description: "Construtor atuante desde os 11 anos de idade, Lucas Azevedo cresceu dentro da construção civil, em uma empresa familiar com mais de 27 anos de atuação no mercado.",
     extraInfo: "Une conhecimento técnico profundo, visão prática de obra e domínio de projetos, sendo responsável por transformar conceito em estrutura, desempenho e durabilidade. Sua atuação garante construções bem resolvidas, econômicas e tecnicamente superiores. Diretor Executivo da C.A.C Prime Corp.",
     company: "Diretor Executivo da C.A.C PRIME CORP.",
     image: "/quem-somos/lucas-azevedo.png"
