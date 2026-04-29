@@ -13,13 +13,21 @@ interface Partner {
 }
 
 const partners: Partner[] = [
+  // {
+  //   name: "Dener Lopes",
+  //   role: "Engenheiro Ambiental e Agrimensor | Incorporação | Regularização Fundiária",
+  //   description: "Incorporador desde 2008, especialista na área ambiental e agrimensura. Cursou Engenharia Ambiental na UEMG (Universidade do Estado de Minas Gerais), é Agrimensor pela Faculdade Pitágoras, Diretor comercial Da Urbastructor Urbanismo E Incorporações e aqui como CEO da Patrimonial. Participou de 73 loteamentos em São Paulo, Minas Gerais e Goiás, além de inúmeras regularizações fundiárias, ambientais e urbanísticas em diferentes escalas.",
+  //   extraInfo: "É o responsável por integrar engenharia, legislação, viabilidade econômica e estratégia imobiliária, assegurando que cada projeto nasça juridicamente sólido, tecnicamente viável e financeiramente eficiente.",
+  //   company: "Diretor Comercial da URBASTRUCTOR",
+  //   image: "/quem-somos/dener-lopes.png"
+  // },
   {
-    name: "Dener Lopes",
-    role: "Engenheiro Ambiental e Agrimensor | Incorporação | Regularização Fundiária",
-    description: "Incorporador desde 2008, especialista na área ambiental e agrimensura. Cursou Engenharia Ambiental na UEMG (Universidade do Estado de Minas Gerais), é Agrimensor pela Faculdade Pitágoras, Diretor comercial Da Urbastructor Urbanismo E Incorporações e aqui como CEO da Patrimonial. Participou de 73 loteamentos em São Paulo, Minas Gerais e Goiás, além de inúmeras regularizações fundiárias, ambientais e urbanísticas em diferentes escalas.",
-    extraInfo: "É o responsável por integrar engenharia, legislação, viabilidade econômica e estratégia imobiliária, assegurando que cada projeto nasça juridicamente sólido, tecnicamente viável e financeiramente eficiente.",
-    company: "Diretor Comercial da URBASTRUCTOR",
-    image: "/quem-somos/dener-lopes.png"
+    name: "Jarliane Oliveira",
+    role: "Empresária | Finanças | Gestão de Pessoas",
+    description: "Empresária com mais de 14 anos de experiência, com atuação estratégica nas áreas de finanças, gestão de pessoas e performance organizacional, tendo ocupado a posição de CFO (Chief Financial Officer). Com passagem por multinacional de renome como a Heineken, desenvolveu forte visão corporativa, governança e foco em resultados. No setor da construção civil, consolidou expertise em segurança do trabalho, gestão de riscos e compliance.",
+    extraInfo: "Especialista em KPIs e inteligência de dados, atua na estruturação de métricas e processos que impulsionam crescimento sustentável e eficiência operacional. Sua experiência em Recursos Humanos contempla a formação e desenvolvimento de equipes de alta performance, alinhadas a uma cultura organizacional orientada a resultados.",
+    company: "GRUPO PATRIMONIAL",
+    image: "/quem-somos/jarliane-oliveira.png"
   },
   {
     name: "Lucas Azevedo",
@@ -29,14 +37,14 @@ const partners: Partner[] = [
     company: "Diretor Executivo da C.A.C PRIME CORP.",
     image: "/quem-somos/lucas-azevedo.png"
   },
-  {
-    name: "Adermis Marini",
-    role: "Empresário | Corretor de Imóveis | Estratégia Comercial",
-    description: "Empresário, corretor de imóveis e ex-deputado federal, Adermis Marini atua no ramo imobiliário há mais de 8 anos, com participação direta no lançamento e desenvolvimento de diversos empreendimentos.",
-    extraInfo: "Economista com pós-graduações em Administração de Empresas e Gestão Empresarial pela UniFACEF, possui ainda formação em Gestão de Negócios Imobiliários pela Escola Técnica Federal de Minas Gerais e especialização em Gestão de Cidades pela Fundação do Instituto Latino Americano. Possui forte visão de mercado, relacionamento institucional e capacidade estratégica para posicionamento comercial, vendas e articulação de negócios, conectando o produto certo ao público certo. Diretor Executivo da Marini Imóveis.",
-    company: "Diretor Executivo da MARINI IMÓVEIS.",
-    image: "/quem-somos/adermis-marini.png"
-  },
+  // {
+  //   name: "Adermis Marini",
+  //   role: "Empresário | Corretor de Imóveis | Estratégia Comercial",
+  //   description: "Empresário, corretor de imóveis e ex-deputado federal, Adermis Marini atua no ramo imobiliário há mais de 8 anos, com participação direta no lançamento e desenvolvimento de diversos empreendimentos.",
+  //   extraInfo: "Economista com pós-graduações em Administração de Empresas e Gestão Empresarial pela UniFACEF, possui ainda formação em Gestão de Negócios Imobiliários pela Escola Técnica Federal de Minas Gerais e especialização em Gestão de Cidades pela Fundação do Instituto Latino Americano. Possui forte visão de mercado, relacionamento institucional e capacidade estratégica para posicionamento comercial, vendas e articulação de negócios, conectando o produto certo ao público certo. Diretor Executivo da Marini Imóveis.",
+  //   company: "Diretor Executivo da MARINI IMÓVEIS.",
+  //   image: "/quem-somos/adermis-marini.png"
+  // },
   {
     name: "Beto Gallo",
     role: "Empresário | Arquiteto | Design | Arquitetura Internacional",
@@ -45,14 +53,14 @@ const partners: Partner[] = [
     company: "Diretor de Projetos da GALLO DECOR.",
     image: "/quem-somos/beto-gallo.png"
   },
-  {
-    name: "Osmar",
-    role: "Sócio-Diretor | Estratégia e Novos Negócios",
-    description: "Bio em desenvolvimento. Osmar traz sua experiência em gestão e visão estratégica para o fortalecimento do Grupo Patrimonial.",
-    extraInfo: "Atuando na identificação de oportunidades de mercado e consolidação de parcerias estratégicas que impulsionam o crescimento sustentável da empresa.",
-    company: "GRUPO PATRIMONIAL",
-    image: "/quem-somos/osmar.png"
-  }
+  // {
+  //   name: "Osmar",
+  //   role: "Sócio-Diretor | Estratégia e Novos Negócios",
+  //   description: "Bio em desenvolvimento. Osmar traz sua experiência em gestão e visão estratégica para o fortalecimento do Grupo Patrimonial.",
+  //   extraInfo: "Atuando na identificação de oportunidades de mercado e consolidação de parcerias estratégicas que impulsionam o crescimento sustentável da empresa.",
+  //   company: "GRUPO PATRIMONIAL",
+  //   image: "/quem-somos/osmar.png"
+  // }
 ];
 
 export function Leadership() {
@@ -101,7 +109,7 @@ export function Leadership() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8, delay: index * 0.15 }}
-              className="bg-white border border-primary/10 group overflow-hidden hover:border-primary/30 transition-all duration-500 flex flex-col self-start w-full md:w-[calc(50%-1rem)] lg:w-[calc(20%-1.6rem)]"
+              className="bg-white border border-primary/10 group overflow-hidden hover:border-primary/30 transition-all duration-500 flex flex-col self-start w-full md:w-[calc(50%-1rem)] lg:w-[calc(33.333%-1.5rem)]"
             >
               <div className="aspect-[3/4] overflow-hidden grayscale hover:grayscale-0 transition-all duration-700 relative">
                 <img
