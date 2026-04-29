@@ -20,7 +20,7 @@ const playfair = Playfair_Display({
 
 export const metadata: Metadata = {
   title: {
-    default: "Patrimonial Incorporações",
+    default: "Patrimonial Inc.",
     template: "%s | Patrimonial Incorporações",
   },
   description:

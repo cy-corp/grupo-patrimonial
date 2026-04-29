@@ -15,6 +15,7 @@ export function Hero() {
   const cardRef = useRef<HTMLDivElement>(null);
 
   const [maskValue, setMaskValue] = useState("none");
+  const [applyOffset, setApplyOffset] = useState(false);
 
   // Mobile foreground offset — calibrated on S10 (360×760)
   const [mobileOffset, setMobileOffset] = useState({ x: -70, y: -140 });
@@ -28,6 +29,12 @@ export function Hero() {
   const EXTEND_BG_PX = 200;
 
   useEffect(() => {
+    if (typeof window !== "undefined") {
+      const ua = navigator.userAgent;
+      const isFirefox = /Firefox/.test(ua);
+      setApplyOffset(!isFirefox);
+    }
+
     const calcMobileOffset = () => {
       if (typeof window === "undefined") return;
       if (window.innerWidth >= 768) {
@@ -79,16 +86,12 @@ export function Hero() {
 
     if (!titleRef.current) return;
 
-    // Em telas muito grandes não há risco de colisão
-    if (vw >= 1536) {
-      setMaskValue("none");
-      return;
-    }
-
     const rect = titleRef.current.getBoundingClientRect();
     const textRightPct = (rect.right / vw) * 100;
-    const fadeStart = Math.max(textRightPct - 5, 0);
-    const fadeEnd = Math.min(textRightPct + 18, 100);
+    // Buffer maior: começa a desaparecer 25% antes do edge do texto
+    // e termina 20% depois — garante cobertura em qualquer zoom/viewport
+    const fadeStart = Math.max(textRightPct - 25, 0);
+    const fadeEnd = Math.min(textRightPct + 20, 100);
 
     setMaskValue(
       `linear-gradient(to right, transparent 0%, transparent ${fadeStart.toFixed(1)}%, black ${fadeEnd.toFixed(1)}%, black 100%)`
@@ -181,11 +184,25 @@ export function Hero() {
 
           {/* Title */}
           <h1
-            className="text-[2.6rem] sm:text-5xl leading-[0.9] text-[#0F172A] mb-4 uppercase tracking-tighter"
-            style={{ fontFamily: "'Anglecia Pro Display', serif", fontWeight: "normal" }}
+            className="text-[2rem] sm:text-[2.4rem] md:text-4xl leading-[0.9] text-[#0F172A] mb-4 uppercase"
+            style={{
+              fontFamily: "'Anglecia Pro Display', serif",
+              fontWeight: "normal",
+              textRendering: "geometricPrecision",
+              fontKerning: "none",
+              letterSpacing: "0.02em",
+              fontFeatureSettings: '"kern" 0, "liga" 0, "clig" 0, "calt" 0'
+            }}
           >
             PATRIMONIAL <br />
-            <span className="inline-block mt-1">INCORPORAÇÕES</span>
+            <span className="inline-block whitespace-nowrap mt-1">
+              INCORPORAÇÕ<span
+                className="inline-block"
+                style={{ marginLeft: applyOffset ? "0.4em" : "0.02em", fontKerning: "none", fontFeatureSettings: '"kern" 0' }}
+              >
+                ES
+              </span>
+            </span>
           </h1>
 
           {/* Subtitle */}
@@ -282,14 +299,14 @@ export function Hero() {
       <div className="hidden md:block absolute top-0 right-0 w-[50vw] h-full bg-white/5 skew-x-[-12deg] translate-x-[20%] pointer-events-none z-1" />
 
       {/* DESKTOP MAIN CONTAINER */}
-      <div className="hidden md:flex relative w-full max-w-[1600px] z-10 translate-y-10 px-8 md:px-16 lg:px-24 items-center justify-center min-h-screen">
+      <div className="hidden md:flex relative w-full max-w-[1600px] z-10 px-8 md:px-16 lg:px-24 items-center justify-center min-h-[calc(100vh-6rem)] mt-24 pb-8">
 
         {/* THE FUSION CANVAS */}
         <motion.div
           initial={{ opacity: 0, scale: 0.98, y: 20 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
-          className="relative min-h-[60vh] md:min-h-[75vh] lg:min-h-[80vh] w-full rounded-[40px] md:rounded-[60px] overflow-hidden drop-shadow-[0_45px_100px_rgba(0,0,0,0.15)] isolate"
+          className="relative min-h-[60vh] md:min-h-[70vh] lg:min-h-[72vh] w-full rounded-[40px] md:rounded-[60px] overflow-hidden drop-shadow-[0_45px_100px_rgba(0,0,0,0.15)] isolate"
         >
           {/* THE HOLE & WHITE BACKGROUND */}
           <div className="absolute right-6 top-6 bottom-6 md:right-8 md:top-8 md:bottom-8 md:w-[30%] lg:w-[35%] xl:w-[40%] rounded-[30px] md:rounded-[50px] shadow-[0_0_0_9999px_white] z-0 pointer-events-none transition-all duration-700 ease-in-out" />
@@ -298,7 +315,7 @@ export function Hero() {
           <div className="relative z-10 flex flex-row items-stretch h-full min-h-[60vh] md:min-h-[75vh] lg:min-h-[80vh]">
 
             {/* LEFT SIDE: TEXT */}
-            <div className="w-full md:w-[70%] lg:w-[65%] xl:w-[60%] flex flex-col justify-center p-8 md:p-14 lg:p-20 lg:pl-24 transition-all duration-700 ease-in-out">
+            <div className="w-full md:w-[65%] lg:w-[60%] xl:w-[55%] flex flex-col justify-center p-8 md:p-12 lg:p-16 lg:pl-20 transition-all duration-700 ease-in-out">
               <motion.div
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
@@ -318,15 +335,27 @@ export function Hero() {
                 className="max-w-[900px]"
               >
                 <h1
-                  className="text-5xl sm:text-6xl md:text-7xl lg:text-[clamp(2.5rem,5.5vw,5.5rem)] leading-[0.85] text-[#0F172A] mb-12 uppercase tracking-tighter"
-                  style={{ fontFamily: "'Anglecia Pro Display', serif", fontWeight: "normal" }}
+                  className="text-4xl sm:text-5xl md:text-5xl lg:text-[clamp(2.2rem,4.5vw,4.2rem)] leading-[0.85] text-[#0F172A] mb-12 uppercase"
+                  style={{
+                    fontFamily: "'Anglecia Pro Display', serif",
+                    fontWeight: "normal",
+                    textRendering: "geometricPrecision",
+                    fontKerning: "none",
+                    letterSpacing: "0.02em",
+                    fontFeatureSettings: '"kern" 0, "liga" 0, "clig" 0, "calt" 0'
+                  }}
                 >
-                  GRUPO <br />
+                  PATRIMONIAL <br />
                   <span
                     ref={titleRef}
-                    className="inline-block"
+                    className="inline-block whitespace-nowrap"
                   >
-                    PATRIMONIAL
+                    INCORPORAÇÕ<span
+                      className="inline-block"
+                      style={{ marginLeft: applyOffset ? "0.4em" : "0.02em", fontKerning: "none", fontFeatureSettings: '"kern" 0' }}
+                    >
+                      ES
+                    </span>
                   </span>
                 </h1>
 
@@ -347,7 +376,7 @@ export function Hero() {
             </div>
 
             {/* RIGHT SIDE: THE HOLE (spacer) */}
-            <div className="md:w-[30%] lg:w-[35%] xl:w-[40%] pointer-events-none transition-all duration-700 ease-in-out" />
+            <div className="md:w-[35%] lg:w-[40%] xl:w-[45%] pointer-events-none transition-all duration-700 ease-in-out" />
 
           </div>
         </motion.div>
