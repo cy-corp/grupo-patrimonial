@@ -10,6 +10,7 @@ import {
   TrendingUp,
   ChevronRight
 } from "lucide-react";
+import Link from "next/link";
 import { cn } from "@/lib/utils";
 
 const solutions = [
@@ -18,30 +19,35 @@ const solutions = [
     description: "Soluções técnicas avançadas e rigor construtivo para projetos de alta complexidade.",
     icon: HardHat,
     color: "bg-blue-500/10 text-blue-500",
+    path: "/engenharia",
   },
   {
     title: "Incorporadora",
     description: "Desenvolvimento de produtos imobiliários inovadores e de alto padrão.",
     icon: Building2,
     color: "bg-amber-500/10 text-amber-500",
+    path: "/incorporadora",
   },
   {
     title: "Construtora",
     description: "Execução impecável com tecnologia de ponta e foco total em qualidade.",
     icon: Construction,
     color: "bg-emerald-500/10 text-emerald-500",
+    path: "/construtora",
   },
   {
     title: "Imobiliária",
     description: "Comercialização estratégica e curadoria de ativos para clientes exigentes.",
     icon: Home,
     color: "bg-purple-500/10 text-purple-500",
+    path: "/imobiliaria",
   },
   {
     title: "Gestão Patrimonial",
     description: "Preservação e valorização de patrimônios através de gestão profissional.",
     icon: TrendingUp,
     color: "bg-rose-500/10 text-rose-500",
+    path: "/patrimonial",
   },
 ];
 
@@ -115,10 +121,13 @@ export function Solutions() {
                 {solution.description}
               </p>
 
-              <div className="mt-auto pt-8 flex items-center gap-3 text-primary text-[10px] uppercase font-bold tracking-[0.3em] opacity-0 group-hover:opacity-100 transition-all duration-500 group-hover:translate-x-2">
+              <Link
+                href={solution.path}
+                className="mt-auto pt-8 flex items-center gap-3 text-primary text-[10px] uppercase font-bold tracking-[0.3em] opacity-0 group-hover:opacity-100 transition-all duration-500 group-hover:translate-x-2 cursor-pointer"
+              >
                 Conhecer Unidade
                 <ChevronRight className="w-3 h-3" />
-              </div>
+              </Link>
 
               {/* Bottom Decorative Bar */}
               <div className="absolute bottom-0 left-0 w-0 h-[2px] bg-primary group-hover:w-full transition-all duration-1000" />
