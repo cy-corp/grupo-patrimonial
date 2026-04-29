@@ -39,7 +39,7 @@ export function Navbar() {
         <div className="min-[1150px]:hidden flex items-center">
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="flex items-center gap-2 text-[#0F172A] p-2 hover:bg-slate-100 rounded-lg transition-colors"
+            className="flex items-center gap-2 text-[#0F172A] p-2 hover:bg-slate-100 rounded-lg transition-colors cursor-pointer"
             aria-label="Abrir menu"
           >
             {isMobileMenuOpen ? <X size={22} /> : <Menu size={22} />}
