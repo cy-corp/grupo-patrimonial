@@ -2,20 +2,24 @@
 
 import React from "react";
 import { motion } from "framer-motion";
+import { useActiveImage } from "@/hooks/useActiveImage";
 
 export function InvestorsHero() {
+  const { imageUrl, altText } = useActiveImage("investidores_hero", "/investidores/investor-hero.jpg");
+
   return (
     <section className="relative min-h-[100vh] md:min-h-[90vh] flex flex-col md:flex-row md:items-center overflow-hidden bg-[#F8F1E3]">
       {/* Background/Image block (Mobile vs Desktop) */}
       <div className="relative md:absolute md:inset-0 h-[45vh] md:h-full w-full overflow-hidden z-0">
         <img
-          alt="Prestigious metropolitan skyscraper architecture"
+          alt={altText || "Prestigious metropolitan skyscraper architecture"}
           className="w-full h-full object-cover transition-all duration-700"
-          src="/investidores/investor-hero.jpg"
+          src={imageUrl}
         />
         {/* Horizontal Gradient (Desktop Only) */}
         <div className="hidden md:block absolute inset-0 bg-gradient-to-r from-[#F8F1E3] via-[#F8F1E3]/85 to-transparent"></div>
       </div>
+
 
       {/* Content block with more aggressive negative margin on mobile */}
       <div className="relative z-10 -mt-28 md:mt-0 px-6 py-12 md:py-24 md:px-24 md:ml-12 max-w-6xl bg-[#F8F1E3] md:bg-transparent rounded-t-[3rem] md:rounded-none">

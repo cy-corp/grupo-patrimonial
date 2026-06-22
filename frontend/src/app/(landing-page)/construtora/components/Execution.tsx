@@ -2,8 +2,11 @@
 
 import Image from "next/image";
 import { motion } from "framer-motion";
+import { useActiveImage } from "@/hooks/useActiveImage";
 
 export function Execution() {
+  const { imageUrl, altText } = useActiveImage("construtora_execution", "/construtora-execucao.jpg");
+
   return (
     <section className="py-24 md:py-48 bg-white overflow-hidden">
       <div className="container mx-auto px-6 lg:px-24">
@@ -16,12 +19,13 @@ export function Execution() {
             className="relative aspect-square md:aspect-[4/5] overflow-hidden rounded-sm shadow-2xl"
           >
             <Image
-              src="/construtora-execucao.jpg"
-              alt="Execução Institucional"
+              src={imageUrl}
+              alt={altText || "Execução Institucional"}
               fill
               className="object-cover grayscale hover:grayscale-0 transition-all duration-700 hover:scale-105"
             />
           </motion.div>
+
 
           <motion.div
             initial={{ opacity: 0, x: 50 }}

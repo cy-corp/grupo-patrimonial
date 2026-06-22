@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { motion, Variants } from "framer-motion";
 import { GoldButton } from "@/components/ui/gold-button";
+import { useActiveImage } from "@/hooks/useActiveImage";
 import {
   Compass,
   Map,
@@ -64,6 +65,8 @@ const fadeUp: Variants = {
 };
 
 export default function IncorporadoraPage() {
+  const { imageUrl, altText } = useActiveImage("incorporadora_hero", "/incorporadora/incorporadora-hero.jpg");
+
   return (
     <main className="min-h-screen bg-[#F8F1E3] flex flex-col pt-16 md:pt-0">
 
@@ -74,8 +77,8 @@ export default function IncorporadoraPage() {
         <div className="hidden md:flex relative min-h-[85vh] items-center">
           <div className="absolute inset-0 z-0">
             <Image
-              src="/incorporadora/incorporadora-hero.jpg"
-              alt="Incorporadora"
+              src={imageUrl}
+              alt={altText || "Incorporadora"}
               fill
               className="object-cover brightness-75"
               priority
@@ -111,8 +114,8 @@ export default function IncorporadoraPage() {
         <div className="md:hidden flex flex-col">
           <div className="relative h-[45vh] w-full">
             <Image
-              src="/incorporadora/incorporadora-hero.jpg"
-              alt="Incorporadora"
+              src={imageUrl}
+              alt={altText || "Incorporadora"}
               fill
               className="object-cover brightness-90"
             />
@@ -129,7 +132,7 @@ export default function IncorporadoraPage() {
               <span className="text-[#C9A14A]">RADORA</span>
             </h1>
             <p className="font-sans text-[#0F172A]/80 text-lg leading-relaxed">
-              Desenvolvimento estratégico de empreendimentos imobiliários de alto valor.
+              Desenvolvimento strategic de empreendimentos imobiliários de alto valor.
             </p>
           </div>
         </div>

@@ -2,22 +2,26 @@
 
 import Image from "next/image";
 import { motion } from "framer-motion";
+import { useActiveImage } from "@/hooks/useActiveImage";
 
 export function Hero() {
+  const { imageUrl, altText } = useActiveImage("construtora_hero", "/construtora/construtora-hero.jpg");
+
   return (
     <section className="relative w-full overflow-hidden">
       {/* Desktop Hero */}
       <div className="hidden md:flex relative min-h-[90vh] items-center">
         <div className="absolute inset-0 z-0">
           <Image
-            src="/construtora/construtora-hero.jpg"
-            alt="Construtora"
+            src={imageUrl}
+            alt={altText || "Construtora"}
             fill
             className="object-cover"
             priority
           />
           <div className="absolute inset-0 bg-gradient-to-r from-[#F8F1E3] via-[#F8F1E3]/85 to-transparent" />
         </div>
+
 
         <div className="container relative z-10 mx-auto px-12 lg:px-24">
           <motion.div
@@ -46,8 +50,8 @@ export function Hero() {
       <div className="md:hidden flex flex-col">
         <div className="relative h-[45vh] w-full">
           <Image
-            src="/construtora/construtora-hero.jpg"
-            alt="Construtora"
+            src={imageUrl}
+            alt={altText || "Construtora"}
             fill
             className="object-cover brightness-90"
           />

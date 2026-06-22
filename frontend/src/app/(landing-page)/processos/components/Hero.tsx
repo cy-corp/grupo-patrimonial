@@ -2,15 +2,18 @@
 
 import Image from "next/image";
 import { motion } from "framer-motion";
+import { useActiveImage } from "@/hooks/useActiveImage";
 
 export function Hero() {
+  const { imageUrl, altText } = useActiveImage("processos_hero", "/processos/processos-hero.jpg");
+
   return (
     <section className="relative min-h-[85vh] lg:h-screen w-full flex flex-col lg:flex-row items-center overflow-hidden bg-[#F8F1E3]">
       {/* BACKGROUND IMAGE - CINEMATIC DESKTOP / EDITORIAL MOBILE */}
       <div className="relative w-full h-[50vh] lg:absolute lg:inset-0 lg:h-full z-0">
         <Image
-          src="/processos/processos-hero.jpg"
-          alt="Processos e Qualidade"
+          src={imageUrl}
+          alt={altText || "Processos e Qualidade"}
           fill
           className="object-cover object-center brightness-[0.8] lg:brightness-100"
           priority
@@ -18,6 +21,7 @@ export function Hero() {
         {/* DESKTOP OVERLAY GRADIENT */}
         <div className="hidden lg:block absolute inset-0 bg-gradient-to-r from-[#F8F1E3] via-[#F8F1E3]/85 to-transparent z-10" />
       </div>
+
 
       {/* CONTENT - EDITORIAL OVERLAP ON MOBILE / OVERLAY ON DESKTOP */}
       <div className="container relative z-20 mx-auto px-6 lg:px-12 -mt-28 lg:mt-0">

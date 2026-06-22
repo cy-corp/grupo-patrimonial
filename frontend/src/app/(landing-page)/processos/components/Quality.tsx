@@ -3,8 +3,11 @@
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { ArrowUpRight, CheckCircle2 } from "lucide-react";
+import { useActiveImage } from "@/hooks/useActiveImage";
 
 export function Quality() {
+  const { imageUrl, altText } = useActiveImage("processos_seal", "/processos/quality-seal.png");
+
   return (
     <section className="py-24 lg:py-48 bg-[#F8F1E3] overflow-hidden">
       <div className="container mx-auto px-6">
@@ -19,12 +22,13 @@ export function Quality() {
               className="relative aspect-square w-full max-w-[600px] mx-auto overflow-hidden bg-[#0F172A]"
             >
               <Image
-                src="/processos/quality-seal.png"
-                alt="Selo de Qualidade"
+                src={imageUrl}
+                alt={altText || "Selo de Qualidade"}
                 fill
                 className="object-cover object-center"
               />
             </motion.div>
+
 
             {/* FLOATING CARD */}
             <motion.div
