@@ -2,6 +2,7 @@
 
 import dynamic from "next/dynamic";
 import Link from "next/link";
+import { companyList, formatCnpj } from "@/lib/companies";
 
 const FooterDiorama = dynamic(
   () => import("./footer-diorama").then((mod) => mod.FooterDiorama),
@@ -10,15 +11,36 @@ const FooterDiorama = dynamic(
 
 export function Footer() {
   return (
-    <footer className="relative overflow-hidden bg-[#F3F0EA] pb-[12.5rem] pt-12 md:pb-[26rem] md:pt-20">
+    <footer className="relative z-[70] -mt-6 overflow-hidden rounded-t-[40px] bg-[#F3F0EA] pb-[12.5rem] pt-12 shadow-[0_-16px_40px_rgba(0,0,0,0.12)] md:-mt-10 md:rounded-t-[60px] md:pb-[26rem] md:pt-20">
       <div className="relative z-10 container mx-auto px-4">
-        <div className="grid grid-cols-1 gap-10 md:grid-cols-4 md:gap-8">
-          <div className="col-span-1 md:col-span-2">
+        <div className="grid grid-cols-1 gap-10 md:grid-cols-12 md:gap-8">
+          <div className="md:col-span-3">
             <p className="max-w-xs text-pretty text-sm text-[#4D4D4D]">
               Duas empresas, papéis claros: incorporação na Rendal, projeto e construção na DCorp.
             </p>
           </div>
-          <div>
+
+          {companyList.map((company) => (
+            <div key={company.id} className="md:col-span-3">
+              <h3 className="mb-4 font-heading font-semibold text-[#1F1F1F]">{company.legalName}</h3>
+              <ul className="space-y-2 text-sm text-[#4D4D4D]">
+                <li>
+                  <a href={company.contactHref} className="hover:text-primary">
+                    {company.email}
+                  </a>
+                </li>
+                <li>
+                  <a href={company.phoneHref} className="hover:text-primary">
+                    {company.phone}
+                  </a>
+                </li>
+                <li className="text-pretty">{company.address}</li>
+                <li>{formatCnpj(company.cnpj)}</li>
+              </ul>
+            </div>
+          ))}
+
+          <div className="md:col-span-3">
             <h3 className="mb-4 font-heading font-semibold text-[#1F1F1F]">Links</h3>
             <ul className="space-y-2 text-sm text-[#4D4D4D]">
               <li>
@@ -37,18 +59,10 @@ export function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/contato#form-contato" className="hover:text-primary">
+                <Link href="/contato" className="hover:text-primary">
                   Contato
                 </Link>
               </li>
-            </ul>
-          </div>
-          <div>
-            <h3 className="mb-4 font-heading font-semibold text-[#1F1F1F]">Contato</h3>
-            <ul className="space-y-2 text-sm text-[#4D4D4D]">
-              <li>contato@gruporendal.com.br</li>
-              <li>(19) 99999-9999</li>
-              <li>Campinas-SP</li>
             </ul>
           </div>
         </div>

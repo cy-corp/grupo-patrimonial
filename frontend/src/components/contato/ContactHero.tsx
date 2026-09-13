@@ -3,53 +3,38 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { useActiveImage } from "@/hooks/useActiveImage";
+import type { Company } from "@/lib/companies";
 
-export function ContactHero() {
+export function ContactHero({ company }: { company: Company }) {
   const { imageUrl, altText } = useActiveImage("contato_hero", "/contato/contact-hero.jpg");
 
   return (
-    <section className="relative min-h-[100vh] md:min-h-[90vh] flex flex-col md:flex-row md:items-center overflow-hidden bg-[#F8F1E3]">
-      {/* Background/Image block (Mobile vs Desktop) */}
-      <div className="relative md:absolute md:inset-0 h-[45vh] md:h-full w-full overflow-hidden z-0">
+    <section className="relative flex min-h-[100vh] flex-col overflow-hidden bg-[#F8F1E3] md:min-h-[90vh] md:flex-row md:items-center">
+      <div className="relative z-0 h-[45vh] w-full overflow-hidden md:absolute md:inset-0 md:h-full">
         <img
-          alt={altText || "Luxury office architecture headquarters"}
-          className="w-full h-full object-cover transition-all duration-700"
+          alt={altText || "Escritório"}
+          className="h-full w-full object-cover"
           src={imageUrl}
         />
-        {/* Horizontal Gradient (Desktop Only) */}
-        <div className="hidden md:block absolute inset-0 bg-gradient-to-r from-[#F8F1E3] via-[#F8F1E3]/85 to-transparent"></div>
-        {/* Bottom Gradient (Mobile Only) */}
-        <div className="md:hidden absolute inset-0 bg-gradient-to-t from-[#F8F1E3] via-[#F8F1E3]/20 to-transparent"></div>
+        <div className="absolute inset-0 hidden bg-gradient-to-r from-[#F8F1E3] via-[#F8F1E3]/85 to-transparent md:block" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#F8F1E3] via-[#F8F1E3]/20 to-transparent md:hidden" />
       </div>
 
-
-      {/* Content block with aggressive negative margin on mobile */}
-      <div className="relative z-10 -mt-28 md:mt-0 px-6 py-12 md:py-24 md:px-24 md:ml-12 max-w-6xl bg-[#F8F1E3] md:bg-transparent rounded-t-[3rem] md:rounded-none">
-        <motion.div
-          initial={{ height: 0 }}
-          animate={{ height: 48 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-          className="w-[2px] bg-primary mb-8"
-        ></motion.div>
-
+      <div className="relative z-10 -mt-28 max-w-6xl rounded-t-[3rem] bg-[#F8F1E3] px-6 py-12 md:mt-0 md:ml-12 md:rounded-none md:bg-transparent md:px-24 md:py-24">
+        <p className="mb-6 font-sans text-[10px] font-bold uppercase tracking-[0.4em] text-primary">
+          {company.legalName}
+        </p>
         <motion.h1
-          initial={{ opacity: 0, x: -30 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          className="font-heading text-4xl md:text-8xl font-black text-[#0F172A] leading-none mb-10 uppercase tracking-tighter"
+          initial={{ opacity: 0, transform: "translateY(12px)" }}
+          animate={{ opacity: 1, transform: "translateY(0px)" }}
+          transition={{ duration: 0.45, ease: [0.23, 1, 0.32, 1] }}
+          className="mb-8 font-display text-4xl leading-[1.08] text-balance text-graphite md:text-7xl"
         >
-          Presença &<br />
-          <span className="text-primary italic font-light lowercase">Diálogo</span>
+          Fale com a {company.name}
         </motion.h1>
-
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.4 }}
-          className="font-sans text-[#0F172A]/70 text-base md:text-xl max-w-2xl leading-relaxed tracking-wide font-medium border-l-2 border-primary/20 pl-8 md:pl-10"
-        >
-          Fale com a Rendal e a DCorp. A equipe analisa terrenos, parcerias e obras para viabilizar empreendimentos com papéis claros: negócio de um lado, execução do outro.
-        </motion.p>
+        <p className="max-w-2xl border-l-2 border-primary/20 pl-8 font-sans text-base font-medium leading-relaxed text-pretty text-graphite/70 md:pl-10 md:text-xl">
+          {company.role}. A mensagem chega nesta unidade — não na outra.
+        </p>
       </div>
     </section>
   );

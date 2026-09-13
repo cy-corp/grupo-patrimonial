@@ -1,19 +1,15 @@
 import { Metadata } from "next";
-import { ContactHero } from "@/components/contato/ContactHero";
-import { FAQ } from "@/components/contato/FAQ";
-import { ContactForm } from "@/components/contato/ContactForm";
+import { ContactExperience } from "@/components/contato/ContactExperience";
 
 export const metadata: Metadata = {
   title: "Contato",
-  description: "Fale com a Rendal e a DCorp sobre incorporação, engenharia, obras e parcerias.",
+  description: "Escolha Rendal ou DCorp e fale com a unidade certa.",
 };
 
 export default function ContatoPage() {
   return (
-    <main className="min-h-screen bg-[#F8F1E3] overflow-x-hidden pt-20">
-      <ContactHero />
-      <FAQ />
-      <ContactForm />
-    </main>
+    <div className="min-h-screen overflow-x-hidden bg-[#F8F1E3] pt-20">
+      <ContactExperience />
+    </div>
   );
 }

@@ -101,7 +101,7 @@ export default function IncorporadoraPage() {
           <p className="mb-10 font-sans text-lg leading-relaxed text-pretty text-graphite/70">
             Quer estruturar um terreno, uma parceria ou um novo produto com a Rendal?
           </p>
-          <Link href="/contato#form-contato">
+          <Link href="/contato?empresa=rendal">
             <GoldButton className="px-12 py-6 text-xs font-bold uppercase tracking-[0.3em]">
               Fale com a Rendal
             </GoldButton>

@@ -1,8 +1,9 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { LucideProps } from "lucide-react";
-import Link from "next/link";
+import { useState } from "react";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { LucideProps, X } from "lucide-react";
+import { companyList, whatsappHref } from "@/lib/companies";
 
 export const WhatsAppIcon = ({ className, ...props }: LucideProps) => (
   <svg
@@ -16,22 +17,52 @@ export const WhatsAppIcon = ({ className, ...props }: LucideProps) => (
   </svg>
 );
 
+const easeOut = [0.23, 1, 0.32, 1] as const;
+
 export function WhatsAppButton() {
+  const [open, setOpen] = useState(false);
+  const reduce = useReducedMotion();
+
   return (
-    <div className="fixed bottom-6 right-6 z-[200]">
-      <Link
-        href="https://wa.me/5511999999999" // Placeholder phone number
-        target="_blank"
-        rel="noopener noreferrer"
+    <div className="fixed right-6 bottom-6 z-[200] flex flex-col items-end gap-3">
+      <AnimatePresence>
+        {open &&
+          companyList.map((company, index) => (
+            <motion.a
+              key={company.id}
+              href={whatsappHref(company, `Olá, gostaria de falar com a ${company.name}.`)}
+              target="_blank"
+              rel="noopener noreferrer"
+              initial={reduce ? { opacity: 0 } : { opacity: 0, transform: "translateY(12px) scale(0.96)" }}
+              animate={reduce ? { opacity: 1 } : { opacity: 1, transform: "translateY(0px) scale(1)" }}
+              exit={reduce ? { opacity: 0 } : { opacity: 0, transform: "translateY(8px) scale(0.96)" }}
+              transition={{ duration: 0.22, delay: reduce ? 0 : index * 0.05, ease: easeOut }}
+              className="flex items-center gap-3 rounded-full bg-white py-2 pr-4 pl-2 text-graphite shadow-lg ring-1 ring-graphite/10"
+            >
+              <span className="flex size-10 items-center justify-center rounded-full bg-[#25D366] text-white">
+                <WhatsAppIcon className="size-5" />
+              </span>
+              <span className="pr-1 text-left">
+                <span className="block font-sans text-[10px] font-semibold uppercase tracking-[0.18em] text-brand-gray">
+                  {company.role}
+                </span>
+                <span className="block font-heading text-sm font-bold">{company.name}</span>
+              </span>
+            </motion.a>
+          ))}
+      </AnimatePresence>
+
+      <motion.button
+        type="button"
+        aria-expanded={open}
+        aria-label={open ? "Fechar WhatsApp" : "Falar no WhatsApp"}
+        onClick={() => setOpen((value) => !value)}
+        className="flex size-14 items-center justify-center rounded-full bg-[#25D366] text-white shadow-lg"
+        animate={reduce ? undefined : { transform: open ? "rotate(90deg)" : "rotate(0deg)" }}
+        transition={{ duration: 0.2, ease: easeOut }}
       >
-        <motion.div
-          whileHover={{ scale: 1.1 }}
-          whileTap={{ scale: 0.9 }}
-          className="flex h-14 w-14 items-center justify-center rounded-full bg-[#25D366] text-white shadow-lg transition-colors hover:bg-[#20bd5a]"
-        >
-          <WhatsAppIcon className="h-8 w-8" />
-        </motion.div>
-      </Link>
+        {open ? <X className="size-6" /> : <WhatsAppIcon className="size-8" />}
+      </motion.button>
     </div>
   );
 }

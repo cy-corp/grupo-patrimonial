@@ -47,7 +47,7 @@ export function Solutions() {
             href={brand.href}
             aria-label={`Conheça a ${brand.name} — ${brand.role}`}
             className={cn(
-              "group flex min-h-[28rem] flex-col p-7 md:min-h-0 md:p-10 lg:p-14 xl:p-20",
+              "group flex min-h-[28rem] flex-col p-7 pb-16 md:min-h-0 md:p-10 md:pb-24 lg:p-14 lg:pb-28 xl:p-20 xl:pb-32",
               brand.panelClass,
             )}
           >

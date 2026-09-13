@@ -11,11 +11,26 @@ export async function submitContact(formData: FormData) {
   const phone = formData.get("phone") as string;
   const subject = formData.get("subject") as string;
   const message = formData.get("message") as string;
+  const company = formData.get("company") === "dcorp" ? "dcorp" : "rendal";
+
+  const inbox =
+    company === "dcorp"
+      ? process.env.CONTACT_EMAIL_DCORP || process.env.CONTACT_EMAIL
+      : process.env.CONTACT_EMAIL_RENDAL || process.env.CONTACT_EMAIL;
 
   try {
-    // Placeholder implementation
-    console.log("Contact submission:", { name, email, phone, subject, message });
-    // await resend.emails.send({ ... })
+    console.log("Contact submission:", { company, inbox, name, email, phone, subject, message });
+
+    if (process.env.RESEND_API_KEY && process.env.RESEND_API_KEY !== "re_123" && inbox) {
+      await resend.emails.send({
+        from: "Contato <noreply@gruporendal.com.br>",
+        to: inbox,
+        replyTo: email,
+        subject: `[${company === "dcorp" ? "DCorp" : "Rendal"}] ${subject || "Nova mensagem"} — ${name}`,
+        text: [`Empresa: ${company}`, `Nome: ${name}`, `E-mail: ${email}`, `Telefone: ${phone}`, "", message].join("\n"),
+      });
+    }
+
     return { success: true, message: "Mensagem enviada com sucesso!" };
   } catch (error) {
     return { success: false, message: "Erro ao enviar a mensagem." };

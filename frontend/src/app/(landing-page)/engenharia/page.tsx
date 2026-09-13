@@ -162,7 +162,7 @@ export default function EngenhariaPage() {
           <h2 className="mx-auto mb-12 max-w-4xl font-display text-3xl leading-[1.12] text-balance text-graphite md:text-5xl">
             Permanência não é acidente: é engenharia precisa e obra bem conduzida.
           </h2>
-          <Link href="/contato#form-contato">
+          <Link href="/contato?empresa=dcorp">
             <GoldButton className="px-12 py-6 text-xs font-bold uppercase tracking-[0.3em]">
               Fale com a DCorp
             </GoldButton>

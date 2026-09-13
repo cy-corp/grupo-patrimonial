@@ -67,7 +67,7 @@ export function Navbar() {
         </div>
 
         <div className="hidden min-[1150px]:flex items-center gap-4">
-          <Link href="/contato#form-contato">
+          <Link href="/contato">
             <GoldButton className="px-4 xl:px-8 py-4 text-[9px] xl:text-[10px] tracking-[0.2em] xl:tracking-[0.3em]">
               Fale conosco
             </GoldButton>
@@ -97,7 +97,7 @@ export function Navbar() {
                   {link.name}
                 </Link>
               ))}
-              <Link href="/contato#form-contato" onClick={() => setIsMobileMenuOpen(false)} className="pt-4">
+              <Link href="/contato" onClick={() => setIsMobileMenuOpen(false)} className="pt-4">
                 <GoldButton className="w-full py-5 text-[10px] tracking-[0.3em]">
                   Fale conosco
                 </GoldButton>

@@ -39,7 +39,7 @@ export default function QuemSomos() {
             Explore oportunidades de investimento e parceria com a Rendal e a DCorp.
           </p>
           <div className="flex justify-center">
-            <Link href="/contato#form-contato">
+            <Link href="/contato">
               <GoldButton className="px-12 py-8 text-sm font-bold uppercase tracking-[0.2em]">
                 Fale com um Especialista
               </GoldButton>
