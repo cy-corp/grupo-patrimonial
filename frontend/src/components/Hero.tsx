@@ -1,19 +1,25 @@
 "use client";
 
-import React, { useRef, useState, useEffect, useCallback } from "react";
+import React, { useRef, useState, useEffect, useCallback, type ReactNode } from "react";
 import { motion } from "framer-motion";
 import { GoldButton } from "@/components/ui/gold-button";
 import { ArrowDown } from "lucide-react";
 import { DualBrandLockup } from "@/components/brands/DualBrandLockup";
 import { cn } from "@/lib/utils";
 
-function HeroEditorial({ align = "left" }: { align?: "left" | "center" }) {
+function HeroEditorial({
+  align = "left",
+  children,
+}: {
+  align?: "left" | "center";
+  children?: ReactNode;
+}) {
   const centered = align === "center";
 
   return (
     <div className={cn("flex flex-col", centered ? "items-center text-center" : "items-start text-left")}>
       <h1
-        className="max-w-[11ch] text-[2.1rem] font-normal leading-[1.08] tracking-[-0.025em] text-[#1F1F1F] sm:text-[2.4rem] md:text-[3.4rem] lg:text-[3.9rem] xl:text-[4.35rem]"
+        className="max-w-[11ch] text-balance text-[2rem] font-normal leading-[1.08] tracking-[-0.025em] text-[#1F1F1F] min-[380px]:text-[2.1rem] sm:text-[2.4rem] md:text-[3.4rem] lg:text-[3.9rem] xl:text-[4.35rem]"
         style={{ fontFamily: "Georgia, 'Times New Roman', serif" }}
       >
         <span className="whitespace-nowrap">Do negócio</span>
@@ -22,44 +28,38 @@ function HeroEditorial({ align = "left" }: { align?: "left" | "center" }) {
           à obra.
         </span>
       </h1>
-      <p className="mt-5 max-w-[34ch] font-sans text-[13px] font-medium leading-6 text-[#4D4D4D] md:mt-6 md:text-[15px] md:leading-7">
+      <p className="mt-5 max-w-[34ch] text-pretty font-sans text-[13px] font-medium leading-6 text-[#4D4D4D] md:mt-6 md:text-[15px] md:leading-7">
         Papéis separados, o mesmo critério: a Rendal puxa o empreendimento, a DCorp tira do papel.
       </p>
 
-      <div
-        className={cn(
-          "mt-8 grid w-full border-t border-[#1F1F1F]/10 pt-7 md:mt-10 md:pt-8",
-          centered ? "max-w-xs grid-cols-2 gap-6" : "max-w-md grid-cols-2 gap-8 md:gap-10",
-        )}
-      >
-        <div
-          className={cn(
-            "flex min-w-0 flex-col gap-1.5",
-            centered ? "items-center" : "border-r border-[#1F1F1F]/10 pr-6 md:pr-8",
-          )}
-        >
-          <span className="font-sans text-[10px] font-semibold uppercase tracking-[0.22em] text-primary">
-            01 — Rendal
-          </span>
-          <p className="font-display text-[1.45rem] leading-none text-[#1F1F1F] md:text-[1.7rem]">
-            Incorporação
-          </p>
-          <p className="max-w-[16ch] font-sans text-xs font-medium leading-5 text-[#4D4D4D]">
-            Negócio, capital e produto.
-          </p>
+      {children}
+
+      {!centered && (
+        <div className="mt-8 grid w-full max-w-md grid-cols-2 gap-8 border-t border-[#1F1F1F]/10 pt-7 md:mt-10 md:gap-10 md:pt-8">
+          <div className="flex min-w-0 flex-col gap-1.5 border-r border-[#1F1F1F]/10 pr-6 md:pr-8">
+            <span className="font-sans text-[10px] font-semibold uppercase tracking-[0.22em] text-primary">
+              01 — Rendal
+            </span>
+            <p className="font-display text-[1.45rem] leading-none text-[#1F1F1F] md:text-[1.7rem]">
+              Incorporação
+            </p>
+            <p className="max-w-[16ch] font-sans text-xs font-medium leading-5 text-[#4D4D4D]">
+              Negócio, capital e produto.
+            </p>
+          </div>
+          <div className="flex min-w-0 flex-col gap-1.5">
+            <span className="font-sans text-[10px] font-semibold uppercase tracking-[0.22em] text-primary">
+              02 — DCorp
+            </span>
+            <p className="font-display text-[1.45rem] leading-none text-[#1F1F1F] md:text-[1.7rem]">
+              Engenharia
+            </p>
+            <p className="max-w-[16ch] font-sans text-xs font-medium leading-5 text-[#4D4D4D]">
+              Projeto, técnica e execução.
+            </p>
+          </div>
         </div>
-        <div className={cn("flex min-w-0 flex-col gap-1.5", centered && "items-center")}>
-          <span className="font-sans text-[10px] font-semibold uppercase tracking-[0.22em] text-primary">
-            02 — DCorp
-          </span>
-          <p className="font-display text-[1.45rem] leading-none text-[#1F1F1F] md:text-[1.7rem]">
-            Engenharia
-          </p>
-          <p className="max-w-[16ch] font-sans text-xs font-medium leading-5 text-[#4D4D4D]">
-            Projeto, técnica e execução.
-          </p>
-        </div>
-      </div>
+      )}
     </div>
   );
 }
@@ -110,13 +110,9 @@ export function Hero() {
         setExtendedHeight(`${vh + EXTEND_BG_PX}px`);
         lastWidthRef.current = vw;
       }
-      // y is anchored to the card height, not the viewport height.
-      // The card has nearly fixed height (content-driven), so the visual
-      // overlap stays constant across any phone — tall or short.
-      // Calibrated: S10 card ~310px → 310 * 0.45 ≈ 140px (perfect on S10).
       const cardHeight = cardRef.current
         ? cardRef.current.getBoundingClientRect().height
-        : 310; // safe fallback
+        : 310;
       setMobileOffset({
         x: -(vw * 0.1944),
         y: -(cardHeight * 0.45),
@@ -230,7 +226,7 @@ export function Hero() {
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.9, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
-          className="relative z-10 bg-white rounded-[32px] w-full px-6 pt-8 pb-8 flex flex-col items-center text-center shadow-[0_20px_60px_rgba(0,0,0,0.3)] flex-shrink-0"
+          className="relative z-10 flex w-full flex-shrink-0 flex-col items-center rounded-[32px] bg-white px-6 pb-28 pt-8 text-center shadow-[0_20px_60px_rgba(0,0,0,0.3)]"
         >
           <div className="mb-5 flex items-center justify-center gap-3">
             <div className="h-[1px] w-6 flex-shrink-0 bg-primary" />
@@ -245,23 +241,19 @@ export function Hero() {
             pipeClassName="h-10"
           />
 
-          <HeroEditorial align="center" />
-
-          <GoldButton
-            href="#projetos"
-            className="relative z-40 mt-7 rounded-full px-8 py-4 text-[10px] sm:text-xs font-bold uppercase tracking-[0.3em] group shadow-xl"
-          >
-            Saiba Mais
-            <ArrowDown className="ml-3 w-4 h-4 transition-transform group-hover:translate-y-1" />
-          </GoldButton>
+          <HeroEditorial align="center">
+            <GoldButton
+              href="#projetos"
+              className="mt-6 rounded-full px-8 py-4 text-[10px] font-bold uppercase tracking-[0.3em] shadow-xl sm:text-xs"
+            >
+              Saiba Mais
+              <ArrowDown className="ml-3 size-4" aria-hidden="true" />
+            </GoldButton>
+          </HeroEditorial>
         </motion.div>
 
-        {/* Foreground building PNG — its tip touching the card */}
-        {/* Positioning via style (not animated). Only opacity fades in.
-            Because opacity=0 + 0.4s delay, useEffect corrects x/y before
-            the element ever becomes visible — no slide artifact. */}
         <motion.div
-          className="relative z-20 flex-1 w-full flex items-end justify-center pointer-events-none mt-[-20px] sm:mt-[-10px]"
+          className="pointer-events-none relative z-20 mt-[-20px] flex w-full flex-1 items-end justify-center sm:mt-[-10px]"
           style={{
             transform: `translateX(${mobileOffset.x}px) translateY(${mobileOffset.y}px)`,
           }}
@@ -269,13 +261,10 @@ export function Hero() {
           animate={{ opacity: 1 }}
           transition={{ duration: 2, ease: "easeOut", delay: 0.4 }}
         >
-          <motion.img
+          <img
             src="/house-transparent-mobile.png"
-            alt="Foreground Building"
-            initial={{ filter: "brightness(0.75)" }}
-            animate={{ filter: "brightness(1)" }}
-            transition={{ duration: 2.5, ease: "easeOut", delay: 0.4 }}
-            className="w-full h-full object-cover object-top scale-[1.25] select-none drop-shadow-[0_-15px_35px_rgba(0,0,0,0.4)]"
+            alt=""
+            className="h-full w-full scale-[1.25] select-none object-cover object-top"
             style={{
               objectPosition: "50% top",
               maskImage: "linear-gradient(to bottom, black 0%, black 75%, transparent 100%)",
