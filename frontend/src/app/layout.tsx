@@ -1,46 +1,46 @@
 import type { Metadata } from "next";
-import { Inter, Playfair_Display } from "next/font/google";
+import { Allura, Montserrat } from "next/font/google";
 import "@/app/globals.css";
 
-const inter = Inter({
-  variable: "--font-sans",
+const montserrat = Montserrat({
+  variable: "--font-montserrat",
   subsets: ["latin"],
+  weight: ["400", "500", "600", "700", "800"],
 });
 
-const playfair = Playfair_Display({
-  variable: "--font-heading",
+const allura = Allura({
+  variable: "--font-allura",
   subsets: ["latin"],
+  weight: "400",
 });
 
 export const metadata: Metadata = {
   title: {
-    default: "Patrimonial Inc.",
-    template: "%s | Patrimonial Incorporações",
+    default: "Grupo Rendal e DCorp Engenharia",
+    template: "%s | Grupo Rendal",
   },
   description:
-    "Soluções completas em Engenharia, Incorporação, Construção, Imobiliária e Gestão Patrimonial. Transformamos imóveis em ativos sólidos e rentáveis com visão de longo prazo.",
+    "Duas empresas, papéis claros: a Rendal estrutura o negócio; a DCorp projeta e constrói.",
   keywords: [
-    "engenharia civil",
+    "grupo rendal",
+    "dcorp engenharia",
     "incorporadora",
-    "construtora",
-    "imobiliária",
-    "gestão patrimonial",
-    "investimento imobiliário",
-    "patrimônio imobiliário",
+    "engenharia civil",
+    "construção industrial",
   ],
   openGraph: {
     type: "website",
     locale: "pt_BR",
-    siteName: "Patrimonial Incorporações",
-    title: "Patrimonial Incorporações",
+    siteName: "Grupo Rendal",
+    title: "Grupo Rendal e DCorp Engenharia",
     description:
-      "Soluções completas em Engenharia, Incorporação, Construção, Imobiliária e Gestão Patrimonial.",
+      "Duas empresas, papéis claros: a Rendal estrutura o negócio; a DCorp projeta e constrói.",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Patrimonial Incorporações",
+    title: "Grupo Rendal e DCorp Engenharia",
     description:
-      "Soluções completas em Engenharia, Incorporação, Construção, Imobiliária e Gestão Patrimonial.",
+      "Duas empresas, papéis claros: a Rendal estrutura o negócio; a DCorp projeta e constrói.",
   },
 };
 
@@ -51,9 +51,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt-BR" suppressHydrationWarning>
-      <body
-        className={`${inter.variable} ${playfair.variable} font-sans antialiased`}
-      >
+      <body className={`${montserrat.variable} ${allura.variable} font-sans antialiased`}>
         {children}
       </body>
     </html>
