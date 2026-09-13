@@ -8,62 +8,55 @@ export function InstitutionalHero() {
   const { imageUrl, altText } = useActiveImage("quem_somos_hero", "/quem-somos/quem-somos-hero.jpg");
 
   return (
-    <section className="relative min-h-[100vh] md:min-h-[90vh] flex flex-col md:flex-row md:items-center overflow-hidden bg-[#F8F1E3]">
-      {/* Background/Image block */}
-      <div className="relative md:absolute md:inset-0 h-[45vh] md:h-full w-full overflow-hidden z-0">
+    <section className="relative flex min-h-[100vh] flex-col overflow-hidden bg-[#F8F1E3] md:min-h-[90vh] md:flex-row md:items-center">
+      <div className="relative z-0 h-[45vh] w-full overflow-hidden md:absolute md:inset-0 md:h-full">
         <img
-          alt={altText || "Modern prestigious building architecture"}
-          className="w-full h-full object-cover transition-all duration-700"
+          alt={altText || "Arquitetura institucional"}
+          className="h-full w-full object-cover"
           src={imageUrl}
         />
-        {/* Horizontal Gradient (Desktop Only) */}
-        <div className="hidden md:block absolute inset-0 bg-gradient-to-r from-[#F8F1E3] via-[#F8F1E3]/85 to-transparent"></div>
+        <div className="absolute inset-0 hidden bg-gradient-to-r from-[#F8F1E3] via-[#F8F1E3]/85 to-transparent md:block" />
       </div>
 
-
-      {/* Content Block with aggressive Negative Margin on Mobile for a high-end editorial overlap */}
-      <div className="relative z-10 -mt-28 md:-mt-0 px-6 py-12 md:py-24 md:px-24 md:ml-12 max-w-6xl bg-[#F8F1E3] md:bg-transparent rounded-t-[3rem] md:rounded-none">
+      <div className="relative z-10 -mt-28 max-w-6xl rounded-t-[3rem] bg-[#F8F1E3] px-6 py-12 md:-mt-0 md:ml-12 md:rounded-none md:bg-transparent md:px-24 md:py-24">
         <motion.div
           initial={{ height: 0 }}
           animate={{ height: 48 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
-          className="w-[2px] bg-primary mb-8"
-        ></motion.div>
+          className="mb-8 w-[2px] bg-primary"
+        />
 
         <motion.h1
           initial={{ opacity: 0, x: -30 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="font-heading text-4xl md:text-7xl text-[#0F172A] mb-8 leading-tight tracking-tight uppercase font-black"
+          className="mb-8 font-display text-4xl leading-[1.08] text-balance text-graphite md:text-6xl"
         >
-          Patrimonial Incorporações:<br />
-          <span className="text-primary italic font-light lowercase block mt-2">Solidez e Visão de Futuro</span>
+          Duas empresas, o mesmo critério.
         </motion.h1>
 
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.4 }}
-          className="font-sans text-[#0F172A]/70 text-base md:text-xl max-w-2xl leading-relaxed tracking-wide mb-12 font-medium"
+          className="mb-12 max-w-2xl font-sans text-base font-medium leading-relaxed text-pretty text-graphite/70 md:text-xl"
         >
-          Um ecossistema empresarial de alta performance que integra Engenharia, Incorporação, Construção e Inteligência Imobiliária para criar o amanhã.
+          A Rendal estrutura o empreendimento. A DCorp projeta e constrói. Papéis separados, decisão alinhada.
         </motion.p>
 
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.6 }}
-          className="grid grid-cols-2 lg:grid-cols-4 gap-4"
+          className="grid max-w-xl grid-cols-2 gap-4"
         >
           {[
-            { id: "01.", label: "Engenharia" },
-            { id: "02.", label: "Incorporadora" },
-            { id: "03.", label: "Construtora" },
-            { id: "04.", label: "Imobiliária" }
-          ].map((item, index) => (
-            <div key={index} className="p-4 md:p-6 bg-white border-l border-primary/20 hover:border-primary transition-colors cursor-default">
-              <span className="text-primary font-heading block mb-1 md:mb-2 font-bold text-sm md:text-base">{item.id}</span>
-              <span className="text-[8px] md:text-[10px] uppercase tracking-widest font-sans font-bold text-[#0F172A]/60">{item.label}</span>
+            { id: "01.", label: "Rendal — Incorporação" },
+            { id: "02.", label: "DCorp — Engenharia" },
+          ].map((item) => (
+            <div key={item.id} className="border-l border-primary/20 bg-white p-4 md:p-6">
+              <span className="mb-1 block font-heading text-sm font-bold text-primary md:mb-2 md:text-base">{item.id}</span>
+              <span className="font-sans text-[8px] font-bold uppercase tracking-widest text-graphite/60 md:text-[10px]">{item.label}</span>
             </div>
           ))}
         </motion.div>

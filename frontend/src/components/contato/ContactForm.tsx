@@ -12,12 +12,11 @@ import { CheckCircle2, ArrowRight, MapPin, Copy, Check } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const subjectOptions = [
-  "Investimento Estratégico",
-  "Desenvolvimento & Incorporação",
-  "Asset Management Privado",
-  "Engenharia de Valor",
-  "Consulta Institucional",
-  "Outros"
+  "Incorporação (Rendal)",
+  "Engenharia e obra (DCorp)",
+  "Parceria ou investimento",
+  "Consulta institucional",
+  "Outros",
 ];
 
 export function ContactForm() {
@@ -233,7 +232,7 @@ export function ContactForm() {
             <div className="flex items-start gap-4">
               <MapPin className="text-primary w-6 h-6 shrink-0 mt-1" />
               <div>
-                <span className="block text-[10px] font-heading font-black uppercase text-primary tracking-widest mb-1">Unidade Patrimonial INC</span>
+                <span className="mb-1 block font-heading text-[10px] font-black uppercase tracking-widest text-primary">Sede em Campinas</span>
                 <p className="text-[#0F172A] font-sans text-xs font-bold leading-relaxed uppercase tracking-tight group-hover:text-primary transition-colors">
                   {address}
                 </p>

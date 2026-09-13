@@ -124,7 +124,7 @@ export function Pillars() {
             transition={{ delay: 0.3 }}
             className="font-sans text-[#0F172A]/70 text-base md:text-lg max-w-sm mb-2"
           >
-            Soluções integradas com rigor técnico para a materialização de grandes ativos imobiliários.
+            Modalidades da DCorp para tirar o empreendimento do papel com rigor técnico.
           </motion.p>
         </div>
 

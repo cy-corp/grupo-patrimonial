@@ -17,7 +17,7 @@ const allura = Allura({
 export const metadata: Metadata = {
   title: {
     default: "Grupo Rendal e DCorp Engenharia",
-    template: "%s | Grupo Rendal",
+    template: "%s | Rendal e DCorp",
   },
   description:
     "Duas empresas, papéis claros: a Rendal estrutura o negócio; a DCorp projeta e constrói.",

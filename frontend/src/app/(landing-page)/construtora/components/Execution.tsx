@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 import { useActiveImage } from "@/hooks/useActiveImage";
 
 export function Execution() {
-  const { imageUrl, altText } = useActiveImage("construtora_execution", "/construtora-execucao.jpg");
+  const { imageUrl, altText } = useActiveImage("construtora_execution", "/construtora/construtora-execucao.jpg");
 
   return (
     <section className="py-24 md:py-48 bg-white overflow-hidden">
@@ -39,7 +39,7 @@ export function Execution() {
             </h2>
             <div className="space-y-6">
               <p className="font-sans text-[#0F172A]/70 text-lg md:text-xl leading-relaxed tracking-wide">
-                Mais do que realizar o patrimonial, construir não é apenas erguer estruturas, é materializar ativos. Nossa abordagem combina o rigor da engenharia civil com uma visão estratégica de preservação de valor.
+                Construir na DCorp não é só erguer estrutura: é materializar o ativo que a Rendal estruturou. Engenharia civil com preservação de valor em cada decisão de obra.
               </p>
               <p className="font-sans text-[#0F172A]/70 text-lg md:text-xl leading-relaxed tracking-wide">
                 Utilizamos processos industrializados e gestão orientadora por dados para mitigar riscos inerentes à construção, asseguramos que cada projeto cumpra rigorosamente cronogramas e orçamentos.

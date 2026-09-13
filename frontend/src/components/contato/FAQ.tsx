@@ -6,24 +6,24 @@ import { Plus, Minus } from "lucide-react";
 
 const faqs = [
   {
-    question: "Como funciona o processo de estruturação de incorporações?",
-    answer: "Atuamos em toda a cadeia: desde o estudo de viabilidade técnica e jurídica até a entrega final. Integramos engenharia de precisão e inteligência de mercado para maximizar o VGV e garantir segurança aos investidores."
+    question: "Como a Rendal e a DCorp trabalham juntas?",
+    answer: "A Rendal estrutura o negócio: viabilidade, produto, capital e aprovações. A DCorp assume projeto, técnica e obra. São empresas distintas, com o mesmo critério de entrega."
   },
   {
-    question: "Quais são os critérios da Patrimonial Inc. para parcerias em novos terrenos?",
-    answer: "Buscamos áreas com potencial estratégico de valorização, preferencialmente em localizações consagradas ou de expansão planejada. Analisamos metragem, zoneamento e liquidez imobiliária do entorno."
+    question: "Quais são os critérios da Rendal para parcerias em novos terrenos?",
+    answer: "Buscamos áreas com potencial de valorização, em localizações consolidadas ou de expansão planejada. Analisamos metragem, zoneamento e liquidez do entorno antes de estruturar o produto."
   },
   {
-    question: "Como a Patrimonial Inc. garante a segurança jurídica dos investimentos?",
-    answer: "Utilizamos estruturas de SPE (Sociedade de Propósito Específico) para cada projeto, garantindo segregação patrimonial. Contamos com auditoria jurídica permanente e transparência total na governança das parcerias."
+    question: "Como fica a segurança jurídica dos investimentos?",
+    answer: "Cada projeto pode nascer em SPE, com segregação patrimonial, auditoria jurídica e governança transparente entre parceiros, incorporadora e construtora."
   },
   {
-    question: "Qual o perfil de investidor atendido pela Patrimonial Inc.?",
-    answer: "Atendemos investidores institucionais, Family Offices e investidores privados de alta renda que buscam diversificação em ativos reais com foco em preservação e expansão de capital no longo prazo."
+    question: "Qual o perfil de investidor atendido?",
+    answer: "Investidores institucionais, family offices e pessoas físicas de alta renda que buscam ativos reais com preservação e expansão de capital no longo prazo."
   },
   {
-    question: "Como agendar uma análise técnica de potencial de área?",
-    answer: "Você pode solicitar uma consultoria inicial através do nosso formulário de memorando. Após a triagem estratégica, nosso conselho técnico entra em contato para uma reunião remota ou presencial em nossa sede em Campinas."
+    question: "Como agendar uma análise de área ou de obra?",
+    answer: "Envie o formulário de contato. Depois da triagem, a equipe da Rendal ou da DCorp retorna para reunião remota ou presencial em Campinas."
   }
 ];
 

@@ -4,8 +4,8 @@ import { FAQ } from "@/components/contato/FAQ";
 import { ContactForm } from "@/components/contato/ContactForm";
 
 export const metadata: Metadata = {
-  title: "Contato | Patrimonial Incorporações",
-  description: "Entre em contato com a Patrimonial Incorporações e esclareça suas dúvidas sobre investimentos e parcerias.",
+  title: "Contato",
+  description: "Fale com a Rendal e a DCorp sobre incorporação, engenharia, obras e parcerias.",
 };
 
 export default function ContatoPage() {
