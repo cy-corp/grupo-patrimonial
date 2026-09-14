@@ -5,12 +5,12 @@ import { motion, AnimatePresence } from "framer-motion";
 
 const dener = {
   name: "Dener Lopes",
-  role: "CEO da Rendal",
+  role: "CEO da Rendal e da DCorp",
   description:
-    "Incorporador desde 2008, especialista na área ambiental e agrimensura. Cursou Engenharia Ambiental na UEMG (Universidade do Estado de Minas Gerais), é Agrimensor pela Faculdade Pitágoras, Diretor comercial da Urbastructor Urbanismo e Incorporações e CEO da Rendal. Participou de 73 loteamentos em São Paulo, Minas Gerais e Goiás, além de inúmeras regularizações fundiárias, ambientais e urbanísticas em diferentes escalas.",
+    "Incorporador desde 2008, especialista na área ambiental e agrimensura. Cursou Engenharia Ambiental na UEMG (Universidade do Estado de Minas Gerais), é Agrimensor pela Faculdade Pitágoras e CEO da Rendal e da DCorp. Participou de 73 loteamentos em São Paulo, Minas Gerais e Goiás, além de inúmeras regularizações fundiárias, ambientais e urbanísticas em diferentes escalas.",
   extraInfo:
     "É o responsável por integrar engenharia, legislação, viabilidade econômica e estratégia imobiliária, assegurando que cada projeto nasça juridicamente sólido, tecnicamente viável e financeiramente eficiente.",
-  company: "Diretor Comercial da URBASTRUCTOR",
+  company: "CEO da Rendal e da DCorp",
   image: "/quem-somos/dener-lopes.png",
 };
 
