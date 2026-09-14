@@ -13,7 +13,7 @@ import { formatCnpj } from "@/lib/companies";
 
 const subjectByCompany = {
   rendal: ["Terreno ou parceria", "Investimento", "Produto imobiliário", "Outros"],
-  dcorp: ["Obra", "Projeto e engenharia", "Administração de obra", "Outros"],
+  dcorp: ["Engenharia e construção", "Projeto e engenharia", "Administração da construção", "Outros"],
 };
 
 export function ContactForm({

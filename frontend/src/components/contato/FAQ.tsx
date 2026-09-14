@@ -7,7 +7,7 @@ import { Plus, Minus } from "lucide-react";
 const faqs = [
   {
     question: "Como a Rendal e a DCorp trabalham juntas?",
-    answer: "A Rendal estrutura o negócio: viabilidade, produto, capital e aprovações. A DCorp assume projeto, técnica e obra. São empresas distintas, com o mesmo critério de entrega."
+    answer: "A Rendal estrutura o negócio: viabilidade, produto, capital e aprovações. A DCorp assume projeto, técnica e construção. São empresas distintas, com o mesmo critério de entrega."
   },
   {
     question: "Quais são os critérios da Rendal para parcerias em novos terrenos?",
@@ -22,7 +22,7 @@ const faqs = [
     answer: "Investidores institucionais, family offices e pessoas físicas de alta renda que buscam ativos reais com preservação e expansão de capital no longo prazo."
   },
   {
-    question: "Como agendar uma análise de área ou de obra?",
+    question: "Como agendar uma análise de área ou de construção?",
     answer: "Envie o formulário de contato. Depois da triagem, a equipe da Rendal ou da DCorp retorna para reunião remota ou presencial em Campinas."
   }
 ];

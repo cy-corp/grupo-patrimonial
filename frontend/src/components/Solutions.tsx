@@ -24,7 +24,7 @@ const brands = [
     role: "Engenharia",
     statement: "Da decisão à execução.",
     description:
-      "Converte a estratégia em engenharia, coordenando projetos, soluções técnicas e obra com precisão em cada etapa.",
+      "Converte a estratégia em engenharia, coordenando projetos, soluções técnicas e construção com precisão em cada etapa.",
     capabilities: ["Projeto", "Técnica", "Execução"],
     logo: "/brands/dcorp-logo.png",
     image: "/construtora/construtora-execucao.jpg",

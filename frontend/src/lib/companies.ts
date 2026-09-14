@@ -43,7 +43,7 @@ export const companies: Record<CompanyId, Company> = {
     id: "dcorp",
     name: "DCorp",
     legalName: "DCorp Engenharia",
-    role: "Engenharia e obra",
+    role: "Engenharia e construção",
     email: "contato@dcorp.eng.br",
     phone: "(19) 98888-8888",
     phoneHref: "tel:+5519988888888",

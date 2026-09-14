@@ -7,9 +7,5 @@ export const metadata: Metadata = {
 };
 
 export default function ContatoPage() {
-  return (
-    <div className="min-h-screen overflow-x-hidden bg-[#F8F1E3] pt-20">
-      <ContactExperience />
-    </div>
-  );
+  return <ContactExperience />;
 }
