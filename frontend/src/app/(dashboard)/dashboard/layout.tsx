@@ -15,28 +15,33 @@ export default function DashboardLayout({
 }) {
   const router = useRouter()
   const pathname = usePathname()
-  const supabase = createClient()
 
   const [userEmail, setUserEmail] = useState<string>('')
   const [initials, setInitials] = useState<string>('GP')
 
   useEffect(() => {
     const fetchUser = async () => {
-      const { data: { user } } = await supabase.auth.getUser()
-      if (user && user.email) {
-        setUserEmail(user.email)
-        const parts = user.email.split('@')[0].split(/[._-]/)
-        if (parts.length > 1 && parts[0] && parts[1]) {
-          setInitials((parts[0][0] + parts[1][0]).toUpperCase())
-        } else if (parts[0]) {
-          setInitials(parts[0].slice(0, 2).toUpperCase())
+      try {
+        const supabase = createClient()
+        const { data: { user } } = await supabase.auth.getUser()
+        if (user && user.email) {
+          setUserEmail(user.email)
+          const parts = user.email.split('@')[0].split(/[._-]/)
+          if (parts.length > 1 && parts[0] && parts[1]) {
+            setInitials((parts[0][0] + parts[1][0]).toUpperCase())
+          } else if (parts[0]) {
+            setInitials(parts[0].slice(0, 2).toUpperCase())
+          }
         }
+      } catch {
+        // Admin stays usable if Supabase is not configured at build time.
       }
     }
     fetchUser()
-  }, [supabase])
+  }, [])
 
   const handleSignOut = async () => {
+    const supabase = createClient()
     await supabase.auth.signOut()
     router.push('/login')
     router.refresh()
