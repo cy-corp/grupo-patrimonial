@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Allura, Montserrat } from "next/font/google";
+import { Montserrat } from "next/font/google";
 import "./globals.css";
 import { SiteShell } from "@/components/site/SiteShell";
 
@@ -9,26 +9,20 @@ const montserrat = Montserrat({
   weight: ["400", "500", "600", "700", "800"],
 });
 
-const allura = Allura({
-  variable: "--font-allura",
-  subsets: ["latin"],
-  weight: "400",
-});
-
 export const metadata: Metadata = {
   title: {
-    default: "DCorp Engenharia",
-    template: "%s | DCorp Engenharia",
+    default: "DCORP Engenharia",
+    template: "%s | DCORP Engenharia",
   },
   description:
-    "Engenharia e construção de casas, obras térreas e soluções construtivas de alta produtividade.",
+    "Construção industrial com planejamento, execução e resultados. Projetos que constroem oportunidades.",
   openGraph: {
     type: "website",
     locale: "pt_BR",
-    siteName: "DCorp Engenharia",
-    title: "DCorp Engenharia",
+    siteName: "DCORP Engenharia",
+    title: "DCORP Engenharia",
     description:
-      "Construção com engenharia, produtividade, controle e previsibilidade.",
+      "Soluções industrializadas para ganhar produtividade, reduzir desperdícios e acelerar prazos.",
   },
 };
 
@@ -37,7 +31,7 @@ export default function DcorpLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="pt-BR">
-      <body className={`${montserrat.variable} ${allura.variable} font-sans antialiased`}>
+      <body className={`${montserrat.variable} font-sans antialiased`}>
         <SiteShell companyId="dcorp">{children}</SiteShell>
       </body>
     </html>

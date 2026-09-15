@@ -41,9 +41,9 @@ export const companies: Record<CompanyId, Company> = {
   },
   dcorp: {
     id: "dcorp",
-    name: "DCorp",
-    legalName: "DCorp Engenharia",
-    role: "Engenharia e construção",
+    name: "DCORP",
+    legalName: "DCORP Engenharia",
+    role: "Construção industrial",
     email: "contato@dcorp.com.br",
     phone: "(19) 99367-0722",
     phoneHref: "tel:+5519993670722",

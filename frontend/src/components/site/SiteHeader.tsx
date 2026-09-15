@@ -37,7 +37,7 @@ function LearnChevron() {
   );
 }
 
-/** Graphite / silver CTA — CSS metal rim (no WebGL). */
+/** Graphite / silver CTA — CSS metal rim (no WebGL). Rendal default. */
 function MetalCta({
   href,
   label,
@@ -57,6 +57,36 @@ function MetalCta({
       onClick={onClick}
       className={cn(
         "t-learn site-header-cta-metal inline-flex h-10 items-center justify-center gap-2 rounded-full px-5 text-[11px] font-semibold tracking-[-0.01em] whitespace-nowrap",
+        fullWidth && "w-full h-12",
+        className,
+      )}
+    >
+      <span>{label}</span>
+      <LearnChevron />
+    </Link>
+  );
+}
+
+/** DCORP gold metallic CTA — shared brand CTA surface. */
+function GoldCta({
+  href,
+  label,
+  className,
+  onClick,
+  fullWidth,
+}: {
+  href: string;
+  label: string;
+  className?: string;
+  onClick?: () => void;
+  fullWidth?: boolean;
+}) {
+  return (
+    <Link
+      href={href}
+      onClick={onClick}
+      className={cn(
+        "t-learn gold-metallic-cta inline-flex h-10 items-center justify-center gap-2 rounded-md px-5 text-[13px] font-semibold tracking-[-0.01em] whitespace-nowrap uppercase",
         fullWidth && "w-full h-12",
         className,
       )}
@@ -197,16 +227,24 @@ export function SiteHeader({ companyId }: { companyId: CompanyId }) {
   useEffect(() => () => window.clearTimeout(closeTimer.current), []);
 
   const ctaHref = `/contato?empresa=${companyId}`;
+  const isDcorp = companyId === "dcorp";
+  const HeaderCta = isDcorp ? GoldCta : MetalCta;
 
   return (
-    <header className="site-header pointer-events-none fixed inset-x-0 top-0 z-[100] px-4 pt-[max(0.85rem,env(safe-area-inset-top))] md:px-6 md:pt-[max(1.15rem,env(safe-area-inset-top))]">
+    <header
+      className={cn(
+        "site-header pointer-events-none fixed inset-x-0 top-0 z-[100] px-4 pt-[max(0.85rem,env(safe-area-inset-top))] md:px-6 md:pt-[max(1.15rem,env(safe-area-inset-top))]",
+        isDcorp && "site-header--dcorp",
+      )}
+    >
       <div className="pointer-events-auto relative mx-auto max-w-5xl">
         <div
           data-scrolled={scrolled}
           onPointerMove={paintSheen}
           onPointerLeave={clearSheen}
           className={cn(
-            "site-glass site-glass-sheen site-header-bar flex h-[3.75rem] items-center gap-2 rounded-full px-2.5 sm:px-3",
+            "site-glass site-glass-sheen site-header-bar flex h-[3.75rem] items-center gap-2 px-2.5 sm:px-3",
+            isDcorp ? "rounded-xl site-glass-dcorp" : "rounded-full",
             companyId === "rendal" && "site-glass-rendal",
           )}
         >
@@ -257,13 +295,16 @@ export function SiteHeader({ companyId }: { companyId: CompanyId }) {
 
           <div className="relative z-10 ml-auto flex items-center gap-2">
             <div className="hidden min-[1150px]:block">
-              <MetalCta href={ctaHref} label={config.ctaLabel} />
+              <HeaderCta href={ctaHref} label={config.ctaLabel} />
             </div>
 
             <button
               type="button"
               onClick={() => (open ? closeMenu() : openMenu())}
-              className="flex size-11 items-center justify-center rounded-full text-graphite transition-colors duration-[var(--duration-quick)] ease-[var(--ease-smooth-out)] hover:bg-graphite/5 active:scale-[0.96] min-[1150px]:hidden"
+              className={cn(
+                "flex size-11 items-center justify-center text-graphite transition-colors duration-[var(--duration-quick)] ease-[var(--ease-smooth-out)] hover:bg-graphite/5 active:scale-[0.96] min-[1150px]:hidden",
+                isDcorp ? "rounded-md" : "rounded-full",
+              )}
               aria-label={open ? "Fechar menu" : "Abrir menu"}
               aria-expanded={open}
               aria-controls={menuId}
@@ -286,6 +327,7 @@ export function SiteHeader({ companyId }: { companyId: CompanyId }) {
           data-scrolled="true"
           className={cn(
             "t-dropdown t-dropdown-panel site-header-dropdown site-glass min-[1150px]:hidden",
+            isDcorp && "site-glass-dcorp rounded-xl",
             companyId === "rendal" && "site-glass-rendal",
             open && "is-open",
             closing && "is-closing",
@@ -304,7 +346,8 @@ export function SiteHeader({ companyId }: { companyId: CompanyId }) {
                   onClick={closeMenu}
                   aria-current={active ? "page" : undefined}
                   className={cn(
-                    "t-stagger-line site-header-mobile-link rounded-2xl px-4 py-3.5 transition-colors duration-[var(--duration-quick)] ease-[var(--ease-smooth-out)]",
+                    "t-stagger-line site-header-mobile-link px-4 py-3.5 transition-colors duration-[var(--duration-quick)] ease-[var(--ease-smooth-out)]",
+                    isDcorp ? "rounded-md" : "rounded-2xl",
                     active ? "bg-white text-graphite shadow-sm" : "text-graphite/70 hover:bg-white/75 hover:text-graphite",
                   )}
                   style={{ transitionDelay: `calc(var(--stagger-stagger) * ${index})` } as CSSProperties}
@@ -321,7 +364,7 @@ export function SiteHeader({ companyId }: { companyId: CompanyId }) {
                 } as CSSProperties
               }
             >
-              <MetalCta
+              <HeaderCta
                 href={ctaHref}
                 label={config.ctaLabel}
                 onClick={closeMenu}

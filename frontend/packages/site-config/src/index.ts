@@ -29,18 +29,18 @@ export const siteConfigs: Record<SiteBrandId, SiteBrandConfig> = {
   },
   dcorp: {
     id: "dcorp",
-    name: "DCorp",
-    role: "Engenharia e construção",
+    name: "DCORP",
+    role: "Construção industrial",
     logo: "/brands/dcorp-logo.png",
-    homeTitle: "Construção de alta produtividade",
+    homeTitle: "Projetos que constroem oportunidades",
     homeHref: "/",
     links: [
-      { label: "A DCorp", href: "/quem-somos" },
+      { label: "A DCORP", href: "/quem-somos" },
       { label: "Sistemas construtivos", href: "/sistemas-construtivos" },
       { label: "Serviços", href: "/servicos" },
       { label: "Obras", href: "/obras" },
       { label: "Contato", href: "/contato" },
     ],
-    ctaLabel: "Solicite um orçamento",
+    ctaLabel: "Solicitar orçamento",
   },
 };

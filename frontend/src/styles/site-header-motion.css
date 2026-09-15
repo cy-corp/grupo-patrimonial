@@ -364,6 +364,41 @@
   }
 }
 
+/* DCORP header: gold metallic CTA sizing inside the bar */
+.site-header--dcorp .gold-metallic-cta {
+  text-transform: none;
+  letter-spacing: -0.01em;
+  font-weight: 600;
+  box-shadow:
+    0 2px 8px rgba(31, 31, 31, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4);
+}
+
+.site-header--dcorp .gold-metallic-cta:hover {
+  transform: translateY(-1px);
+}
+
+.site-header--dcorp .gold-metallic-cta:active {
+  transform: scale(0.985);
+}
+
+.site-header--dcorp .t-tabs-pill {
+  border-radius: 6px;
+}
+
+.site-header--dcorp .t-tab {
+  border-radius: 6px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .site-header--dcorp .gold-metallic-cta,
+  .site-header--dcorp .gold-metallic-cta:hover,
+  .site-header--dcorp .gold-metallic-cta:active {
+    transition: none;
+    transform: none;
+  }
+}
+
 .site-header .t-learn-chevron svg {
   display: block;
 }
