@@ -1,5 +1,6 @@
 "use client";
 
+import { usePathname } from "next/navigation";
 import { useGLTF } from "@react-three/drei";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { Suspense, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
@@ -144,6 +145,8 @@ function Aim() {
 
 export function FooterDiorama() {
   const hostRef = useRef<HTMLDivElement>(null);
+  const revealedRef = useRef(false);
+  const pathname = usePathname();
   const [visible, setVisible] = useState(false);
   const [epoch, setEpoch] = useState(0);
   const reducedMotion = useMemo(() => {
@@ -152,22 +155,31 @@ export function FooterDiorama() {
   }, []);
 
   useEffect(() => {
+    revealedRef.current = false;
+    setVisible(false);
+  }, [pathname]);
+
+  useEffect(() => {
     const node = hostRef.current;
     if (!node) return;
+
     const io = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
           setVisible(true);
-          setEpoch((value) => value + 1);
-        } else {
-          setVisible(false);
+          if (!revealedRef.current) {
+            revealedRef.current = true;
+            setEpoch((value) => value + 1);
+          }
+          return;
         }
+        setVisible(false);
       },
-      { threshold: 0.08, rootMargin: "80px 0px" },
+      { threshold: 0, rootMargin: "0px 0px 36% 0px" },
     );
     io.observe(node);
     return () => io.disconnect();
-  }, []);
+  }, [pathname]);
 
   const camera = useMemo(
     () => ({ position: [1.15, 2.15, -17.8] as [number, number, number], fov: 24, near: 0.1, far: 90 }),

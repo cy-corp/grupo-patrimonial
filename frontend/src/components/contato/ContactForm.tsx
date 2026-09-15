@@ -1,20 +1,18 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { submitContact } from "@/lib/actions";
 import { GoldButton } from "@/components/ui/gold-button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
+import { HoneypotField } from "@/components/contato/HoneypotField";
+import { TurnstileField } from "@/components/contato/TurnstileField";
 import { motion, AnimatePresence } from "framer-motion";
 import { CheckCircle2, ArrowRight, MapPin, Copy, Check } from "lucide-react";
 import type { Company } from "@/lib/companies";
 import { formatCnpj } from "@/lib/companies";
-
-const subjectByCompany = {
-  rendal: ["Terreno ou parceria", "Investimento", "Produto imobiliário", "Outros"],
-  dcorp: ["Engenharia e construção", "Projeto e engenharia", "Administração da construção", "Outros"],
-};
+import { SUBJECTS_BY_COMPANY } from "@/lib/contact/constants";
 
 export function ContactForm({
   company,
@@ -27,6 +25,12 @@ export function ContactForm({
   const [isPending, setIsPending] = useState(false);
   const [phone, setPhone] = useState("");
   const [copied, setCopied] = useState(false);
+  const [turnstileReset, setTurnstileReset] = useState(0);
+
+  useEffect(() => {
+    setStatus(null);
+    setTurnstileReset((value) => value + 1);
+  }, [company.id]);
 
   const handleCopy = () => {
     navigator.clipboard.writeText(`${company.address} · ${formatCnpj(company.cnpj)}`);
@@ -67,6 +71,8 @@ export function ContactForm({
     if (result.success) {
       e.currentTarget.reset();
       setPhone("");
+    } else {
+      setTurnstileReset((value) => value + 1);
     }
   }
 
@@ -117,8 +123,9 @@ export function ContactForm({
                   </button>
                 </motion.div>
               ) : (
-                <form key="form" onSubmit={handleSubmit} className="space-y-10 md:space-y-12">
+                <form key="form" onSubmit={handleSubmit} className="relative space-y-10 md:space-y-12">
                   <input type="hidden" name="company" value={company.id} />
+                  <HoneypotField />
                   <div className="grid grid-cols-1 gap-8 md:grid-cols-2 md:gap-12">
                     <div className="space-y-3">
                       <Label htmlFor="name" className="pl-1 font-heading text-[11px] font-black uppercase tracking-[0.2em] text-[#0F172A] opacity-80">Nome Completo *</Label>
@@ -126,6 +133,7 @@ export function ContactForm({
                         id="name"
                         name="name"
                         required
+                        maxLength={120}
                         placeholder="Seu nome"
                         className="h-14 rounded-none border-0 border-b border-[#0F172A]/10 bg-transparent px-1 font-sans text-lg font-medium tracking-tight placeholder:text-[#0F172A]/30 focus-visible:border-primary focus-visible:ring-0 md:text-xl"
                       />
@@ -137,6 +145,7 @@ export function ContactForm({
                         name="email"
                         type="email"
                         required
+                        maxLength={254}
                         placeholder="seu@email.com"
                         className="h-14 rounded-none border-0 border-b border-[#0F172A]/10 bg-transparent px-1 font-sans text-lg font-medium tracking-tight placeholder:text-[#0F172A]/30 focus-visible:border-primary focus-visible:ring-0 md:text-xl"
                       />
@@ -169,7 +178,7 @@ export function ContactForm({
                         <option value="" disabled>
                           Escolha o assunto
                         </option>
-                        {subjectByCompany[company.id].map((option) => (
+                        {SUBJECTS_BY_COMPANY[company.id].map((option) => (
                           <option key={option} value={option}>
                             {option}
                           </option>
@@ -184,10 +193,19 @@ export function ContactForm({
                       id="message"
                       name="message"
                       rows={6}
+                      maxLength={4000}
                       placeholder="Descreva sua solicitação."
                       className="rounded-2xl border border-[#0F172A]/10 bg-transparent p-6 font-sans text-base font-medium tracking-tight placeholder:text-[#0F172A]/30 focus-visible:border-primary focus-visible:ring-0 md:text-lg"
                     />
                   </div>
+
+                  <TurnstileField resetSignal={turnstileReset} />
+
+                  {status && !status.success ? (
+                    <p className="text-center font-sans text-sm font-semibold text-red-700">
+                      {status.message}
+                    </p>
+                  ) : null}
 
                   <div className="flex justify-center">
                     <GoldButton

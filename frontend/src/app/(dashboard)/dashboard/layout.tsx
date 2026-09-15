@@ -2,9 +2,9 @@
 
 import React, { useEffect, useState } from 'react'
 import { useRouter, usePathname } from 'next/navigation'
-import Image from 'next/image'
 import Link from 'next/link'
 import { LayoutGrid, LogOut } from 'lucide-react'
+import { DualBrandLockup } from '@/components/brands/DualBrandLockup'
 import { createClient } from '@/lib/supabase/client'
 import { Toaster } from 'sonner'
 
@@ -17,7 +17,7 @@ export default function DashboardLayout({
   const pathname = usePathname()
 
   const [userEmail, setUserEmail] = useState<string>('')
-  const [initials, setInitials] = useState<string>('GP')
+  const [initials, setInitials] = useState<string>('RD')
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -71,16 +71,11 @@ export default function DashboardLayout({
       <aside className="hidden md:flex flex-col fixed top-0 bottom-0 left-0 w-56 bg-white border-r border-[#0F172A]/8 z-30">
         {/* Brand logo */}
         <div className="h-16 px-6 border-b border-[#0F172A]/8 flex items-center gap-3">
-          <Image
-            src="/patrimonial-logo-png.png"
-            alt="Grupo Patrimonial"
-            width={28}
-            height={28}
-            className="object-contain"
+          <DualBrandLockup
+            className="w-full gap-2"
+            markClassName="h-6"
+            pipeClassName="h-6"
           />
-          <span className="font-semibold text-sm text-[#0F172A] tracking-tight">
-            Grupo Patrimonial
-          </span>
         </div>
 
         {/* Navigation */}

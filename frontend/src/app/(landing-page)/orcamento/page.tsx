@@ -6,10 +6,13 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
+import { HoneypotField } from "@/components/contato/HoneypotField";
+import { TurnstileField } from "@/components/contato/TurnstileField";
 
 export default function Orcamento() {
   const [status, setStatus] = useState<{ success: boolean; message: string } | null>(null);
   const [isPending, setIsPending] = useState(false);
+  const [turnstileReset, setTurnstileReset] = useState(0);
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -20,6 +23,7 @@ export default function Orcamento() {
     const result = await submitOrcamento(formData);
     setStatus(result);
     setIsPending(false);
+    setTurnstileReset((value) => value + 1);
 
     if (result.success) {
       e.currentTarget.reset();
@@ -31,26 +35,29 @@ export default function Orcamento() {
       <h1 className="font-heading text-4xl font-bold uppercase tracking-tight text-primary md:text-5xl">Solicite um Orçamento</h1>
       <p className="mt-4 text-center max-w-2xl text-lg text-muted-foreground">Preencha os dados abaixo e entraremos em contato com uma proposta detalhada.</p>
 
-      <form onSubmit={handleSubmit} className="mt-12 w-full max-w-lg space-y-6 bg-card p-8 rounded-2xl shadow-sm border">
+      <form onSubmit={handleSubmit} className="relative mt-12 w-full max-w-lg space-y-6 bg-card p-8 rounded-2xl shadow-sm border">
+        <HoneypotField />
         <div className="space-y-2">
           <Label htmlFor="name">Nome / Empresa</Label>
-          <Input id="name" name="name" required />
+          <Input id="name" name="name" required maxLength={120} />
         </div>
-        
+
         <div className="space-y-2">
           <Label htmlFor="email">Email</Label>
-          <Input id="email" name="email" type="email" required />
+          <Input id="email" name="email" type="email" required maxLength={254} />
         </div>
 
         <div className="space-y-2">
           <Label htmlFor="service">Serviço Desejado</Label>
-          <Input id="service" name="service" placeholder="Ex: Incorporação, Gestão Patrimonial..." required />
+          <Input id="service" name="service" placeholder="Ex: Incorporação, engenharia..." required maxLength={160} />
         </div>
 
         <div className="space-y-2">
           <Label htmlFor="details">Detalhes do Projeto</Label>
-          <Textarea id="details" name="details" rows={5} required />
+          <Textarea id="details" name="details" rows={5} required maxLength={4000} />
         </div>
+
+        <TurnstileField resetSignal={turnstileReset} />
 
         <Button type="submit" className="w-full text-lg h-12" disabled={isPending}>
           {isPending ? "Enviando..." : "Solicitar Orçamento"}

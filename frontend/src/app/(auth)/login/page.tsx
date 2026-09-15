@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import Image from 'next/image'
+import { DualBrandLockup } from '@/components/brands/DualBrandLockup'
 import { createClient } from '@/lib/supabase/client'
 
 export default function LoginPage() {
@@ -43,16 +43,13 @@ export default function LoginPage() {
       <div className="w-full max-w-md bg-white rounded-xl shadow-md border border-[#0F172A14] overflow-hidden p-8 flex flex-col items-center">
         {/* Logo */}
         <div className="mb-6 flex flex-col items-center">
-          <Image
-            src="/patrimonial-logo-png.png"
-            alt="Grupo Patrimonial Logo"
-            width={72}
-            height={72}
-            className="object-contain"
-            priority
+          <DualBrandLockup
+            className="w-full max-w-[240px] justify-center gap-3"
+            markClassName="h-10"
+            pipeClassName="h-8"
           />
           <h2 className="text-xl font-semibold text-[#0F172A] mt-3">
-            Grupo Patrimonial
+            Rendal e DCorp
           </h2>
           <p className="text-xs text-[#0F172A]/50 mt-1 uppercase tracking-widest font-bold">
             Painel Administrativo
