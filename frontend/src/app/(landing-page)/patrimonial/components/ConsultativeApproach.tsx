@@ -29,7 +29,7 @@ export function ConsultativeApproach() {
             className="lg:col-span-6 border-l border-[#0F172A]/10 pl-8 lg:pl-16 mt-12 lg:mt-0"
           >
             <p className="font-sans text-[#0F172A] text-xl md:text-3xl lg:text-4xl leading-tight md:leading-snug tracking-tight font-medium italic">
-              "Nosso trabalho vai além da simples administração de imóveis. Atuamos de forma próxima e estratégica, analisando cada ativo como parte de um ecossistema patrimonial maior."
+              &quot;Nosso trabalho vai além da simples administração de imóveis. Atuamos de forma próxima e estratégica, analisando cada ativo como parte de um ecossistema patrimonial maior.&quot;
             </p>
           </motion.div>
         </div>

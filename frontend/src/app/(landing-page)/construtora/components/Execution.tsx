@@ -39,7 +39,7 @@ export function Execution() {
             </h2>
             <div className="space-y-6">
               <p className="font-sans text-[#0F172A]/70 text-lg md:text-xl leading-relaxed tracking-wide">
-                Construir na DCorp não é só erguer estrutura: é materializar o ativo que a Rendal estruturou. Engenharia civil com preservação de valor em cada decisão de obra.
+                Construir na DCorp é transformar projetos em obras executadas com método, controle e atenção a cada decisão do canteiro.
               </p>
               <p className="font-sans text-[#0F172A]/70 text-lg md:text-xl leading-relaxed tracking-wide">
                 Utilizamos processos industrializados e gestão orientadora por dados para mitigar riscos inerentes à construção, asseguramos que cada projeto cumpra rigorosamente cronogramas e orçamentos.

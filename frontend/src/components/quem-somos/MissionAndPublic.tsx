@@ -20,7 +20,7 @@ export function MissionAndPublic() {
         >
           <h2 className="font-heading text-2xl md:text-3xl text-primary mb-12 uppercase tracking-[0.2em] font-black">Nossa Missão</h2>
           <p className="font-heading text-3xl text-[#0F172A] leading-snug italic mb-8 font-light">
-            "Transformar imóveis e áreas em ativos sólidos, legais e rentáveis, com visão de longo prazo, segurança jurídica e eficiência técnica."
+            &quot;Transformar imóveis e áreas em ativos sólidos, legais e rentáveis, com visão de longo prazo, segurança jurídica e eficiência técnica.&quot;
           </p>
           <div className="h-[1px] w-full bg-primary/20 mb-8"></div>
         </motion.div>

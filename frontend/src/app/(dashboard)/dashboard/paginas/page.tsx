@@ -2,6 +2,7 @@ import React from 'react'
 import Link from 'next/link'
 import { Image as ImageIcon, ChevronRight } from 'lucide-react'
 import { createClient } from '@/lib/supabase/server'
+import { brandFromPageSlug, brandLabel } from '@/lib/content/brand'
 
 interface ImageQuery {
   url: string
@@ -22,7 +23,14 @@ interface PageData {
 
 export const dynamic = 'force-dynamic'
 
-export default async function PagesListPage() {
+interface PageProps {
+  searchParams: Promise<{
+    marca?: string
+  }>
+}
+
+export default async function PagesListPage({ searchParams }: PageProps) {
+  const { marca } = await searchParams
   const supabase = await createClient()
 
   // Fetch pages, their slots, and active images
@@ -43,7 +51,10 @@ export default async function PagesListPage() {
     .neq('slug', 'home')
     .order('name', { ascending: true })
 
-  const pages = (data || []) as unknown as PageData[]
+  const pages = ((data || []) as unknown as PageData[]).filter((page) => {
+    if (marca !== "rendal" && marca !== "dcorp" && marca !== "shared") return true
+    return brandFromPageSlug(page.slug) === marca
+  })
 
   if (error) {
     console.error('Error fetching pages:', error)
@@ -59,6 +70,26 @@ export default async function PagesListPage() {
         <p className="text-sm text-[#0F172A]/60 mt-1">
           Selecione uma seção do site para gerenciar e substituir suas imagens.
         </p>
+        <div className="mt-5 flex flex-wrap gap-2">
+          {[
+            { label: "Todas", value: "" },
+            { label: "Rendal", value: "rendal" },
+            { label: "DCorp", value: "dcorp" },
+            { label: "Compartilhado", value: "shared" },
+          ].map((filter) => (
+            <Link
+              key={filter.value || "all"}
+              href={filter.value ? `/dashboard/paginas?marca=${filter.value}` : "/dashboard/paginas"}
+              className={`rounded-full px-3 py-1.5 text-xs font-semibold transition-colors ${
+                (marca || "") === filter.value
+                  ? "bg-[#C9A14A] text-white"
+                  : "bg-[#F8F5F0] text-[#0F172A]/60 hover:text-[#0F172A]"
+              }`}
+            >
+              {filter.label}
+            </Link>
+          ))}
+        </div>
       </div>
 
       {/* Pages Grid */}
@@ -95,6 +126,9 @@ export default async function PagesListPage() {
                   <p className="text-xs text-[#0F172A]/60 mt-1">
                     {slotsCount} {slotsCount === 1 ? 'imagem gerenciável' : 'imagens gerenciáveis'}
                   </p>
+                  <span className="mt-3 inline-flex rounded-full bg-[#F8F5F0] px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-[#C9A14A]">
+                    {brandLabel(brandFromPageSlug(page.slug))}
+                  </span>
 
                   {/* Mosaico/Avatar Row */}
                   <div className="flex items-center gap-2 mt-6">

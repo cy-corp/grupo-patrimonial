@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import { SlotGrid } from '@/components/dashboard/slot-grid'
+import { brandFromPageSlug, brandLabel } from '@/lib/content/brand'
 
 interface ImageMetadata {
   id: string
@@ -91,6 +92,9 @@ export default async function PageSlotsPage({ params }: PageProps) {
           <span>/</span>
           <span className="text-[#0F172A]">{page.name}</span>
         </div>
+        <span className="inline-flex rounded-full bg-[#F8F5F0] px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-[#C9A14A]">
+          {brandLabel(brandFromPageSlug(page.slug))}
+        </span>
         <h2 className="text-2xl font-bold text-[#0F172A] tracking-tight">
           {page.name}
         </h2>

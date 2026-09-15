@@ -59,7 +59,7 @@ function City({ reducedMotion, play, epoch }: { reducedMotion: boolean; play: bo
     return { min, range: Math.max(1, max - min) };
   }, [buildings]);
 
-  const clockHands = useMemo(() => {
+  const clockHands = useMemo<{ hour: THREE.Object3D | null; minute: THREE.Object3D | null }>(() => {
     let hour: THREE.Object3D | null = null;
     let minute: THREE.Object3D | null = null;
     root.traverse((obj) => {
@@ -105,11 +105,13 @@ function City({ reducedMotion, play, epoch }: { reducedMotion: boolean; play: bo
     }).formatToParts(new Date());
     const hour = Number(parts.find((p) => p.type === "hour")?.value ?? 0);
     const minute = Number(parts.find((p) => p.type === "minute")?.value ?? 0);
-    if (clockHands.hour) {
-      clockHands.hour.rotation.z = -((hour % 12) / 12) * Math.PI * 2 - (minute / 60) * (Math.PI / 6);
+    const hourHand = clockHands.hour;
+    const minuteHand = clockHands.minute;
+    if (hourHand) {
+      hourHand.rotation.z = -((hour % 12) / 12) * Math.PI * 2 - (minute / 60) * (Math.PI / 6);
     }
-    if (clockHands.minute) {
-      clockHands.minute.rotation.z = -(minute / 60) * Math.PI * 2;
+    if (minuteHand) {
+      minuteHand.rotation.z = -(minute / 60) * Math.PI * 2;
     }
   });
 
@@ -129,13 +131,14 @@ function Aim() {
   const { camera, size } = useThree();
   useLayoutEffect(() => {
     const mobile = size.width < 768;
+    const perspectiveCamera = camera as THREE.PerspectiveCamera;
     if (mobile) {
       camera.position.set(0.45, 1.9, -13.2);
-      camera.fov = 26;
+      perspectiveCamera.fov = 26;
       camera.lookAt(0, 1.2, 0);
     } else {
       camera.position.set(1.15, 2.15, -17.8);
-      camera.fov = 24;
+      perspectiveCamera.fov = 24;
       camera.lookAt(0, 0.85, 0);
     }
     camera.updateProjectionMatrix();

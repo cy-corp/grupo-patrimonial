@@ -142,7 +142,7 @@ export function Ecosystem() {
                             {step.tag}
                           </span>
                           <span className="text-[#0F172A]/30 text-xs font-bold uppercase tracking-wider">
-                            // {step.subtitle}
+                            {"// "}{step.subtitle}
                           </span>
                         </div>
                       </div>

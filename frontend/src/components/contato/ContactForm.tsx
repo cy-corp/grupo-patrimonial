@@ -19,7 +19,7 @@ export function ContactForm({
   onSwitch,
 }: {
   company: Company;
-  onSwitch: () => void;
+  onSwitch?: () => void;
 }) {
   const [status, setStatus] = useState<{ success: boolean; message: string } | null>(null);
   const [isPending, setIsPending] = useState(false);
@@ -86,13 +86,15 @@ export function ContactForm({
           <h2 className="font-heading text-4xl font-black uppercase leading-none tracking-tighter text-[#0F172A] md:text-6xl">
             Envie para a {company.name}
           </h2>
-          <button
-            type="button"
-            onClick={onSwitch}
-            className="cursor-pointer font-sans text-[10px] font-black uppercase tracking-[0.22em] text-primary hover:opacity-70"
-          >
-            Falar com a outra empresa
-          </button>
+          {onSwitch && (
+            <button
+              type="button"
+              onClick={onSwitch}
+              className="cursor-pointer font-sans text-[10px] font-black uppercase tracking-[0.22em] text-primary hover:opacity-70"
+            >
+              Falar com a outra empresa
+            </button>
+          )}
         </div>
 
         <div className="order-2 lg:col-span-7 lg:row-span-2">

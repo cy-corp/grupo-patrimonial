@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import { Building2, Truck, HardHat, BarChart3, ChevronRight } from "lucide-react";
-import { motion, useScroll, useTransform, useSpring, AnimatePresence } from "framer-motion";
+import { motion, useScroll, useTransform, useSpring, AnimatePresence, type MotionValue } from "framer-motion";
 
 /**
  * SERVICE PILLARS COMPONENT
@@ -13,8 +13,8 @@ import { motion, useScroll, useTransform, useSpring, AnimatePresence } from "fra
 const services = [
   {
     icon: <Building2 className="w-8 h-8 text-[#C9A14A]" />,
-    title: "Obras Civis",
-    description: "Execução de edifícios corporativos e residências de alto padrão com excelência em acabamentos.",
+    title: "Obras residenciais e térreas",
+    description: "Execução de casas, condomínios residenciais e barracões com atenção a acabamento e durabilidade.",
     color: "bg-white",
     textColor: "text-[#0F172A]",
     descColor: "text-[#0F172A]/60",
@@ -26,7 +26,7 @@ const services = [
   {
     icon: <Truck className="w-8 h-8 text-[#C9A14A]" />,
     title: "Infraestrutura",
-    description: "Urbanização e pavimentação de loteamentos, aumentando a valorização do ativo.",
+    description: "Execução de fundações, preparação e infraestrutura necessária para cada obra.",
     color: "bg-[#162032]",
     textColor: "text-white",
     descColor: "text-white/55",
@@ -124,7 +124,7 @@ export function Pillars() {
             transition={{ delay: 0.3 }}
             className="font-sans text-[#0F172A]/70 text-base md:text-lg max-w-sm mb-2"
           >
-            Modalidades da DCorp para tirar o empreendimento do papel com rigor técnico.
+            Modalidades da DCorp para executar casas, condomínios e estruturas térreas com rigor técnico.
           </motion.p>
         </div>
 
@@ -145,7 +145,17 @@ export function Pillars() {
   );
 }
 
-function PuzzlePiece({ service, idx, progress, isMobile }: { service: typeof services[0], idx: number, progress: any, isMobile: boolean }) {
+function PuzzlePiece({
+  service,
+  idx,
+  progress,
+  isMobile,
+}: {
+  service: (typeof services)[number];
+  idx: number;
+  progress: MotionValue<number>;
+  isMobile: boolean;
+}) {
   // Desktop movement based on scroll
   const desktopX = useTransform(progress, [0, 0.45], [service.offsetX, 0]);
   const desktopY = useTransform(progress, [0, 0.45], [service.offsetY, 0]);

@@ -5,7 +5,10 @@ import { motion } from "framer-motion";
 import { useActiveImage } from "@/hooks/useActiveImage";
 
 export function Hero() {
-  const { imageUrl, altText } = useActiveImage("construtora_hero", "/construtora/construtora-hero.jpg");
+  const { imageUrl, altText } = useActiveImage(
+    "dcorp_hero",
+    "/construtora/construtora-hero.jpg",
+  );
 
   return (
     <section className="relative w-full overflow-hidden">
@@ -14,12 +17,12 @@ export function Hero() {
         <div className="absolute inset-0 z-0">
           <Image
             src={imageUrl}
-            alt={altText || "Construtora"}
+            alt={altText || "Casa em construção pela DCorp"}
             fill
+            unoptimized
             className="object-cover"
             priority
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-[#F8F1E3] via-[#F8F1E3]/85 to-transparent" />
         </div>
 
 
@@ -37,7 +40,7 @@ export function Hero() {
               </span>
             </div>
             <h1 className="font-heading text-6xl lg:text-[10rem] font-black uppercase tracking-tighter leading-none text-[#0F172A] mb-8 whitespace-nowrap">
-              CONS<span className="text-[#C9A14A]">TRUTORA</span>
+              CONS<span className="text-[#C9A14A]">TRUÇÃO</span>
             </h1>
             <p className="font-sans text-[#0F172A]/70 text-xl leading-relaxed tracking-wide max-w-xl border-l-2 border-[#C9A14A]/30 pl-8">
               Execução de obras com controle, qualidade e previsibilidade, garantindo que o patrimônio seja bem construído e durável.
@@ -51,8 +54,9 @@ export function Hero() {
         <div className="relative h-[45vh] w-full">
           <Image
             src={imageUrl}
-            alt={altText || "Construtora"}
+            alt={altText || "Casa em construção pela DCorp"}
             fill
+            unoptimized
             className="object-cover brightness-90"
           />
         </div>
@@ -64,7 +68,7 @@ export function Hero() {
             </span>
           </div>
           <h1 className="font-heading text-4xl sm:text-5xl font-black uppercase tracking-tight md:tracking-tighter leading-tight md:leading-none text-[#0F172A] mb-6 whitespace-nowrap">
-            CONS<span className="text-[#C9A14A]">TRUTORA</span>
+            CONS<span className="text-[#C9A14A]">TRUÇÃO</span>
           </h1>
           <p className="font-sans text-[#0F172A]/80 text-lg leading-relaxed">
             Execução de obras com controle, qualidade e previsibilidade, garantindo acabamento e durabilidade.
