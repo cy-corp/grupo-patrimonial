@@ -423,11 +423,6 @@
   color: #ffffff;
 }
 
-.site-header-logo--attached {
-  filter: brightness(0) invert(1);
-  opacity: 0.96;
-}
-
 /* Detach settle: only when leaving the hero wallpaper */
 .site-header--detaching .site-header-bar {
   animation: dcorp-header-detach 420ms var(--ease-smooth-out) both;

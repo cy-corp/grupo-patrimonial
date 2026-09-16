@@ -112,6 +112,7 @@ export function SiteHeader({ companyId }: { companyId: CompanyId }) {
   const pillRef = useRef<HTMLSpanElement>(null);
   const closeTimer = useRef<number>(0);
   const hoverIndex = useRef<number | null>(null);
+  const isHome = pathname === "/";
 
   const matchedIndex = config.links.findIndex((link) => link.href === pathname);
   const activeIndex = matchedIndex;
@@ -173,11 +174,13 @@ export function SiteHeader({ companyId }: { companyId: CompanyId }) {
     requestAnimationFrame(() => setMenuShown(true));
   }, []);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     let ticking = false;
-    const threshold = isDcorp && pathname === "/" ? 72 : 16;
+    const threshold = isDcorp && isHome ? 72 : 16;
+    const readY = () =>
+      window.scrollY || document.documentElement.scrollTop || 0;
     const update = () => {
-      const next = window.scrollY > threshold;
+      const next = readY() > threshold;
       setScrolled((prev) => (prev === next ? prev : next));
       ticking = false;
     };
@@ -189,7 +192,7 @@ export function SiteHeader({ companyId }: { companyId: CompanyId }) {
     update();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
-  }, [isDcorp, pathname]);
+  }, [isDcorp, isHome]);
 
   useEffect(() => {
     closeMenu();
@@ -232,7 +235,7 @@ export function SiteHeader({ companyId }: { companyId: CompanyId }) {
 
   const ctaHref = `/contato?empresa=${companyId}`;
   const HeaderCta = isDcorp ? GoldCta : MetalCta;
-  const attached = isDcorp && pathname === "/" && !scrolled && !open;
+  const attached = isDcorp && isHome && !scrolled && !open;
 
   useEffect(() => {
     if (attached) {
@@ -240,14 +243,14 @@ export function SiteHeader({ companyId }: { companyId: CompanyId }) {
       setDetaching(false);
       return;
     }
-    if (wasAttached.current && isDcorp && pathname === "/") {
+    if (wasAttached.current && isDcorp && isHome) {
       wasAttached.current = false;
       setDetaching(true);
       const timer = window.setTimeout(() => setDetaching(false), 420);
       return () => window.clearTimeout(timer);
     }
     wasAttached.current = false;
-  }, [attached, isDcorp, pathname]);
+  }, [attached, isDcorp, isHome]);
 
   return (
     <header
@@ -285,17 +288,35 @@ export function SiteHeader({ companyId }: { companyId: CompanyId }) {
               isDcorp ? "rounded-md" : "rounded-full",
             )}
           >
-            <Image
-              src={config.logo}
-              alt={config.name}
-              width={1016}
-              height={813}
-              className={cn(
-                "h-8 w-auto max-w-[7rem] object-contain sm:h-9",
-                attached && "site-header-logo--attached",
-              )}
-              priority
-            />
+            <span className="relative block h-11 w-[9.75rem] sm:h-12 sm:w-[11rem]">
+              <Image
+                src={config.logo}
+                alt={config.name}
+                width={1016}
+                height={813}
+                className={cn(
+                  "absolute inset-0 h-full w-full object-contain object-left transition-opacity duration-[var(--duration-quick)] ease-out",
+                  isDcorp && isHome && !scrolled && !open
+                    ? "opacity-0"
+                    : "opacity-100",
+                )}
+                priority
+              />
+              {isDcorp ? (
+                <Image
+                  src="/brands/dcorp-logo-negative.png"
+                  alt=""
+                  aria-hidden="true"
+                  width={1016}
+                  height={813}
+                  className={cn(
+                    "absolute inset-0 h-full w-full object-contain object-left transition-opacity duration-[var(--duration-quick)] ease-out",
+                    isHome && !scrolled && !open ? "opacity-100" : "opacity-0",
+                  )}
+                  priority
+                />
+              ) : null}
+            </span>
           </Link>
 
           <nav
