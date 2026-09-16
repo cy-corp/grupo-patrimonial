@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { GoldButton } from "@/components/ui/gold-button";
 import { DcorpHandoffLogo } from "@/components/site/DcorpHandoffLogo";
 import { useDcorpChrome } from "@/components/site/dcorp-chrome";
@@ -21,11 +21,8 @@ const HERO_IMAGE = "/dcorp/hero-kinetic.jpg";
 export function DcorpHero() {
   const [shown, setShown] = useState(false);
   const chrome = useDcorpChrome();
-  const handoffLineRef = useRef<HTMLDivElement>(null);
   const isMobile = Boolean(chrome?.isMobile);
-  const logoInHeader = Boolean(chrome?.logoInHeader);
-  const setLogoInHeader = chrome?.setLogoInHeader;
-
+  const pastHero = Boolean(chrome?.pastHero);
   const handoffActive = isMobile;
 
   useEffect(() => {
@@ -39,44 +36,6 @@ export function DcorpHero() {
     });
     return () => cancelAnimationFrame(id);
   }, []);
-
-  useEffect(() => {
-    if (!handoffActive || !setLogoInHeader) return;
-    const node = handoffLineRef.current;
-    if (!node) return;
-
-    // Dead zone between enter/exit so slow scroll near the hero edge
-    // does not thrash the shared logo layout + header attach state.
-    const ENTER_Y = 72;
-    const EXIT_Y = 148;
-    let inHeader = false;
-    let ticking = false;
-
-    const read = () => {
-      const top = node.getBoundingClientRect().top;
-      const next = inHeader ? top < EXIT_Y : top < ENTER_Y;
-      if (next !== inHeader) {
-        inHeader = next;
-        setLogoInHeader(next);
-      }
-      ticking = false;
-    };
-
-    const onScroll = () => {
-      if (ticking) return;
-      ticking = true;
-      requestAnimationFrame(read);
-    };
-
-    read();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onScroll);
-    return () => {
-      window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", onScroll);
-      setLogoInHeader(false);
-    };
-  }, [handoffActive, setLogoInHeader]);
 
   return (
     <section
@@ -107,7 +66,7 @@ export function DcorpHero() {
             <div
               className={cn(
                 "mb-4 md:hidden transition-opacity duration-[var(--duration-medium)] ease-[var(--ease-smooth-out)]",
-                logoInHeader
+                pastHero
                   ? "pointer-events-none opacity-0"
                   : "opacity-100",
               )}
@@ -121,8 +80,6 @@ export function DcorpHero() {
               </Link>
             </div>
           ) : null}
-
-          <div ref={handoffLineRef} className="h-px w-full" aria-hidden="true" />
 
           <p className="dcorp-hero-label font-sans text-[11px] font-semibold uppercase text-white/60 md:text-xs">
             DCORP Engenharia

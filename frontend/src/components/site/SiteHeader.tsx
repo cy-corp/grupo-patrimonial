@@ -116,7 +116,11 @@ export function SiteHeader({ companyId }: { companyId: CompanyId }) {
   const isHome = pathname === "/";
   const chrome = useDcorpChrome();
   const mobileHandoff = Boolean(isDcorp && isHome && chrome?.isMobile);
-  const showHeaderLogo = !mobileHandoff || Boolean(chrome?.logoInHeader) || open;
+  const pastHero = Boolean(chrome?.pastHero);
+  const setPastHero = chrome?.setPastHero;
+  const debugHandoff = Boolean(chrome?.debugHandoff);
+  const setHandoffDebug = chrome?.setHandoffDebug;
+  const showHeaderLogo = !mobileHandoff || pastHero || open;
 
   const matchedIndex = config.links.findIndex((link) => link.href === pathname);
   const activeIndex = matchedIndex;
@@ -180,12 +184,27 @@ export function SiteHeader({ companyId }: { companyId: CompanyId }) {
 
   useLayoutEffect(() => {
     let ticking = false;
-    const threshold = isDcorp && isHome ? 72 : 16;
+    let past = false;
+    // Hysteresis: enter/exit bands so slow scroll does not thrash glass + logo.
+    const enterY = isDcorp && isHome ? 56 : 16;
+    const exitY = isDcorp && isHome ? 16 : 8;
     const readY = () =>
       window.scrollY || document.documentElement.scrollTop || 0;
     const update = () => {
-      const next = readY() > threshold;
-      setScrolled((prev) => (prev === next ? prev : next));
+      const y = readY();
+      const next = past ? y > exitY : y > enterY;
+      if (next !== past) {
+        past = next;
+        setScrolled(next);
+        if (isDcorp && isHome && setPastHero) setPastHero(next);
+      }
+      if (debugHandoff && setHandoffDebug) {
+        setHandoffDebug({
+          scrollY: y,
+          lineTop: null,
+          note: next ? "pastHero" : "top",
+        });
+      }
       ticking = false;
     };
     const onScroll = () => {
@@ -195,8 +214,11 @@ export function SiteHeader({ companyId }: { companyId: CompanyId }) {
     };
     update();
     window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, [isDcorp, isHome]);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      if (isDcorp && isHome && setPastHero) setPastHero(false);
+    };
+  }, [isDcorp, isHome, setPastHero, debugHandoff, setHandoffDebug]);
 
   useEffect(() => {
     closeMenu();
@@ -239,11 +261,7 @@ export function SiteHeader({ companyId }: { companyId: CompanyId }) {
 
   const ctaHref = companies[companyId].contactHref;
   const HeaderCta = isDcorp ? GoldCta : MetalCta;
-  const attached =
-    isDcorp &&
-    isHome &&
-    !open &&
-    (mobileHandoff ? !chrome?.logoInHeader : !scrolled);
+  const attached = isDcorp && isHome && !open && !scrolled;
 
   const headerLogoVariant = attached ? "hero" : "header";
 
