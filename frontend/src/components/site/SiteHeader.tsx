@@ -118,8 +118,6 @@ export function SiteHeader({ companyId }: { companyId: CompanyId }) {
   const mobileHandoff = Boolean(isDcorp && isHome && chrome?.isMobile);
   const pastHero = Boolean(chrome?.pastHero);
   const setPastHero = chrome?.setPastHero;
-  const debugHandoff = Boolean(chrome?.debugHandoff);
-  const setHandoffDebug = chrome?.setHandoffDebug;
   const showHeaderLogo = !mobileHandoff || pastHero || open;
 
   const matchedIndex = config.links.findIndex((link) => link.href === pathname);
@@ -198,13 +196,6 @@ export function SiteHeader({ companyId }: { companyId: CompanyId }) {
         setScrolled(next);
         if (isDcorp && isHome && setPastHero) setPastHero(next);
       }
-      if (debugHandoff && setHandoffDebug) {
-        setHandoffDebug({
-          scrollY: y,
-          lineTop: null,
-          note: next ? "pastHero" : "top",
-        });
-      }
       ticking = false;
     };
     const onScroll = () => {
@@ -218,7 +209,7 @@ export function SiteHeader({ companyId }: { companyId: CompanyId }) {
       window.removeEventListener("scroll", onScroll);
       if (isDcorp && isHome && setPastHero) setPastHero(false);
     };
-  }, [isDcorp, isHome, setPastHero, debugHandoff, setHandoffDebug]);
+  }, [isDcorp, isHome, setPastHero]);
 
   useEffect(() => {
     closeMenu();
