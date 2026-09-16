@@ -1,8 +1,10 @@
 "use client";
 
 import Link from "next/link";
+import { LayoutGroup } from "framer-motion";
 import type { CompanyId } from "@/lib/companies";
 import { siteConfigs } from "@grupo-patrimonial/site-config";
+import { DcorpChromeProvider } from "./dcorp-chrome";
 import { SiteHeader } from "./SiteHeader";
 
 export function getSiteConfig(id: CompanyId) {
@@ -19,7 +21,7 @@ export function SiteShell({
   const config = siteConfigs[companyId];
   const isDcorp = companyId === "dcorp";
 
-  return (
+  const tree = (
     <div className={isDcorp ? "min-h-dvh bg-white" : "min-h-dvh bg-[#F8F1E3]"}>
       <SiteHeader companyId={companyId} />
 
@@ -56,5 +58,13 @@ export function SiteShell({
         </div>
       </footer>
     </div>
+  );
+
+  if (!isDcorp) return tree;
+
+  return (
+    <DcorpChromeProvider>
+      <LayoutGroup id="dcorp-chrome">{tree}</LayoutGroup>
+    </DcorpChromeProvider>
   );
 }

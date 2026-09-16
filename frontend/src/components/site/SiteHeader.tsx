@@ -17,6 +17,8 @@ import {
 import { cn } from "@/lib/utils";
 import type { CompanyId } from "@/lib/companies";
 import { siteConfigs } from "@grupo-patrimonial/site-config";
+import { useDcorpChrome } from "./dcorp-chrome";
+import { DcorpHandoffLogo } from "./DcorpHandoffLogo";
 
 function cssNumber(name: string, fallback: number) {
   if (typeof window === "undefined") return fallback;
@@ -113,6 +115,9 @@ export function SiteHeader({ companyId }: { companyId: CompanyId }) {
   const closeTimer = useRef<number>(0);
   const hoverIndex = useRef<number | null>(null);
   const isHome = pathname === "/";
+  const chrome = useDcorpChrome();
+  const mobileHandoff = Boolean(isDcorp && isHome && chrome?.isMobile);
+  const showHeaderLogo = !mobileHandoff || Boolean(chrome?.logoInHeader) || open;
 
   const matchedIndex = config.links.findIndex((link) => link.href === pathname);
   const activeIndex = matchedIndex;
@@ -235,7 +240,11 @@ export function SiteHeader({ companyId }: { companyId: CompanyId }) {
 
   const ctaHref = `/contato?empresa=${companyId}`;
   const HeaderCta = isDcorp ? GoldCta : MetalCta;
-  const attached = isDcorp && isHome && !scrolled && !open;
+  const attached =
+    isDcorp &&
+    isHome &&
+    !open &&
+    (mobileHandoff ? !chrome?.logoInHeader : !scrolled);
 
   useEffect(() => {
     if (attached) {
@@ -252,6 +261,8 @@ export function SiteHeader({ companyId }: { companyId: CompanyId }) {
     wasAttached.current = false;
   }, [attached, isDcorp, isHome]);
 
+  const headerLogoVariant = attached ? "hero" : "header";
+
   return (
     <header
       className={cn(
@@ -266,6 +277,8 @@ export function SiteHeader({ companyId }: { companyId: CompanyId }) {
         className={cn(
           "pointer-events-auto relative mx-auto transition-[max-width] duration-[var(--duration-fast)] ease-[var(--ease-smooth-out)]",
           attached ? "max-w-6xl" : "max-w-5xl",
+          isDcorp && "max-w-6xl",
+          mobileHandoff && attached && "flex justify-end",
         )}
       >
         <div
@@ -278,51 +291,46 @@ export function SiteHeader({ companyId }: { companyId: CompanyId }) {
             isDcorp ? "rounded-xl site-glass-dcorp" : "rounded-full",
             companyId === "rendal" && "site-glass-rendal",
             attached && "site-header-bar--attached",
+            mobileHandoff && attached && "ml-auto w-auto justify-end px-1.5 shadow-none",
           )}
         >
-          <Link
-            href={config.homeHref}
-            aria-label={`${config.name} - início`}
-            className={cn(
-              "relative z-10 flex shrink-0 items-center px-2 py-1 active:scale-[0.96]",
-              isDcorp ? "rounded-md" : "rounded-full",
-            )}
-          >
-            <span className="relative block h-11 w-[9.75rem] sm:h-12 sm:w-[11rem]">
-              <Image
-                src={config.logo}
-                alt={config.name}
-                width={1016}
-                height={813}
-                className={cn(
-                  "absolute inset-0 h-full w-full object-contain object-left transition-opacity duration-[var(--duration-quick)] ease-out",
-                  isDcorp && isHome && !scrolled && !open
-                    ? "opacity-0"
-                    : "opacity-100",
-                )}
-                priority
-              />
+          {showHeaderLogo ? (
+            <Link
+              href={config.homeHref}
+              aria-label={`${config.name} - início`}
+              className={cn(
+                "relative z-10 mr-auto flex shrink-0 items-center px-2 py-1 active:scale-[0.96]",
+                isDcorp ? "rounded-md" : "rounded-full",
+              )}
+            >
               {isDcorp ? (
-                <Image
-                  src="/brands/dcorp-logo-negative.png"
-                  alt=""
-                  aria-hidden="true"
-                  width={1016}
-                  height={813}
-                  className={cn(
-                    "absolute inset-0 h-full w-full object-contain object-left transition-opacity duration-[var(--duration-quick)] ease-out",
-                    isHome && !scrolled && !open ? "opacity-100" : "opacity-0",
-                  )}
+                <DcorpHandoffLogo
+                  variant={headerLogoVariant}
                   priority
+                  className="h-11 w-[9.75rem] sm:h-12 sm:w-[11rem]"
                 />
-              ) : null}
-            </span>
-          </Link>
+              ) : (
+                <span className="relative block h-11 w-[9.75rem] sm:h-12 sm:w-[11rem]">
+                  <Image
+                    src={config.logo}
+                    alt={config.name}
+                    width={1016}
+                    height={813}
+                    className="absolute inset-0 h-full w-full object-contain object-left"
+                    priority
+                  />
+                </span>
+              )}
+            </Link>
+          ) : null}
 
           <nav
             ref={tabsRef}
             aria-label="Principal"
-            className="t-tabs site-header-tabs relative mx-auto hidden min-w-0 flex-1 justify-center min-[1150px]:inline-flex"
+            className={cn(
+              "t-tabs site-header-tabs relative mx-auto hidden min-w-0 flex-1 justify-center",
+              isDcorp ? "2xl:inline-flex" : "min-[1150px]:inline-flex",
+            )}
             onMouseLeave={() => {
               hoverIndex.current = null;
               movePillToIndex(activeIndex, true);
@@ -335,7 +343,7 @@ export function SiteHeader({ companyId }: { companyId: CompanyId }) {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className="t-tab"
+                  className={cn("t-tab", isDcorp && "site-header-tab--dcorp")}
                   aria-selected={active}
                   aria-current={active ? "page" : undefined}
                   onMouseEnter={() => {
@@ -349,8 +357,13 @@ export function SiteHeader({ companyId }: { companyId: CompanyId }) {
             })}
           </nav>
 
-          <div className="relative z-10 ml-auto flex items-center gap-2">
-            <div className="hidden min-[1150px]:block">
+          <div className="relative z-10 flex items-center gap-2">
+            <div
+              className={cn(
+                "hidden",
+                isDcorp ? "2xl:block" : "min-[1150px]:block",
+              )}
+            >
               <HeaderCta href={ctaHref} label={config.ctaLabel} />
             </div>
 
@@ -358,8 +371,8 @@ export function SiteHeader({ companyId }: { companyId: CompanyId }) {
               type="button"
               onClick={() => (open ? closeMenu() : openMenu())}
               className={cn(
-                "site-header-menu-btn flex size-11 items-center justify-center transition-colors duration-[var(--duration-quick)] ease-[var(--ease-smooth-out)] active:scale-[0.96] min-[1150px]:hidden",
-                isDcorp ? "rounded-md" : "rounded-full",
+                "site-header-menu-btn flex size-11 items-center justify-center transition-colors duration-[var(--duration-quick)] ease-[var(--ease-smooth-out)] active:scale-[0.96]",
+                isDcorp ? "rounded-md 2xl:hidden" : "rounded-full min-[1150px]:hidden",
                 attached
                   ? "text-white hover:bg-white/10"
                   : "text-graphite hover:bg-graphite/5",
@@ -385,7 +398,8 @@ export function SiteHeader({ companyId }: { companyId: CompanyId }) {
           data-origin="top-right"
           data-scrolled="true"
           className={cn(
-            "t-dropdown t-dropdown-panel site-header-dropdown site-glass min-[1150px]:hidden",
+            "t-dropdown t-dropdown-panel site-header-dropdown site-glass",
+            isDcorp ? "2xl:hidden" : "min-[1150px]:hidden",
             isDcorp && "site-glass-dcorp rounded-xl",
             companyId === "rendal" && "site-glass-rendal",
             open && "is-open",
@@ -439,7 +453,8 @@ export function SiteHeader({ companyId }: { companyId: CompanyId }) {
         aria-label="Fechar menu"
         tabIndex={open ? 0 : -1}
         className={cn(
-          "site-header-backdrop fixed inset-0 -z-10 min-[1150px]:hidden",
+          "site-header-backdrop fixed inset-0 -z-10",
+          isDcorp ? "2xl:hidden" : "min-[1150px]:hidden",
           open ? "pointer-events-auto is-open" : "pointer-events-none",
         )}
         onClick={closeMenu}

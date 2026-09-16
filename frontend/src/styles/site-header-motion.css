@@ -192,10 +192,24 @@
 }
 
 .site-header .t-tabs {
+  display: none;
   gap: 4px;
   padding: 4px;
   background: transparent;
   border-radius: 999px;
+}
+
+@media (min-width: 1150px) {
+  .site-header:not(.site-header--dcorp) .t-tabs {
+    display: inline-flex;
+  }
+}
+
+/* DCORP labels are longer — keep hamburger until 2xl */
+@media (min-width: 1536px) {
+  .site-header--dcorp .t-tabs {
+    display: inline-flex;
+  }
 }
 
 .site-header .t-tab {
@@ -390,6 +404,15 @@
   border-radius: 6px;
 }
 
+.site-header--dcorp .site-header-tab--dcorp {
+  font-size: 0.95rem;
+  padding-inline: 12px;
+}
+
+.site-header--dcorp .t-tabs {
+  gap: 2px;
+}
+
 /* Attached to hero wallpaper — light chrome, no white card */
 .site-header--attached {
   --tabs-pill-bg: rgba(255, 255, 255, 0.14);
@@ -416,10 +439,6 @@
 
 .site-header--attached .t-tab[aria-selected="true"],
 .site-header--attached .t-tab:hover {
-  color: #ffffff;
-}
-
-.site-header--attached .t-icon-swap {
   color: #ffffff;
 }
 
@@ -459,6 +478,16 @@
 .site-header .t-icon-swap {
   place-items: center;
   color: #1f1f1f;
+}
+
+.site-header--attached .t-icon-swap {
+  color: #ffffff;
+}
+
+.site-header--attached .site-header-menu-btn {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.12);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.22);
 }
 
 .site-header-tabs {
