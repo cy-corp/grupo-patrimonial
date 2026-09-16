@@ -2,69 +2,108 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useActiveImage } from "@/hooks/useActiveImage";
+import { useEffect, useState } from "react";
 import { GoldButton } from "@/components/ui/gold-button";
+import { cn } from "@/lib/utils";
+
+const SIGNATURE = [
+  { text: "Projetos", tone: "white" as const },
+  { text: "que", tone: "white" as const },
+  { text: "constroem", tone: "white" as const },
+  { text: "oportunidades.", tone: "gold" as const },
+];
+
+const HERO_IMAGE = "/dcorp/hero-kinetic.jpg";
 
 export function DcorpHero() {
-  const { imageUrl, altText } = useActiveImage(
-    "dcorp_hero",
-    "/construtora/construtora-hero.jpg",
-  );
+  const [shown, setShown] = useState(false);
+
+  useEffect(() => {
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduce) {
+      setShown(true);
+      return;
+    }
+    const id = requestAnimationFrame(() => {
+      requestAnimationFrame(() => setShown(true));
+    });
+    return () => cancelAnimationFrame(id);
+  }, []);
 
   return (
-    <section className="relative isolate min-h-dvh w-full overflow-hidden bg-[#1F1F1F]">
-      <Image
-        src={imageUrl}
-        alt={altText || "Obra de construção industrial DCORP"}
-        fill
-        unoptimized
-        priority
-        className="object-cover object-center"
-      />
-      <div
-        className="absolute inset-0 bg-[#1F1F1F]/65"
-        aria-hidden="true"
-      />
+    <section
+      className="dcorp-hero relative isolate flex min-h-dvh w-full flex-col overflow-hidden bg-graphite text-white"
+      data-shown={shown ? "true" : "false"}
+      aria-label="Apresentação DCORP"
+    >
+      <div className="absolute inset-0">
+        <Image
+          src={HERO_IMAGE}
+          alt=""
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover object-[62%_center] md:object-[70%_center]"
+        />
+        <div
+          className="absolute inset-0 bg-graphite/72 md:bg-graphite/58"
+          aria-hidden="true"
+        />
+      </div>
 
-      <div className="relative z-10 flex min-h-dvh flex-col justify-end px-6 pb-16 pt-28 md:justify-center md:px-12 md:pb-24 lg:px-20">
-        <div className="dcorp-hero-copy max-w-3xl">
-          <p className="mb-5 font-sans text-[11px] font-semibold uppercase text-[#C9A96A] md:mb-6 md:text-xs">
-            DCORP Engenharia
-          </p>
-          <h1 className="text-balance font-sans text-4xl font-bold leading-[1.05] text-white sm:text-5xl md:text-6xl lg:text-7xl">
-            Construção industrial com planejamento, execução e resultados.
-          </h1>
-          <p className="mt-6 max-w-xl text-pretty font-sans text-base leading-relaxed text-white/75 md:mt-8 md:text-lg">
-            Projetos que constroem oportunidades — inteligência construtiva,
-            eficiência operacional e entrega previsível.
-          </p>
+      <div className="dcorp-hero-scan" aria-hidden="true" />
 
-          <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-4">
-            <GoldButton
-              href="/contato?empresa=dcorp"
-              className="h-11 px-7 text-[12px] tracking-[0.12em]"
-            >
-              Solicitar orçamento
-            </GoldButton>
-            <Link
-              href="/sistemas-construtivos"
-              className="inline-flex h-11 items-center justify-center rounded-md border border-white/25 px-6 text-[12px] font-semibold text-white transition-colors duration-[var(--duration-quick)] ease-[var(--ease-smooth-out)] hover:border-white/50 hover:bg-white/5"
-            >
-              Ver sistemas construtivos
-            </Link>
-          </div>
-        </div>
+      <div className="relative z-10 mx-auto flex w-full max-w-6xl flex-1 flex-col justify-center px-6 pb-16 pt-28 sm:px-8 md:px-12 lg:px-16">
+        <p className="dcorp-hero-label mb-8 font-sans text-[11px] font-semibold uppercase text-white/60 md:mb-10 md:text-xs">
+          DCORP Engenharia
+        </p>
 
-        <div className="mt-14 hidden items-center gap-8 border-t border-white/15 pt-6 md:flex">
-          {["Planejamento", "Execução", "Resultados"].map((item, index) => (
-            <div key={item} className="flex items-center gap-8">
-              {index > 0 && (
-                <span className="h-px w-8 bg-[#C9A96A]/60" aria-hidden="true" />
+        <h1 className="dcorp-hero-signature max-w-[14ch] text-balance font-sans text-[2.35rem] font-bold leading-[1.05] sm:text-5xl md:text-6xl lg:text-7xl">
+          {SIGNATURE.map((word, index) => (
+            <span
+              key={word.text}
+              className={cn(
+                "dcorp-hero-word inline-block",
+                word.tone === "gold" && "font-semibold italic text-gold",
               )}
-              <span className="font-sans text-[11px] font-semibold uppercase text-white/70">
-                {item}
-              </span>
-            </div>
+              style={{ ["--word-i" as string]: index }}
+            >
+              {word.text}
+              {index < SIGNATURE.length - 1 ? "\u00A0" : null}
+            </span>
+          ))}
+        </h1>
+
+        <p className="dcorp-hero-support mt-7 max-w-[42ch] text-pretty font-sans text-base leading-relaxed text-white/65 md:mt-8 md:text-lg">
+          Planejamento, execução e resultados para construção industrial.
+        </p>
+
+        <div className="dcorp-hero-actions mt-9 flex flex-col gap-3 sm:mt-11 sm:flex-row sm:items-center sm:gap-4">
+          <GoldButton
+            href="/contato?empresa=dcorp"
+            className="h-11 px-7 text-[12px]"
+          >
+            Solicitar orçamento
+          </GoldButton>
+          <Link
+            href="/quem-somos"
+            className="inline-flex h-11 items-center justify-center rounded-md border border-white/25 px-6 text-[12px] font-semibold text-white transition-colors duration-[var(--duration-quick)] ease-out hover:border-white/45 hover:bg-white/5"
+          >
+            Conhecer a DCORP
+          </Link>
+        </div>
+      </div>
+
+      <div className="dcorp-hero-rail relative z-10 border-t border-white/10 bg-graphite/55">
+        <div className="mx-auto flex max-w-6xl flex-wrap items-center gap-x-8 gap-y-3 px-6 py-4 sm:px-8 md:px-12 lg:px-16">
+          {["Planejamento", "Execução", "Resultados"].map((item) => (
+            <span
+              key={item}
+              className="flex items-center gap-3 font-sans text-[11px] font-semibold uppercase text-white/55"
+            >
+              <span className="size-1.5 rounded-full bg-gold" aria-hidden="true" />
+              {item}
+            </span>
           ))}
         </div>
       </div>

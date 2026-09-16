@@ -1,1 +1,112 @@
 @import "../../../../src/app/globals.css";
+
+/*
+  DCORP hero — kinetic signature (B)
+  Type roles: label → display → support → actions → rail
+  Colors: graphite / white / gold only
+  Motion: transform + opacity (compositor-safe)
+*/
+
+.dcorp-hero {
+  --dcorp-ease: var(--ease-smooth-out, ease-out);
+  --dcorp-word-dur: 560ms;
+  --dcorp-word-stagger: 70ms;
+  --dcorp-fade-dur: 480ms;
+}
+
+.dcorp-hero-scan {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  z-index: 1;
+  height: 1px;
+  background: color-mix(in srgb, var(--color-gold, #c9a96a) 55%, transparent);
+  opacity: 0;
+  transform: translateY(0);
+  pointer-events: none;
+}
+
+.dcorp-hero[data-shown="true"] .dcorp-hero-scan {
+  animation: dcorp-hero-scan 1.35s var(--dcorp-ease) 80ms both;
+}
+
+@keyframes dcorp-hero-scan {
+  0% {
+    opacity: 0;
+    transform: translateY(0);
+  }
+  12% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(72dvh);
+  }
+}
+
+.dcorp-hero-label,
+.dcorp-hero-support,
+.dcorp-hero-actions,
+.dcorp-hero-rail {
+  opacity: 0;
+  transform: translateY(12px);
+  transition:
+    opacity var(--dcorp-fade-dur) var(--dcorp-ease),
+    transform var(--dcorp-fade-dur) var(--dcorp-ease);
+}
+
+.dcorp-hero-word {
+  opacity: 0;
+  transform: translateY(18px);
+  transition:
+    opacity var(--dcorp-word-dur) var(--dcorp-ease),
+    transform var(--dcorp-word-dur) var(--dcorp-ease);
+  transition-delay: calc(80ms + (var(--word-i, 0) * var(--dcorp-word-stagger)));
+}
+
+.dcorp-hero[data-shown="true"] .dcorp-hero-label {
+  opacity: 1;
+  transform: none;
+  transition-delay: 40ms;
+}
+
+.dcorp-hero[data-shown="true"] .dcorp-hero-word {
+  opacity: 1;
+  transform: none;
+}
+
+.dcorp-hero[data-shown="true"] .dcorp-hero-support {
+  opacity: 1;
+  transform: none;
+  transition-delay: 420ms;
+}
+
+.dcorp-hero[data-shown="true"] .dcorp-hero-actions {
+  opacity: 1;
+  transform: none;
+  transition-delay: 520ms;
+}
+
+.dcorp-hero[data-shown="true"] .dcorp-hero-rail {
+  opacity: 1;
+  transform: none;
+  transition-delay: 620ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dcorp-hero-scan {
+    display: none;
+  }
+
+  .dcorp-hero-label,
+  .dcorp-hero-support,
+  .dcorp-hero-actions,
+  .dcorp-hero-rail,
+  .dcorp-hero-word {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+    animation: none !important;
+  }
+}
