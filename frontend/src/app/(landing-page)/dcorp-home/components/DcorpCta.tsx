@@ -1,5 +1,9 @@
 import Link from "next/link";
 import { GoldButton } from "@/components/ui/gold-button";
+import { companies } from "@/lib/companies";
+
+const DCORP_ORCAMENTO = companies.dcorp.contactHref;
+const DCORP_PARCEIRO = "/contato?empresa=dcorp#parceiro";
 
 export function DcorpCta() {
   return (
@@ -19,13 +23,13 @@ export function DcorpCta() {
         </p>
         <div className="flex w-full flex-col gap-3 sm:w-auto sm:flex-row">
           <GoldButton
-            href="/contato?empresa=dcorp"
+            href={DCORP_ORCAMENTO}
             className="h-11 px-8 text-[12px] tracking-[0.12em]"
           >
             Solicitar orçamento
           </GoldButton>
           <Link
-            href="/contato?empresa=dcorp#parceiro"
+            href={DCORP_PARCEIRO}
             className="inline-flex h-11 items-center justify-center rounded-md border border-white/20 px-7 text-[12px] font-semibold text-white transition-colors duration-[var(--duration-quick)] ease-[var(--ease-smooth-out)] hover:border-white/40"
           >
             Seja nosso parceiro

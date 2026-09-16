@@ -9,29 +9,122 @@ import { cn } from "@/lib/utils";
 const EASE = [0.22, 1, 0.36, 1] as const;
 const VIEWPORT = { once: true, amount: 0.25, margin: "0px 0px -8% 0px" } as const;
 const LAST = DCORP_SERVICES_HOME.length - 1;
-const STEP_MS = 1000;
+/** Tempo para a barra encher de um ponto ao próximo. */
+const SEGMENT_MS = 1600;
+/** Pausa no último ponto antes de reiniciar. */
+const HOLD_MS = 800;
 
 export function DcorpServices() {
   const [active, setActive] = useState(0);
   const [railReady, setRailReady] = useState(false);
   const [paused, setPaused] = useState(false);
-  const prevActive = useRef(0);
   const reduceMotion = useReducedMotion();
 
-  const fill = railReady || reduceMotion ? active / LAST : 0;
-  const wrapping = prevActive.current === LAST && active === 0;
+  const fillRef = useRef(0);
+  const activeRef = useRef(0);
+  const pausedRef = useRef(false);
+  const desktopBarRef = useRef<HTMLDivElement>(null);
+  const mobileBarRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    prevActive.current = active;
-  }, [active]);
+    pausedRef.current = paused;
+  }, [paused]);
+
+  const paint = (value: number) => {
+    const ratio = Math.min(1, Math.max(0, value / LAST));
+    if (desktopBarRef.current) {
+      desktopBarRef.current.style.transform = `scaleX(${ratio})`;
+    }
+    if (mobileBarRef.current) {
+      mobileBarRef.current.style.transform = `scaleY(${ratio})`;
+    }
+  };
+
+  const snapTo = (index: number) => {
+    const next = Math.max(0, Math.min(LAST, index));
+    fillRef.current = next;
+    activeRef.current = next;
+    setActive(next);
+    paint(next);
+  };
 
   useEffect(() => {
-    if (!railReady || paused || reduceMotion) return;
-    const id = window.setInterval(() => {
-      setActive((current) => (current >= LAST ? 0 : current + 1));
-    }, STEP_MS);
-    return () => window.clearInterval(id);
-  }, [railReady, paused, reduceMotion]);
+    if (!railReady || reduceMotion) {
+      paint(reduceMotion ? LAST : fillRef.current);
+      return;
+    }
+
+    let raf = 0;
+    let from = fillRef.current;
+    let to = Math.min(LAST, Math.floor(from) + 1);
+    if (to <= from) to = Math.min(LAST, from + 1);
+    let start = performance.now();
+    let holding = false;
+
+    const tick = (now: number) => {
+      if (pausedRef.current) {
+        from = fillRef.current;
+        to = Math.min(LAST, Math.floor(from) + 1);
+        if (to <= from && from < LAST) to = Math.min(LAST, from + 1);
+        start = now;
+        holding = false;
+        raf = requestAnimationFrame(tick);
+        return;
+      }
+
+      if (holding) {
+        if (now - start >= HOLD_MS) {
+          fillRef.current = 0;
+          activeRef.current = 0;
+          setActive(0);
+          paint(0);
+          from = 0;
+          to = 1;
+          holding = false;
+          start = now;
+        }
+        raf = requestAnimationFrame(tick);
+        return;
+      }
+
+      const span = Math.max(to - from, 0.0001);
+      const t = Math.min(1, (now - start) / SEGMENT_MS);
+      const eased = 1 - (1 - t) ** 1.55;
+      const value = from + span * eased;
+
+      fillRef.current = value;
+      paint(value);
+
+      const nextActive = Math.min(LAST, Math.floor(value + 0.02));
+      if (nextActive !== activeRef.current) {
+        activeRef.current = nextActive;
+        setActive(nextActive);
+      }
+
+      if (t >= 1) {
+        fillRef.current = to;
+        paint(to);
+        if (activeRef.current !== to) {
+          activeRef.current = to;
+          setActive(to);
+        }
+
+        if (to >= LAST) {
+          holding = true;
+          start = now;
+        } else {
+          from = to;
+          to = from + 1;
+          start = now;
+        }
+      }
+
+      raf = requestAnimationFrame(tick);
+    };
+
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, [railReady, reduceMotion]);
 
   const headerAnim = reduceMotion
     ? undefined
@@ -119,18 +212,18 @@ export function DcorpServices() {
             },
           }}
         >
-          {/* Center of size-3 (12px) → 6px */}
           <div
             className="absolute bottom-2 left-[5.5px] top-2 w-px bg-[#D9D9D9]"
             aria-hidden="true"
           />
-          <motion.div
-            className="absolute left-[5.5px] top-2 w-px origin-top bg-[#C9A96A]"
+          <div
+            ref={mobileBarRef}
+            className="absolute left-[5.5px] top-2 w-px origin-top bg-[#C9A96A] will-change-transform"
             aria-hidden="true"
-            initial={false}
-            animate={{ scaleY: fill }}
-            transition={{ duration: wrapping ? 0 : 0.4, ease: EASE }}
-            style={{ height: "calc(100% - 1rem)" }}
+            style={{
+              height: "calc(100% - 1rem)",
+              transform: "scaleY(0)",
+            }}
           />
           {DCORP_SERVICES_HOME.map((service, index) => {
             const reached = index <= active;
@@ -153,7 +246,7 @@ export function DcorpServices() {
                   type="button"
                   onClick={() => {
                     setPaused(true);
-                    setActive(index);
+                    snapTo(index);
                   }}
                   className="min-w-0 flex-1 cursor-pointer text-left"
                 >
@@ -200,12 +293,10 @@ export function DcorpServices() {
             aria-hidden="true"
           >
             <div className="absolute inset-0 bg-[#D9D9D9]" />
-            <motion.div
-              className="absolute inset-y-0 left-0 origin-left bg-[#C9A96A]"
-              initial={false}
-              animate={{ scaleX: fill }}
-              transition={{ duration: wrapping ? 0 : 0.4, ease: EASE }}
-              style={{ width: "100%" }}
+            <div
+              ref={desktopBarRef}
+              className="absolute inset-y-0 left-0 w-full origin-left bg-[#C9A96A] will-change-transform"
+              style={{ transform: "scaleX(0)" }}
             />
           </div>
 
@@ -216,10 +307,10 @@ export function DcorpServices() {
               <motion.li key={service} className="relative" {...stepAnim}>
                 <button
                   type="button"
-                  onMouseEnter={() => setActive(index)}
+                  onMouseEnter={() => snapTo(index)}
                   onFocus={() => {
                     setPaused(true);
-                    setActive(index);
+                    snapTo(index);
                   }}
                   aria-pressed={selected}
                   className={cn(

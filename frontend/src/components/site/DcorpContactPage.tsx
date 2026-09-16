@@ -18,7 +18,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { submitContact } from "@/lib/actions";
 import { SUBJECTS_BY_COMPANY } from "@/lib/contact/constants";
-import { companies, whatsappHref } from "@/lib/companies";
+import { companies, formatCnpj, whatsappHref } from "@/lib/companies";
 import { cn } from "@/lib/utils";
 
 const EASE = [0.23, 1, 0.32, 1] as const;
@@ -700,6 +700,27 @@ export function DcorpContactPage() {
                   >
                     Ir para o WhatsApp
                   </a>
+                </dd>
+              </div>
+              <div>
+                <dt className="font-sans text-[10px] font-semibold uppercase tracking-wide text-[#C9A96A]">
+                  E-mail
+                </dt>
+                <dd className="mt-0.5">
+                  <a
+                    href={`mailto:${company.email}`}
+                    className="cursor-pointer font-sans text-sm font-medium text-[#1F1F1F] transition-colors duration-150 ease-out hover:text-[#C9A96A]"
+                  >
+                    {company.email}
+                  </a>
+                </dd>
+              </div>
+              <div>
+                <dt className="font-sans text-[10px] font-semibold uppercase tracking-wide text-[#C9A96A]">
+                  CNPJ
+                </dt>
+                <dd className="mt-0.5 font-sans text-sm font-medium text-[#1F1F1F]">
+                  {formatCnpj(company.cnpj)}
                 </dd>
               </div>
               <div className="min-w-0 basis-full sm:basis-auto">

@@ -16,6 +16,7 @@ import {
 } from "react";
 import { cn } from "@/lib/utils";
 import type { CompanyId } from "@/lib/companies";
+import { companies } from "@/lib/companies";
 import { siteConfigs } from "@grupo-patrimonial/site-config";
 import { useDcorpChrome } from "./dcorp-chrome";
 import { DcorpHandoffLogo } from "./DcorpHandoffLogo";
@@ -238,7 +239,7 @@ export function SiteHeader({ companyId }: { companyId: CompanyId }) {
 
   useEffect(() => () => window.clearTimeout(closeTimer.current), []);
 
-  const ctaHref = `/contato?empresa=${companyId}`;
+  const ctaHref = companies[companyId].contactHref;
   const HeaderCta = isDcorp ? GoldCta : MetalCta;
   const attached =
     isDcorp &&

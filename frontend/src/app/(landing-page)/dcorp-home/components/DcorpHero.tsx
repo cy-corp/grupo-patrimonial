@@ -6,6 +6,7 @@ import { useEffect, useRef, useState } from "react";
 import { GoldButton } from "@/components/ui/gold-button";
 import { DcorpHandoffLogo } from "@/components/site/DcorpHandoffLogo";
 import { useDcorpChrome } from "@/components/site/dcorp-chrome";
+import { companies } from "@/lib/companies";
 import { cn } from "@/lib/utils";
 
 const SIGNATURE = [
@@ -131,7 +132,7 @@ export function DcorpHero() {
 
         <div className="dcorp-hero-actions mt-9 flex flex-col gap-3 sm:mt-11 sm:flex-row sm:items-center sm:gap-4">
           <GoldButton
-            href="/contato?empresa=dcorp"
+            href={companies.dcorp.contactHref}
             className="h-11 px-7 text-[12px]"
           >
             Solicitar orçamento

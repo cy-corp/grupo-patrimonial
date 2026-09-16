@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { motion, useReducedMotion } from "framer-motion";
 import { GoldButton } from "@/components/ui/gold-button";
+import { companies } from "@/lib/companies";
 import { DCORP_SERVICE_GROUPS } from "@/lib/dcorp-content";
 import { cn } from "@/lib/utils";
 import { DcorpPageIntro } from "../DcorpPageChrome";
@@ -196,7 +197,7 @@ export default function DcorpServicosPage() {
             </p>
             <div className="flex w-full flex-col gap-3 sm:w-auto sm:flex-row">
               <GoldButton
-                href="/contato?empresa=dcorp"
+                href={companies.dcorp.contactHref}
                 className="h-11 px-8 text-[12px]"
               >
                 Solicitar orçamento

@@ -1,8 +1,7 @@
-"use client";
-
 import Link from "next/link";
 import { LayoutGroup } from "framer-motion";
 import type { CompanyId } from "@/lib/companies";
+import { companies, formatCnpj } from "@/lib/companies";
 import { siteConfigs } from "@grupo-patrimonial/site-config";
 import { DcorpChromeProvider } from "./dcorp-chrome";
 import { DcorpWhatsAppFab } from "./DcorpWhatsAppFab";
@@ -20,6 +19,7 @@ export function SiteShell({
   children: React.ReactNode;
 }) {
   const config = siteConfigs[companyId];
+  const company = companies[companyId];
   const isDcorp = companyId === "dcorp";
 
   const tree = (
@@ -38,16 +38,41 @@ export function SiteShell({
         <div
           className={
             isDcorp
-              ? "container mx-auto flex flex-col gap-4 text-sm text-white/65 md:flex-row md:items-center md:justify-between"
+              ? "container mx-auto flex flex-col gap-6 text-sm text-white/65 md:flex-row md:items-start md:justify-between"
               : "container mx-auto flex flex-col gap-4 text-sm text-graphite/65 md:flex-row md:items-center md:justify-between"
           }
         >
-          <p>
-            {config.name} · {config.role}
-          </p>
-          <p>Empresa integrante da Paiva &amp; Lopes Holding.</p>
+          <div className="space-y-1">
+            <p className={isDcorp ? "font-medium text-white" : undefined}>
+              {config.name} · {config.role}
+            </p>
+            <p>Empresa integrante da Paiva &amp; Lopes Holding.</p>
+            {isDcorp ? (
+              <p className="pt-1 font-sans text-xs text-white/45">
+                CNPJ {formatCnpj(company.cnpj)}
+              </p>
+            ) : null}
+          </div>
+
+          {isDcorp ? (
+            <div className="space-y-1.5 font-sans text-sm">
+              <a
+                href={company.phoneHref}
+                className="block text-white/75 transition-colors hover:text-[#C9A96A]"
+              >
+                {company.phone}
+              </a>
+              <a
+                href={`mailto:${company.email}`}
+                className="block text-white/75 transition-colors hover:text-[#C9A96A]"
+              >
+                {company.email}
+              </a>
+            </div>
+          ) : null}
+
           <Link
-            href="/contato"
+            href={company.contactHref}
             className={
               isDcorp
                 ? "font-semibold text-[#C9A96A] transition-colors duration-[var(--duration-quick)] ease-[var(--ease-smooth-out)] hover:text-white"

@@ -17,10 +17,37 @@ export type Company = {
   contactHref: string;
 };
 
+export function formatCnpj(cnpj: string) {
+  const digits = cnpj.replace(/\D/g, "");
+  if (digits.length === 14) {
+    return digits.replace(
+      /^(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})$/,
+      "$1.$2.$3/$4-$5",
+    );
+  }
+  return cnpj.trim() || "CNPJ em atualização cadastral";
+}
+
+export function formatPhoneBr(phone: string) {
+  const digits = phone.replace(/\D/g, "");
+  const local = digits.startsWith("55") ? digits.slice(2) : digits;
+  if (local.length === 11) {
+    return local.replace(/^(\d{2})(\d{5})(\d{4})$/, "($1) $2-$3");
+  }
+  if (local.length === 10) {
+    return local.replace(/^(\d{2})(\d{4})(\d{4})$/, "($1) $2-$3");
+  }
+  return phone.trim();
+}
+
 const CAMPINAS_MAPS =
   "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3675.253029433465!2d-47.034394024344445!3d-22.901264938478474!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94c8cf131f57a249%3A0x7fb6f58f7bc87ef2!2sR.%20Dr.%20Jo%C3%A3o%20A.dos%20Santos%2C%20332%20-%20Jardim%20das%20Paineiras%2C%20Campinas%20-%20SP%2C%2013092-331!5e0!3m2!1spt-BR!2sbr!4v1711568000000!5m2!1spt-BR!2sbr&iwloc=near";
 
-const CAMPINAS_ADDRESS = "Rua Dr. João Alves dos Santos, 332, Jardim Paineiras, Campinas-SP";
+const CAMPINAS_ADDRESS =
+  "Rua Dr. João Alves dos Santos, 332, Jardim Paineiras, Campinas-SP";
+
+const DCORP_PHONE = "19993670722";
+const DCORP_CNPJ = "55085352000189";
 
 export const companies: Record<CompanyId, Company> = {
   rendal: {
@@ -45,26 +72,24 @@ export const companies: Record<CompanyId, Company> = {
     legalName: "DCORP Engenharia",
     role: "Construção industrial",
     email: "contato@dcorp.com.br",
-    phone: "(19) 99367-0722",
-    phoneHref: "tel:+5519993670722",
-    whatsapp: process.env.NEXT_PUBLIC_WHATSAPP_DCORP || "5519993670722",
+    phone: formatPhoneBr(DCORP_PHONE),
+    phoneHref: `tel:+55${DCORP_PHONE}`,
+    whatsapp: process.env.NEXT_PUBLIC_WHATSAPP_DCORP || `55${DCORP_PHONE}`,
     address: CAMPINAS_ADDRESS,
     city: "Campinas-SP",
-    cnpj: process.env.NEXT_PUBLIC_CNPJ_DCORP || "55.085.352/0001-89",
+    cnpj: process.env.NEXT_PUBLIC_CNPJ_DCORP || DCORP_CNPJ,
     mapsEmbed: CAMPINAS_MAPS,
     pageHref: "/engenharia",
-    contactHref: "/contato?empresa=dcorp",
+    contactHref: "/contato?empresa=dcorp#contato-form",
   },
 };
 
 export const companyList: Company[] = [companies.rendal, companies.dcorp];
 
-export function isCompanyId(value: string | null | undefined): value is CompanyId {
+export function isCompanyId(
+  value: string | null | undefined,
+): value is CompanyId {
   return value === "rendal" || value === "dcorp";
-}
-
-export function formatCnpj(cnpj: string) {
-  return cnpj.trim() || "CNPJ em atualização cadastral";
 }
 
 export function whatsappHref(company: Company, text?: string) {
