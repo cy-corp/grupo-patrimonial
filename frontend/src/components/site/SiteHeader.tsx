@@ -108,8 +108,6 @@ export function SiteHeader({ companyId }: { companyId: CompanyId }) {
   const [closing, setClosing] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [menuShown, setMenuShown] = useState(false);
-  const [detaching, setDetaching] = useState(false);
-  const wasAttached = useRef(false);
   const menuId = useId();
   const tabsRef = useRef<HTMLElement>(null);
   const pillRef = useRef<HTMLSpanElement>(null);
@@ -247,21 +245,6 @@ export function SiteHeader({ companyId }: { companyId: CompanyId }) {
     !open &&
     (mobileHandoff ? !chrome?.logoInHeader : !scrolled);
 
-  useEffect(() => {
-    if (attached) {
-      wasAttached.current = true;
-      setDetaching(false);
-      return;
-    }
-    if (wasAttached.current && isDcorp && isHome) {
-      wasAttached.current = false;
-      setDetaching(true);
-      const timer = window.setTimeout(() => setDetaching(false), 350);
-      return () => window.clearTimeout(timer);
-    }
-    wasAttached.current = false;
-  }, [attached, isDcorp, isHome]);
-
   const headerLogoVariant = attached ? "hero" : "header";
 
   return (
@@ -270,7 +253,6 @@ export function SiteHeader({ companyId }: { companyId: CompanyId }) {
         "site-header pointer-events-none fixed inset-x-0 top-0 z-[100] px-4 pt-[max(0.85rem,env(safe-area-inset-top))] md:px-6 md:pt-[max(1.15rem,env(safe-area-inset-top))]",
         isDcorp && "site-header--dcorp",
         attached && "site-header--attached",
-        detaching && "site-header--detaching",
       )}
       data-attached={attached ? "true" : "false"}
     >

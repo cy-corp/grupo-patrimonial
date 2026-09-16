@@ -433,14 +433,12 @@
   box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
 }
 
-.site-header--attached .t-tab {
-  color: rgba(255, 255, 255, 0.62);
-  transition: color var(--duration-medium) var(--ease-smooth-out);
-}
-
-.site-header--attached .t-tab[aria-selected="true"],
-.site-header--attached .t-tab:hover {
-  color: #ffffff;
+.site-header--dcorp .site-header-bar {
+  /* Glass owns elevation — avoid stacking the generic bar shadow on detach */
+  box-shadow: none;
+  transition:
+    background-color var(--duration-medium) var(--ease-smooth-out),
+    border-color var(--duration-medium) var(--ease-smooth-out);
 }
 
 .site-header--dcorp .t-tab {
@@ -455,26 +453,16 @@
     transform var(--duration-quick) var(--ease-smooth-out);
 }
 
-.site-header--dcorp .site-header-bar {
-  transition:
-    box-shadow var(--duration-medium) var(--ease-smooth-out),
-    background-color var(--duration-medium) var(--ease-smooth-out),
-    border-color var(--duration-medium) var(--ease-smooth-out);
+.site-header--attached .t-tab {
+  color: rgba(255, 255, 255, 0.62);
 }
 
-/* Soft settle — no Y bump; glass/color CSS transitions do the work */
-.site-header--detaching .site-header-bar {
-  animation: dcorp-header-detach var(--duration-medium) var(--ease-smooth-out) both;
+.site-header--attached .t-tab[aria-selected="true"],
+.site-header--attached .t-tab:hover {
+  color: #ffffff;
 }
 
-@keyframes dcorp-header-detach {
-  from {
-    opacity: 0.94;
-  }
-  to {
-    opacity: 1;
-  }
-}
+/* Detach is CSS-only now — no opacity/Y keyframe bump */
 
 @media (prefers-reduced-motion: reduce) {
   .site-header--dcorp .gold-metallic-cta,
@@ -482,10 +470,6 @@
   .site-header--dcorp .gold-metallic-cta:active {
     transition: none;
     transform: none;
-  }
-
-  .site-header--detaching .site-header-bar {
-    animation: none;
   }
 }
 
