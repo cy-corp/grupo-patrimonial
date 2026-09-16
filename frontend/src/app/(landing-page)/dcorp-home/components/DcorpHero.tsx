@@ -27,7 +27,6 @@ export function DcorpHero() {
   const setLogoInHeader = chrome?.setLogoInHeader;
 
   const handoffActive = isMobile;
-  const showHeroLogo = handoffActive && !logoInHeader;
 
   useEffect(() => {
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -104,8 +103,15 @@ export function DcorpHero() {
 
       <div className="relative z-10 mx-auto flex w-full max-w-6xl flex-1 flex-col justify-center px-6 pb-16 pt-28 sm:px-8 md:px-12 md:pt-28 lg:px-16">
         <div className="mb-8 md:mb-10">
-          {showHeroLogo ? (
-            <div className="mb-4 md:hidden">
+          {handoffActive ? (
+            <div
+              className={cn(
+                "mb-4 md:hidden transition-opacity duration-[var(--duration-medium)] ease-[var(--ease-smooth-out)]",
+                logoInHeader
+                  ? "pointer-events-none opacity-0"
+                  : "opacity-100",
+              )}
+            >
               <Link href="/" aria-label="DCORP - início" className="inline-block">
                 <DcorpHandoffLogo
                   variant="hero"

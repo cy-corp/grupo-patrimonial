@@ -1,16 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { motion, useReducedMotion } from "framer-motion";
 import { cn } from "@/lib/utils";
-
-export const DCORP_LOGO_LAYOUT_ID = "dcorp-logo-handoff";
-
-const handoffTransition = {
-  type: "tween" as const,
-  duration: 0.35,
-  ease: [0.22, 1, 0.36, 1] as const,
-};
 
 type DcorpHandoffLogoProps = {
   variant: "hero" | "header";
@@ -18,19 +9,14 @@ type DcorpHandoffLogoProps = {
   priority?: boolean;
 };
 
+/** Static mark swap — no shared-layout flight (that caused the mobile scroll flick). */
 export function DcorpHandoffLogo({
   variant,
   className,
   priority,
 }: DcorpHandoffLogoProps) {
-  const reduceMotion = useReducedMotion();
-
   return (
-    <motion.div
-      layoutId={DCORP_LOGO_LAYOUT_ID}
-      transition={reduceMotion ? { duration: 0 } : handoffTransition}
-      className={cn("relative", className)}
-    >
+    <div className={cn("relative", className)}>
       <Image
         src="/brands/dcorp-logo.png"
         alt={variant === "header" ? "DCORP" : ""}
@@ -54,6 +40,6 @@ export function DcorpHandoffLogo({
           variant === "hero" ? "opacity-100" : "opacity-0",
         )}
       />
-    </motion.div>
+    </div>
   );
 }

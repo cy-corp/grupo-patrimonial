@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { LayoutGroup } from "framer-motion";
 import type { CompanyId } from "@/lib/companies";
 import { companies, formatCnpj } from "@/lib/companies";
 import { siteConfigs } from "@grupo-patrimonial/site-config";
@@ -96,9 +95,5 @@ export function SiteShell({
 
   if (!isDcorp) return tree;
 
-  return (
-    <DcorpChromeProvider>
-      <LayoutGroup id="dcorp-chrome">{tree}</LayoutGroup>
-    </DcorpChromeProvider>
-  );
+  return <DcorpChromeProvider>{tree}</DcorpChromeProvider>;
 }

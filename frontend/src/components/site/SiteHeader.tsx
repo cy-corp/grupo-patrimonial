@@ -277,19 +277,24 @@ export function SiteHeader({ companyId }: { companyId: CompanyId }) {
         >
           {mobileHandoff ? (
             <div className="relative z-10 mr-auto flex h-11 w-[9.75rem] shrink-0 items-center px-2">
-              {showHeaderLogo ? (
-                <Link
-                  href={config.homeHref}
-                  aria-label={`${config.name} - início`}
-                  className="flex items-center rounded-md active:scale-[0.96]"
-                >
-                  <DcorpHandoffLogo
-                    variant={headerLogoVariant}
-                    priority
-                    className="h-11 w-[9.75rem]"
-                  />
-                </Link>
-              ) : null}
+              <Link
+                href={config.homeHref}
+                aria-label={`${config.name} - início`}
+                tabIndex={showHeaderLogo ? 0 : -1}
+                aria-hidden={!showHeaderLogo}
+                className={cn(
+                  "flex items-center rounded-md transition-opacity duration-[var(--duration-medium)] ease-[var(--ease-smooth-out)] active:scale-[0.96]",
+                  showHeaderLogo
+                    ? "opacity-100"
+                    : "pointer-events-none opacity-0",
+                )}
+              >
+                <DcorpHandoffLogo
+                  variant={headerLogoVariant}
+                  priority
+                  className="h-11 w-[9.75rem]"
+                />
+              </Link>
             </div>
           ) : showHeaderLogo ? (
             <Link
