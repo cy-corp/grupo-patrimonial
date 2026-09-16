@@ -113,14 +113,18 @@ export const DCORP_SERVICES_HOME = [
 
 export const DCORP_SERVICE_GROUPS = [
   {
+    id: "engenharia",
     title: "Engenharia",
     items: [
       "Planejamento executivo de obras",
       "Orçamentação e engenharia de custos",
       "Compatibilização de projetos",
     ],
+    image: "/dcorp/services/01-engenharia.jpg",
+    alt: "Mesa técnica com plantas, orçamento e compatibilização de projetos",
   },
   {
+    id: "execucao",
     title: "Execução",
     items: [
       "Construção de unidades habitacionais",
@@ -128,14 +132,19 @@ export const DCORP_SERVICE_GROUPS = [
       "Implantação de sistemas construtivos industrializados",
       "Obras próprias e para terceiros",
     ],
+    image: "/dcorp/services/02-execucao.jpg",
+    alt: "Canteiro com sistemas industrializados em montagem",
   },
   {
+    id: "gestao",
     title: "Gestão e capacitação",
     items: [
       "Gerenciamento e fiscalização de obras",
       "Treinamento e apoio técnico de equipes",
       "Execução para incorporadoras e investidores",
     ],
+    image: "/dcorp/services/03-gestao.jpg",
+    alt: "Fiscalização e orientação técnica em obra",
   },
 ] as const;
 
