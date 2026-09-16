@@ -15,14 +15,14 @@ export const metadata: Metadata = {
     template: "%s | DCORP Engenharia",
   },
   description:
-    "Construção industrial com planejamento, execução e resultados. Projetos que constroem oportunidades.",
+    "Construção industrializada com engenharia, velocidade e controle. Sistemas construtivos de alta produtividade para incorporadoras, investidores e empresas.",
   openGraph: {
     type: "website",
     locale: "pt_BR",
     siteName: "DCORP Engenharia",
     title: "DCORP Engenharia",
     description:
-      "Soluções industrializadas para ganhar produtividade, reduzir desperdícios e acelerar prazos.",
+      "Sistemas construtivos industrializados e soluções de alta produtividade. Projetos que constroem oportunidades.",
   },
 };
 

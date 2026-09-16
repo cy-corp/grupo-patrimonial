@@ -1,1 +1,1 @@
-export { default } from "@/app/(landing-page)/quem-somos/page";
+export { default } from "@/app/(landing-page)/dcorp-pages/quem-somos/page";

@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useActiveImage } from "@/hooks/useActiveImage";
+import { DCORP_POSITIONING } from "@/lib/dcorp-content";
 
 export function DcorpInstitutional() {
   const { imageUrl, altText } = useActiveImage(
@@ -11,7 +12,7 @@ export function DcorpInstitutional() {
   );
 
   return (
-    <section className="bg-white px-6 py-20 md:px-12 md:py-28 lg:px-20">
+    <section className="bg-[#F7F7F7] px-6 py-20 md:px-12 md:py-28 lg:px-20">
       <div className="mx-auto grid max-w-6xl gap-12 lg:grid-cols-12 lg:gap-16 lg:items-center">
         <div className="relative aspect-[4/5] overflow-hidden lg:col-span-5">
           <Image
@@ -30,32 +31,42 @@ export function DcorpInstitutional() {
           <div className="mb-5 flex items-center gap-3">
             <span className="h-px w-10 bg-[#C9A96A]" aria-hidden="true" />
             <p className="font-sans text-[11px] font-semibold uppercase text-[#C9A96A]">
-              A DCORP
+              Como trabalhamos
             </p>
           </div>
           <h2 className="text-balance font-sans text-3xl font-bold text-[#1F1F1F] md:text-4xl lg:text-5xl">
             Construir hoje para gerar mais oportunidades amanhã.
           </h2>
           <div className="mt-8 space-y-5 text-pretty font-sans text-base leading-relaxed text-[#4D4D4D] md:text-lg">
+            <p>{DCORP_POSITIONING}</p>
             <p>
-              A DCORP Engenharia une inteligência construtiva, eficiência
-              operacional e visão de crescimento em projetos industriais.
-            </p>
-            <p>
-              Trabalhamos com planejamento estruturado, execução eficiente e
-              controle de qualidade — para entregar produtividade, redução de
-              desperdícios e resultados concretos.
+              Inteligência construtiva, eficiência operacional e controle de
+              qualidade — para entregar produtividade, redução de desperdícios e
+              resultados concretos.
             </p>
           </div>
 
-          <div className="mt-10 flex flex-wrap gap-x-10 gap-y-4 border-t border-[#D9D9D9] pt-8">
-            {["Planejamento", "Pessoas", "Execução"].map((pillar) => (
-              <div key={pillar}>
+          <div className="mt-10 grid gap-6 border-t border-[#D9D9D9] pt-8 sm:grid-cols-3">
+            {[
+              {
+                title: "Planejamento",
+                detail: "Estratégia, inteligência e viabilidade.",
+              },
+              {
+                title: "Pessoas",
+                detail: "Confiança, parceria e relacionamento.",
+              },
+              {
+                title: "Execução",
+                detail: "Resultados, solidez e crescimento.",
+              },
+            ].map((pillar) => (
+              <div key={pillar.title}>
                 <p className="font-sans text-[11px] font-semibold uppercase text-[#C9A96A]">
-                  Pilar
+                  {pillar.title}
                 </p>
-                <p className="mt-1 font-sans text-base font-semibold text-[#1F1F1F]">
-                  {pillar}
+                <p className="mt-2 font-sans text-sm leading-relaxed text-[#4D4D4D]">
+                  {pillar.detail}
                 </p>
               </div>
             ))}

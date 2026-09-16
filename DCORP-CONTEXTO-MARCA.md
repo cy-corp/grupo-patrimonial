@@ -89,7 +89,11 @@ A empresa adota sistemas construtivos industrializados para:
 
 # Sistemas Construtivos
 
+Regra de linguagem: preferir **"sistemas construtivos industrializados e soluções de alta produtividade"**. Não apresentar o portfólio como “construção a seco” — EPS, ICF e paredes de concreto utilizam argamassa ou concreto. Nas páginas, classificar cada sistema como seco, semi-industrializado ou moldado in loco.
+
 ## Painel Monolítico EPS
+
+Tipo: semi-industrializado (com argamassa/concreto)
 
 Benefícios:
 
@@ -97,29 +101,37 @@ Benefícios:
 - Desempenho térmico
 - Rapidez de montagem
 
-## Sistema Concrete Laje
+## Paredes de concreto moldadas in loco
+
+Tipo: moldado in loco
 
 Benefícios:
 
-- Racionalização
-- Robustez
+- Robustez estrutural
 - Controle construtivo
+- Padronização de qualidade
 
-## Sistema Concrete Parede-Forma
+## ICF — formas isolantes para concreto
 
-Benefícios:
-
-- Precisão
-- Velocidade
-- Padronização
-
-## Estruturas Industriais
+Tipo: semi-industrializado (forma + concreto)
 
 Benefícios:
 
-- Escala
-- Desempenho
-- Eficiência
+- Isolamento térmico
+- Velocidade de execução
+- Desempenho energético
+
+## Lightwall
+
+Tipo: seco / leve
+
+Benefícios:
+
+- Agilidade
+- Flexibilidade de layout
+- Produtividade em obra
+
+Outros sistemas industrializados só entram no site após confirmação de domínio efetivo pela empresa.
 
 ---
 
@@ -362,9 +374,9 @@ Destacar:
 Apresentar:
 
 - Painel Monolítico EPS
-- Sistema Concrete Laje
-- Sistema Concrete Parede-Forma
-- Estruturas Industriais
+- Paredes de concreto moldadas in loco
+- ICF — formas isolantes para concreto
+- Lightwall
 
 ---
 
@@ -420,3 +432,59 @@ Sua comunicação deve equilibrar:
 Sempre transmitindo a ideia central:
 
 "Planejamento. Execução. Resultados."
+
+---
+
+# IA do site (brief comercial)
+
+## Posicionamento comercial
+
+Empresa de engenharia e construção especializada em sistemas construtivos industrializados, com atuação própria e prestação de serviços para incorporadoras, investidores, empresas e clientes terceiros.
+
+O site deve transmitir especialização técnica, produtividade, engenharia e capacidade de execução.
+
+## Abertura (hero)
+
+Assinatura de marca (headline):
+
+> Projetos que constroem oportunidades.
+
+Supporting line (brief):
+
+> Construção industrializada com engenharia, velocidade e controle — para incorporadoras, investidores e empresas.
+
+## Serviços
+
+- Planejamento executivo de obras
+- Orçamentação e engenharia de custos
+- Compatibilização de projetos
+- Construção de unidades habitacionais
+- Execução de condomínios e empreendimentos residenciais
+- Implantação de sistemas construtivos industrializados
+- Gerenciamento e fiscalização de obras
+- Treinamento e apoio técnico de equipes
+- Execução para incorporadoras e investidores
+- Obras próprias e para terceiros
+
+## Públicos
+
+- Incorporadoras
+- Construtoras que necessitam de parceiro tecnológico
+- Investidores imobiliários
+- Proprietários de terrenos
+- Empresas interessadas em construção rápida
+- Clientes institucionais
+- SPEs, inclusive externas ao grupo
+
+## Menu canônico
+
+- Início
+- A DCORP (`/quem-somos`)
+- Sistemas construtivos
+- Serviços
+- Obras e portfólio
+- Contato
+
+CTA do header: **Solicitar orçamento**
+
+“Seja nosso parceiro” não é item de menu — bloco em Contato ou Serviços.

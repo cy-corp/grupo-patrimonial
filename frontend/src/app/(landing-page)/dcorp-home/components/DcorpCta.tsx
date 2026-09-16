@@ -15,8 +15,8 @@ export function DcorpCta() {
           Vamos construir oportunidades para o seu projeto.
         </h2>
         <p className="max-w-xl text-pretty font-sans text-base leading-relaxed text-white/65 md:text-lg">
-          Fale com a equipe técnica da DCORP e solicite um orçamento com
-          planejamento, execução e resultados.
+          Solicite um orçamento ou fale sobre parceria tecnológica para
+          implantar sistemas industrializados com a DCORP.
         </p>
         <div className="flex w-full flex-col gap-3 sm:w-auto sm:flex-row">
           <GoldButton
@@ -26,10 +26,10 @@ export function DcorpCta() {
             Solicitar orçamento
           </GoldButton>
           <Link
-            href="/obras"
+            href="/contato?empresa=dcorp#parceiro"
             className="inline-flex h-11 items-center justify-center rounded-md border border-white/20 px-7 text-[12px] font-semibold text-white transition-colors duration-[var(--duration-quick)] ease-[var(--ease-smooth-out)] hover:border-white/40"
           >
-            Ver obras
+            Seja nosso parceiro
           </Link>
         </div>
       </div>

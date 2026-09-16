@@ -124,8 +124,9 @@ export function DcorpHero() {
           ))}
         </h1>
 
-        <p className="dcorp-hero-support mt-7 max-w-[42ch] text-pretty font-sans text-base leading-relaxed text-white/65 md:mt-8 md:text-lg">
-          Planejamento, execução e resultados para construção industrial.
+        <p className="dcorp-hero-support mt-7 max-w-[36ch] text-pretty font-sans text-base leading-relaxed text-white/65 md:mt-8 md:text-lg">
+          Construção industrializada com engenharia, velocidade e controle —
+          para incorporadoras, investidores e empresas.
         </p>
 
         <div className="dcorp-hero-actions mt-9 flex flex-col gap-3 sm:mt-11 sm:flex-row sm:items-center sm:gap-4">
