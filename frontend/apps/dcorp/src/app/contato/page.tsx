@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
-import { SiteContactPage } from "@/components/site/SiteContactPage";
+import { DcorpContactPage } from "@/components/site/DcorpContactPage";
 
 export const metadata: Metadata = {
   title: "Contato",
-  description: "Solicite um orçamento para sua obra com a DCorp Engenharia.",
+  description:
+    "Solicite um orçamento ou fale sobre parceria tecnológica com a DCORP Engenharia.",
 };
 
-export default function DcorpContactPage() {
-  return <SiteContactPage companyId="dcorp" />;
+export default function ContatoPage() {
+  return <DcorpContactPage />;
 }

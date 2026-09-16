@@ -5,6 +5,7 @@ import { LayoutGroup } from "framer-motion";
 import type { CompanyId } from "@/lib/companies";
 import { siteConfigs } from "@grupo-patrimonial/site-config";
 import { DcorpChromeProvider } from "./dcorp-chrome";
+import { DcorpWhatsAppFab } from "./DcorpWhatsAppFab";
 import { SiteHeader } from "./SiteHeader";
 
 export function getSiteConfig(id: CompanyId) {
@@ -57,6 +58,8 @@ export function SiteShell({
           </Link>
         </div>
       </footer>
+
+      {isDcorp ? <DcorpWhatsAppFab /> : null}
     </div>
   );
 
