@@ -29,13 +29,15 @@ npm run dev --workspace @grupo-patrimonial/dashboard
 
 ## Projetos Vercel
 
-Crie três projetos apontando para o mesmo repositório:
+Crie três projetos apontando para o mesmo repositório (um por domínio):
 
-| Projeto | Root Directory | Build Command | Domínio |
-| --- | --- | --- | --- |
-| Rendal | `frontend/apps/rendal` | `npm run build` | domínio da Rendal |
-| DCorp | `frontend/apps/dcorp` | `npm run build` | domínio da DCorp |
-| Dashboard | `frontend/apps/dashboard` | `npm run build` | subdomínio administrativo |
+| Projeto | Root Directory | Install Command | Build Command | Domínio |
+| --- | --- | --- | --- | --- |
+| Rendal | `frontend/apps/rendal` | via `vercel.json` | `npm run build` | domínio da Rendal |
+| DCorp | `frontend/apps/dcorp` | via `vercel.json` | `npm run build` | domínio da DCorp |
+| Dashboard | `frontend/apps/dashboard` | via `vercel.json` | `npm run build` | subdomínio administrativo |
+
+Cada `apps/*/vercel.json` instala o workspace em `frontend/` e cria symlinks de `next`/`react` no app. Sem isso, o pós-build da Vercel falha com `Cannot find module 'next/dist/compiled/next-server/server.runtime.prod.js'` porque o npm hoist deixa o `next` só na raiz do workspace.
 
 As variáveis de ambiente devem ser configuradas em cada projeto. Os sites públicos precisam das variáveis do formulário e do Supabase; o dashboard precisa também de `SUPABASE_SERVICE_ROLE_KEY` e `BLOB_READ_WRITE_TOKEN`.
 

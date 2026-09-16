@@ -1,4 +1,4 @@
 {
   "framework": "nextjs",
-  "installCommand": "npm install --prefix ../.."
+  "installCommand": "cd ../.. && npm install && node scripts/link-app-next-for-vercel.mjs rendal"
 }
