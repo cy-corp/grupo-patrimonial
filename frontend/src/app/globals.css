@@ -302,6 +302,12 @@
     0 10px 28px rgba(31, 31, 31, 0.08),
     0 1px 0 rgba(255, 255, 255, 0.9) inset,
     0 0 0 0.5px rgba(201, 169, 106, 0.22);
+  transition:
+    background-color var(--duration-fast) var(--ease-smooth-out),
+    box-shadow var(--duration-fast) var(--ease-smooth-out),
+    border-color var(--duration-fast) var(--ease-smooth-out),
+    backdrop-filter var(--duration-fast) var(--ease-smooth-out),
+    transform var(--duration-fast) var(--ease-smooth-out);
 }
 
 .site-glass-dcorp[data-scrolled="true"] {
@@ -311,6 +317,20 @@
     0 14px 36px rgba(31, 31, 31, 0.1),
     0 1px 0 rgba(255, 255, 255, 0.95) inset,
     0 0 0 0.5px rgba(201, 169, 106, 0.35);
+}
+
+/* Home top: blends into hero, then detaches on scroll */
+.site-glass-dcorp[data-attached="true"] {
+  background: transparent;
+  border-color: transparent;
+  box-shadow: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  transform: translateY(0);
+}
+
+.site-glass-dcorp:not([data-attached="true"]) {
+  transform: translateY(0);
 }
 
 @media (prefers-reduced-transparency: reduce) {
@@ -323,6 +343,10 @@
     background: #ffffff;
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
+  }
+
+  .site-glass-dcorp[data-attached="true"] {
+    background: rgba(31, 31, 31, 0.88);
   }
 
   .site-glass-sheen::before {

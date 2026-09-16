@@ -100,10 +100,13 @@ function GoldCta({
 export function SiteHeader({ companyId }: { companyId: CompanyId }) {
   const config = siteConfigs[companyId];
   const pathname = usePathname();
+  const isDcorp = companyId === "dcorp";
   const [open, setOpen] = useState(false);
   const [closing, setClosing] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [menuShown, setMenuShown] = useState(false);
+  const [detaching, setDetaching] = useState(false);
+  const wasAttached = useRef(false);
   const menuId = useId();
   const tabsRef = useRef<HTMLElement>(null);
   const pillRef = useRef<HTMLSpanElement>(null);
@@ -172,8 +175,9 @@ export function SiteHeader({ companyId }: { companyId: CompanyId }) {
 
   useEffect(() => {
     let ticking = false;
+    const threshold = isDcorp && pathname === "/" ? 72 : 16;
     const update = () => {
-      const next = window.scrollY > 16;
+      const next = window.scrollY > threshold;
       setScrolled((prev) => (prev === next ? prev : next));
       ticking = false;
     };
@@ -185,7 +189,7 @@ export function SiteHeader({ companyId }: { companyId: CompanyId }) {
     update();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+  }, [isDcorp, pathname]);
 
   useEffect(() => {
     closeMenu();
@@ -227,38 +231,69 @@ export function SiteHeader({ companyId }: { companyId: CompanyId }) {
   useEffect(() => () => window.clearTimeout(closeTimer.current), []);
 
   const ctaHref = `/contato?empresa=${companyId}`;
-  const isDcorp = companyId === "dcorp";
   const HeaderCta = isDcorp ? GoldCta : MetalCta;
+  const attached = isDcorp && pathname === "/" && !scrolled && !open;
+
+  useEffect(() => {
+    if (attached) {
+      wasAttached.current = true;
+      setDetaching(false);
+      return;
+    }
+    if (wasAttached.current && isDcorp && pathname === "/") {
+      wasAttached.current = false;
+      setDetaching(true);
+      const timer = window.setTimeout(() => setDetaching(false), 420);
+      return () => window.clearTimeout(timer);
+    }
+    wasAttached.current = false;
+  }, [attached, isDcorp, pathname]);
 
   return (
     <header
       className={cn(
         "site-header pointer-events-none fixed inset-x-0 top-0 z-[100] px-4 pt-[max(0.85rem,env(safe-area-inset-top))] md:px-6 md:pt-[max(1.15rem,env(safe-area-inset-top))]",
         isDcorp && "site-header--dcorp",
+        attached && "site-header--attached",
+        detaching && "site-header--detaching",
       )}
+      data-attached={attached ? "true" : "false"}
     >
-      <div className="pointer-events-auto relative mx-auto max-w-5xl">
+      <div
+        className={cn(
+          "pointer-events-auto relative mx-auto transition-[max-width] duration-[var(--duration-fast)] ease-[var(--ease-smooth-out)]",
+          attached ? "max-w-6xl" : "max-w-5xl",
+        )}
+      >
         <div
           data-scrolled={scrolled}
-          onPointerMove={paintSheen}
-          onPointerLeave={clearSheen}
+          data-attached={attached ? "true" : "false"}
+          onPointerMove={attached ? undefined : paintSheen}
+          onPointerLeave={attached ? undefined : clearSheen}
           className={cn(
             "site-glass site-glass-sheen site-header-bar flex h-[3.75rem] items-center gap-2 px-2.5 sm:px-3",
             isDcorp ? "rounded-xl site-glass-dcorp" : "rounded-full",
             companyId === "rendal" && "site-glass-rendal",
+            attached && "site-header-bar--attached",
           )}
         >
           <Link
             href={config.homeHref}
             aria-label={`${config.name} - início`}
-            className="relative z-10 flex shrink-0 items-center rounded-full px-2 py-1 active:scale-[0.96]"
+            className={cn(
+              "relative z-10 flex shrink-0 items-center px-2 py-1 active:scale-[0.96]",
+              isDcorp ? "rounded-md" : "rounded-full",
+            )}
           >
             <Image
               src={config.logo}
               alt={config.name}
               width={1016}
               height={813}
-              className="h-8 w-auto max-w-[7rem] object-contain sm:h-9"
+              className={cn(
+                "h-8 w-auto max-w-[7rem] object-contain sm:h-9",
+                attached && "site-header-logo--attached",
+              )}
               priority
             />
           </Link>
@@ -302,8 +337,11 @@ export function SiteHeader({ companyId }: { companyId: CompanyId }) {
               type="button"
               onClick={() => (open ? closeMenu() : openMenu())}
               className={cn(
-                "flex size-11 items-center justify-center text-graphite transition-colors duration-[var(--duration-quick)] ease-[var(--ease-smooth-out)] hover:bg-graphite/5 active:scale-[0.96] min-[1150px]:hidden",
+                "site-header-menu-btn flex size-11 items-center justify-center transition-colors duration-[var(--duration-quick)] ease-[var(--ease-smooth-out)] active:scale-[0.96] min-[1150px]:hidden",
                 isDcorp ? "rounded-md" : "rounded-full",
+                attached
+                  ? "text-white hover:bg-white/10"
+                  : "text-graphite hover:bg-graphite/5",
               )}
               aria-label={open ? "Fechar menu" : "Abrir menu"}
               aria-expanded={open}

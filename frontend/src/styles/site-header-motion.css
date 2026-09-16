@@ -390,12 +390,70 @@
   border-radius: 6px;
 }
 
+/* Attached to hero wallpaper — light chrome, no white card */
+.site-header--attached {
+  --tabs-pill-bg: rgba(255, 255, 255, 0.14);
+  --tabs-text-muted: rgba(255, 255, 255, 0.62);
+  --tabs-text-active: #ffffff;
+}
+
+.site-header--attached .site-header-bar {
+  box-shadow: none;
+}
+
+.site-header--attached .site-glass-sheen::before {
+  display: none;
+}
+
+.site-header--attached .t-tabs-pill {
+  background: rgba(255, 255, 255, 0.14);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+}
+
+.site-header--attached .t-tab {
+  color: rgba(255, 255, 255, 0.62);
+}
+
+.site-header--attached .t-tab[aria-selected="true"],
+.site-header--attached .t-tab:hover {
+  color: #ffffff;
+}
+
+.site-header--attached .t-icon-swap {
+  color: #ffffff;
+}
+
+.site-header-logo--attached {
+  filter: brightness(0) invert(1);
+  opacity: 0.96;
+}
+
+/* Detach settle: only when leaving the hero wallpaper */
+.site-header--detaching .site-header-bar {
+  animation: dcorp-header-detach 420ms var(--ease-smooth-out) both;
+}
+
+@keyframes dcorp-header-detach {
+  from {
+    opacity: 0.72;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .site-header--dcorp .gold-metallic-cta,
   .site-header--dcorp .gold-metallic-cta:hover,
   .site-header--dcorp .gold-metallic-cta:active {
     transition: none;
     transform: none;
+  }
+
+  .site-header--detaching .site-header-bar {
+    animation: none;
   }
 }
 
