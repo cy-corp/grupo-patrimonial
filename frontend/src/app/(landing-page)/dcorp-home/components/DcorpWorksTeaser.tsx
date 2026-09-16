@@ -81,7 +81,7 @@ export function DcorpWorksTeaser() {
               </p>
             </div>
             <h2 className="text-balance font-sans text-3xl font-bold text-[#1F1F1F] md:text-4xl lg:text-5xl">
-              Obra no canteiro.
+              Execução com escala.
             </h2>
             <p className="mt-5 max-w-md text-pretty font-sans text-base leading-relaxed text-[#4D4D4D] md:text-lg">
               Residencial, condomínios e execução para incorporadoras.

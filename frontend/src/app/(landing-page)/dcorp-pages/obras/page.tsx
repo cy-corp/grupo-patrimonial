@@ -8,7 +8,7 @@ export default function DcorpObrasPage() {
       <div className="mx-auto max-w-6xl px-6 pb-20 pt-28 md:px-12 md:pb-28 md:pt-36 lg:px-20">
         <DcorpPageIntro
           eyebrow="Obras e portfólio"
-          title="Obra no canteiro."
+          title="Execução com escala."
           description="Residencial, condomínios e execução para incorporadoras — com engenharia e sistemas de alta produtividade."
         />
 
