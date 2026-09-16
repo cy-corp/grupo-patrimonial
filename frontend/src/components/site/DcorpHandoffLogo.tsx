@@ -8,9 +8,9 @@ export const DCORP_LOGO_LAYOUT_ID = "dcorp-logo-handoff";
 
 const spring = {
   type: "spring" as const,
-  stiffness: 420,
-  damping: 34,
-  mass: 0.78,
+  stiffness: 380,
+  damping: 38,
+  mass: 0.85,
 };
 
 type DcorpHandoffLogoProps = {
@@ -39,7 +39,7 @@ export function DcorpHandoffLogo({
         height={813}
         priority={priority}
         className={cn(
-          "absolute inset-0 h-full w-full object-contain object-left",
+          "absolute inset-0 h-full w-full object-contain object-left transition-opacity duration-[var(--duration-medium)] ease-[var(--ease-smooth-out)]",
           variant === "header" ? "opacity-100" : "opacity-0",
         )}
       />
@@ -51,7 +51,7 @@ export function DcorpHandoffLogo({
         height={813}
         priority={priority}
         className={cn(
-          "absolute inset-0 h-full w-full object-contain object-left",
+          "absolute inset-0 h-full w-full object-contain object-left transition-opacity duration-[var(--duration-medium)] ease-[var(--ease-smooth-out)]",
           variant === "hero" ? "opacity-100" : "opacity-0",
         )}
       />

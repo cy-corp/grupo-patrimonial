@@ -256,7 +256,7 @@ export function SiteHeader({ companyId }: { companyId: CompanyId }) {
     if (wasAttached.current && isDcorp && isHome) {
       wasAttached.current = false;
       setDetaching(true);
-      const timer = window.setTimeout(() => setDetaching(false), 420);
+      const timer = window.setTimeout(() => setDetaching(false), 350);
       return () => window.clearTimeout(timer);
     }
     wasAttached.current = false;

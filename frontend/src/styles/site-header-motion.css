@@ -435,6 +435,7 @@
 
 .site-header--attached .t-tab {
   color: rgba(255, 255, 255, 0.62);
+  transition: color var(--duration-medium) var(--ease-smooth-out);
 }
 
 .site-header--attached .t-tab[aria-selected="true"],
@@ -442,19 +443,36 @@
   color: #ffffff;
 }
 
-/* Detach settle: only when leaving the hero wallpaper */
+.site-header--dcorp .t-tab {
+  transition: color var(--duration-medium) var(--ease-smooth-out);
+}
+
+.site-header--dcorp .site-header-menu-btn {
+  transition:
+    color var(--duration-medium) var(--ease-smooth-out),
+    background-color var(--duration-medium) var(--ease-smooth-out),
+    box-shadow var(--duration-medium) var(--ease-smooth-out),
+    transform var(--duration-quick) var(--ease-smooth-out);
+}
+
+.site-header--dcorp .site-header-bar {
+  transition:
+    box-shadow var(--duration-medium) var(--ease-smooth-out),
+    background-color var(--duration-medium) var(--ease-smooth-out),
+    border-color var(--duration-medium) var(--ease-smooth-out);
+}
+
+/* Soft settle — no Y bump; glass/color CSS transitions do the work */
 .site-header--detaching .site-header-bar {
-  animation: dcorp-header-detach 420ms var(--ease-smooth-out) both;
+  animation: dcorp-header-detach var(--duration-medium) var(--ease-smooth-out) both;
 }
 
 @keyframes dcorp-header-detach {
   from {
-    opacity: 0.72;
-    transform: translateY(-6px);
+    opacity: 0.94;
   }
   to {
     opacity: 1;
-    transform: translateY(0);
   }
 }
 
