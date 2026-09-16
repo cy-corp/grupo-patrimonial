@@ -1,7 +1,8 @@
 /**
  * Vercel's Next.js builder resolves `next` from the app directory after build.
- * npm workspaces hoist `next` to the frontend root, so we link it back into
- * the app's node_modules for packaging (noop.js / serverless functions).
+ * npm workspaces hoist `next` to the frontend root, and Vercel will not follow
+ * symlinks that escape the project Root Directory — so we copy (dereferenced)
+ * the packages the builder needs into the app's node_modules.
  */
 import fs from "node:fs";
 import path from "node:path";
@@ -32,13 +33,6 @@ for (const pkg of packages) {
   }
 
   fs.rmSync(dest, { recursive: true, force: true });
-
-  if (process.platform === "win32") {
-    // Junctions don't need admin rights; symlinks usually do.
-    fs.symlinkSync(target, dest, "junction");
-  } else {
-    fs.symlinkSync(path.relative(path.dirname(dest), target), dest, "dir");
-  }
-
-  console.log(`[link-app-next] linked ${pkg} -> apps/${appName}/node_modules/${pkg}`);
+  fs.cpSync(target, dest, { recursive: true, dereference: true });
+  console.log(`[link-app-next] copied ${pkg} -> apps/${appName}/node_modules/${pkg}`);
 }
