@@ -1,12 +1,5 @@
-import type { Metadata } from "next";
 import Link from "next/link";
 import { companies, formatCnpj } from "@/lib/companies";
-
-export const metadata: Metadata = {
-  title: "Política de Privacidade",
-  description:
-    "Como a DCORP Engenharia trata dados pessoais enviados pelo site e pelo formulário de contato.",
-};
 
 const company = companies.dcorp;
 

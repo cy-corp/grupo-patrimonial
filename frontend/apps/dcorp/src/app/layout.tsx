@@ -2,6 +2,12 @@ import type { Metadata } from "next";
 import { Montserrat } from "next/font/google";
 import "./globals.css";
 import { SiteShell } from "@/components/site/SiteShell";
+import {
+  DCORP_DEFAULT_DESCRIPTION,
+  DCORP_SIGNATURE,
+  DCORP_SITE_NAME,
+  getDcorpSiteUrl,
+} from "../lib/site";
 
 const montserrat = Montserrat({
   variable: "--font-montserrat",
@@ -9,26 +15,31 @@ const montserrat = Montserrat({
   weight: ["400", "500", "600", "700", "800"],
 });
 
+const siteUrl = getDcorpSiteUrl();
+
 export const metadata: Metadata = {
+  metadataBase: new URL(siteUrl),
   title: {
-    default: "DCORP Engenharia",
-    template: "%s | DCORP Engenharia",
+    default: DCORP_SITE_NAME,
+    template: `%s | ${DCORP_SITE_NAME}`,
   },
-  description:
-    "Construção industrializada com engenharia, velocidade e controle. Sistemas construtivos de alta produtividade para incorporadoras, investidores e empresas.",
+  description: DCORP_DEFAULT_DESCRIPTION,
+  applicationName: DCORP_SITE_NAME,
+  alternates: {
+    canonical: "/",
+  },
   openGraph: {
     type: "website",
     locale: "pt_BR",
-    siteName: "DCORP Engenharia",
-    title: "DCORP Engenharia",
-    description:
-      "Sistemas construtivos industrializados e soluções de alta produtividade. Projetos que constroem oportunidades.",
+    url: "/",
+    siteName: DCORP_SITE_NAME,
+    title: DCORP_SITE_NAME,
+    description: `${DCORP_SIGNATURE} ${DCORP_DEFAULT_DESCRIPTION}`,
   },
   twitter: {
     card: "summary_large_image",
-    title: "DCORP Engenharia",
-    description:
-      "Sistemas construtivos industrializados e soluções de alta produtividade.",
+    title: DCORP_SITE_NAME,
+    description: DCORP_DEFAULT_DESCRIPTION,
   },
 };
 
