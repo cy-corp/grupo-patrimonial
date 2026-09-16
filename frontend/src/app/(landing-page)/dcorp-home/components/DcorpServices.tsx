@@ -107,7 +107,7 @@ export function DcorpServices() {
 
         {/* Mobile */}
         <motion.ol
-          className="relative pl-8 md:hidden"
+          className="relative md:hidden"
           initial={reduceMotion ? false : "hidden"}
           whileInView="show"
           viewport={VIEWPORT}
@@ -119,12 +119,13 @@ export function DcorpServices() {
             },
           }}
         >
+          {/* Center of size-3 (12px) → 6px */}
           <div
-            className="absolute bottom-2 left-[0.6875rem] top-2 w-px bg-[#D9D9D9]"
+            className="absolute bottom-2 left-[5.5px] top-2 w-px bg-[#D9D9D9]"
             aria-hidden="true"
           />
           <motion.div
-            className="absolute left-[0.6875rem] top-2 w-px origin-top bg-[#C9A96A]"
+            className="absolute left-[5.5px] top-2 w-px origin-top bg-[#C9A96A]"
             aria-hidden="true"
             initial={false}
             animate={{ scaleY: fill }}
@@ -136,12 +137,12 @@ export function DcorpServices() {
             return (
               <motion.li
                 key={service}
-                className="relative pb-8 last:pb-0"
+                className="relative flex gap-4 pb-8 last:pb-0"
                 {...stepAnim}
               >
                 <span
                   className={cn(
-                    "absolute left-[-1.4rem] top-1 z-[1] size-3 rounded-full border-2 bg-white transition-colors duration-300 ease-[var(--ease-smooth-out)]",
+                    "relative z-[1] mt-1 size-3 shrink-0 rounded-full border-2 bg-white transition-colors duration-300 ease-[var(--ease-smooth-out)]",
                     reached
                       ? "border-[#C9A96A] bg-[#C9A96A]"
                       : "border-[#D9D9D9]",
@@ -154,7 +155,7 @@ export function DcorpServices() {
                     setPaused(true);
                     setActive(index);
                   }}
-                  className="w-full cursor-pointer text-left"
+                  className="min-w-0 flex-1 cursor-pointer text-left"
                 >
                   <span
                     className={cn(
