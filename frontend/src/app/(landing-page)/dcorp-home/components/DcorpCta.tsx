@@ -12,11 +12,10 @@ export function DcorpCta() {
           </p>
         </div>
         <h2 className="text-balance font-sans text-3xl font-bold text-white md:text-5xl lg:text-6xl">
-          Vamos construir oportunidades para o seu projeto.
+          Engenharia e execução para o seu empreendimento.
         </h2>
         <p className="max-w-xl text-pretty font-sans text-base leading-relaxed text-white/65 md:text-lg">
-          Solicite um orçamento ou fale sobre parceria tecnológica para
-          implantar sistemas industrializados com a DCORP.
+          Orçamento com método — sistemas industrializados, prazo e entrega.
         </p>
         <div className="flex w-full flex-col gap-3 sm:w-auto sm:flex-row">
           <GoldButton

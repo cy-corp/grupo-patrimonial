@@ -32,8 +32,8 @@ export function DcorpPageIntro({
 }
 
 export function DcorpPageCta({
-  title = "Vamos construir oportunidades para o seu projeto.",
-  description = "Fale com a equipe técnica da DCORP e solicite um orçamento.",
+  title = "Engenharia e execução para o seu empreendimento.",
+  description = "Orçamento com método — sistemas industrializados, prazo e entrega.",
 }: {
   title?: string;
   description?: string;

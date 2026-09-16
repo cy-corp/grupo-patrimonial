@@ -139,17 +139,26 @@ export const DCORP_SERVICE_GROUPS = [
   },
 ] as const;
 
-export const DCORP_WORKS_PLACEHOLDERS = [
+export const DCORP_WORKS_HOME = [
   {
+    id: "residencial",
     title: "Empreendimento residencial",
-    meta: "Sistemas industrializados · Residencial",
+    meta: "Sistemas industrializados",
+    image: "/dcorp/works/01-residencial.jpg",
+    alt: "Empreendimento residencial em execução com sistemas industrializados",
   },
   {
-    title: "Condomínio em execução",
-    meta: "Concreto e produtividade · Multifamiliar",
+    id: "condominio",
+    title: "Condomínio multifamiliar",
+    meta: "Concreto e produtividade",
+    image: "/dcorp/works/02-condominio.jpg",
+    alt: "Condomínio multifamiliar em obra com paredes de concreto",
   },
   {
+    id: "incorporadora",
     title: "Obra para incorporadora",
-    meta: "Parceiro de execução · Terceiros",
+    meta: "Execução para terceiros",
+    image: "/dcorp/works/03-incorporadora.jpg",
+    alt: "Canteiro em escala para incorporadora parceira",
   },
 ] as const;
