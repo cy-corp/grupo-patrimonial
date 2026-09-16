@@ -24,6 +24,12 @@ export const metadata: Metadata = {
     description:
       "Sistemas construtivos industrializados e soluções de alta produtividade. Projetos que constroem oportunidades.",
   },
+  twitter: {
+    card: "summary_large_image",
+    title: "DCORP Engenharia",
+    description:
+      "Sistemas construtivos industrializados e soluções de alta produtividade.",
+  },
 };
 
 export default function DcorpLayout({
