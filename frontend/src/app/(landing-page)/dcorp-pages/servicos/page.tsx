@@ -152,7 +152,7 @@ export default function DcorpServicosPage() {
                   <ol className="mt-8">
                     {group.items.map((item, index) => (
                       <motion.li
-                        key={item}
+                        key={item.title}
                         className="grid grid-cols-[2.5rem_1fr] gap-3 border-b border-[#D9D9D9] py-5 first:border-t sm:grid-cols-[3rem_1fr] sm:gap-5 sm:py-6"
                         initial={reduceMotion ? false : { opacity: 0, y: 12 }}
                         whileInView={{ opacity: 1, y: 0 }}
@@ -166,9 +166,14 @@ export default function DcorpServicosPage() {
                         <span className="font-sans text-sm font-semibold tabular-nums text-[#C9A96A]">
                           {String(index + 1).padStart(2, "0")}
                         </span>
-                        <p className="font-sans text-base font-medium leading-snug text-[#1F1F1F] md:text-lg">
-                          {item}
-                        </p>
+                        <div>
+                          <p className="font-sans text-base font-medium leading-snug text-[#1F1F1F] md:text-lg">
+                            {item.title}
+                          </p>
+                          <p className="mt-2 max-w-xl text-pretty font-sans text-sm leading-relaxed text-[#4D4D4D]">
+                            {item.deliverable}
+                          </p>
+                        </div>
                       </motion.li>
                     ))}
                   </ol>

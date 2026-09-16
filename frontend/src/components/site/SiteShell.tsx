@@ -68,6 +68,12 @@ export function SiteShell({
               >
                 {company.email}
               </a>
+              <Link
+                href="/politica-de-privacidade"
+                className="block text-white/75 transition-colors hover:text-[#C9A96A]"
+              >
+                Política de Privacidade
+              </Link>
             </div>
           ) : null}
 

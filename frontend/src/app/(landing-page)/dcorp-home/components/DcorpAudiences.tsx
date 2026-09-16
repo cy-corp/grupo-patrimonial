@@ -64,12 +64,12 @@ export function DcorpAudiences() {
             Quem precisa de produtividade na obra.
           </h2>
           <p className="mt-5 max-w-md text-pretty font-sans text-base leading-relaxed text-[#4D4D4D] md:text-lg">
-            Obra própria e serviços para quem decide, investe e executa.
+            Quem decide o empreendimento, quem executa no canteiro e quem coloca capital na obra.
           </p>
         </motion.div>
 
         <motion.ul
-          className="grid gap-px bg-[#D9D9D9] sm:grid-cols-2 lg:col-span-7"
+          className="grid gap-px bg-[#D9D9D9] lg:col-span-7"
           {...listAnim}
         >
           {DCORP_AUDIENCES.map((audience, index) => (

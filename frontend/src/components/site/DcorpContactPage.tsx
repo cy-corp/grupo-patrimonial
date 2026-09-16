@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useEffect, useId, useRef, useState } from "react";
 import {
   AnimatePresence,
@@ -441,8 +442,8 @@ export function DcorpContactPage() {
                     Mensagem recebida.
                   </h2>
                   <p className="mt-3 max-w-md text-pretty font-sans text-base leading-relaxed text-[#4D4D4D]">
-                    Registramos sua solicitação para a DCORP. Em breve a equipe
-                    retorna com o próximo passo.
+                    Registramos sua solicitação para a DCORP. A equipe técnica
+                    analisa as informações e retorna em até um dia útil.
                   </p>
                   <button
                     type="button"
@@ -458,6 +459,7 @@ export function DcorpContactPage() {
               ) : (
                 <motion.form
                   key="form"
+                  method="post"
                   onSubmit={handleSubmit}
                   initial={reduceMotion ? false : { opacity: 0 }}
                   animate={{ opacity: 1 }}
@@ -645,6 +647,31 @@ export function DcorpContactPage() {
                     ) : null}
 
                     <motion.div
+                      className="space-y-3 pt-1"
+                      variants={reduceMotion ? undefined : fieldVariants}
+                    >
+                      <label className="flex cursor-pointer items-start gap-3">
+                        <input
+                          type="checkbox"
+                          name="privacy"
+                          required
+                          className="mt-1 size-4 shrink-0 cursor-pointer accent-[#C9A96A]"
+                        />
+                        <span className="text-pretty font-sans text-sm leading-relaxed text-[#4D4D4D]">
+                          Autorizo o contato da DCORP e o tratamento dos meus
+                          dados conforme a{" "}
+                          <Link
+                            href="/politica-de-privacidade"
+                            className="font-semibold text-[#1F1F1F] underline decoration-[#C9A96A] underline-offset-4 transition-colors hover:text-[#C9A96A]"
+                          >
+                            Política de Privacidade
+                          </Link>
+                          .
+                        </span>
+                      </label>
+                    </motion.div>
+
+                    <motion.div
                       className="pt-2"
                       variants={reduceMotion ? undefined : fieldVariants}
                     >
@@ -655,6 +682,10 @@ export function DcorpContactPage() {
                       >
                         {isPending ? "Enviando…" : "Enviar mensagem"}
                       </GoldButton>
+                      <p className="mt-3 text-pretty font-sans text-sm leading-relaxed text-[#4D4D4D]">
+                        Nossa equipe técnica analisa as informações e retorna em
+                        até um dia útil.
+                      </p>
                     </motion.div>
                   </motion.div>
                 </motion.form>

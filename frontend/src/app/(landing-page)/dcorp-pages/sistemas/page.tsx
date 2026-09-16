@@ -14,10 +14,10 @@ const VIEWPORT = { once: true, amount: 0.2 } as const;
 
 /** Labels curtos só no índice — evita quebra feia no grid 2×2 mobile. */
 const NAV_LABELS: Record<string, string> = {
-  eps: "EPS",
+  lightwall: "Lightwall",
   "concreto-in-loco": "Concreto in loco",
   icf: "ICF",
-  lightwall: "Lightwall",
+  gesso: "Gesso",
 };
 
 export default function DcorpSistemasPage() {

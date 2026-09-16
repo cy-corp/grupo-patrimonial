@@ -28,17 +28,17 @@ const ACTUATION = [
   {
     title: "Obras próprias",
     detail:
-      "Empreendimentos do grupo com engenharia, sistema e entrega sob o mesmo comando.",
+      "Empreendimentos sob responsabilidade direta da DCORP — engenharia, sistema e entrega no mesmo comando.",
   },
   {
     title: "Serviços a terceiros",
     detail:
-      "Execução para incorporadoras, investidores e SPEs externas — com prazo e custo sob controle.",
+      "Execução para incorporadoras, investidores e SPEs — inclusive fora da holding, com prazo e custo sob controle.",
   },
   {
     title: "Sistemas industrializados",
     detail:
-      "EPS, concreto in loco, ICF e Lightwall escolhidos pelo desempenho da obra, não por catálogo.",
+      "Lightwall, concreto in loco, ICF e gesso — escolhidos pelo desempenho da obra, não por catálogo.",
     href: "/sistemas-construtivos",
   },
 ] as const;

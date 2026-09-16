@@ -48,7 +48,7 @@ export function confirmationLeadEmail(input: { company: Company; name: string })
     `Olá, ${first}.`,
     "",
     `Recebemos sua mensagem na ${input.company.legalName}.`,
-    "Vamos avaliar o pedido e entrar em contato em breve.",
+    "Nossa equipe analisa as informações e retorna em até um dia útil.",
     "",
     "Esta é uma confirmação automática. Não é necessário responder este e-mail.",
   ].join("\n");
@@ -57,7 +57,7 @@ export function confirmationLeadEmail(input: { company: Company; name: string })
     <div style="font-family:Arial,sans-serif;color:#0F172A;line-height:1.6;max-width:560px">
       <p style="font-size:12px;letter-spacing:0.16em;text-transform:uppercase;color:#C9A14A;font-weight:700">${escapeHtml(input.company.legalName)}</p>
       <p>Olá, ${escapeHtml(first)}.</p>
-      <p>Recebemos sua mensagem e vamos entrar em contato em breve.</p>
+      <p>Recebemos sua mensagem. Nossa equipe analisa as informações e retorna em até um dia útil.</p>
       <p style="color:#4D4D4D;font-size:13px">Esta é uma confirmação automática. Não é necessário responder este e-mail.</p>
     </div>
   `;
