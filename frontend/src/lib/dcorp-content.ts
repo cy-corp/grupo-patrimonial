@@ -153,6 +153,10 @@ export const DCORP_WORKS_HOME = [
     id: "residencial",
     title: "Empreendimento residencial",
     meta: "Sistemas industrializados",
+    scope: "Obra própria e para terceiros",
+    summary:
+      "Unidades e tipologias repetidas com ritmo de canteiro — sistemas industrializados para prazo, qualidade e menos desperdício.",
+    focuses: ["Produtividade", "Padronização", "Entrega previsível"],
     image: "/dcorp/works/01-residencial.jpg",
     alt: "Empreendimento residencial em execução com sistemas industrializados",
   },
@@ -160,6 +164,10 @@ export const DCORP_WORKS_HOME = [
     id: "condominio",
     title: "Condomínio multifamiliar",
     meta: "Concreto e produtividade",
+    scope: "Escala em vertical e horizontal",
+    summary:
+      "Condomínios que pedem solidez estrutural e repetição de blocos — concreto moldado in loco e controle construtivo no canteiro.",
+    focuses: ["Robustez", "Repetição", "Controle de qualidade"],
     image: "/dcorp/works/02-condominio.jpg",
     alt: "Condomínio multifamiliar em obra com paredes de concreto",
   },
@@ -167,6 +175,10 @@ export const DCORP_WORKS_HOME = [
     id: "incorporadora",
     title: "Obra para incorporadora",
     meta: "Execução para terceiros",
+    scope: "SPE e clientes externos ao grupo",
+    summary:
+      "Engenharia e execução a serviço de incorporadoras e investidores — do sistema escolhido à fiscalização no dia a dia da obra.",
+    focuses: ["Parceiro de execução", "Prazo e custo", "Método"],
     image: "/dcorp/works/03-incorporadora.jpg",
     alt: "Canteiro em escala para incorporadora parceira",
   },
