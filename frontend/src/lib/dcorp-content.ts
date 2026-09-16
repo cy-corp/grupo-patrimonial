@@ -26,17 +26,17 @@ export const DCORP_SYSTEMS_HEADLINE = "Sistemas que aceleram a obra.";
 
 export const DCORP_SYSTEMS: DcorpSystem[] = [
   {
-    id: "lightwall",
-    name: "Lightwall",
-    shortName: "Lightwall",
-    type: "seco",
-    typeLabel: "Seco / leve",
+    id: "painel-monolitico-eps",
+    name: "Painel monolítico EPS",
+    shortName: "Painel EPS",
+    type: "semi-industrializado",
+    typeLabel: "Semi-industrializado",
     summary:
-      "Painéis leves com núcleo isolante e montagem acelerada — fechamentos e tipologias com alto ganho de produtividade em obra.",
-    benefits: ["Leveza", "Rapidez de montagem", "Produtividade"],
-    when: "Quando o projeto prioriza velocidade, leveza e racionalização de etapas no canteiro.",
-    image: "/dcorp/systems/01-lightwall.jpg",
-    alt: "Montagem de painéis Lightwall em canteiro",
+      "Painéis monolíticos com núcleo em EPS — leveza, desempenho térmico e montagem rápida no canteiro.",
+    benefits: ["Leveza", "Desempenho térmico", "Rapidez de montagem"],
+    when: "Quando o projeto prioriza isolamento térmico, leveza estrutural e produtividade na montagem.",
+    image: "/dcorp/systems/01-eps-mesh.jpg",
+    alt: "Montagem de painéis monolíticos EPS com tela de aço em canteiro",
   },
   {
     id: "concreto-in-loco",
@@ -65,17 +65,17 @@ export const DCORP_SYSTEMS: DcorpSystem[] = [
     alt: "Formas isolantes ICF prontas para concreto",
   },
   {
-    id: "gesso",
-    name: "Gesso",
-    shortName: "Gesso",
-    type: "seco",
-    typeLabel: "Seco / leve",
+    id: "lightwall",
+    name: "Lightwall",
+    shortName: "Lightwall",
+    type: "semi-industrializado",
+    typeLabel: "Semi-industrializado",
     summary:
-      "Fechamentos em gesso acartonado sobre estrutura leve — layouts flexíveis, acabamento rápido e produtividade em obra seca.",
-    benefits: ["Agilidade", "Flexibilidade de layout", "Acabamento rápido"],
-    when: "Em soluções internas e fechamentos que pedem leveza, adaptação de planta e montagem seca.",
-    image: "/dcorp/systems/04-gesso.jpg",
-    alt: "Montagem de paredes em gesso acartonado",
+      "Painéis pré-moldados de concreto leve com núcleo de EPS — montagem rápida no canteiro, substituindo alvenaria com alto ganho de produtividade.",
+    benefits: ["Agilidade", "Desempenho térmico", "Produtividade"],
+    when: "Quando o projeto prioriza velocidade de montagem, conforto térmico e racionalização frente à alvenaria convencional.",
+    image: "/dcorp/systems/04-lightwall-br.jpg",
+    alt: "Montagem de painéis Lightwall com núcleo EPS em canteiro",
   },
 ];
 

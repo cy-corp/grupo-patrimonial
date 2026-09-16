@@ -38,7 +38,7 @@ const ACTUATION = [
   {
     title: "Sistemas industrializados",
     detail:
-      "Lightwall, concreto in loco, ICF e gesso — escolhidos pelo desempenho da obra, não por catálogo.",
+      "Painel monolítico EPS, concreto in loco, ICF e Lightwall — escolhidos pelo desempenho da obra, não por catálogo.",
     href: "/sistemas-construtivos",
   },
 ] as const;
