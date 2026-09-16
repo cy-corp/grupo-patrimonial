@@ -37,7 +37,7 @@ Crie três projetos apontando para o mesmo repositório (um por domínio):
 | DCorp | `frontend/apps/dcorp` | via `vercel.json` | `npm run build` | domínio da DCorp |
 | Dashboard | `frontend/apps/dashboard` | via `vercel.json` | `npm run build` | subdomínio administrativo |
 
-Cada `apps/*/vercel.json` instala o workspace em `frontend/` e cria symlinks de `next`/`react` no app. Sem isso, o pós-build da Vercel falha com `Cannot find module 'next/dist/compiled/next-server/server.runtime.prod.js'` porque o npm hoist deixa o `next` só na raiz do workspace.
+Cada `apps/*/vercel.json` instala o workspace em `frontend/`. O `outputFileTracingRoot` dos apps aponta para a raiz do repositório (onde a Vercel monta `/vercel/path0`), para o builder achar o `next` hoisted em `frontend/node_modules`.
 
 As variáveis de ambiente devem ser configuradas em cada projeto. Os sites públicos precisam das variáveis do formulário e do Supabase; o dashboard precisa também de `SUPABASE_SERVICE_ROLE_KEY` e `BLOB_READ_WRITE_TOKEN`.
 

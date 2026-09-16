@@ -1,4 +1,4 @@
 {
   "framework": "nextjs",
-  "installCommand": "cd ../.. && npm install && node scripts/link-app-next-for-vercel.mjs dcorp"
+  "installCommand": "cd ../.. && npm install"
 }

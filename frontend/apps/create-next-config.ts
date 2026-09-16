@@ -2,13 +2,16 @@ import type { NextConfig } from "next";
 import path from "node:path";
 
 export function createNextConfig(appDir: string): NextConfig {
-  const workspaceRoot = path.join(appDir, "../..");
+  // Git repo root (Vercel path0), not only frontend/. Tracing paths must
+  // include the `frontend/` segment or the builder looks for next at
+  // /vercel/path0/node_modules instead of /vercel/path0/frontend/node_modules.
+  const repoRoot = path.join(appDir, "../../..");
 
   return {
     distDir: process.env.NODE_ENV === "production" ? ".next" : ".next-dev",
-    outputFileTracingRoot: workspaceRoot,
+    outputFileTracingRoot: repoRoot,
     turbopack: {
-      root: workspaceRoot,
+      root: repoRoot,
     },
     transpilePackages: ["@grupo-patrimonial/site-config"],
     experimental: {
