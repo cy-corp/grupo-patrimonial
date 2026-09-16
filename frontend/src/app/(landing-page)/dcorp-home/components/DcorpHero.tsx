@@ -46,21 +46,35 @@ export function DcorpHero() {
     const node = handoffLineRef.current;
     if (!node) return;
 
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        const past = !entry.isIntersecting && entry.boundingClientRect.top < 96;
-        setLogoInHeader(past);
-      },
-      {
-        root: null,
-        threshold: 0,
-        rootMargin: "-88px 0px 0px 0px",
-      },
-    );
+    // Dead zone between enter/exit so slow scroll near the hero edge
+    // does not thrash the shared logo layout + header attach state.
+    const ENTER_Y = 72;
+    const EXIT_Y = 148;
+    let inHeader = false;
+    let ticking = false;
 
-    observer.observe(node);
+    const read = () => {
+      const top = node.getBoundingClientRect().top;
+      const next = inHeader ? top < EXIT_Y : top < ENTER_Y;
+      if (next !== inHeader) {
+        inHeader = next;
+        setLogoInHeader(next);
+      }
+      ticking = false;
+    };
+
+    const onScroll = () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(read);
+    };
+
+    read();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
     return () => {
-      observer.disconnect();
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
       setLogoInHeader(false);
     };
   }, [handoffActive, setLogoInHeader]);
