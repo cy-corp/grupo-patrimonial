@@ -39,7 +39,7 @@ export function DcorpHero() {
 
   return (
     <section
-      className="dcorp-hero relative isolate flex min-h-dvh w-full flex-col overflow-hidden bg-graphite text-white"
+      className="dcorp-hero relative isolate flex min-h-svh w-full flex-col overflow-hidden bg-graphite text-white"
       data-shown={shown ? "true" : "false"}
       aria-label="Apresentação DCORP"
     >

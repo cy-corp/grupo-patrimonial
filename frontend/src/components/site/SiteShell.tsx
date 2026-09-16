@@ -22,10 +22,10 @@ export function SiteShell({
   const isDcorp = companyId === "dcorp";
 
   const tree = (
-    <div className={isDcorp ? "min-h-dvh bg-white" : "min-h-dvh bg-[#F8F1E3]"}>
+    <div className={isDcorp ? "min-h-svh bg-white" : "min-h-dvh bg-[#F8F1E3]"}>
       <SiteHeader companyId={companyId} />
 
-      <div className="min-h-dvh">{children}</div>
+      <div className={isDcorp ? "min-h-svh" : "min-h-dvh"}>{children}</div>
 
       <footer
         className={

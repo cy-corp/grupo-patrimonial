@@ -12,7 +12,7 @@ import { DcorpCta } from "./components/DcorpCta";
  */
 export default function DcorpHomePage() {
   return (
-    <main className="flex min-h-dvh flex-col bg-white">
+    <main className="flex min-h-svh flex-col bg-white">
       <DcorpHero />
       <DcorpAudiences />
       <DcorpSolutions />
