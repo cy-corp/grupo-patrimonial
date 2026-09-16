@@ -279,7 +279,6 @@ export function SiteHeader({ companyId }: { companyId: CompanyId }) {
           "pointer-events-auto relative mx-auto transition-[max-width] duration-[var(--duration-fast)] ease-[var(--ease-smooth-out)]",
           attached ? "max-w-6xl" : "max-w-5xl",
           isDcorp && "max-w-6xl",
-          mobileHandoff && attached && "flex justify-end",
         )}
       >
         <div
@@ -292,10 +291,25 @@ export function SiteHeader({ companyId }: { companyId: CompanyId }) {
             isDcorp ? "rounded-xl site-glass-dcorp" : "rounded-full",
             companyId === "rendal" && "site-glass-rendal",
             attached && "site-header-bar--attached",
-            mobileHandoff && attached && "ml-auto w-auto justify-end px-1.5 shadow-none",
           )}
         >
-          {showHeaderLogo ? (
+          {mobileHandoff ? (
+            <div className="relative z-10 mr-auto flex h-11 w-[9.75rem] shrink-0 items-center px-2">
+              {showHeaderLogo ? (
+                <Link
+                  href={config.homeHref}
+                  aria-label={`${config.name} - início`}
+                  className="flex items-center rounded-md active:scale-[0.96]"
+                >
+                  <DcorpHandoffLogo
+                    variant={headerLogoVariant}
+                    priority
+                    className="h-11 w-[9.75rem]"
+                  />
+                </Link>
+              ) : null}
+            </div>
+          ) : showHeaderLogo ? (
             <Link
               href={config.homeHref}
               aria-label={`${config.name} - início`}
