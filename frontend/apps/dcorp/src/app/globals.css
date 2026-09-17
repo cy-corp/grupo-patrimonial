@@ -110,3 +110,24 @@
     animation: none !important;
   }
 }
+
+/* Quem-somos · método — idle breath on schematic house */
+@keyframes dcorp-method-house-idle {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-3px);
+  }
+}
+
+.dcorp-method-house-idle {
+  animation: dcorp-method-house-idle 5.5s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dcorp-method-house-idle {
+    animation: none;
+  }
+}

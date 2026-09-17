@@ -79,6 +79,42 @@ export const DCORP_SYSTEMS: DcorpSystem[] = [
   },
 ];
 
+export const DCORP_METHOD_HEADLINE = "Obra por etapas especializadas.";
+
+export const DCORP_METHOD_SUPPORT =
+  "Cada fase com profissionais dedicados — sob um planejamento único, com cronograma, padrões técnicos e inspeções coordenadas pela DCORP.";
+
+export const DCORP_METHOD_STAGES = [
+  {
+    id: "fundacao",
+    title: "Fundação",
+    detail: "Preparação do terreno e execução da fundação em radier.",
+  },
+  {
+    id: "estrutura",
+    title: "Estrutura e painéis",
+    detail: "Montagem dos painéis e da estrutura da edificação.",
+  },
+  {
+    id: "instalacoes",
+    title: "Instalações",
+    detail: "Elétrica e hidráulica com equipes especializadas.",
+  },
+  {
+    id: "revestimentos",
+    title: "Revestimentos e acabamentos",
+    detail: "Chapisco, emboço, pisos, esquadrias, louças e pintura.",
+  },
+  {
+    id: "entrega",
+    title: "Entrega",
+    detail: "Paisagismo, limpeza e entrega final sob inspeção da DCORP.",
+  },
+] as const;
+
+export const DCORP_METHOD_OUTCOME =
+  "Mais produtividade, controle de custos, menos desperdício e prazo mais previsível.";
+
 export const DCORP_AUDIENCES = [
   {
     title: "Incorporadoras e SPEs",

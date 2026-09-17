@@ -3,8 +3,14 @@
 import Image from "next/image";
 import Link from "next/link";
 import { motion, useReducedMotion } from "framer-motion";
-import { DCORP_POSITIONING } from "@/lib/dcorp-content";
+import {
+  DCORP_POSITIONING,
+  DCORP_METHOD_HEADLINE,
+  DCORP_METHOD_SUPPORT,
+  DCORP_METHOD_OUTCOME,
+} from "@/lib/dcorp-content";
 import { DcorpPageCta } from "../DcorpPageChrome";
+import { DcorpMethodHouse } from "./DcorpMethodHouse";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 const VIEWPORT = { once: true, amount: 0.15 } as const;
@@ -208,6 +214,50 @@ export default function DcorpQuemSomosPage() {
               </motion.li>
             ))}
           </ol>
+        </div>
+      </section>
+
+      <section className="bg-white px-6 py-16 md:px-12 md:py-20 lg:px-20">
+        <div className="mx-auto max-w-6xl">
+          <motion.div
+            className="max-w-xl"
+            initial={reduceMotion ? false : { opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={VIEWPORT}
+            transition={{ duration: 0.55, ease: EASE }}
+          >
+            <div className="mb-4 flex items-center gap-3">
+              <span className="h-px w-10 bg-[#C9A96A]" aria-hidden="true" />
+              <p className="font-sans text-[11px] font-semibold uppercase tracking-wide text-[#C9A96A]">
+                Método
+              </p>
+            </div>
+            <h2 className="font-sans text-2xl font-bold text-[#1F1F1F] md:text-3xl">
+              {DCORP_METHOD_HEADLINE}
+            </h2>
+            <p className="mt-3 text-pretty font-sans text-base leading-relaxed text-[#4D4D4D]">
+              {DCORP_METHOD_SUPPORT}
+            </p>
+          </motion.div>
+
+          <motion.div
+            initial={reduceMotion ? false : { opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={VIEWPORT}
+            transition={{ duration: 0.55, ease: EASE, delay: 0.06 }}
+          >
+            <DcorpMethodHouse />
+          </motion.div>
+
+          <motion.p
+            className="mt-10 max-w-2xl border-l-2 border-[#C9A96A] pl-4 font-sans text-sm leading-relaxed text-[#4D4D4D] md:text-base"
+            initial={reduceMotion ? false : { opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={VIEWPORT}
+            transition={{ duration: 0.5, ease: EASE }}
+          >
+            {DCORP_METHOD_OUTCOME}
+          </motion.p>
         </div>
       </section>
 
