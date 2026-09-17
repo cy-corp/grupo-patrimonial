@@ -175,11 +175,11 @@ export default function DcorpQuemSomosPage() {
             </p>
           </motion.div>
 
-          <ol className="mt-12 border-t border-[#D9D9D9]">
+          <ul className="mt-12 border-t border-[#D9D9D9]">
             {ACTUATION.map((item, index) => (
               <motion.li
                 key={item.title}
-                className="grid gap-4 border-b border-[#D9D9D9] py-8 sm:grid-cols-[4.5rem_1fr] sm:gap-8 sm:py-10 lg:grid-cols-[5.5rem_minmax(0,14rem)_1fr] lg:items-baseline lg:gap-12"
+                className="grid gap-3 border-b border-[#D9D9D9] py-8 sm:grid-cols-[minmax(0,14rem)_1fr] sm:gap-10 sm:py-10 lg:gap-14"
                 initial={reduceMotion ? false : { opacity: 0, y: 14 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={VIEWPORT}
@@ -189,13 +189,10 @@ export default function DcorpQuemSomosPage() {
                   delay: 0.06 * index,
                 }}
               >
-                <span className="font-sans text-3xl font-bold tabular-nums text-[#C9A96A] md:text-4xl">
-                  {String(index + 1).padStart(2, "0")}
-                </span>
-                <h3 className="font-sans text-lg font-semibold text-[#1F1F1F] md:text-xl">
+                <h3 className="border-l-2 border-[#C9A96A] pl-4 font-sans text-lg font-semibold text-[#1F1F1F] md:text-xl">
                   {item.title}
                 </h3>
-                <div className="sm:col-span-2 lg:col-span-1">
+                <div>
                   <p className="max-w-xl text-pretty font-sans text-sm leading-relaxed text-[#4D4D4D] md:text-base">
                     {item.detail}
                   </p>
@@ -213,7 +210,7 @@ export default function DcorpQuemSomosPage() {
                 </div>
               </motion.li>
             ))}
-          </ol>
+          </ul>
         </div>
       </section>
 

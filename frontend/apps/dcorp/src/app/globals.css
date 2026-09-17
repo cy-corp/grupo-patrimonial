@@ -126,8 +126,25 @@
   animation: dcorp-method-house-idle 5.5s ease-in-out infinite;
 }
 
+@keyframes dcorp-method-stage-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.dcorp-method-stage-fade {
+  animation: dcorp-method-stage-fade 280ms ease-out both;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .dcorp-method-house-idle {
+    animation: none;
+  }
+
+  .dcorp-method-stage-fade {
     animation: none;
   }
 }
