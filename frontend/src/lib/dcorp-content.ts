@@ -219,17 +219,26 @@ export const DCORP_SERVICE_GROUPS = [
   },
 ] as const;
 
+/**
+ * Holambra gallery: drop JPGs in `public/dcorp/works/holambra/` as 01.jpg, 02.jpg…
+ * then append paths to `images` below. Home uses `images[0]`.
+ */
 export const DCORP_WORKS_HOME = [
   {
-    id: "residencial",
-    title: "Empreendimento residencial",
-    meta: "Sistemas industrializados",
-    scope: "Obra própria e para terceiros",
+    id: "holambra",
+    title: "Holambra",
+    meta: "Em andamento",
+    scope: "Residencial em execução",
     summary:
-      "Unidades e tipologias repetidas com ritmo de canteiro — sistemas industrializados para prazo, qualidade e menos desperdício.",
-    focuses: ["Produtividade", "Padronização", "Entrega previsível"],
-    image: "/dcorp/works/01-residencial.jpg",
-    alt: "Empreendimento residencial em execução com sistemas industrializados",
+      "Obra em andamento com painel monolítico EPS — montagem industrializada e acompanhamento por etapas no canteiro.",
+    focuses: ["Em andamento", "Painel monolítico EPS", "Método por etapas"],
+    images: [
+      "/dcorp/works/holambra/01.jpg?v=2",
+      "/dcorp/works/holambra/02.jpg?v=2",
+      "/dcorp/works/holambra/03.jpg?v=2",
+    ],
+    alt: "Obra Holambra em andamento com painel monolítico EPS",
+    gallery: true,
   },
   {
     id: "condominio",
@@ -239,8 +248,9 @@ export const DCORP_WORKS_HOME = [
     summary:
       "Condomínios que pedem solidez estrutural e repetição de blocos — concreto moldado in loco e controle construtivo no canteiro.",
     focuses: ["Robustez", "Repetição", "Controle de qualidade"],
-    image: "/dcorp/works/02-condominio.jpg",
+    images: ["/dcorp/works/02-condominio.jpg"],
     alt: "Condomínio multifamiliar em obra com paredes de concreto",
+    gallery: false,
   },
   {
     id: "incorporadora",
@@ -250,7 +260,8 @@ export const DCORP_WORKS_HOME = [
     summary:
       "Engenharia e execução a serviço de incorporadoras e investidores — do sistema escolhido à fiscalização no dia a dia da obra.",
     focuses: ["Parceiro de execução", "Prazo e custo", "Método"],
-    image: "/dcorp/works/03-incorporadora.jpg",
+    images: ["/dcorp/works/03-incorporadora.jpg"],
     alt: "Canteiro em escala para incorporadora parceira",
+    gallery: false,
   },
 ] as const;

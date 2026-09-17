@@ -178,8 +178,8 @@ export function DcorpMethodHouse() {
         </svg>
 
         <p className="pointer-events-none absolute bottom-2.5 left-3 font-sans text-[10px] uppercase tracking-wide text-[#1F1F1F]/35">
-          <span className="pointer-coarse:hidden">Passe o mouse nas partes</span>
-          <span className="hidden pointer-coarse:inline">Toque nas partes</span>
+          <span className="pointer-coarse:hidden">Passe o mouse nas etapas</span>
+          <span className="hidden pointer-coarse:inline">Toque nas etapas</span>
         </p>
       </div>
 
@@ -197,11 +197,17 @@ export function DcorpMethodHouse() {
                 onClick={() => select(stage.id)}
                 aria-pressed={locked === stage.id}
                 className={cn(
-                  "grid w-full grid-cols-[2.6rem_1fr] gap-3 border-b border-[#D9D9D9] py-3.5 text-left transition-colors duration-[var(--duration-quick)] ease-[var(--ease-smooth-out)] md:gap-4 md:py-4",
+                  "relative grid w-full grid-cols-[2.6rem_1fr] gap-3 border-b border-[#D9D9D9] py-3.5 pl-4 pr-3 text-left transition-colors duration-[var(--duration-quick)] ease-[var(--ease-smooth-out)] md:gap-4 md:py-4 md:pl-5 md:pr-4",
                   "hover:bg-[#C9A96A]/[0.08] focus-visible:bg-[#C9A96A]/[0.08] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C9A96A]/45",
-                  isActive && "bg-[#C9A96A]/[0.08] shadow-[inset_2px_0_0_#C9A96A]",
+                  isActive && "bg-[#C9A96A]/[0.08]",
                 )}
               >
+                {isActive ? (
+                  <span
+                    aria-hidden
+                    className="absolute bottom-0 left-0 top-0 w-0.5 bg-[#C9A96A]"
+                  />
+                ) : null}
                 <span
                   className={cn(
                     "font-sans text-lg font-bold tabular-nums text-[#C9A96A] transition-opacity duration-200 md:text-xl",

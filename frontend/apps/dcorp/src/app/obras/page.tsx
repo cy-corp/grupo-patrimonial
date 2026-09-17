@@ -5,12 +5,12 @@ export { default } from "@/app/(landing-page)/dcorp-pages/obras/page";
 export const metadata: Metadata = {
   title: "Obras",
   description:
-    "Execução com escala: empreendimentos residenciais, condomínios e obras para incorporadoras com sistemas industrializados.",
+    "Portfólio DCORP: obra Holambra em andamento com painel monolítico EPS e tipologias de execução em escala.",
   alternates: { canonical: "/obras" },
   openGraph: {
     title: "Obras | DCORP Engenharia",
     description:
-      "Residencial, condomínios e execução para incorporadoras — com engenharia e produtividade.",
+      "Holambra em andamento com painel monolítico EPS — e execução para residencial e incorporadoras.",
     url: "/obras",
   },
 };

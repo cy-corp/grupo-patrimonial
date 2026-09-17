@@ -84,7 +84,8 @@ export function DcorpWorksTeaser() {
               Execução com escala.
             </h2>
             <p className="mt-5 max-w-md text-pretty font-sans text-base leading-relaxed text-[#4D4D4D] md:text-lg">
-              Residencial, condomínios e execução para incorporadoras.
+              Holambra em andamento e execução em escala para residencial e
+              incorporadoras.
             </p>
           </div>
           <Link
@@ -119,59 +120,62 @@ export function DcorpWorksTeaser() {
         >
           {DCORP_WORKS_HOME.map((work, index) => {
             const ready = Boolean(loaded[work.id]);
+            const cover = work.images[0];
             return (
               <motion.li
                 key={work.id}
                 className="group bg-white"
                 {...cardAnim}
               >
-                <div className="relative aspect-[4/3] overflow-hidden bg-[#1F1F1F]">
-                  <motion.div className="absolute inset-0" {...imageAnim}>
-                    <div
-                      className="absolute inset-0"
-                      style={{
-                        backgroundImage:
-                          "linear-gradient(145deg, #2c2c2c 0%, #1F1F1F 48%, #3d3426 100%)",
-                      }}
-                      aria-hidden="true"
-                    />
-                    <Image
-                      src={work.image}
-                      alt={work.alt}
-                      fill
-                      sizes="(max-width: 768px) 100vw, 33vw"
-                      className={cn(
-                        "object-cover transition-transform duration-500 ease-[var(--ease-smooth-out)] group-hover:scale-[1.03]",
-                        ready ? "opacity-100" : "opacity-0",
-                      )}
-                      onLoadingComplete={() =>
-                        setLoaded((prev) => ({ ...prev, [work.id]: true }))
-                      }
-                      onError={() =>
-                        setLoaded((prev) => ({ ...prev, [work.id]: false }))
-                      }
-                      priority={index === 0}
-                    />
-                  </motion.div>
+                <Link href={`/obras#${work.id}`} className="block">
+                  <div className="relative aspect-[4/3] overflow-hidden bg-[#1F1F1F]">
+                    <motion.div className="absolute inset-0" {...imageAnim}>
+                      <div
+                        className="absolute inset-0"
+                        style={{
+                          backgroundImage:
+                            "linear-gradient(145deg, #2c2c2c 0%, #1F1F1F 48%, #3d3426 100%)",
+                        }}
+                        aria-hidden="true"
+                      />
+                      <Image
+                        src={cover}
+                        alt={work.alt}
+                        fill
+                        sizes="(max-width: 768px) 100vw, 33vw"
+                        className={cn(
+                          "object-cover transition-transform duration-500 ease-[var(--ease-smooth-out)] group-hover:scale-[1.03]",
+                          ready ? "opacity-100" : "opacity-0",
+                        )}
+                        onLoadingComplete={() =>
+                          setLoaded((prev) => ({ ...prev, [work.id]: true }))
+                        }
+                        onError={() =>
+                          setLoaded((prev) => ({ ...prev, [work.id]: false }))
+                        }
+                        priority={index === 0}
+                      />
+                    </motion.div>
 
-                  <span className="absolute left-5 top-5 z-[1] font-sans text-[11px] font-semibold tabular-nums text-[#C9A96A]">
-                    {String(index + 1).padStart(2, "0")}
-                  </span>
-                  {!ready ? (
-                    <span className="absolute bottom-5 left-5 z-[1] font-sans text-[10px] font-semibold uppercase tracking-wide text-white/40">
-                      Imagem em breve
+                    <span className="absolute left-4 top-4 z-[1] flex size-9 items-center justify-center border border-white/25 bg-[#1F1F1F]/50 font-sans text-[11px] font-semibold tabular-nums text-[#C9A96A] shadow-[0_8px_20px_rgba(0,0,0,0.22)] backdrop-blur-md md:left-5 md:top-5 md:size-10 md:text-xs">
+                      {String(index + 1).padStart(2, "0")}
                     </span>
-                  ) : null}
-                </div>
+                    {!ready ? (
+                      <span className="absolute bottom-5 left-5 z-[1] font-sans text-[10px] font-semibold uppercase tracking-wide text-white/40">
+                        Imagem em breve
+                      </span>
+                    ) : null}
+                  </div>
 
-                <div className="border-t border-[#D9D9D9] px-5 py-5">
-                  <h3 className="font-sans text-lg font-semibold text-[#1F1F1F]">
-                    {work.title}
-                  </h3>
-                  <p className="mt-2 font-sans text-sm text-[#4D4D4D]">
-                    {work.meta}
-                  </p>
-                </div>
+                  <div className="border-t border-[#D9D9D9] px-5 py-5">
+                    <h3 className="font-sans text-lg font-semibold text-[#1F1F1F]">
+                      {work.title}
+                    </h3>
+                    <p className="mt-2 font-sans text-sm text-[#4D4D4D]">
+                      {work.meta}
+                    </p>
+                  </div>
+                </Link>
               </motion.li>
             );
           })}

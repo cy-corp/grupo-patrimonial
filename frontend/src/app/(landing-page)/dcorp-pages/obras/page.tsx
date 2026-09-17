@@ -5,6 +5,7 @@ import { motion, useReducedMotion } from "framer-motion";
 import { DCORP_WORKS_HOME } from "@/lib/dcorp-content";
 import { cn } from "@/lib/utils";
 import { DcorpPageCta, DcorpPageIntro } from "../DcorpPageChrome";
+import { DcorpWorkCarousel } from "./DcorpWorkCarousel";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 const VIEWPORT = { once: true, amount: 0.2 } as const;
@@ -23,7 +24,7 @@ export default function DcorpObrasPage() {
           <DcorpPageIntro
             eyebrow="Obras e portfólio"
             title="Execução com escala."
-            description="Residencial, condomínios e execução para incorporadoras — com engenharia e sistemas de alta produtividade."
+            description="Cases em andamento e tipologias de execução — com engenharia e sistemas de alta produtividade."
           />
         </motion.div>
 
@@ -84,6 +85,73 @@ export default function DcorpObrasPage() {
       <div>
         {DCORP_WORKS_HOME.map((work, index) => {
           const reverse = index % 2 === 1;
+          const cover = work.images[0];
+
+          if (work.gallery) {
+            return (
+              <article
+                key={work.id}
+                id={work.id}
+                className="scroll-mt-28 border-t border-[#D9D9D9] bg-[#F7F7F7] px-6 py-14 md:px-12 md:py-20 lg:px-20"
+              >
+                <div className="mx-auto grid max-w-6xl gap-10 lg:grid-cols-12 lg:gap-12">
+                  <motion.div
+                    className="lg:col-span-4 lg:pt-2"
+                    initial={reduceMotion ? false : { opacity: 0, y: 16 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={VIEWPORT}
+                    transition={{ duration: 0.6, ease: EASE }}
+                  >
+                    <div className="flex items-center gap-3">
+                      <span className="font-sans text-[11px] font-semibold tabular-nums text-[#C9A96A]">
+                        {String(index + 1).padStart(2, "0")}
+                      </span>
+                      <span
+                        className="h-px w-8 bg-[#C9A96A]"
+                        aria-hidden="true"
+                      />
+                      <p className="font-sans text-[10px] font-semibold uppercase tracking-wide text-[#C9A96A]">
+                        {work.meta}
+                      </p>
+                    </div>
+                    <h2 className="mt-4 text-balance font-sans text-2xl font-bold text-[#1F1F1F] md:text-3xl lg:text-4xl">
+                      {work.title}
+                    </h2>
+                    <p className="mt-2 font-sans text-sm text-[#4D4D4D]">
+                      {work.scope}
+                    </p>
+                    <p className="mt-5 text-pretty font-sans text-base leading-relaxed text-[#4D4D4D] md:text-lg">
+                      {work.summary}
+                    </p>
+                    <ul className="mt-8 flex flex-col gap-2 border-t border-[#D9D9D9] pt-6">
+                      {work.focuses.map((focus) => (
+                        <li
+                          key={focus}
+                          className="font-sans text-sm text-[#1F1F1F] before:mr-2 before:text-[#C9A96A] before:content-['—']"
+                        >
+                          {focus}
+                        </li>
+                      ))}
+                    </ul>
+                  </motion.div>
+
+                  <motion.div
+                    className="lg:col-span-8"
+                    initial={reduceMotion ? false : { opacity: 0, y: 18 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={VIEWPORT}
+                    transition={{ duration: 0.65, ease: EASE, delay: 0.06 }}
+                  >
+                    <DcorpWorkCarousel
+                      images={work.images}
+                      alt={work.alt}
+                      priority={index === 0}
+                    />
+                  </motion.div>
+                </div>
+              </article>
+            );
+          }
 
           return (
             <article
@@ -106,7 +174,7 @@ export default function DcorpObrasPage() {
                   transition={{ duration: 0.65, ease: EASE }}
                 >
                   <Image
-                    src={work.image}
+                    src={cover}
                     alt={work.alt}
                     fill
                     sizes="(max-width: 1024px) 100vw, 58vw"
@@ -180,12 +248,12 @@ export default function DcorpObrasPage() {
               Portfólio
             </p>
             <h2 className="mt-3 font-sans text-xl font-bold text-[#1F1F1F] md:text-2xl">
-              Tipologias representativas — não um catálogo fechado.
+              Obra real em destaque — e tipologias de execução.
             </h2>
             <p className="mt-4 text-pretty font-sans text-base leading-relaxed text-[#4D4D4D]">
-              Cada empreendimento define sistema, prazo e escopo. A DCORP
-              adapta engenharia e execução ao programa da obra, em projetos
-              próprios e para clientes terceiros.
+              Holambra é o case em andamento com painel monolítico EPS. As demais
+              tipologias representam formatos de execução que a DCORP entrega em
+              projetos próprios e para clientes terceiros.
             </p>
           </motion.div>
         </div>
