@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { RendalHomeHero } from "./RendalHomeHero";
+import { RendalMorphScroll } from "./RendalMorphScroll";
 import { RendalServicesStack } from "./RendalServicesStack";
 
 export default function IncorporadoraPage() {
@@ -10,6 +11,7 @@ export default function IncorporadoraPage() {
       <RendalHomeHero />
 
       <div className="relative z-0 -mt-2">
+        <RendalMorphScroll />
         <RendalServicesStack />
 
         <section className="border-t border-graphite/5 px-6 py-24 md:py-32">
