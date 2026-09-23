@@ -7,20 +7,22 @@ import { siteConfigs } from "@grupo-patrimonial/site-config";
 
 const HERO_IMG = "/wireframes/hero-condominio-ceu.jpg";
 
-/** Azul-petróleo metálico — só Rendal (#0F5B63) */
+/** Azul-petróleo metálico — só Rendal (#0F5B63); escala CTA ref. ROFIX */
 const PETROL_METAL =
-  "inline-flex items-center justify-center gap-2 rounded-full border-[0.5px] border-white/25 bg-gradient-to-b from-[#1A8A94] via-[#0F5B63] to-[#0A3F45] px-[18px] py-3 text-[11px] font-bold uppercase tracking-[0.06em] text-white shadow-[0_4px_12px_rgba(15,91,99,0.22),inset_0_1px_0_rgba(255,255,255,0.35),inset_0_-1px_0_rgba(0,0,0,0.18)] transition-[filter,transform] duration-200 hover:brightness-110 active:translate-y-px";
+  "inline-flex h-12 items-center justify-center gap-2 rounded-full border-[0.5px] border-white/25 bg-gradient-to-b from-[#1A8A94] via-[#0F5B63] to-[#0A3F45] px-6 text-[14px] font-semibold tracking-[-0.01em] text-white shadow-[0_4px_12px_rgba(15,91,99,0.22),inset_0_1px_0_rgba(255,255,255,0.35),inset_0_-1px_0_rgba(0,0,0,0.18)] transition-[filter,transform] duration-200 hover:brightness-110 active:translate-y-px";
 
 /** CTA do header — mesma altura visual do pill de nav (ref. ROFIX) */
 const HEADER_CTA =
-  "inline-flex h-11 items-center justify-center rounded-full border-[0.5px] border-white/25 bg-gradient-to-b from-[#1A8A94] via-[#0F5B63] to-[#0A3F45] px-5 text-[13px] font-semibold tracking-[-0.01em] text-white shadow-[0_4px_12px_rgba(15,91,99,0.22),inset_0_1px_0_rgba(255,255,255,0.35),inset_0_-1px_0_rgba(0,0,0,0.18)] transition-[filter,transform] duration-200 hover:brightness-110 active:translate-y-px";
+  "inline-flex h-12 items-center justify-center rounded-full border-[0.5px] border-white/25 bg-gradient-to-b from-[#1A8A94] via-[#0F5B63] to-[#0A3F45] px-6 text-[14px] font-semibold tracking-[-0.01em] text-white shadow-[0_4px_12px_rgba(15,91,99,0.22),inset_0_1px_0_rgba(255,255,255,0.35),inset_0_-1px_0_rgba(0,0,0,0.18)] transition-[filter,transform] duration-200 hover:brightness-110 active:translate-y-px";
 
 function CssGlass({
   className,
   children,
+  borderless = false,
 }: {
   className?: string;
   children: ReactNode;
+  borderless?: boolean;
 }) {
   return (
     <div
@@ -31,9 +33,10 @@ function CssGlass({
           "linear-gradient(135deg, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0.07) 50%, rgba(255,255,255,0.12) 100%)",
         backdropFilter: "blur(16px) saturate(150%)",
         WebkitBackdropFilter: "blur(16px) saturate(150%)",
-        border: "0.5px solid rgba(255,255,255,0.18)",
-        boxShadow:
-          "inset 0 0.5px 0 rgba(255,255,255,0.4), 0 8px 24px rgba(0,0,0,0.14)",
+        border: borderless ? "none" : "0.5px solid rgba(255,255,255,0.18)",
+        boxShadow: borderless
+          ? "0 8px 24px rgba(0,0,0,0.14)"
+          : "inset 0 0.5px 0 rgba(255,255,255,0.4), 0 8px 24px rgba(0,0,0,0.14)",
       }}
     >
       {children}
@@ -70,7 +73,7 @@ export function RendalHomeHero() {
     <div className="relative z-20 bg-[#F8F1E3] px-1.5 pt-1.5 md:px-2 md:pt-2">
       {/* Frame fino no topo/lados; raio maior só nos cantos inferiores */}
       <section
-        className="relative min-h-[calc(100dvh-0.375rem)] overflow-hidden rounded-t-[1.25rem] rounded-b-[2.75rem] border-[0.5px] border-white/90 bg-[#1F1F1F] text-white md:min-h-[calc(100dvh-0.5rem)] md:rounded-t-[1.75rem] md:rounded-b-[3.5rem] lg:rounded-t-[2rem] lg:rounded-b-[4.5rem]"
+        className="relative min-h-[calc(100dvh-0.375rem)] overflow-hidden rounded-t-[0.75rem] rounded-b-[2.75rem] border-[0.5px] border-white/90 bg-[#1F1F1F] text-white md:min-h-[calc(100dvh-0.5rem)] md:rounded-t-[1rem] md:rounded-b-[3.5rem] lg:rounded-t-[1.25rem] lg:rounded-b-[4.5rem]"
       >
         <Image
           src={HERO_IMG}
@@ -88,23 +91,23 @@ export function RendalHomeHero() {
           }}
         />
 
-        <div className="relative z-[2] flex min-h-[calc(100dvh-0.375rem)] flex-col px-8 pb-24 pt-6 md:min-h-[calc(100dvh-0.5rem)] md:px-16 md:pb-28 md:pt-7 lg:px-24 xl:px-28">
-          <header className="relative flex min-h-11 items-center justify-between">
+        <div className="relative z-[2] flex min-h-[calc(100dvh-0.375rem)] flex-col px-8 pb-36 pt-5 md:min-h-[calc(100dvh-0.5rem)] md:px-16 md:pb-40 md:pt-6 lg:px-24 xl:px-28">
+          <header className="relative flex min-h-12 items-center justify-between">
             <Link href="/" className="relative z-[1] shrink-0 text-white">
-              <p className="m-0 text-[18px] font-bold uppercase tracking-[0.04em] md:text-[20px]">
+              <p className="m-0 text-[20px] font-bold uppercase tracking-[0.04em] md:text-[22px]">
                 Grupo Rendal
               </p>
-              <p className="m-0 mt-0.5 text-[10px] font-medium tracking-[0.02em] text-white/65">
+              <p className="m-0 mt-0.5 text-[11px] font-medium tracking-[0.02em] text-white/65">
                 Participações e Soluções
               </p>
             </Link>
 
-            <CssGlass className="absolute left-1/2 top-1/2 hidden h-11 -translate-x-1/2 -translate-y-1/2 items-center gap-0.5 px-3 md:flex">
+            <CssGlass className="absolute left-1/2 top-1/2 hidden h-12 -translate-x-1/2 -translate-y-1/2 items-center gap-0.5 px-3.5 md:flex">
               {links.map((item) => (
                 <Link
                   key={item.href + item.label}
                   href={item.href}
-                  className="whitespace-nowrap rounded-full px-3.5 py-2 text-[13px] font-medium text-white/92 transition-colors hover:bg-white/10"
+                  className="whitespace-nowrap rounded-full px-4 py-2 text-[14px] font-medium text-white/92 transition-colors hover:bg-white/10"
                 >
                   {item.label}
                 </Link>
@@ -114,7 +117,7 @@ export function RendalHomeHero() {
             <div className="relative z-[1] flex shrink-0 items-center gap-2">
               <button
                 type="button"
-                className="inline-flex size-11 items-center justify-center rounded-full border border-white/25 bg-white/10 text-white md:hidden"
+                className="inline-flex size-12 items-center justify-center rounded-full border border-white/25 bg-white/10 text-white md:hidden"
                 aria-expanded={menuOpen}
                 aria-label={menuOpen ? "Fechar menu" : "Abrir menu"}
                 onClick={() => setMenuOpen((v) => !v)}
@@ -136,7 +139,7 @@ export function RendalHomeHero() {
                   key={item.href + item.label}
                   href={item.href}
                   onClick={() => setMenuOpen(false)}
-                  className="block rounded-xl px-3 py-3 text-[13px] font-medium text-white/90"
+                  className="block rounded-xl px-3 py-3 text-[14px] font-medium text-white/90"
                 >
                   {item.label}
                 </Link>
@@ -144,49 +147,69 @@ export function RendalHomeHero() {
             </nav>
           ) : null}
 
-          <div className="flex flex-1 flex-col items-center justify-center px-2 text-center md:px-4">
-            <h1 className="m-0 max-w-[14ch] text-balance text-[clamp(2.25rem,5.4vw,3.75rem)] font-bold leading-[1.05] tracking-[-0.04em] [text-shadow:0_2px_40px_rgba(0,0,0,0.35)]">
-              Casa que parece cara. Preço que cabe.
+          <div className="flex flex-1 flex-col items-center px-2 pt-14 text-center md:px-4 md:pt-16 lg:pt-20">
+            <h1 className="m-0 px-1 text-[clamp(3rem,7.8vw,5.75rem)] font-bold leading-[1.08] tracking-[-0.04em] [text-shadow:0_2px_40px_rgba(0,0,0,0.35)]">
+              <span className="block md:whitespace-nowrap">Casa que parece cara.</span>
+              <span className="block md:whitespace-nowrap">Preço que cabe.</span>
             </h1>
-            <p className="mt-4 max-w-[42ch] text-[clamp(13px,1.4vw,15px)] leading-relaxed text-white/78">
+            <p className="mt-10 max-w-[48ch] text-pretty text-[16px] leading-[1.65] text-white/85 md:mt-12 md:text-[17px]">
               Valor onde se vê. Inteligência onde não se vê. Lazer na laje e
               acabamento de presença no investimento acessível.
             </p>
 
-            <CssGlass className="mt-7 flex max-w-full flex-wrap items-center justify-center gap-y-2 py-2 pl-5 pr-2">
-              <div className="flex items-center gap-2 px-4 py-1.5 text-[12px] font-medium text-white">
-                <strong className="font-bold">Mais valor</strong>
-                <span className="text-[11px] text-white/75">mesmo investimento</span>
-                <span className="tracking-widest text-[#C9A96A]" aria-hidden>
-                  ★★★★★
+            <CssGlass
+              borderless
+              className="mt-8 flex w-full max-w-[48rem] flex-col items-stretch gap-2 p-2 md:mt-9 sm:flex-row sm:items-center sm:justify-between sm:gap-0 sm:py-2.5 sm:pl-6 sm:pr-2.5"
+            >
+              <div className="flex flex-1 flex-col items-center px-3 py-1.5 text-center leading-tight text-white">
+                <div className="flex items-center justify-center gap-2">
+                  <strong className="text-[13px] font-bold md:text-[14px]">
+                    Mais valor
+                  </strong>
+                  <span className="text-[12px] tracking-widest text-[#C9A96A]" aria-hidden>
+                    ★★★★★
+                  </span>
+                </div>
+                <span className="mt-0.5 text-[12px] font-medium text-white/75 md:text-[13px]">
+                  mesmo investimento
                 </span>
               </div>
-              <div className="hidden h-4 w-px bg-white/30 sm:block" aria-hidden />
-              <div className="flex items-center gap-2 px-4 py-1.5 text-[12px] font-medium text-white">
-                <strong className="font-bold">Classes B e C</strong>
-                <span className="text-[11px] text-white/75">produto com presença</span>
+              <div className="hidden h-8 w-px shrink-0 bg-white/30 sm:block" aria-hidden />
+              <div className="flex flex-1 flex-col items-center px-3 py-1.5 text-center leading-tight text-white">
+                <strong className="text-[13px] font-bold md:text-[14px]">
+                  Classes B e C
+                </strong>
+                <span className="mt-0.5 text-[12px] font-medium text-white/75 md:text-[13px]">
+                  produto com presença
+                </span>
               </div>
-              <Link href="/empreendimentos" className={`ml-1 ${PETROL_METAL}`}>
-                Ver empreendimentos
-                <span aria-hidden>→</span>
-              </Link>
+              <div className="hidden h-8 w-px shrink-0 bg-white/30 sm:block" aria-hidden />
+              <div className="flex flex-1 items-center justify-center px-2 py-1 sm:pl-4 sm:pr-3">
+                <Link
+                  href="/empreendimentos"
+                  className={`w-full sm:w-auto sm:px-5 ${PETROL_METAL}`}
+                >
+                  Ver empreendimentos
+                  <span aria-hidden>→</span>
+                </Link>
+              </div>
             </CssGlass>
           </div>
         </div>
       </section>
 
       {/* Cards em fluxo — cruzam a borda inferior do frame */}
-      <div className="relative z-10 -mt-14 px-1 md:-mt-16 md:px-2">
-        <div className="mx-auto grid max-w-[1120px] gap-3 md:grid-cols-3 md:gap-4">
+      <div className="relative z-10 -mt-16 px-1 md:-mt-[4.5rem] md:px-2">
+        <div className="mx-auto grid max-w-[1120px] gap-3 md:grid-cols-3 md:gap-5">
           {PROOFS.map((card) => (
             <article
               key={card.title}
-              className="rounded-[18px] border border-black/[0.04] bg-white px-5 py-7 text-center shadow-[0_18px_44px_rgba(0,0,0,0.16)]"
+              className="rounded-[22px] border border-black/[0.04] bg-white px-6 py-8 text-center shadow-[0_18px_44px_rgba(0,0,0,0.16)] md:px-7 md:py-9"
             >
-              <h2 className="m-0 text-[15px] font-bold tracking-[-0.02em] text-[#1F1F1F]">
+              <h2 className="m-0 text-[17px] font-bold tracking-[-0.02em] text-[#1F1F1F] md:text-[18px]">
                 {card.title}
               </h2>
-              <p className="mt-2.5 m-0 text-[12.5px] leading-relaxed text-[#4D4D4D]">
+              <p className="mt-3 m-0 text-[13.5px] leading-relaxed text-[#4D4D4D] md:text-[14px]">
                 {card.body}
               </p>
             </article>
