@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Allura, Montserrat } from "next/font/google";
 import "./globals.css";
-import { SiteShell } from "@/components/site/SiteShell";
 
 const montserrat = Montserrat({
   variable: "--font-montserrat",
@@ -38,7 +37,7 @@ export default function RendalLayout({
   return (
     <html lang="pt-BR">
       <body className={`${montserrat.variable} ${allura.variable} font-sans antialiased`}>
-        <SiteShell companyId="rendal">{children}</SiteShell>
+        {children}
       </body>
     </html>
   );

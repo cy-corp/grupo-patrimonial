@@ -256,6 +256,9 @@ export function SiteHeader({ companyId }: { companyId: CompanyId }) {
 
   const headerLogoVariant = attached ? "hero" : "header";
 
+  // Rendal home owns its own hero chrome (nav inside the hero).
+  if (!isDcorp && isHome) return null;
+
   return (
     <header
       className={cn(
