@@ -129,9 +129,9 @@ export function RendalHomeHero() {
 
   return (
     <div className="relative z-20 bg-[#F8F1E3] px-1.5 pt-1.5 md:px-2 md:pt-2">
-      {/* Frame fino no topo/lados; raio maior só nos cantos inferiores */}
+      {/* Frame em U / capacete: topo + laterais; aberto embaixo pra conectar nos cards */}
       <section
-        className="relative min-h-[calc(100dvh-0.375rem)] overflow-hidden rounded-t-[0.75rem] rounded-b-[2.75rem] border-[0.5px] border-white/90 bg-[#1F1F1F] text-white md:min-h-[calc(100dvh-0.5rem)] md:rounded-t-[1rem] md:rounded-b-[3.5rem] lg:rounded-t-[1.25rem] lg:rounded-b-[4.5rem]"
+        className="relative min-h-[calc(100dvh-0.375rem)] overflow-hidden rounded-t-[1.25rem] border-x-[0.5px] border-t-[0.5px] border-b-0 border-white/90 bg-[#1F1F1F] text-white md:min-h-[calc(100dvh-0.5rem)] md:rounded-t-[1.75rem] lg:rounded-t-[2.25rem]"
       >
         <Image
           src={HERO_IMG}
