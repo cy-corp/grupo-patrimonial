@@ -16,6 +16,7 @@ import { siteConfigs } from "@grupo-patrimonial/site-config";
 import { cn } from "@/lib/utils";
 
 const HERO_IMG = "/wireframes/hero-preview-ceu.jpg";
+const HERO_IMG_MOBILE = "/wireframes/hero-preview-ceu-9x16.jpg";
 
 /** Nav glass + CTA desktop só quando cabe sem colidir (mesmo limiar do SiteHeader Rendal) */
 const NAV_DESKTOP = "min-[1150px]";
@@ -41,16 +42,19 @@ function CssGlass({
   className,
   children,
   borderless = false,
+  /** Capsule by default; omit / override via className when stacked */
+  radius = 999,
 }: {
   className?: string;
   children: ReactNode;
   borderless?: boolean;
+  radius?: number | string | false;
 }) {
   return (
     <div
       className={className}
       style={{
-        borderRadius: 999,
+        ...(radius === false ? {} : { borderRadius: radius }),
         background:
           "linear-gradient(135deg, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0.07) 50%, rgba(255,255,255,0.12) 100%)",
         backdropFilter: "blur(16px) saturate(150%)",
@@ -86,6 +90,7 @@ export function RendalHomeHero() {
   const [open, setOpen] = useState(false);
   const [closing, setClosing] = useState(false);
   const [menuShown, setMenuShown] = useState(false);
+  const [proof, setProof] = useState(0);
   const menuId = useId();
   const closeTimer = useRef(0);
 
@@ -129,17 +134,24 @@ export function RendalHomeHero() {
 
   return (
     <div className="relative z-20 bg-[#F8F1E3] px-1.5 pt-1.5 md:px-2 md:pt-2">
-      {/* Frame em U / capacete: topo + laterais; aberto embaixo pra conectar nos cards */}
       <section
-        className="relative min-h-[calc(100dvh-0.375rem)] overflow-hidden rounded-t-[1.25rem] border-x-[0.5px] border-t-[0.5px] border-b-0 border-white/90 bg-[#1F1F1F] text-white md:min-h-[calc(100dvh-0.5rem)] md:rounded-t-[1.75rem] lg:rounded-t-[2.25rem]"
+        className="relative min-h-[calc(100dvh-0.375rem)] overflow-hidden rounded-[1.25rem] border-[0.5px] border-white/90 bg-[#1F1F1F] text-white md:min-h-[calc(100dvh-0.5rem)] md:rounded-[1.75rem] lg:rounded-[2.25rem]"
       >
         <Image
-          src={HERO_IMG}
+          src={HERO_IMG_MOBILE}
           alt="Empreendimento Rendal com laje de lazer"
           fill
           priority
           sizes="100vw"
-          className="object-cover object-[center_28%] sm:object-center"
+          className="object-cover object-[center_42%] md:hidden"
+        />
+        <Image
+          src={HERO_IMG}
+          alt=""
+          fill
+          sizes="100vw"
+          className="hidden object-cover object-center md:block"
+          aria-hidden
         />
         <div
           className="absolute inset-0"
@@ -149,7 +161,7 @@ export function RendalHomeHero() {
           }}
         />
 
-        <div className="relative z-[2] flex min-h-[calc(100dvh-0.375rem)] flex-col px-4 pb-28 pt-4 sm:px-8 sm:pb-36 sm:pt-5 md:min-h-[calc(100dvh-0.5rem)] md:px-16 md:pb-40 md:pt-6 lg:px-24 xl:px-28">
+        <div className="relative z-[2] flex min-h-[calc(100dvh-0.375rem)] flex-col px-4 pb-10 pt-4 sm:px-8 sm:pb-12 sm:pt-5 md:min-h-[calc(100dvh-0.5rem)] md:px-16 md:pb-14 md:pt-6 lg:px-24 xl:px-28">
           <header className="relative z-20 flex min-h-11 items-center justify-between gap-3 sm:min-h-12">
             <Link
               href="/"
@@ -290,87 +302,187 @@ export function RendalHomeHero() {
             />
           )}
 
-          <div className="flex flex-1 flex-col items-center px-1 pt-8 text-center sm:px-2 sm:pt-12 md:px-4 md:pt-16 lg:pt-20">
-            <h1 className="m-0 max-w-[16ch] px-1 text-[clamp(2.35rem,8.2vw,5.75rem)] font-bold leading-[1.08] tracking-[-0.04em] [text-shadow:0_2px_40px_rgba(0,0,0,0.35)] sm:max-w-none">
-              <span className="block sm:whitespace-nowrap">
-                Casa que parece cara.
-              </span>
-              <span className="block sm:whitespace-nowrap">Preço que cabe.</span>
-            </h1>
-            <p className="mt-6 max-w-[40ch] text-pretty text-[15px] leading-[1.6] text-white/85 sm:mt-8 sm:max-w-[48ch] sm:text-[16px] md:mt-12 md:text-[17px]">
-              Valor onde se vê. Inteligência onde não se vê. Lazer na laje e
-              acabamento de presença no investimento acessível.
-            </p>
-
-            <CssGlass
-              borderless
-              className="mt-6 flex w-full max-w-[48rem] flex-col items-stretch gap-2 p-2 sm:mt-8 sm:flex-row sm:items-center sm:justify-between sm:gap-0 sm:py-2.5 sm:pl-6 sm:pr-2.5 md:mt-9"
-            >
-              <div className="flex flex-1 flex-col items-center px-3 py-1.5 text-center leading-tight text-white">
-                <div className="flex items-center justify-center gap-2">
-                  <strong className="text-[13px] font-bold md:text-[14px]">
-                    Mais valor
-                  </strong>
-                  <span
-                    className="text-[12px] tracking-widest text-[#C9A96A]"
-                    aria-hidden
-                  >
-                    ★★★★★
-                  </span>
+          <div className="flex flex-1 flex-col items-center px-1 pb-2 pt-3 text-center sm:px-2 sm:pb-0 sm:pt-12 md:px-4 md:pt-16 lg:pt-20">
+            {/* Mobile: bloco editorial nos 3/4 superiores da imagem (como o desktop) */}
+            <div className="flex w-full flex-1 flex-col items-center sm:flex-none sm:flex-initial">
+              <div className="flex w-full flex-[3] flex-col items-center justify-center gap-5 pt-0 sm:flex-none sm:justify-start sm:gap-0 sm:pt-0">
+                <div className="flex -translate-y-8 flex-col items-center sm:translate-y-0">
+                  <h1 className="m-0 max-w-[20rem] text-[clamp(1.85rem,7.2vw,5.75rem)] font-bold leading-[1.05] tracking-[-0.04em] [text-shadow:0_2px_40px_rgba(0,0,0,0.35)] sm:max-w-none sm:text-[clamp(2.35rem,8.2vw,5.75rem)] sm:leading-[1.08]">
+                    <span className="block whitespace-nowrap">
+                      Casa que parece cara.
+                    </span>
+                    <span className="block whitespace-nowrap">Preço que cabe.</span>
+                  </h1>
+                  <p className="mt-2.5 max-w-[20.5rem] text-[12.5px] leading-[1.35] text-white/85 sm:mt-8 sm:max-w-[48ch] sm:text-[16px] sm:leading-[1.6] md:mt-12 md:text-[17px]">
+                    <span className="block whitespace-nowrap sm:inline sm:whitespace-normal sm:text-pretty">
+                      Valor onde se vê. Inteligência onde não se vê.
+                    </span>{" "}
+                    <span className="block whitespace-nowrap sm:inline sm:whitespace-normal sm:text-pretty">
+                      Lazer na laje e acabamento de presença acessível.
+                    </span>
+                  </p>
                 </div>
-                <span className="mt-0.5 text-[12px] font-medium text-white/75 md:text-[13px]">
-                  mesmo investimento
-                </span>
-              </div>
-              <div
-                className="hidden h-8 w-px shrink-0 bg-white/30 sm:block"
-                aria-hidden
-              />
-              <div className="flex flex-1 flex-col items-center px-3 py-1.5 text-center leading-tight text-white">
-                <strong className="text-[13px] font-bold md:text-[14px]">
-                  Classes B e C
-                </strong>
-                <span className="mt-0.5 text-[12px] font-medium text-white/75 md:text-[13px]">
-                  produto com presença
-                </span>
-              </div>
-              <div
-                className="hidden h-8 w-px shrink-0 bg-white/30 sm:block"
-                aria-hidden
-              />
-              <div className="flex flex-1 items-center justify-center px-2 py-1 sm:pl-4 sm:pr-3">
-                <Link
-                  href="/empreendimentos"
-                  className={cn(
-                    PETROL_METAL,
-                    "w-full cursor-pointer sm:w-auto sm:px-5",
-                  )}
+
+                <CssGlass
+                  borderless
+                  radius={false}
+                  className="mt-0 translate-y-3 flex w-full max-w-[20rem] flex-col items-stretch gap-1.5 rounded-[1.25rem] p-1.5 sm:mt-8 sm:translate-y-0 sm:max-w-[48rem] sm:flex-row sm:items-center sm:justify-between sm:gap-0 sm:rounded-full sm:p-0 sm:py-2.5 sm:pl-6 sm:pr-2.5 md:mt-9"
                 >
-                  Ver empreendimentos
-                  <span aria-hidden>→</span>
-                </Link>
+                  <div className="grid grid-cols-2 gap-0 sm:contents">
+                    <div className="flex flex-col items-center justify-center px-2 py-1.5 text-center leading-[1.25] text-white sm:flex-1 sm:px-3">
+                      <strong className="text-[12px] font-bold whitespace-nowrap sm:text-[13px] md:text-[14px]">
+                        Mais valor{" "}
+                        <span
+                          className="text-[10px] font-normal tracking-widest text-[#C9A96A] sm:text-[12px]"
+                          aria-hidden
+                        >
+                          ★★★★★
+                        </span>
+                      </strong>
+                      <span className="mt-0.5 text-[11px] font-medium whitespace-nowrap text-white/75 sm:text-[12px] md:text-[13px]">
+                        mesmo investimento
+                      </span>
+                    </div>
+                    <div
+                      className="hidden h-8 w-px shrink-0 self-center bg-white/30 sm:block"
+                      aria-hidden
+                    />
+                    <div className="flex flex-col items-center justify-center border-l border-white/20 px-2 py-1.5 text-center leading-[1.25] text-white sm:flex-1 sm:border-l-0 sm:px-3">
+                      <strong className="text-[12px] font-bold whitespace-nowrap sm:text-[13px] md:text-[14px]">
+                        Classes B e C
+                      </strong>
+                      <span className="mt-0.5 text-[11px] font-medium whitespace-nowrap text-white/75 sm:text-[12px] md:text-[13px]">
+                        produto com presença
+                      </span>
+                    </div>
+                  </div>
+                  <div
+                    className="hidden h-8 w-px shrink-0 bg-white/30 sm:block"
+                    aria-hidden
+                  />
+                  <div className="flex items-center justify-center px-0.5 sm:flex-1 sm:pl-4 sm:pr-3">
+                    <Link
+                      href="/empreendimentos"
+                      className={cn(
+                        PETROL_METAL,
+                        "h-10 w-full cursor-pointer text-[12px] sm:h-12 sm:w-auto sm:px-5 sm:text-[14px]",
+                      )}
+                    >
+                      Ver empreendimentos
+                      <span aria-hidden>→</span>
+                    </Link>
+                  </div>
+                </CssGlass>
               </div>
-            </CssGlass>
+              {/* 1/4 inferior livre pra laje / overlap dos cards */}
+              <div className="min-h-0 flex-1 sm:hidden" aria-hidden />
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Cards em fluxo — cruzam a borda inferior do frame */}
-      <div className="relative z-10 -mt-12 px-1 sm:-mt-16 md:-mt-[4.5rem] md:px-2">
-        <div className="mx-auto grid max-w-[1120px] gap-3 md:grid-cols-3 md:gap-5">
-          {PROOFS.map((card) => (
-            <article
-              key={card.title}
-              className="rounded-[22px] border border-black/[0.04] bg-white px-5 py-7 text-center shadow-[0_18px_44px_rgba(0,0,0,0.16)] sm:px-6 sm:py-8 md:px-7 md:py-9"
+      {/* Provas — mobile: deck empilhado sobrepondo a hero; desktop: grid */}
+      <div className="relative z-10 -mt-12 px-3 pb-1 sm:-mt-14 sm:px-4 md:-mt-[4.5rem] md:px-2 md:pb-0">
+        <div className="mx-auto max-w-[1120px]">
+          {/* Mobile deck */}
+          <div className="md:hidden">
+            <div
+              className="relative mx-auto h-[13.5rem] w-full max-w-[21rem]"
+              aria-roledescription="carousel"
+              aria-label="Diferenciais do produto"
             >
-              <h2 className="m-0 text-[16px] font-bold tracking-[-0.02em] text-[#1F1F1F] md:text-[18px]">
-                {card.title}
-              </h2>
-              <p className="mt-2.5 m-0 text-[13px] leading-relaxed text-[#4D4D4D] md:mt-3 md:text-[14px]">
-                {card.body}
-              </p>
-            </article>
-          ))}
+              {PROOFS.map((card, i) => {
+                const depth =
+                  (i - proof + PROOFS.length) % PROOFS.length;
+                const isFront = depth === 0;
+                const y = isFront ? 52 : depth === 1 ? 26 : 0;
+                return (
+                  <article
+                    key={card.title}
+                    role="group"
+                    aria-roledescription="slide"
+                    aria-label={`${i + 1} de ${PROOFS.length}`}
+                    aria-hidden={!isFront}
+                    tabIndex={isFront ? 0 : -1}
+                    onClick={() =>
+                      setProof(isFront ? (proof + 1) % PROOFS.length : i)
+                    }
+                    onKeyDown={(event) => {
+                      if (event.key !== "Enter" && event.key !== " ") return;
+                      event.preventDefault();
+                      setProof(isFront ? (proof + 1) % PROOFS.length : i);
+                    }}
+                    className={cn(
+                      "absolute inset-x-0 cursor-pointer rounded-[1.35rem] border border-black/[0.05] bg-white px-5 shadow-[0_18px_44px_rgba(15,20,25,0.18)] transition-[transform,opacity] duration-300 ease-[var(--ease-smooth-out)]",
+                      isFront ? "py-5" : "overflow-hidden py-3.5",
+                    )}
+                    style={{
+                      zIndex: PROOFS.length - depth,
+                      transform: `translateY(${y}px) scale(${1 - depth * 0.045})`,
+                      transformOrigin: "top center",
+                      opacity: depth === 2 ? 0.88 : 1,
+                    }}
+                  >
+                    <div className="flex items-baseline justify-between gap-3">
+                      <h2 className="m-0 text-[15px] font-bold tracking-[-0.02em] text-[#1F1F1F]">
+                        {card.title}
+                      </h2>
+                      {!isFront && (
+                        <span
+                          className="shrink-0 text-[11px] font-medium text-[#0F5B63]/70"
+                          aria-hidden
+                        >
+                          ···
+                        </span>
+                      )}
+                    </div>
+                    {isFront && (
+                      <p className="mt-2 m-0 text-[13px] leading-relaxed text-[#4D4D4D]">
+                        {card.body}
+                      </p>
+                    )}
+                  </article>
+                );
+              })}
+            </div>
+            <div
+              className="mt-3 flex items-center justify-center gap-1.5"
+              aria-hidden
+            >
+              {PROOFS.map((card, i) => (
+                <button
+                  key={card.title}
+                  type="button"
+                  tabIndex={-1}
+                  aria-label={card.title}
+                  onClick={() => setProof(i)}
+                  className={cn(
+                    "h-1 rounded-full transition-[width,background-color] duration-300 ease-[var(--ease-smooth-out)]",
+                    i === proof
+                      ? "w-5 bg-[#0F5B63]"
+                      : "w-1.5 bg-[#1F1F1F]/2",
+                  )}
+                />
+              ))}
+            </div>
+          </div>
+
+          {/* Desktop grid */}
+          <div className="hidden gap-5 md:grid md:grid-cols-3">
+            {PROOFS.map((card) => (
+              <article
+                key={card.title}
+                className="rounded-[22px] border border-black/[0.04] bg-white px-7 py-9 text-center shadow-[0_18px_44px_rgba(0,0,0,0.16)]"
+              >
+                <h2 className="m-0 text-[18px] font-bold tracking-[-0.02em] text-[#1F1F1F]">
+                  {card.title}
+                </h2>
+                <p className="mt-3 m-0 text-[14px] leading-relaxed text-[#4D4D4D]">
+                  {card.body}
+                </p>
+              </article>
+            ))}
+          </div>
         </div>
       </div>
     </div>

@@ -185,7 +185,7 @@ export function RendalMorphScroll() {
             </div>
 
             <div
-              className="relative mx-auto aspect-square w-full max-w-[min(100%,420px)] overflow-hidden rounded-[1.15rem] border border-graphite/10 bg-[#EDE6DA] sm:max-w-[min(100%,480px)] md:aspect-[16/9] md:max-w-none md:rounded-[1.5rem]"
+              className="relative mx-auto aspect-video w-full overflow-hidden rounded-[1.15rem] border border-graphite/10 bg-[#EDE6DA] md:rounded-[1.5rem]"
               style={{ opacity: ready || reduceMotion ? 1 : 0.55 }}
             >
               {!reduceMotion && (
@@ -197,7 +197,7 @@ export function RendalMorphScroll() {
                       fill
                       priority
                       sizes="(max-width: 768px) 100vw, 1100px"
-                      className="object-cover object-[center_58%] md:object-center"
+                      className="object-contain object-center"
                       draggable={false}
                     />
                   </div>
@@ -208,7 +208,7 @@ export function RendalMorphScroll() {
                         alt=""
                         fill
                         sizes="(max-width: 768px) 100vw, 1100px"
-                        className="object-cover object-[center_58%] md:object-center"
+                        className="object-contain object-center"
                         draggable={false}
                       />
                     </div>
@@ -224,7 +224,7 @@ export function RendalMorphScroll() {
                     fill
                     priority
                     sizes="(max-width: 768px) 100vw, 1100px"
-                    className="object-cover object-[center_58%] md:object-center"
+                    className="object-contain object-center"
                     draggable={false}
                   />
                 </div>
