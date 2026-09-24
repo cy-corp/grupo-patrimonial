@@ -49,8 +49,8 @@ const FRAMES = [
 ] as const;
 
 const LAST = FRAMES.length - 1;
-/** Hold curto no frame final — evita sensação de scroll “preso” */
-const HOLD_END = 0.09;
+/** Hold no frame final antes de liberar o pin */
+const HOLD_END = 0.12;
 
 function mapFrameExact(t: number) {
   const clamped = Math.min(1, Math.max(0, t));
@@ -75,6 +75,7 @@ export function RendalMorphScroll() {
 
   const { scrollYProgress } = useScroll({
     target: trackRef,
+    // Progress only while the pin is active (section fills the viewport).
     offset: ["start start", "end end"],
   });
 
@@ -134,8 +135,9 @@ export function RendalMorphScroll() {
       ref={trackRef}
       className={
         reduceMotion
-          ? "relative z-0 bg-transparent pt-20 md:pt-28"
-          : "relative z-0 h-[270vh] bg-transparent pt-20 md:h-[320vh] md:pt-28"
+          ? "relative z-0 bg-transparent pt-10 md:pt-28"
+          : // Tall track = pin stays mid-screen while scroll only advances frames; unlocks after last.
+            "relative z-0 h-[300vh] bg-transparent pt-10 md:h-[320vh] md:pt-28"
       }
       aria-label="Do croqui ao produto Rendal"
     >
@@ -146,7 +148,7 @@ export function RendalMorphScroll() {
             : "sticky top-0 flex min-h-dvh flex-col justify-center"
         }
       >
-        <div className="flex w-full flex-col px-3 pb-6 pt-4 sm:px-5 sm:pb-8 sm:pt-6 md:px-8 md:pt-8 lg:px-10">
+        <div className="flex w-full flex-col px-3 py-4 sm:px-5 sm:pb-8 sm:pt-6 md:px-8 md:pt-8 lg:px-10">
           <div className="mx-auto w-full max-w-[1100px] rounded-[1.75rem] border border-white/80 bg-[#FBFCFC] px-4 pb-5 pt-5 shadow-[0_18px_50px_rgba(31,31,31,0.08)] sm:px-6 sm:pb-6 sm:pt-6 md:rounded-[2.25rem] md:px-8 md:pb-7 md:pt-7">
             <div className="mb-4 flex items-end justify-between gap-4 md:mb-5">
               <div className="min-w-0">

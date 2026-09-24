@@ -4,6 +4,14 @@ import Image from "next/image";
 import Link from "next/link";
 import { Menu, X } from "lucide-react";
 import {
+  motion,
+  useReducedMotion,
+  useScroll,
+  useSpring,
+  useTransform,
+  type MotionValue,
+} from "framer-motion";
+import {
   useCallback,
   useEffect,
   useId,
@@ -85,12 +93,109 @@ const PROOFS = [
   },
 ] as const;
 
+const CARD_H = 108;
+const CARD_GAP = 18;
+
+/** Slide-up empilhado, scrub suavizado com spring (mesmo padrão do morph Rendal). */
+function ProofSlideTile({
+  card,
+  index,
+  progress,
+  reduceMotion,
+}: {
+  card: (typeof PROOFS)[number];
+  index: number;
+  progress: MotionValue<number>;
+  reduceMotion: boolean | null;
+}) {
+  const start = index === 0 ? 0 : 0.08 + (index - 1) * 0.4;
+  const end = index === 0 ? 0 : start + 0.4;
+
+  const opacity = useTransform(
+    progress,
+    index === 0 ? [0, 1] : [start, start + 0.2, end],
+    index === 0 || reduceMotion ? [1, 1] : [0, 1, 1],
+  );
+  const y = useTransform(progress, (p) => {
+    if (reduceMotion) return index * (CARD_H + CARD_GAP);
+    if (index === 0) return 0;
+    let offset = 0;
+    for (let j = 1; j <= index; j += 1) {
+      const s = 0.08 + (j - 1) * 0.4;
+      const e = s + 0.4;
+      const t = Math.min(1, Math.max(0, (p - s) / (e - s)));
+      // smoothstep
+      const soft = t * t * (3 - 2 * t);
+      offset += soft * (CARD_H + CARD_GAP);
+    }
+    return offset;
+  });
+
+  return (
+    <motion.article
+      style={{
+        y: reduceMotion ? index * (CARD_H + CARD_GAP) : y,
+        opacity: reduceMotion ? 1 : opacity,
+        zIndex: index + 1,
+      }}
+      className="absolute inset-x-0 top-0 rounded-[1.35rem] border border-black/[0.05] bg-white px-5 py-5 shadow-[0_18px_44px_rgba(15,20,25,0.14)]"
+    >
+      <h2 className="m-0 text-[15px] font-bold tracking-[-0.02em] text-[#1F1F1F]">
+        {card.title}
+      </h2>
+      <p className="mt-2 m-0 text-[13px] leading-relaxed text-[#4D4D4D]">
+        {card.body}
+      </p>
+    </motion.article>
+  );
+}
+
+function ProofSlideStack() {
+  const reduceMotion = useReducedMotion();
+  const stackRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: stackRef,
+    offset: ["start end", "start center"],
+  });
+  // Spring = mesmo recurso do morph / framer da DCorp-Rendal — mata o tranco do scrub cru
+  const smooth = useSpring(scrollYProgress, {
+    stiffness: 70,
+    damping: 28,
+    mass: 0.45,
+    restDelta: 0.001,
+  });
+
+  const stackH = CARD_H * PROOFS.length + CARD_GAP * (PROOFS.length - 1);
+
+  return (
+    <div
+      ref={stackRef}
+      className="relative z-10 -mt-14 px-3 pb-8 sm:-mt-16 sm:px-4 md:hidden"
+      aria-label="Diferenciais do produto"
+    >
+      <div
+        className="relative mx-auto w-full max-w-[21rem]"
+        style={{ height: stackH }}
+      >
+        {PROOFS.map((card, i) => (
+          <ProofSlideTile
+            key={card.title}
+            card={card}
+            index={i}
+            progress={reduceMotion ? scrollYProgress : smooth}
+            reduceMotion={reduceMotion}
+          />
+        ))}
+      </div>
+    </div>
+  );
+}
+
 export function RendalHomeHero() {
   const config = siteConfigs.rendal;
   const [open, setOpen] = useState(false);
   const [closing, setClosing] = useState(false);
   const [menuShown, setMenuShown] = useState(false);
-  const [proof, setProof] = useState(0);
   const menuId = useId();
   const closeTimer = useRef(0);
 
@@ -381,108 +486,23 @@ export function RendalHomeHero() {
         </div>
       </section>
 
-      {/* Provas — mobile: deck empilhado sobrepondo a hero; desktop: grid */}
-      <div className="relative z-10 -mt-12 px-3 pb-1 sm:-mt-14 sm:px-4 md:-mt-[4.5rem] md:px-2 md:pb-0">
-        <div className="mx-auto max-w-[1120px]">
-          {/* Mobile deck */}
-          <div className="md:hidden">
-            <div
-              className="relative mx-auto h-[13.5rem] w-full max-w-[21rem]"
-              aria-roledescription="carousel"
-              aria-label="Diferenciais do produto"
+      {/* Provas — mobile: slide-up curto perto da hero; desktop: grid */}
+      <ProofSlideStack />
+      <div className="relative z-10 -mt-[4.5rem] hidden px-2 md:block">
+        <div className="mx-auto grid max-w-[1120px] grid-cols-3 gap-5">
+          {PROOFS.map((card) => (
+            <article
+              key={card.title}
+              className="rounded-[22px] border border-black/[0.04] bg-white px-7 py-9 text-center shadow-[0_18px_44px_rgba(0,0,0,0.16)]"
             >
-              {PROOFS.map((card, i) => {
-                const depth =
-                  (i - proof + PROOFS.length) % PROOFS.length;
-                const isFront = depth === 0;
-                const y = isFront ? 52 : depth === 1 ? 26 : 0;
-                return (
-                  <article
-                    key={card.title}
-                    role="group"
-                    aria-roledescription="slide"
-                    aria-label={`${i + 1} de ${PROOFS.length}`}
-                    aria-hidden={!isFront}
-                    tabIndex={isFront ? 0 : -1}
-                    onClick={() =>
-                      setProof(isFront ? (proof + 1) % PROOFS.length : i)
-                    }
-                    onKeyDown={(event) => {
-                      if (event.key !== "Enter" && event.key !== " ") return;
-                      event.preventDefault();
-                      setProof(isFront ? (proof + 1) % PROOFS.length : i);
-                    }}
-                    className={cn(
-                      "absolute inset-x-0 cursor-pointer rounded-[1.35rem] border border-black/[0.05] bg-white px-5 shadow-[0_18px_44px_rgba(15,20,25,0.18)] transition-[transform,opacity] duration-300 ease-[var(--ease-smooth-out)]",
-                      isFront ? "py-5" : "overflow-hidden py-3.5",
-                    )}
-                    style={{
-                      zIndex: PROOFS.length - depth,
-                      transform: `translateY(${y}px) scale(${1 - depth * 0.045})`,
-                      transformOrigin: "top center",
-                      opacity: depth === 2 ? 0.88 : 1,
-                    }}
-                  >
-                    <div className="flex items-baseline justify-between gap-3">
-                      <h2 className="m-0 text-[15px] font-bold tracking-[-0.02em] text-[#1F1F1F]">
-                        {card.title}
-                      </h2>
-                      {!isFront && (
-                        <span
-                          className="shrink-0 text-[11px] font-medium text-[#0F5B63]/70"
-                          aria-hidden
-                        >
-                          ···
-                        </span>
-                      )}
-                    </div>
-                    {isFront && (
-                      <p className="mt-2 m-0 text-[13px] leading-relaxed text-[#4D4D4D]">
-                        {card.body}
-                      </p>
-                    )}
-                  </article>
-                );
-              })}
-            </div>
-            <div
-              className="mt-3 flex items-center justify-center gap-1.5"
-              aria-hidden
-            >
-              {PROOFS.map((card, i) => (
-                <button
-                  key={card.title}
-                  type="button"
-                  tabIndex={-1}
-                  aria-label={card.title}
-                  onClick={() => setProof(i)}
-                  className={cn(
-                    "h-1 rounded-full transition-[width,background-color] duration-300 ease-[var(--ease-smooth-out)]",
-                    i === proof
-                      ? "w-5 bg-[#0F5B63]"
-                      : "w-1.5 bg-[#1F1F1F]/2",
-                  )}
-                />
-              ))}
-            </div>
-          </div>
-
-          {/* Desktop grid */}
-          <div className="hidden gap-5 md:grid md:grid-cols-3">
-            {PROOFS.map((card) => (
-              <article
-                key={card.title}
-                className="rounded-[22px] border border-black/[0.04] bg-white px-7 py-9 text-center shadow-[0_18px_44px_rgba(0,0,0,0.16)]"
-              >
-                <h2 className="m-0 text-[18px] font-bold tracking-[-0.02em] text-[#1F1F1F]">
-                  {card.title}
-                </h2>
-                <p className="mt-3 m-0 text-[14px] leading-relaxed text-[#4D4D4D]">
-                  {card.body}
-                </p>
-              </article>
-            ))}
-          </div>
+              <h2 className="m-0 text-[18px] font-bold tracking-[-0.02em] text-[#1F1F1F]">
+                {card.title}
+              </h2>
+              <p className="mt-3 m-0 text-[14px] leading-relaxed text-[#4D4D4D]">
+                {card.body}
+              </p>
+            </article>
+          ))}
         </div>
       </div>
     </div>
