@@ -308,7 +308,7 @@ export function RendalMorphScroll() {
           </div>
         )}
 
-        <div className="relative z-0 flex w-full translate-y-12 flex-col px-3 py-4 sm:px-5 sm:pb-8 sm:pt-6 md:translate-y-0 md:px-8 md:pt-8 lg:px-10">
+        <div className="relative z-0 flex w-full translate-y-16 flex-col px-3 py-4 sm:px-5 sm:pb-8 sm:pt-6 md:translate-y-0 md:px-8 md:pt-8 lg:px-10">
           <div
             ref={cardRef}
             className="mx-auto w-full max-w-[1100px] rounded-[1.75rem] border border-white/80 bg-[#FBFCFC] px-4 pb-5 pt-5 shadow-[0_18px_50px_rgba(31,31,31,0.08)] sm:px-6 sm:pb-6 sm:pt-6 md:rounded-[2.25rem] md:px-8 md:pb-7 md:pt-7"
