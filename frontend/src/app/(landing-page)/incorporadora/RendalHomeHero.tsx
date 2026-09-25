@@ -119,7 +119,7 @@ export function RendalHomeHero() {
   return (
     <div className="relative z-20 bg-[#F8F1E3] px-1.5 pt-1.5 md:px-2 md:pt-2">
       <section
-        className="relative min-h-[calc(100dvh-0.375rem)] overflow-hidden rounded-[1.25rem] border-[0.5px] border-white/90 bg-[#1F1F1F] text-white md:min-h-[calc(100dvh-0.5rem)] md:rounded-[1.75rem] lg:rounded-[2.25rem]"
+        className="relative min-h-[calc(100svh-0.375rem)] overflow-hidden rounded-[1.25rem] border-[0.5px] border-white/90 bg-[#1F1F1F] text-white md:min-h-[calc(100dvh-0.5rem)] md:rounded-[1.75rem] lg:rounded-[2.25rem]"
       >
         <Image
           src={HERO_IMG_MOBILE}
@@ -145,20 +145,24 @@ export function RendalHomeHero() {
           }}
         />
 
-        <div className="relative z-[2] flex min-h-[calc(100dvh-0.375rem)] flex-col px-4 pb-10 pt-4 sm:px-8 sm:pb-12 sm:pt-5 md:min-h-[calc(100dvh-0.5rem)] md:px-16 md:pb-14 md:pt-6 lg:px-24 xl:px-28">
+        <div className="relative z-[2] flex min-h-[calc(100svh-0.375rem)] flex-col px-4 pb-10 pt-4 sm:px-8 sm:pb-12 sm:pt-5 md:min-h-[calc(100dvh-0.5rem)] md:px-16 md:pb-14 md:pt-6 lg:px-24 xl:px-28">
           <header className="relative z-20 flex min-h-11 items-center justify-between gap-3 sm:min-h-12">
             <Link
               href="/"
               aria-label="Grupo Rendal - início"
-              className="relative z-[1] flex h-16 w-[7.5rem] shrink-0 items-center justify-center rounded-full border border-white/10 bg-white/[0.08] p-1.5 shadow-[inset_0_0.5px_0_rgba(255,255,255,0.28),0_8px_24px_rgba(0,0,0,0.08)] backdrop-blur-md transition-[background-color,transform] duration-[var(--duration-quick)] ease-[var(--ease-smooth-out)] hover:bg-white/15 active:scale-[0.96] sm:h-[4.5rem] sm:w-[8.5rem] sm:border-white/20 sm:p-2 sm:shadow-[inset_0_0.5px_0_rgba(255,255,255,0.45),0_8px_24px_rgba(0,0,0,0.14)]"
+              className="relative z-[1] isolate flex h-16 w-[7.5rem] shrink-0 items-center justify-center overflow-hidden rounded-full bg-white/10 shadow-[0_10px_28px_rgba(0,0,0,0.12)] [transform:translateZ(0)] active:scale-[0.96] sm:h-[4.5rem] sm:w-[8.5rem]"
             >
+              <span
+                aria-hidden
+                className="pointer-events-none absolute inset-0 bg-white/10 backdrop-blur-md"
+              />
               <Image
                 src="/brands/rendal-logo-sem-subtitulo.png"
                 alt="Grupo Rendal"
                 width={1016}
                 height={813}
                 priority
-                className="h-full w-full object-contain object-center"
+                className="relative z-[1] h-[86%] w-[86%] object-contain object-center"
               />
             </Link>
 

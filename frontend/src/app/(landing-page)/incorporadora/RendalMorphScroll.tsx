@@ -264,7 +264,7 @@ export function RendalMorphScroll() {
           reduceMotion
             ? "relative flex flex-col"
             : // Morph sempre no meio; cards mobile absolutos no topo do pin
-              "pointer-events-auto sticky top-0 flex min-h-dvh flex-col justify-center"
+              "pointer-events-auto sticky top-0 flex min-h-svh flex-col justify-center md:min-h-dvh"
         }
       >
         {/* Mobile: 3 cards entram no scroll e ficam no topo enquanto o morph trava no meio */}
