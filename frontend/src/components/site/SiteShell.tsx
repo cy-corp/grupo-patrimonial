@@ -74,18 +74,31 @@ export function SiteShell({
                 Política de Privacidade
               </Link>
             </div>
-          ) : null}
+          ) : (
+            <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-6">
+              <Link
+                href="/politica-de-privacidade"
+                className="text-graphite/65 transition-colors hover:text-graphite"
+              >
+                Política de Privacidade
+              </Link>
+              <Link
+                href={company.contactHref}
+                className="font-semibold text-primary"
+              >
+                Entrar em contato
+              </Link>
+            </div>
+          )}
 
-          <Link
-            href={company.contactHref}
-            className={
-              isDcorp
-                ? "font-semibold text-[#C9A96A] transition-colors duration-[var(--duration-quick)] ease-[var(--ease-smooth-out)] hover:text-white"
-                : "font-semibold text-primary"
-            }
-          >
-            Entrar em contato
-          </Link>
+          {isDcorp ? (
+            <Link
+              href={company.contactHref}
+              className="font-semibold text-[#C9A96A] transition-colors duration-[var(--duration-quick)] ease-[var(--ease-smooth-out)] hover:text-white"
+            >
+              Entrar em contato
+            </Link>
+          ) : null}
         </div>
       </footer>
 

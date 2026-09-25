@@ -1,33 +1,27 @@
 import type { Metadata } from "next";
-import { Allura, Montserrat } from "next/font/google";
+import { Manrope } from "next/font/google";
 import "./globals.css";
 
-const montserrat = Montserrat({
+const manrope = Manrope({
   variable: "--font-montserrat",
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700", "800"],
-});
-
-const allura = Allura({
-  variable: "--font-allura",
-  subsets: ["latin"],
-  weight: "400",
+  weight: ["400", "500", "600", "700"],
 });
 
 export const metadata: Metadata = {
   title: {
     default: "Rendal Incorporadora",
-    template: "%s | Rendal Incorporadora",
+    template: "%s | Rendal",
   },
   description:
-    "A Rendal identifica oportunidades, estrutura negócios e desenvolve empreendimentos imobiliários.",
+    "Casas Rendal para classes B e C: laje de lazer, lavabo social e acabamento onde se vê. Mais casa no mesmo investimento.",
   openGraph: {
     type: "website",
     locale: "pt_BR",
     siteName: "Rendal Incorporadora",
-    title: "Rendal Incorporadora",
+    title: "Casa com presença no preço que cabe | Rendal",
     description:
-      "Desenvolvimento imobiliário com visão de mercado, segurança e geração de valor.",
+      "Lazer na laje e acabamento onde o olho chega. Veja empreendimentos e agende visita sem compromisso.",
   },
 };
 
@@ -36,7 +30,7 @@ export default function RendalLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="pt-BR">
-      <body className={`${montserrat.variable} ${allura.variable} font-sans antialiased`}>
+      <body className={`${manrope.variable} font-sans antialiased`}>
         {children}
       </body>
     </html>

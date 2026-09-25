@@ -18,3 +18,23 @@ html {
 ::-webkit-scrollbar-thumb:hover {
   background: linear-gradient(180deg, #22a0ab 0%, #14707a 55%, #0f5b63 100%);
 }
+
+@keyframes rendal-scroll-cue {
+  0%,
+  100% {
+    transform: translateY(-1.5px);
+  }
+  50% {
+    transform: translateY(1.5px);
+  }
+}
+
+.rendal-scroll-cue {
+  animation: rendal-scroll-cue 2.8s cubic-bezier(0.37, 0, 0.63, 1) infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rendal-scroll-cue {
+    animation: none;
+  }
+}

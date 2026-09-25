@@ -9,7 +9,6 @@ import {
   useScroll,
   useSpring,
   useTransform,
-  type MotionValue,
 } from "framer-motion";
 
 const FRAMES = [
@@ -31,7 +30,7 @@ const FRAMES = [
   {
     src: "/morph/frame-04.jpg",
     label: "Presença na rua",
-    sub: "Volume e sombra — o que o cliente sente de fora.",
+    sub: "Volume e sombra: o que o cliente sente de fora.",
   },
   {
     src: "/morph/frame-05.jpg",
@@ -50,26 +49,10 @@ const FRAMES = [
   },
 ] as const;
 
-const PROOFS = [
-  {
-    title: "Laje de lazer",
-    body: "Em vez de telhado que só gasta, a cobertura vira área de estar.",
-  },
-  {
-    title: "Lavabo social",
-    body: "Visitante se atende sem entrar na área íntima da casa.",
-  },
-  {
-    title: "Acabamento que se vê",
-    body: "Alto padrão no olho. Racionalização só no que não aparece.",
-  },
-] as const;
-
-const CARD_H = 76;
-const CARD_GAP = 8;
 const LAST = FRAMES.length - 1;
 /** Hold no frame final antes de liberar o pin */
 const HOLD_END = 0.12;
+
 function mapFrameExact(t: number) {
   const clamped = Math.min(1, Math.max(0, t));
   if (clamped >= 1 - HOLD_END) return LAST;
@@ -81,57 +64,6 @@ function mapStepper(t: number) {
   const end = 1 - HOLD_END;
   if (clamped >= end) return 1;
   return clamped / end;
-}
-
-function ProofSlideTile({
-  card,
-  index,
-  progress,
-  reduceMotion,
-}: {
-  card: (typeof PROOFS)[number];
-  index: number;
-  progress: MotionValue<number>;
-  reduceMotion: boolean | null;
-}) {
-  const start = index === 0 ? 0 : 0.08 + (index - 1) * 0.4;
-
-  const opacity = useTransform(progress, (p) => {
-    if (index === 0 || reduceMotion) return 1;
-    const t = Math.min(1, Math.max(0, (p - start) / 0.2));
-    return t * t * (3 - 2 * t);
-  });
-  const y = useTransform(progress, (p) => {
-    if (reduceMotion) return index * (CARD_H + CARD_GAP);
-    if (index === 0) return 0;
-    let offset = 0;
-    for (let j = 1; j <= index; j += 1) {
-      const s = 0.08 + (j - 1) * 0.4;
-      const e = s + 0.4;
-      const t = Math.min(1, Math.max(0, (p - s) / (e - s)));
-      const soft = t * t * (3 - 2 * t);
-      offset += soft * (CARD_H + CARD_GAP);
-    }
-    return offset;
-  });
-
-  return (
-    <motion.article
-      style={{
-        y: reduceMotion ? index * (CARD_H + CARD_GAP) : y,
-        opacity: reduceMotion ? 1 : opacity,
-        zIndex: index + 1,
-      }}
-      className="absolute inset-x-0 top-0 rounded-[1.15rem] border border-black/[0.05] bg-white px-3.5 py-2.5 shadow-[0_10px_28px_rgba(15,20,25,0.12)]"
-    >
-      <h2 className="m-0 text-[13px] font-bold tracking-[-0.02em] text-[#1F1F1F]">
-        {card.title}
-      </h2>
-      <p className="mt-0.5 m-0 text-[12px] leading-snug text-[#4D4D4D]">
-        {card.body}
-      </p>
-    </motion.article>
-  );
 }
 
 export function RendalMorphScroll() {
@@ -147,7 +79,6 @@ export function RendalMorphScroll() {
     offset: ["start start", "end end"],
   });
 
-  // Spring curto: o frame acompanha o scroll em vez de atrasar
   const smooth = useSpring(scrollYProgress, {
     stiffness: 280,
     damping: 40,
@@ -155,7 +86,6 @@ export function RendalMorphScroll() {
     restDelta: 0.0001,
   });
 
-  // Primeira imagem sobe pra dentro do quadro quando o frame entra na tela
   const { scrollYProgress: arrive } = useScroll({
     target: frameRef,
     offset: ["start 1", "start 0.72"],
@@ -163,19 +93,6 @@ export function RendalMorphScroll() {
   const pageY = useTransform(arrive, [0, 1], ["78%", "0%"]);
   const pageOpacity = useTransform(arrive, [0, 0.2, 1], [0, 0.65, 1]);
 
-  // Cards começam a abrir antes do pin e terminam logo que ele engata
-  const { scrollYProgress: proofRaw } = useScroll({
-    target: trackRef,
-    offset: ["start 0.85", "start 0.05"],
-  });
-  const proofProgress = useSpring(proofRaw, {
-    stiffness: 220,
-    damping: 52,
-    mass: 0.14,
-    restDelta: 0.001,
-  });
-
-  // Espaço vazio abaixo do card pinado; a próxima seção sobe até sobrar só o respiro
   const stickyRef = useRef<HTMLDivElement>(null);
   const cardRef = useRef<HTMLDivElement>(null);
   const [trail, setTrail] = useState(0);
@@ -245,15 +162,14 @@ export function RendalMorphScroll() {
   const soft = blend * blend * (3 - 2 * blend);
   const stageIndex = Math.min(LAST, Math.round(exact));
   const stage = FRAMES[stageIndex] ?? FRAMES[0];
-  const stackH = CARD_H * PROOFS.length + CARD_GAP * (PROOFS.length - 1);
 
   return (
     <section
       ref={trackRef}
       className={
         reduceMotion
-          ? "relative z-0 bg-transparent pt-10 md:pt-28"
-          : "pointer-events-none relative z-0 h-[230vh] bg-transparent md:h-[250vh] md:pt-16"
+          ? "relative z-0 bg-transparent pt-10 md:pt-16"
+          : "pointer-events-none relative z-0 h-[230vh] bg-transparent md:h-[250vh] md:pt-8"
       }
       style={reduceMotion ? undefined : { marginBottom: -trail }}
       aria-label="Do croqui ao produto Rendal"
@@ -263,59 +179,17 @@ export function RendalMorphScroll() {
         className={
           reduceMotion
             ? "relative flex flex-col"
-            : // Morph sempre no meio; cards mobile absolutos no topo do pin
-              "pointer-events-auto sticky top-0 flex min-h-svh flex-col justify-center md:min-h-dvh"
+            : "pointer-events-auto sticky top-0 flex min-h-svh flex-col justify-center md:min-h-dvh"
         }
       >
-        {/* Mobile: 3 cards entram no scroll e ficam no topo enquanto o morph trava no meio */}
-        {!reduceMotion && (
-          <div className="pointer-events-none absolute inset-x-0 top-2 z-20 px-3 sm:px-4 md:hidden">
-            <div
-              className="pointer-events-auto relative mx-auto w-full max-w-[21rem]"
-              style={{ height: stackH }}
-              aria-label="Diferenciais do produto"
-            >
-              {PROOFS.map((card, i) => (
-                <ProofSlideTile
-                  key={card.title}
-                  card={card}
-                  index={i}
-                  progress={proofProgress}
-                  reduceMotion={reduceMotion}
-                />
-              ))}
-            </div>
-          </div>
-        )}
-
-        {reduceMotion && (
-          <div className="relative z-10 mb-6 px-3 md:hidden">
-            <div className="mx-auto flex max-w-[21rem] flex-col gap-3">
-              {PROOFS.map((card) => (
-                <article
-                  key={card.title}
-                  className="rounded-[1.25rem] border border-black/[0.05] bg-white px-4 py-4 shadow-[0_14px_36px_rgba(15,20,25,0.14)]"
-                >
-                  <h2 className="m-0 text-[14px] font-bold tracking-[-0.02em] text-[#1F1F1F]">
-                    {card.title}
-                  </h2>
-                  <p className="mt-1.5 m-0 text-[12.5px] leading-relaxed text-[#4D4D4D]">
-                    {card.body}
-                  </p>
-                </article>
-              ))}
-            </div>
-          </div>
-        )}
-
-        <div className="relative z-0 flex w-full translate-y-16 flex-col px-3 py-4 sm:px-5 sm:pb-8 sm:pt-6 md:translate-y-0 md:px-8 md:pt-8 lg:px-10">
+        <div className="relative z-0 flex w-full flex-col px-3 py-4 sm:px-5 sm:pb-8 sm:pt-6 md:px-8 md:pt-8 lg:px-10">
           <div
             ref={cardRef}
-            className="mx-auto w-full max-w-[1100px] rounded-[1.75rem] border border-white/80 bg-[#FBFCFC] px-4 pb-5 pt-5 shadow-[0_18px_50px_rgba(31,31,31,0.08)] sm:px-6 sm:pb-6 sm:pt-6 md:rounded-[2.25rem] md:px-8 md:pb-7 md:pt-7"
+            className="mx-auto w-full max-w-[1100px] rounded-2xl border border-white/80 bg-[#FBFCFC] px-4 pb-5 pt-5 shadow-[0_18px_50px_rgba(31,31,31,0.08)] sm:px-6 sm:pb-6 sm:pt-6 md:rounded-[2rem] md:px-8 md:pb-7 md:pt-7"
           >
             <div className="mb-4 flex items-end justify-between gap-4 md:mb-5">
               <div className="min-w-0">
-                <p className="m-0 font-sans text-[10px] font-bold uppercase tracking-[0.4em] text-[#0F5B63]">
+                <p className="m-0 font-sans text-xs font-semibold uppercase tracking-widest text-[#0F5B63]">
                   Do papel à obra
                 </p>
                 <div className="mt-2.5 md:mt-3">
@@ -323,8 +197,8 @@ export function RendalMorphScroll() {
                     key={stage.label}
                     initial={reduceMotion ? false : { y: 12, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
-                    transition={{ duration: 0.3, ease: [0.23, 1, 0.32, 1] }}
-                    className="m-0 font-display text-[clamp(1.5rem,4vw,2.75rem)] leading-[1.08] tracking-[-0.03em] text-graphite"
+                    transition={{ duration: 0.3, ease: [0.32, 0.72, 0, 1] }}
+                    className="m-0 font-sans text-2xl font-semibold leading-8 tracking-tight text-balance text-[#1F1F1F] sm:text-3xl sm:leading-9 md:text-4xl md:leading-10"
                   >
                     {stage.label}
                   </motion.p>
@@ -334,24 +208,24 @@ export function RendalMorphScroll() {
                     key={stage.sub}
                     initial={reduceMotion ? false : { y: 8, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
-                    transition={{ duration: 0.3, ease: [0.23, 1, 0.32, 1] }}
-                    className="m-0 max-w-[42ch] font-sans text-[13px] leading-snug text-graphite/60 sm:text-sm md:text-base"
+                    transition={{ duration: 0.3, ease: [0.32, 0.72, 0, 1] }}
+                    className="m-0 max-w-[42ch] font-sans text-sm leading-5 text-pretty text-[#1F1F1F]/60 sm:text-base sm:leading-7"
                   >
                     {stage.sub}
                   </motion.p>
                 </div>
               </div>
 
-              <p className="shrink-0 pb-0.5 font-sans text-xs font-semibold tabular-nums tracking-[0.2em] text-graphite/45 md:text-sm">
+              <p className="shrink-0 pb-0.5 font-sans text-xs font-semibold tabular-nums tracking-widest text-[#1F1F1F]/45 md:text-sm">
                 {String(stageIndex + 1).padStart(2, "0")}
-                <span className="mx-1 text-graphite/25">/</span>
+                <span className="mx-1 text-[#1F1F1F]/25">/</span>
                 {String(FRAMES.length).padStart(2, "0")}
               </p>
             </div>
 
             <div
               ref={frameRef}
-              className="relative mx-auto aspect-video w-full overflow-hidden rounded-[1.15rem] border border-graphite/10 bg-[#EDE6DA] md:rounded-[1.5rem]"
+              className="relative mx-auto aspect-video max-h-[min(46svh,22rem)] w-full overflow-hidden rounded-xl border border-[#1F1F1F]/10 bg-[#EDE6DA] sm:max-h-[min(52svh,28rem)] md:max-h-[min(56svh,34rem)] md:rounded-2xl lg:max-h-none"
               style={{ opacity: ready || reduceMotion ? 1 : 0.55 }}
             >
               {!reduceMotion && (
@@ -398,14 +272,6 @@ export function RendalMorphScroll() {
                   />
                 </div>
               )}
-
-              <div
-                className="pointer-events-none absolute inset-0"
-                style={{
-                  background:
-                    "radial-gradient(ellipse at center, transparent 52%, rgba(15,20,25,0.18) 100%)",
-                }}
-              />
             </div>
 
             <div
@@ -418,7 +284,7 @@ export function RendalMorphScroll() {
                 return (
                   <div
                     key={frame.src}
-                    className="h-1 flex-1 overflow-hidden rounded-full bg-graphite/10"
+                    className="h-1 flex-1 overflow-hidden rounded-full bg-[#1F1F1F]/10"
                   >
                     <div
                       className="h-full rounded-full bg-[#0F5B63]"

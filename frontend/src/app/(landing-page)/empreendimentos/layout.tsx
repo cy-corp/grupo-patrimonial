@@ -6,4 +6,10 @@ export const metadata: Metadata = {
     "Conheça os empreendimentos Rendal: casas com laje de lazer e presença de alto padrão no preço das classes B e C. Agende visita sem compromisso.",
 };
 
-export { default } from "@/app/(landing-page)/empreendimentos/page";
+export default function EmpreendimentosLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return children;
+}
