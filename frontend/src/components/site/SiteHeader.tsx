@@ -113,7 +113,7 @@ export function SiteHeader({ companyId }: { companyId: CompanyId }) {
   const pillRef = useRef<HTMLSpanElement>(null);
   const closeTimer = useRef<number>(0);
   const hoverIndex = useRef<number | null>(null);
-  const isHome = pathname === "/";
+  const isHome = pathname === "/" || pathname === "/concept";
   const chrome = useDcorpChrome();
   const mobileHandoff = Boolean(isDcorp && isHome && chrome?.isMobile);
   const pastHero = Boolean(chrome?.pastHero);
@@ -256,7 +256,7 @@ export function SiteHeader({ companyId }: { companyId: CompanyId }) {
 
   const headerLogoVariant = attached ? "hero" : "header";
 
-  // Rendal home owns its own hero chrome (nav inside the hero).
+  // Rendal home and the concept page own their own hero chrome.
   if (!isDcorp && isHome) return null;
 
   return (

@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>DCORP — Serviços section wireframes</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --graphite: #1F1F1F;
+      --gold: #C9A96A;
+      --muted: #4D4D4D;
+      --line: #D9D9D9;
+      --fog: #F7F7F7;
+      --white: #fff;
+      --ease: cubic-bezier(0.16, 1, 0.3, 1);
+      --font: "Montserrat", "Segoe UI", system-ui, sans-serif;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: var(--font);
+      background: #0d0d0d;
+      color: #fff;
+    }
+    .deck { max-width: 1120px; margin: 0 auto; padding: 36px 18px 96px; }
+    .head { max-width: 680px; margin-bottom: 22px; }
+    .head h1 { margin: 0 0 10px; font-size: 26px; letter-spacing: -0.03em; }
+    .head p { margin: 0; color: rgba(255,255,255,.55); font-size: 14px; line-height: 1.55; }
+    .picks {
+      display: grid;
+      gap: 8px;
+      margin: 18px 0 28px;
+      padding: 14px 16px;
+      border: 1px solid rgba(201,169,106,.35);
+      border-radius: 12px;
+      background: rgba(201,169,106,.06);
+      font-size: 13px;
+      color: rgba(255,255,255,.75);
+      line-height: 1.5;
+    }
+    .picks strong { color: var(--gold); }
+    .nav {
+      position: sticky; top: 0; z-index: 30;
+      display: flex; gap: 8px; overflow-x: auto;
+      padding: 10px 0 18px;
+      background: linear-gradient(#0d0d0d, #0d0d0d 75%, transparent);
+    }
+    .nav a {
+      flex: 0 0 auto;
+      text-decoration: none;
+      color: #111;
+      background: #fff;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 8px 12px;
+      border-radius: 8px;
+    }
+    .nav a:hover { background: var(--gold); }
+    .card {
+      border: 1px solid #242424;
+      border-radius: 16px;
+      overflow: hidden;
+      margin-bottom: 34px;
+      background: #151515;
+    }
+    .meta { padding: 16px 18px 12px; }
+    .meta .tag {
+      color: var(--gold);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+    }
+    .meta h2 { margin: 6px 0 4px; font-size: 17px; letter-spacing: -0.02em; }
+    .meta p { margin: 0; color: rgba(255,255,255,.5); font-size: 13px; line-height: 1.45; }
+    .toolbar {
+      display: flex; gap: 8px; padding: 0 18px 14px;
+    }
+    .toolbar button {
+      border: 1px solid #333;
+      background: #1c1c1c;
+      color: #fff;
+      font: inherit;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      padding: 8px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    .toolbar button:hover { border-color: var(--gold); color: var(--gold); }
+    .frame {
+      position: relative;
+      aspect-ratio: 16 / 10;
+      overflow: hidden;
+      background: var(--white);
+      color: var(--graphite);
+    }
+    @media (max-width: 720px) { .frame { aspect-ratio: 3 / 5; } }
+
+    /* Shared section chrome */
+    .sec {
+      position: absolute; inset: 0;
+      padding: clamp(18px, 3.2vw, 36px) clamp(16px, 3vw, 40px);
+      display: flex; flex-direction: column;
+      background: var(--white);
+    }
+    .sec.fog { background: var(--fog); }
+    .eyebrow {
+      display: flex; align-items: center; gap: 12px;
+      margin-bottom: 14px;
+    }
+    .eyebrow .rule {
+      width: 48px; height: 1px; background: var(--gold);
+    }
+    .eyebrow span {
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+    .title {
+      margin: 0;
+      max-width: 16ch;
+      font-size: clamp(22px, 2.6vw, 36px);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1.08;
+      color: var(--graphite);
+    }
+    .support {
+      margin: 10px 0 0;
+      max-width: 36ch;
+      font-size: 13px;
+      line-height: 1.45;
+      color: var(--muted);
+    }
+    .learn {
+      display: inline-flex; align-items: center; gap: 6px;
+      margin-top: 14px;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--graphite);
+      text-decoration: none;
+    }
+    .ph {
+      background:
+        linear-gradient(145deg, #2c2c2c 0%, #1F1F1F 48%, #3d3426 100%);
+      position: relative;
+      overflow: hidden;
+    }
+    .ph::after {
+      content: "foto";
+      position: absolute; inset: 0;
+      display: grid; place-items: center;
+      font-size: 9px;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.28);
+    }
+    .num {
+      font-size: 10px;
+      font-weight: 700;
+      font-variant-numeric: tabular-nums;
+      color: var(--gold);
+    }
+
+    /* Motion defaults — same language as Para quem / hero */
+    .anim-head,
+    .anim-item {
+      opacity: 0;
+      transform: translateY(12px);
+      transition:
+        opacity .48s var(--ease),
+        transform .48s var(--ease);
+    }
+    .is-on .anim-head {
+      opacity: 1;
+      transform: none;
+      transition-delay: .22s;
+    }
+    .is-on .anim-item {
+      opacity: 1;
+      transform: none;
+      transition-delay: calc(.32s + (var(--i, 0) * 80ms));
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .anim-head, .anim-item {
+        opacity: 1 !important;
+        transform: none !important;
+        transition: none !important;
+      }
+    }
+
+    /* ——— A: Mosaic foto tiles ——— */
+    .a-top {
+      display: flex; justify-content: space-between; align-items: flex-end;
+      gap: 16px; flex-wrap: wrap; margin-bottom: 18px;
+    }
+    .a-grid {
+      flex: 1;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--line);
+      min-height: 0;
+    }
+    .a-tile {
+      background: var(--white);
+      display: flex; flex-direction: column;
+      min-height: 0;
+    }
+    .a-tile .ph { aspect-ratio: 16/10; flex: 0 0 auto; }
+    .a-tile .cap {
+      padding: 10px 12px 12px;
+      border-top: 1px solid var(--line);
+    }
+    .a-tile h3 {
+      margin: 4px 0 0;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      line-height: 1.25;
+    }
+    @media (max-width: 720px) {
+      .a-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    /* ——— B: Process spine ——— */
+    .b-layout {
+      display: grid;
+      grid-template-columns: 0.9fr 1.4fr;
+      gap: 28px;
+      flex: 1;
+      min-height: 0;
+      align-items: center;
+    }
+    .b-list { display: flex; flex-direction: column; gap: 0; border-top: 1px solid var(--line); }
+    .b-row {
+      display: grid;
+      grid-template-columns: 2.2rem 1fr auto;
+      gap: 10px;
+      align-items: center;
+      padding: 11px 0;
+      border-bottom: 1px solid var(--line);
+    }
+    .b-row h3 {
+      margin: 0;
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+    }
+    .b-row .thumb {
+      width: 52px; height: 36px; border-radius: 2px;
+    }
+    .b-rail {
+      position: relative;
+      height: 100%;
+      min-height: 220px;
+      border-radius: 2px;
+    }
+    .b-rail .mark {
+      position: absolute; left: 14px; bottom: 14px;
+      font-size: 10px; font-weight: 700; letter-spacing: .12em;
+      text-transform: uppercase; color: rgba(255,255,255,.45);
+    }
+    @media (max-width: 720px) {
+      .b-layout { grid-template-columns: 1fr; }
+      .b-rail { min-height: 120px; }
+    }
+
+    /* ——— C: Bento featured ——— */
+    .c-grid {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 1.35fr 1fr 1fr;
+      grid-template-rows: 1fr 1fr;
+      gap: 1px;
+      background: var(--line);
+      margin-top: 16px;
+      min-height: 0;
+    }
+    .c-feat {
+      grid-row: 1 / span 2;
+      background: var(--graphite);
+      color: #fff;
+      display: flex; flex-direction: column;
+      padding: 0;
+      overflow: hidden;
+    }
+    .c-feat .ph { flex: 1; min-height: 120px; }
+    .c-feat .cap { padding: 14px 16px 16px; }
+    .c-feat .num { color: var(--gold); }
+    .c-feat h3 {
+      margin: 6px 0 0;
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+    .c-feat p {
+      margin: 6px 0 0;
+      font-size: 12px;
+      line-height: 1.4;
+      color: rgba(255,255,255,.55);
+      max-width: 28ch;
+    }
+    .c-cell {
+      background: var(--white);
+      padding: 14px 14px 16px;
+      display: flex; flex-direction: column; justify-content: flex-end;
+    }
+    .c-cell h3 {
+      margin: 6px 0 0;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      line-height: 1.25;
+    }
+    @media (max-width: 720px) {
+      .c-grid {
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: auto;
+      }
+      .c-feat { grid-row: auto; grid-column: 1 / -1; min-height: 180px; }
+    }
+
+    /* ——— D: Filmstrip ——— */
+    .d-head { margin-bottom: 16px; }
+    .d-strip {
+      flex: 1;
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 1px;
+      background: var(--line);
+      min-height: 0;
+    }
+    .d-card {
+      background: var(--white);
+      display: flex; flex-direction: column;
+      min-width: 0;
+    }
+    .d-card .ph {
+      aspect-ratio: 3/4;
+      flex: 1;
+    }
+    .d-card .cap {
+      padding: 10px 10px 12px;
+      border-top: 1px solid var(--line);
+    }
+    .d-card h3 {
+      margin: 4px 0 0;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      line-height: 1.3;
+    }
+    @media (max-width: 900px) {
+      .d-strip {
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: auto auto;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="deck">
+    <div class="head">
+      <h1>Serviços — wireframes + motion</h1>
+      <p>
+        Seção abaixo de “Para quem”. Seis serviços da home, texto enxuto,
+        eyebrow no tamanho novo. Quatro direções — replay para ver o stagger
+        com delay leve (mesmo idioma da seção anterior).
+      </p>
+    </div>
+
+    <div class="picks">
+      <div><strong>Recomendação:</strong> A (mosaic) se tiver fotos reais de obra/escritório — presença visual sem virar card generico.</div>
+      <div><strong>Sem fotos ainda:</strong> B (spine) — tipografia + um painel único; placeholders honestos não poluem.</div>
+      <div><strong>Evitar:</strong> grade 3×2 só com borda igual à atual — é o que está “sem sal”.</div>
+      <div><strong>Copy curta sugerida:</strong> título “Engenharia à entrega.” · apoio “Seis frentes. Um método.”</div>
+    </div>
+
+    <nav class="nav">
+      <a href="#a">A Mosaic</a>
+      <a href="#b">B Spine</a>
+      <a href="#c">C Bento</a>
+      <a href="#d">D Filmstrip</a>
+    </nav>
+
+    <!-- A -->
+    <article class="card" id="a">
+      <div class="meta">
+        <div class="tag">A · Mosaic</div>
+        <h2>Tiles com imagem + rótulo curto</h2>
+        <p>2×3. Foto placeholder por serviço. Melhor quando houver assets reais. Stagger tile a tile.</p>
+      </div>
+      <div class="toolbar">
+        <button type="button" data-replay="a">Replay</button>
+      </div>
+      <div class="frame" data-sketch="a">
+        <section class="sec" aria-label="Sketch A">
+          <div class="a-top">
+            <div class="anim-head">
+              <div class="eyebrow"><i class="rule"></i><span>Serviços</span></div>
+              <h2 class="title">Engenharia à entrega.</h2>
+              <p class="support">Seis frentes. Um método.</p>
+            </div>
+            <a class="learn anim-head" href="#">Ver todos →</a>
+          </div>
+          <div class="a-grid" id="a-items"></div>
+        </section>
+      </div>
+    </article>
+
+    <!-- B -->
+    <article class="card" id="b">
+      <div class="meta">
+        <div class="tag">B · Spine</div>
+        <h2>Lista densa + um painel de imagem</h2>
+        <p>Texto enxuto à direita, uma foto grande à esquerda. Bom sem seis fotos. Thumbs opcionais.</p>
+      </div>
+      <div class="toolbar">
+        <button type="button" data-replay="b">Replay</button>
+      </div>
+      <div class="frame fog" data-sketch="b">
+        <section class="sec fog" aria-label="Sketch B">
+          <div class="b-layout">
+            <div class="anim-head">
+              <div class="eyebrow"><i class="rule"></i><span>Serviços</span></div>
+              <h2 class="title">Engenharia à entrega.</h2>
+              <p class="support">Do planejamento à fiscalização.</p>
+              <a class="learn" href="#">Ver todos →</a>
+              <div class="b-rail ph" style="margin-top:18px" aria-hidden="true">
+                <span class="mark">Obra / método</span>
+              </div>
+            </div>
+            <div>
+              <div class="anim-head" style="margin-bottom:8px">
+                <span class="num" style="font-size:11px">01 — 06</span>
+              </div>
+              <div class="b-list" id="b-items"></div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </article>
+
+    <!-- C -->
+    <article class="card" id="c">
+      <div class="meta">
+        <div class="tag">C · Bento</div>
+        <h2>Um destaque com foto + cinco compactos</h2>
+        <p>Hierarquia: “Execução” como âncora visual; o resto em células tipográficas. Equilíbrio foto/texto.</p>
+      </div>
+      <div class="toolbar">
+        <button type="button" data-replay="c">Replay</button>
+      </div>
+      <div class="frame" data-sketch="c">
+        <section class="sec" aria-label="Sketch C">
+          <div class="anim-head">
+            <div class="eyebrow"><i class="rule"></i><span>Serviços</span></div>
+            <h2 class="title">Engenharia à entrega.</h2>
+            <p class="support">Seis frentes. Um método.</p>
+          </div>
+          <div class="c-grid" id="c-items"></div>
+        </section>
+      </div>
+    </article>
+
+    <!-- D -->
+    <article class="card" id="d">
+      <div class="meta">
+        <div class="tag">D · Filmstrip</div>
+        <h2>Seis colunas verticais (catálogo)</h2>
+        <p>Uma tela no desktop. Retrato + número + nome curto. Forte se as fotos forem distintas; senão fica padrão.</p>
+      </div>
+      <div class="toolbar">
+        <button type="button" data-replay="d">Replay</button>
+      </div>
+      <div class="frame" data-sketch="d">
+        <section class="sec" aria-label="Sketch D">
+          <div class="d-head anim-head">
+            <div class="eyebrow"><i class="rule"></i><span>Serviços</span></div>
+            <h2 class="title">Engenharia à entrega.</h2>
+            <p class="support">Seis frentes. Um método.</p>
+          </div>
+          <div class="d-strip" id="d-items"></div>
+        </section>
+      </div>
+    </article>
+  </div>
+
+  <script>
+    const SERVICES = [
+      { short: "Planejamento", full: "Planejamento executivo" },
+      { short: "Orçamentação", full: "Orçamentação e custos" },
+      { short: "Compatibilização", full: "Compatibilização" },
+      { short: "Sistemas", full: "Implantação de sistemas" },
+      { short: "Fiscalização", full: "Gerenciamento e fiscalização" },
+      { short: "Execução", full: "Execução para incorporadoras" },
+    ];
+
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    function pad(n) {
+      return String(n).padStart(2, "0");
+    }
+
+    function buildA() {
+      const root = document.getElementById("a-items");
+      root.innerHTML = SERVICES.map((s, i) => `
+        <article class="a-tile anim-item" style="--i:${i}">
+          <div class="ph" aria-hidden="true"></div>
+          <div class="cap">
+            <span class="num">${pad(i + 1)}</span>
+            <h3>${s.short}</h3>
+          </div>
+        </article>
+      `).join("");
+    }
+
+    function buildB() {
+      const root = document.getElementById("b-items");
+      root.innerHTML = SERVICES.map((s, i) => `
+        <div class="b-row anim-item" style="--i:${i}">
+          <span class="num">${pad(i + 1)}</span>
+          <h3>${s.full}</h3>
+          <div class="thumb ph" aria-hidden="true"></div>
+        </div>
+      `).join("");
+    }
+
+    function buildC() {
+      const root = document.getElementById("c-items");
+      const feat = SERVICES[5];
+      const rest = SERVICES.slice(0, 5);
+      root.innerHTML = `
+        <article class="c-feat anim-item" style="--i:0">
+          <div class="ph" aria-hidden="true"></div>
+          <div class="cap">
+            <span class="num">${pad(6)}</span>
+            <h3>${feat.short}</h3>
+            <p>Âncora do método — obra para quem incorpora e investe.</p>
+          </div>
+        </article>
+        ${rest.map((s, i) => `
+          <article class="c-cell anim-item" style="--i:${i + 1}">
+            <span class="num">${pad(i + 1)}</span>
+            <h3>${s.short}</h3>
+          </article>
+        `).join("")}
+      `;
+    }
+
+    function buildD() {
+      const root = document.getElementById("d-items");
+      root.innerHTML = SERVICES.map((s, i) => `
+        <article class="d-card anim-item" style="--i:${i}">
+          <div class="ph" aria-hidden="true"></div>
+          <div class="cap">
+            <span class="num">${pad(i + 1)}</span>
+            <h3>${s.short}</h3>
+          </div>
+        </article>
+      `).join("");
+    }
+
+    function play(id) {
+      const frame = document.querySelector(`[data-sketch="${id}"]`);
+      if (!frame) return;
+      const sec = frame.querySelector(".sec");
+      sec.classList.remove("is-on");
+      // reflow
+      void sec.offsetWidth;
+      if (reduce) {
+        sec.classList.add("is-on");
+        return;
+      }
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => sec.classList.add("is-on"));
+      });
+    }
+
+    function observe() {
+      const ios = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (!entry.isIntersecting) return;
+            const id = entry.target.getAttribute("data-sketch");
+            play(id);
+            ios.unobserve(entry.target);
+          });
+        },
+        { threshold: 0.25 }
+      );
+      document.querySelectorAll("[data-sketch]").forEach((el) => ios.observe(el));
+    }
+
+    buildA();
+    buildB();
+    buildC();
+    buildD();
+    observe();
+
+    document.querySelectorAll("[data-replay]").forEach((btn) => {
+      btn.addEventListener("click", () => play(btn.getAttribute("data-replay")));
+    });
+  </script>
+</body>
+</html>

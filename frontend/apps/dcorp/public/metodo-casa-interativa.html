@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>DCORP — Método · sketch casa interativa</title>
+  <style>
+    :root {
+      --graphite: #1F1F1F;
+      --gold: #C9A96A;
+      --gray: #4D4D4D;
+      --line: #D9D9D9;
+      --fog: #F7F7F7;
+      --white: #fff;
+      --font: "Montserrat", "Segoe UI", system-ui, sans-serif;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: var(--font);
+      background: #111;
+      color: var(--graphite);
+    }
+    .deck {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 36px 18px 80px;
+    }
+    .deck-head {
+      color: #fff;
+      max-width: 520px;
+      margin-bottom: 28px;
+    }
+    .deck-head h1 {
+      margin: 0 0 8px;
+      font-size: 24px;
+      letter-spacing: -0.03em;
+    }
+    .deck-head p {
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.55;
+      color: rgba(255,255,255,.55);
+    }
+    .hint {
+      margin-top: 14px;
+      font-size: 12px;
+      color: var(--gold);
+    }
+
+    .frame {
+      background: var(--white);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 24px 60px rgba(0,0,0,.35);
+    }
+    .frame-label {
+      background: #1a1a1a;
+      color: rgba(255,255,255,.65);
+      font-size: 12px;
+      padding: 12px 18px;
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .frame-label strong { color: var(--gold); }
+
+    .section {
+      padding: 44px 24px 52px;
+      max-width: 960px;
+      margin: 0 auto;
+    }
+    .eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+    .eyebrow .line {
+      width: 40px;
+      height: 1px;
+      background: var(--gold);
+    }
+    .eyebrow p {
+      margin: 0;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+    h2 {
+      margin: 0;
+      font-size: clamp(1.35rem, 2.4vw, 1.8rem);
+      letter-spacing: -0.02em;
+      max-width: 16ch;
+    }
+    .lede {
+      margin: 12px 0 0;
+      color: var(--gray);
+      font-size: 15px;
+      line-height: 1.55;
+      max-width: 40ch;
+    }
+
+    .stage {
+      margin-top: 36px;
+      display: grid;
+      gap: 28px;
+    }
+    @media (min-width: 860px) {
+      .stage {
+        grid-template-columns: 1.15fr 0.85fr;
+        align-items: center;
+        gap: 40px;
+      }
+    }
+
+    /* House canvas */
+    .house-panel {
+      position: relative;
+      background: var(--fog);
+      border: 1px solid var(--line);
+      aspect-ratio: 5 / 4;
+      overflow: hidden;
+      user-select: none;
+      touch-action: manipulation;
+    }
+    .house-panel::after {
+      content: "passe o mouse / toque nas partes";
+      position: absolute;
+      left: 12px;
+      bottom: 10px;
+      font-size: 10px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: rgba(31,31,31,.35);
+      pointer-events: none;
+    }
+
+    .house {
+      width: 100%;
+      height: 100%;
+      display: block;
+      /* idle breath */
+      animation: breath 5.5s ease-in-out infinite;
+      transform-origin: 50% 78%;
+    }
+    @keyframes breath {
+      0%, 100% { transform: translateY(0) scale(1); }
+      50% { transform: translateY(-3px) scale(1.008); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .house { animation: none; }
+    }
+
+    .zone {
+      fill: #1F1F1F;
+      fill-opacity: 0.06;
+      stroke: #1F1F1F;
+      stroke-width: 1.6;
+      stroke-opacity: 0.35;
+      transition:
+        fill-opacity 220ms ease,
+        stroke-opacity 220ms ease,
+        stroke-width 220ms ease,
+        filter 220ms ease;
+      cursor: pointer;
+    }
+    .zone-accent {
+      fill: none;
+      stroke: #C9A96A;
+      stroke-width: 1.2;
+      stroke-opacity: 0.2;
+      stroke-dasharray: 5 4;
+      pointer-events: none;
+      transition: stroke-opacity 220ms ease;
+    }
+
+    /* desbotado default; highlight no ativo */
+    .house-panel[data-active] .zone {
+      fill-opacity: 0.035;
+      stroke-opacity: 0.18;
+    }
+    .house-panel[data-active="fundacao"] #z-fundacao,
+    .house-panel[data-active="estrutura"] #z-estrutura,
+    .house-panel[data-active="instalacoes"] #z-instalacoes,
+    .house-panel[data-active="revestimentos"] #z-revestimentos,
+    .house-panel[data-active="entrega"] #z-entrega {
+      fill: #C9A96A;
+      fill-opacity: 0.28;
+      stroke: #C9A96A;
+      stroke-opacity: 1;
+      stroke-width: 2.2;
+      filter: drop-shadow(0 0 10px rgba(201,169,106,.35));
+    }
+    .house-panel[data-active="estrutura"] #a-estrutura,
+    .house-panel[data-active="instalacoes"] #a-instalacoes {
+      stroke-opacity: 0.9;
+    }
+
+    .badge {
+      font-family: var(--font);
+      font-size: 10px;
+      font-weight: 700;
+      fill: #C9A96A;
+      opacity: 0.35;
+      transition: opacity 220ms ease;
+      pointer-events: none;
+    }
+    .house-panel[data-active="fundacao"] #b-fundacao,
+    .house-panel[data-active="estrutura"] #b-estrutura,
+    .house-panel[data-active="instalacoes"] #b-instalacoes,
+    .house-panel[data-active="revestimentos"] #b-revestimentos,
+    .house-panel[data-active="entrega"] #b-entrega {
+      opacity: 1;
+    }
+
+    /* List */
+    .callouts {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      border-top: 1px solid var(--line);
+    }
+    .callouts li {
+      display: grid;
+      grid-template-columns: 2.6rem 1fr;
+      gap: 12px;
+      padding: 13px 8px 13px 0;
+      border-bottom: 1px solid var(--line);
+      align-items: baseline;
+      cursor: pointer;
+      transition: background 180ms ease;
+    }
+    .callouts li:hover,
+    .callouts li.is-active {
+      background: rgba(201,169,106,.08);
+    }
+    .callouts li.is-active {
+      box-shadow: inset 2px 0 0 var(--gold);
+    }
+    .callouts .n {
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--gold);
+      font-variant-numeric: tabular-nums;
+      opacity: 0.45;
+      transition: opacity 180ms ease;
+    }
+    .callouts li.is-active .n,
+    .callouts li:hover .n {
+      opacity: 1;
+    }
+    .callouts strong {
+      display: block;
+      font-size: 14px;
+      font-weight: 600;
+    }
+    .callouts span {
+      display: block;
+      margin-top: 2px;
+      font-size: 12px;
+      color: var(--gray);
+      line-height: 1.4;
+      opacity: 0.75;
+    }
+    .callouts li.is-active span {
+      opacity: 1;
+      color: var(--graphite);
+    }
+
+    .note {
+      margin-top: 28px;
+      padding-left: 14px;
+      border-left: 2px solid var(--gold);
+      color: var(--gray);
+      font-size: 13px;
+      line-height: 1.5;
+      max-width: 48ch;
+    }
+  </style>
+</head>
+<body>
+  <div class="deck">
+    <header class="deck-head">
+      <h1>Método · casa interativa</h1>
+      <p>
+        Sketch: casa desbotada + idle leve. Hover/tap numa região destaca ela e
+        sincroniza a lista. (Placeholder 2D — depois vira render/Blender em camadas.)
+      </p>
+      <p class="hint">Desktop: hover · Mobile: toque</p>
+    </header>
+
+    <article class="frame">
+      <div class="frame-label">
+        <span><strong>Prototype</strong> — A + highlight por zona</span>
+        <span>institutional · sem glow exagerado</span>
+      </div>
+
+      <div class="section">
+        <div class="eyebrow">
+          <span class="line"></span>
+          <p>Método</p>
+        </div>
+        <h2>Obra por etapas especializadas.</h2>
+        <p class="lede">
+          Cada fase com profissionais dedicados — sob planejamento único e inspeção DCORP.
+        </p>
+
+        <div class="stage">
+          <div class="house-panel" id="housePanel" data-active="">
+            <svg class="house" viewBox="0 0 480 384" xmlns="http://www.w3.org/2000/svg" aria-label="Casa esquemática por etapas">
+              <!-- ground -->
+              <line x1="36" y1="328" x2="444" y2="328" stroke="#D9D9D9" stroke-width="1" />
+
+              <!-- 05 Entrega / telhado -->
+              <path
+                id="z-entrega"
+                class="zone"
+                data-zone="entrega"
+                d="M88 148 L240 52 L392 148 Z"
+              />
+              <text id="b-entrega" class="badge" x="240" y="100" text-anchor="middle">05</text>
+
+              <!-- 04 Revestimentos / volume superior + beiral -->
+              <path
+                id="z-revestimentos"
+                class="zone"
+                data-zone="revestimentos"
+                d="M112 148 H368 V188 H112 Z"
+              />
+              <text id="b-revestimentos" class="badge" x="400" y="172" text-anchor="middle">04</text>
+
+              <!-- 02 Estrutura / paredes painéis -->
+              <path
+                id="z-estrutura"
+                class="zone"
+                data-zone="estrutura"
+                d="M112 188 H368 V308 H112 Z"
+              />
+              <g id="a-estrutura" class="zone-accent">
+                <line x1="176" y1="188" x2="176" y2="308" />
+                <line x1="240" y1="188" x2="240" y2="308" />
+                <line x1="304" y1="188" x2="304" y2="308" />
+              </g>
+              <text id="b-estrutura" class="badge" x="70" y="250" text-anchor="middle">02</text>
+
+              <!-- 03 Instalações (janelas / núcleo) -->
+              <g id="z-instalacoes" class="zone" data-zone="instalacoes" style="fill:transparent; stroke:transparent">
+                <rect x="136" y="210" width="40" height="40" class="zone" data-zone="instalacoes" />
+                <rect x="304" y="210" width="40" height="40" class="zone" data-zone="instalacoes" />
+                <rect x="220" y="236" width="40" height="72" class="zone" data-zone="instalacoes" />
+              </g>
+              <g id="a-instalacoes" class="zone-accent">
+                <rect x="136" y="210" width="40" height="40" />
+                <rect x="304" y="210" width="40" height="40" />
+                <rect x="220" y="236" width="40" height="72" />
+              </g>
+              <text id="b-instalacoes" class="badge" x="410" y="248" text-anchor="middle">03</text>
+
+              <!-- 01 Fundação -->
+              <rect
+                id="z-fundacao"
+                class="zone"
+                data-zone="fundacao"
+                x="96"
+                y="308"
+                width="288"
+                height="22"
+              />
+              <text id="b-fundacao" class="badge" x="240" y="352" text-anchor="middle">01</text>
+            </svg>
+          </div>
+
+          <ol class="callouts" id="list">
+            <li data-zone="fundacao" tabindex="0">
+              <span class="n">01</span>
+              <div>
+                <strong>Fundação</strong>
+                <span>Terreno e radier</span>
+              </div>
+            </li>
+            <li data-zone="estrutura" tabindex="0">
+              <span class="n">02</span>
+              <div>
+                <strong>Estrutura e painéis</strong>
+                <span>Montagem industrializada</span>
+              </div>
+            </li>
+            <li data-zone="instalacoes" tabindex="0">
+              <span class="n">03</span>
+              <div>
+                <strong>Instalações</strong>
+                <span>Elétrica e hidráulica</span>
+              </div>
+            </li>
+            <li data-zone="revestimentos" tabindex="0">
+              <span class="n">04</span>
+              <div>
+                <strong>Revestimentos</strong>
+                <span>Acabamentos e pintura</span>
+              </div>
+            </li>
+            <li data-zone="entrega" tabindex="0">
+              <span class="n">05</span>
+              <div>
+                <strong>Entrega</strong>
+                <span>Inspeção e limpeza final</span>
+              </div>
+            </li>
+          </ol>
+        </div>
+
+        <p class="note">
+          Mais produtividade, controle de custos, menos desperdício e prazo previsível — coordenado pela DCORP.
+        </p>
+      </div>
+    </article>
+  </div>
+
+  <script>
+    const panel = document.getElementById("housePanel");
+    const items = [...document.querySelectorAll("#list li")];
+    const zones = [...document.querySelectorAll("[data-zone]")].filter(
+      (el) => el.classList.contains("zone") || el.tagName === "LI"
+    );
+
+    let locked = null; // mobile tap lock
+    let fine = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+
+    function setActive(zone) {
+      panel.dataset.active = zone || "";
+      items.forEach((li) => {
+        li.classList.toggle("is-active", Boolean(zone) && li.dataset.zone === zone);
+      });
+    }
+
+    function clearIfNotLocked() {
+      if (!locked) setActive("");
+    }
+
+    // SVG zones
+    document.querySelectorAll(".zone[data-zone]").forEach((el) => {
+      const zone = el.dataset.zone;
+      el.addEventListener("pointerenter", () => {
+        if (fine) setActive(zone);
+      });
+      el.addEventListener("pointerleave", () => {
+        if (fine) clearIfNotLocked();
+      });
+      el.addEventListener("click", (e) => {
+        e.preventDefault();
+        if (locked === zone) {
+          locked = null;
+          setActive("");
+        } else {
+          locked = zone;
+          setActive(zone);
+        }
+      });
+    });
+
+    // List sync
+    items.forEach((li) => {
+      const zone = li.dataset.zone;
+      li.addEventListener("pointerenter", () => {
+        if (fine) setActive(zone);
+      });
+      li.addEventListener("pointerleave", () => {
+        if (fine) clearIfNotLocked();
+      });
+      li.addEventListener("click", () => {
+        if (locked === zone) {
+          locked = null;
+          setActive("");
+        } else {
+          locked = zone;
+          setActive(zone);
+        }
+      });
+      li.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          li.click();
+        }
+      });
+    });
+
+    window.matchMedia("(hover: hover) and (pointer: fine)").addEventListener("change", (e) => {
+      fine = e.matches;
+      if (fine) locked = null;
+    });
+  </script>
+</body>
+</html>

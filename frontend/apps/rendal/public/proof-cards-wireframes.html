@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Rendal — Proof cards · scroll sketches</title>
+  <style>
+    :root {
+      --petrol: #0F5B63;
+      --cream: #F8F1E3;
+      --ink: #1F1F1F;
+      --muted: #4D4D4D;
+      --line: rgba(0,0,0,.08);
+      --ease: cubic-bezier(0.22, 1, 0.36, 1);
+      --font: "Segoe UI", system-ui, sans-serif;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: var(--font);
+      background: #111;
+      color: #fff;
+    }
+    .wrap { max-width: 1180px; margin: 0 auto; padding: 28px 16px 80px; }
+    .head { max-width: 560px; margin-bottom: 22px; }
+    .head h1 { margin: 0 0 8px; font-size: 24px; letter-spacing: -0.03em; }
+    .head p { margin: 0; color: rgba(255,255,255,.55); font-size: 14px; line-height: 1.5; }
+    .nav {
+      position: sticky; top: 0; z-index: 40;
+      display: flex; gap: 8px; overflow-x: auto;
+      padding: 10px 0 16px;
+      background: linear-gradient(#111, #111 70%, transparent);
+      scrollbar-width: none;
+    }
+    .nav::-webkit-scrollbar { display: none; }
+    .nav a {
+      flex: 0 0 auto;
+      text-decoration: none;
+      color: #111;
+      background: #fff;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 8px 12px;
+      border-radius: 999px;
+    }
+    .nav a:hover { background: #9fd0d4; }
+
+    .grid {
+      display: grid;
+      gap: 28px;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    }
+    .sketch {
+      border: 1px solid #2a2a2a;
+      border-radius: 18px;
+      background: #171717;
+      overflow: hidden;
+    }
+    .meta { padding: 14px 16px 10px; }
+    .meta .tag {
+      color: #9fd0d4;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+    }
+    .meta h2 { margin: 6px 0 4px; font-size: 16px; letter-spacing: -0.02em; }
+    .meta p { margin: 0; color: rgba(255,255,255,.5); font-size: 12.5px; line-height: 1.45; }
+    .toolbar { display: flex; gap: 8px; padding: 0 16px 12px; }
+    .toolbar button {
+      border: 1px solid #333;
+      background: #222;
+      color: #fff;
+      font-size: 12px;
+      font-weight: 600;
+      padding: 7px 10px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    .toolbar button:hover { border-color: #0F5B63; background: #1a2e30; }
+
+    /* Phone frame */
+    .phone {
+      margin: 0 16px 16px;
+      border-radius: 28px;
+      border: 2px solid #333;
+      background: #000;
+      padding: 10px;
+      box-shadow: 0 20px 50px rgba(0,0,0,.35);
+    }
+    .phone-screen {
+      position: relative;
+      height: 520px;
+      border-radius: 20px;
+      overflow: auto;
+      background: var(--cream);
+      scrollbar-width: thin;
+      scrollbar-color: #bbb transparent;
+    }
+    .phone-screen::-webkit-scrollbar { width: 4px; }
+    .phone-screen::-webkit-scrollbar-thumb { background: #bbb; border-radius: 4px; }
+
+    /* Shared demo scene */
+    .hero {
+      position: relative;
+      height: 420px;
+      border-radius: 0 0 22px 22px;
+      overflow: hidden;
+      background:
+        linear-gradient(180deg, rgba(15,40,55,.15) 0%, rgba(15,15,15,.35) 100%),
+        linear-gradient(165deg, #4a90b8 0%, #7eb6d4 42%, #c4a574 78%, #8a7355 100%);
+    }
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: auto 12% 18% 12%;
+      height: 38%;
+      border-radius: 8px;
+      background: linear-gradient(180deg, #e8e0d4, #b8a890);
+      box-shadow: 0 8px 24px rgba(0,0,0,.2);
+      opacity: .85;
+    }
+    .hero-ui {
+      position: relative;
+      z-index: 2;
+      padding: 18px 14px 0;
+      color: #fff;
+      text-align: center;
+    }
+    .hero-ui h3 {
+      margin: 28px 0 0;
+      font-size: 22px;
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      text-shadow: 0 2px 20px rgba(0,0,0,.3);
+    }
+    .hero-ui p {
+      margin: 8px auto 0;
+      max-width: 22ch;
+      font-size: 11px;
+      line-height: 1.35;
+      opacity: .85;
+    }
+    .glass {
+      margin: 14px auto 0;
+      width: min(100%, 240px);
+      border-radius: 16px;
+      padding: 8px;
+      background: linear-gradient(135deg, rgba(255,255,255,.22), rgba(255,255,255,.08));
+      backdrop-filter: blur(10px);
+      box-shadow: 0 8px 20px rgba(0,0,0,.15);
+    }
+    .glass .btn {
+      display: block;
+      text-align: center;
+      border-radius: 999px;
+      padding: 10px;
+      background: linear-gradient(#1A8A94, #0F5B63);
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .proof {
+      border-radius: 18px;
+      background: #fff;
+      color: var(--ink);
+      padding: 16px 18px;
+      border: 1px solid var(--line);
+      box-shadow: 0 16px 36px rgba(15,20,25,.14);
+    }
+    .proof h4 {
+      margin: 0;
+      font-size: 14px;
+      letter-spacing: -0.02em;
+    }
+    .proof p {
+      margin: 6px 0 0;
+      font-size: 12px;
+      line-height: 1.4;
+      color: var(--muted);
+    }
+
+    .hint {
+      text-align: center;
+      padding: 10px 12px 28px;
+      font-size: 11px;
+      color: rgba(0,0,0,.35);
+      font-weight: 600;
+    }
+
+    /* —— Variant shells —— */
+    .v-track { position: relative; }
+    .v-sticky {
+      position: sticky;
+      top: 12px;
+      z-index: 5;
+      padding: 0 14px;
+      pointer-events: none;
+    }
+    .v-sticky .proof { pointer-events: auto; }
+    .v-spacer { height: 520px; }
+
+    /* A: Jacob ladder */
+    .v-a .stack {
+      position: relative;
+      height: 340px;
+      margin-top: -56px;
+      perspective: 1200px;
+    }
+    .v-a .proof {
+      position: absolute;
+      inset-inline: 0;
+      top: 0;
+      transform-origin: top center;
+      backface-visibility: hidden;
+      will-change: transform, opacity;
+    }
+
+    /* B: Slide up cascade */
+    .v-b .stack {
+      position: relative;
+      height: 340px;
+      margin-top: -56px;
+    }
+    .v-b .proof {
+      position: absolute;
+      inset-inline: 0;
+      top: 0;
+      will-change: transform, opacity;
+    }
+
+    /* C: Single ficha expand */
+    .v-c .sheet {
+      margin: -48px 14px 0;
+      border-radius: 20px;
+      background: #fff;
+      box-shadow: 0 18px 40px rgba(15,20,25,.16);
+      overflow: hidden;
+      border: 1px solid var(--line);
+    }
+    .v-c .row {
+      padding: 14px 16px;
+      border-top: 1px solid var(--line);
+      color: var(--ink);
+      transform-origin: top center;
+      will-change: transform, opacity, max-height;
+    }
+    .v-c .row:first-child { border-top: 0; }
+    .v-c .row h4 { margin: 0; font-size: 14px; }
+    .v-c .row p { margin: 6px 0 0; font-size: 12px; color: var(--muted); line-height: 1.4; }
+
+    /* D: Fan deck (tap) */
+    .v-d .stack {
+      position: relative;
+      height: 200px;
+      margin: -56px 14px 0;
+    }
+    .v-d .proof {
+      position: absolute;
+      inset-inline: 0;
+      cursor: pointer;
+      transition: transform .35s var(--ease), box-shadow .35s var(--ease);
+    }
+
+    /* E: Book flip (rotateY) */
+    .v-e .stage {
+      margin: -56px 14px 0;
+      height: 160px;
+      perspective: 1400px;
+    }
+    .v-e .proof {
+      position: absolute;
+      inset: 0;
+      transform-origin: left center;
+      backface-visibility: hidden;
+    }
+
+    /* F: Sticky replace (morph text) */
+    .v-f .card-slot {
+      margin: -56px 14px 0;
+      min-height: 120px;
+    }
+    .v-f .proof { position: relative; }
+
+    /* G: Soft overlap reveal (no 3D) */
+    .v-g .list {
+      margin: -40px 14px 0;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .v-g .proof {
+      opacity: 0;
+      transform: translateY(28px);
+      will-change: transform, opacity;
+    }
+
+    /* H: Accordion peel */
+    .v-h .stack {
+      margin: -56px 14px 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+    .v-h .proof {
+      transform-origin: top center;
+      margin-top: -8px;
+      will-change: transform, opacity;
+    }
+    .v-h .proof:first-child { margin-top: 0; }
+
+    .pick {
+      display: inline-block;
+      margin-top: 8px;
+      padding: 4px 8px;
+      border-radius: 6px;
+      background: rgba(15,91,99,.2);
+      color: #9fd0d4;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="head">
+      <h1>Proof cards — scroll sketches</h1>
+      <p>
+        Wireframe só das provas (Laje / Lavabo / Acabamento) no mobile.
+        Cada telefone tem scroll próprio — role dentro do frame. Compare e marque a favorita.
+      </p>
+    </div>
+
+    <nav class="nav">
+      <a href="#a">A · Jacob ladder</a>
+      <a href="#b">B · Slide up</a>
+      <a href="#c">C · Ficha única</a>
+      <a href="#d">D · Fan deck</a>
+      <a href="#e">E · Book flip</a>
+      <a href="#f">F · Morph sticky</a>
+      <a href="#g">G · Soft reveal</a>
+      <a href="#h">H · Accordion</a>
+    </nav>
+
+    <div class="grid">
+
+      <!-- A -->
+      <section class="sketch" id="a">
+        <div class="meta">
+          <div class="tag">A · 3D hinge</div>
+          <h2>Jacob’s ladder / ladrilho</h2>
+          <p>1º sobrepõe a hero. 2º e 3º caem com <code>rotateX</code> no scroll. O que está no site agora.</p>
+        </div>
+        <div class="toolbar">
+          <button type="button" data-replay="a">Replay</button>
+        </div>
+        <div class="phone">
+          <div class="phone-screen" data-demo="a">
+            <div class="v-track v-a">
+              <div class="hero">
+                <div class="hero-ui">
+                  <h3>Casa que parece cara.<br/>Preço que cabe.</h3>
+                  <p>Valor onde se vê. Inteligência onde não se vê.</p>
+                  <div class="glass"><div class="btn">Ver empreendimentos →</div></div>
+                </div>
+              </div>
+              <div class="v-sticky">
+                <div class="stack" data-stack="a"></div>
+              </div>
+              <div class="v-spacer"></div>
+              <div class="hint">↓ role aqui dentro</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- B -->
+      <section class="sketch" id="b">
+        <div class="meta">
+          <div class="tag">B · 2D</div>
+          <h2>Slide up (curto)</h2>
+          <p>Sem 3D e sem track alto: 2º/3º sobem num meio viewport — hero ainda no quadro.</p>
+        </div>
+        <div class="toolbar"><button type="button" data-replay="b">Replay</button></div>
+        <div class="phone">
+          <div class="phone-screen" data-demo="b">
+            <div class="v-track v-b">
+              <div class="hero"><div class="hero-ui"><h3>Casa que parece cara.<br/>Preço que cabe.</h3><div class="glass"><div class="btn">Ver empreendimentos →</div></div></div></div>
+              <div class="v-sticky"><div class="stack" data-stack="b"></div></div>
+              <div style="height:220px"></div>
+              <div class="hint">↓ pouco scroll — hero fica perto</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- C -->
+      <section class="sketch" id="c">
+        <div class="meta">
+          <div class="tag">C · editorial</div>
+          <h2>Ficha única sobreposta</h2>
+          <p>Um card só na borda da hero. As 3 provas abrem em linhas conforme o scroll.</p>
+        </div>
+        <div class="toolbar"><button type="button" data-replay="c">Replay</button></div>
+        <div class="phone">
+          <div class="phone-screen" data-demo="c">
+            <div class="v-track v-c">
+              <div class="hero"><div class="hero-ui"><h3>Casa que parece cara.<br/>Preço que cabe.</h3><div class="glass"><div class="btn">Ver empreendimentos →</div></div></div></div>
+              <div class="sheet" data-sheet="c"></div>
+              <div class="v-spacer"></div>
+              <div class="hint">↓ role aqui dentro</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- D -->
+      <section class="sketch" id="d">
+        <div class="meta">
+          <div class="tag">D · tap</div>
+          <h2>Fan deck (toque)</h2>
+          <p>Sobreposição tipo carteira. Toque cicla — sem scroll-jack. O que tentamos antes.</p>
+        </div>
+        <div class="toolbar"><button type="button" data-replay="d">Reset</button></div>
+        <div class="phone">
+          <div class="phone-screen" data-demo="d">
+            <div class="v-track v-d">
+              <div class="hero"><div class="hero-ui"><h3>Casa que parece cara.<br/>Preço que cabe.</h3><div class="glass"><div class="btn">Ver empreendimentos →</div></div></div></div>
+              <div class="stack" data-stack="d"></div>
+              <div style="height:120px"></div>
+              <div class="hint">toque no deck</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- E -->
+      <section class="sketch" id="e">
+        <div class="meta">
+          <div class="tag">E · 3D</div>
+          <h2>Book flip (rotateY)</h2>
+          <p>Página virando pro lado. Um card por vez no mesmo slot — mais “álbum”.</p>
+        </div>
+        <div class="toolbar"><button type="button" data-replay="e">Replay</button></div>
+        <div class="phone">
+          <div class="phone-screen" data-demo="e">
+            <div class="v-track v-e">
+              <div class="hero"><div class="hero-ui"><h3>Casa que parece cara.<br/>Preço que cabe.</h3><div class="glass"><div class="btn">Ver empreendimentos →</div></div></div></div>
+              <div class="stage" data-stack="e"></div>
+              <div class="v-spacer"></div>
+              <div class="hint">↓ role aqui dentro</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- F -->
+      <section class="sketch" id="f">
+        <div class="meta">
+          <div class="tag">F · morph</div>
+          <h2>Sticky morph</h2>
+          <p>Um card fixo sobreposto; título/texto trocam no scroll. Mínimo de UI.</p>
+        </div>
+        <div class="toolbar"><button type="button" data-replay="f">Replay</button></div>
+        <div class="phone">
+          <div class="phone-screen" data-demo="f">
+            <div class="v-track v-f">
+              <div class="hero"><div class="hero-ui"><h3>Casa que parece cara.<br/>Preço que cabe.</h3><div class="glass"><div class="btn">Ver empreendimentos →</div></div></div></div>
+              <div class="v-sticky">
+                <div class="card-slot">
+                  <article class="proof" data-morph="f">
+                    <h4></h4>
+                    <p></p>
+                  </article>
+                </div>
+              </div>
+              <div class="v-spacer"></div>
+              <div class="hint">↓ role aqui dentro</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- G -->
+      <section class="sketch" id="g">
+        <div class="meta">
+          <div class="tag">G · safe</div>
+          <h2>Soft reveal + overlap leve</h2>
+          <p>Lista normal, 1º puxado pra cima da hero, os outros fade/slide. Zero 3D.</p>
+        </div>
+        <div class="toolbar"><button type="button" data-replay="g">Replay</button></div>
+        <div class="phone">
+          <div class="phone-screen" data-demo="g">
+            <div class="v-track v-g">
+              <div class="hero"><div class="hero-ui"><h3>Casa que parece cara.<br/>Preço que cabe.</h3><div class="glass"><div class="btn">Ver empreendimentos →</div></div></div></div>
+              <div class="list" data-stack="g"></div>
+              <div style="height:200px"></div>
+              <div class="hint">↓ role aqui dentro</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- H -->
+      <section class="sketch" id="h">
+        <div class="meta">
+          <div class="tag">H · peel</div>
+          <h2>Accordion peel</h2>
+          <p>Cards colados; ao scroll cada um “descola” e abre o corpo. Meio caminho entre A e C.</p>
+        </div>
+        <div class="toolbar"><button type="button" data-replay="h">Replay</button></div>
+        <div class="phone">
+          <div class="phone-screen" data-demo="h">
+            <div class="v-track v-h">
+              <div class="hero"><div class="hero-ui"><h3>Casa que parece cara.<br/>Preço que cabe.</h3><div class="glass"><div class="btn">Ver empreendimentos →</div></div></div></div>
+              <div class="stack" data-stack="h"></div>
+              <div class="v-spacer"></div>
+              <div class="hint">↓ role aqui dentro</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </div>
+
+  <script>
+    const PROOFS = [
+      {
+        title: "Laje de lazer",
+        body: "Em vez de telhado que só gasta, a cobertura vira área de estar.",
+      },
+      {
+        title: "Lavabo social",
+        body: "Visitante se atende sem entrar na área íntima da casa.",
+      },
+      {
+        title: "Acabamento que se vê",
+        body: "Alto padrão no olho. Racionalização só no que não aparece.",
+      },
+    ];
+
+    const CARD_H = 100;
+
+    function clamp(n, a, b) { return Math.max(a, Math.min(b, n)); }
+    function smooth(t) { return t * t * (3 - 2 * t); }
+
+    function progressIn(screen) {
+      const track = screen.querySelector(".v-track");
+      const rect = track.getBoundingClientRect();
+      const srect = screen.getBoundingClientRect();
+      // Versão curta: progresso enquanto o topo do track sobe de ~92% → ~42% do frame
+      const startY = srect.top + srect.height * 0.92;
+      const endY = srect.top + srect.height * 0.42;
+      const raw = (startY - rect.top) / (startY - endY);
+      return clamp(raw, 0, 1);
+    }
+
+    function elProof(p) {
+      const a = document.createElement("article");
+      a.className = "proof";
+      a.innerHTML = `<h4>${p.title}</h4><p>${p.body}</p>`;
+      return a;
+    }
+
+    /* —— mount —— */
+    function mountA(screen) {
+      const stack = screen.querySelector("[data-stack='a']");
+      stack.innerHTML = "";
+      PROOFS.forEach((p, i) => {
+        const node = elProof(p);
+        node.dataset.i = i;
+        stack.appendChild(node);
+      });
+    }
+    function updateA(screen) {
+      const p = progressIn(screen);
+      screen.querySelectorAll("[data-stack='a'] .proof").forEach((node, i) => {
+        const start = i === 0 ? 0 : 0.12 + (i - 1) * 0.36;
+        const end = i === 0 ? 0 : start + 0.3;
+        let t = i === 0 ? 1 : clamp((p - start) / (end - start), 0, 1);
+        t = smooth(t);
+        let y = 0;
+        for (let j = 1; j <= i; j++) {
+          const s = 0.12 + (j - 1) * 0.36;
+          const e = s + 0.3;
+          const tj = smooth(clamp((p - s) / (e - s), 0, 1));
+          y += tj * (CARD_H + 12);
+        }
+        const rot = i === 0 ? 0 : 86 * (1 - t);
+        const op = i === 0 ? 1 : clamp((t - 0.05) / 0.35, 0, 1);
+        node.style.zIndex = String(PROOFS.length - i);
+        node.style.opacity = String(op);
+        node.style.transform = `translateY(${y}px) perspective(1200px) rotateX(${rot}deg)`;
+      });
+    }
+
+    function mountB(screen) {
+      const stack = screen.querySelector("[data-stack='b']");
+      stack.innerHTML = "";
+      PROOFS.forEach((p, i) => {
+        const node = elProof(p);
+        stack.appendChild(node);
+      });
+    }
+    function updateB(screen) {
+      const p = progressIn(screen);
+      screen.querySelectorAll("[data-stack='b'] .proof").forEach((node, i) => {
+        const start = i === 0 ? 0 : 0.1 + (i - 1) * 0.32;
+        const end = i === 0 ? 0 : start + 0.28;
+        const t = i === 0 ? 1 : smooth(clamp((p - start) / (end - start), 0, 1));
+        let y = 0;
+        for (let j = 1; j <= i; j++) {
+          const s = 0.1 + (j - 1) * 0.32;
+          const e = s + 0.28;
+          y += smooth(clamp((p - s) / (e - s), 0, 1)) * (CARD_H + 12);
+        }
+        const rise = i === 0 ? 0 : (1 - t) * 40;
+        node.style.zIndex = String(i + 1);
+        node.style.opacity = String(i === 0 ? 1 : t);
+        node.style.transform = `translateY(${y + rise}px) scale(${0.96 + t * 0.04})`;
+      });
+    }
+
+    function mountC(screen) {
+      const sheet = screen.querySelector("[data-sheet='c']");
+      sheet.innerHTML = "";
+      PROOFS.forEach((p, i) => {
+        const row = document.createElement("div");
+        row.className = "row";
+        row.innerHTML = `<h4>${p.title}</h4><p>${p.body}</p>`;
+        sheet.appendChild(row);
+      });
+    }
+    function updateC(screen) {
+      const p = progressIn(screen);
+      screen.querySelectorAll("[data-sheet='c'] .row").forEach((row, i) => {
+        const start = i * 0.28;
+        const end = start + 0.22;
+        const t = smooth(clamp((p - start) / (end - start), 0, 1));
+        if (i === 0) {
+          row.style.opacity = "1";
+          row.style.maxHeight = "120px";
+          row.style.transform = "none";
+          return;
+        }
+        row.style.opacity = String(t);
+        row.style.maxHeight = `${Math.round(t * 110)}px`;
+        row.style.overflow = "hidden";
+        row.style.transform = `translateY(${(1 - t) * -8}px)`;
+      });
+    }
+
+    function mountD(screen) {
+      const stack = screen.querySelector("[data-stack='d']");
+      stack.innerHTML = "";
+      let active = 0;
+      PROOFS.forEach((p, i) => {
+        const node = elProof(p);
+        node.addEventListener("click", () => {
+          active = i === active ? (active + 1) % PROOFS.length : i;
+          paint();
+        });
+        stack.appendChild(node);
+      });
+      function paint() {
+        [...stack.children].forEach((node, i) => {
+          const depth = (i - active + PROOFS.length) % PROOFS.length;
+          const y = depth === 0 ? 52 : depth === 1 ? 26 : 0;
+          node.style.zIndex = String(PROOFS.length - depth);
+          node.style.transform = `translateY(${y}px) scale(${1 - depth * 0.045})`;
+          node.style.opacity = depth === 2 ? "0.9" : "1";
+          const body = node.querySelector("p");
+          body.style.display = depth === 0 ? "block" : "none";
+        });
+      }
+      paint();
+      screen._dReset = () => { active = 0; paint(); };
+    }
+    function updateD() {}
+
+    function mountE(screen) {
+      const stage = screen.querySelector("[data-stack='e']");
+      stage.innerHTML = "";
+      stage.style.position = "relative";
+      PROOFS.forEach((p) => {
+        const node = elProof(p);
+        node.style.width = "100%";
+        stage.appendChild(node);
+      });
+    }
+    function updateE(screen) {
+      const p = progressIn(screen);
+      const idx = clamp(Math.floor(p * PROOFS.length), 0, PROOFS.length - 1);
+      const local = (p * PROOFS.length) % 1;
+      screen.querySelectorAll("[data-stack='e'] .proof").forEach((node, i) => {
+        let rot = 0;
+        let op = 0;
+        let z = 1;
+        if (i < idx) {
+          rot = -90;
+          op = 0;
+        } else if (i === idx) {
+          rot = -90 * local;
+          op = 1 - local * 0.2;
+          z = 3;
+        } else if (i === idx + 1) {
+          rot = 0;
+          op = 1;
+          z = 2;
+        } else {
+          rot = 0;
+          op = 0;
+        }
+        if (i === 0 && p < 0.05) { rot = 0; op = 1; z = 3; }
+        node.style.zIndex = String(z);
+        node.style.opacity = String(op);
+        node.style.transform = `perspective(1400px) rotateY(${rot}deg)`;
+      });
+    }
+
+    function mountF(screen) {
+      /* content filled in update */
+    }
+    function updateF(screen) {
+      const p = progressIn(screen);
+      const idx = clamp(Math.round(p * (PROOFS.length - 1)), 0, PROOFS.length - 1);
+      const card = screen.querySelector("[data-morph='f']");
+      const proof = PROOFS[idx];
+      card.querySelector("h4").textContent = proof.title;
+      card.querySelector("p").textContent = proof.body;
+      card.style.transform = `scale(${0.98 + Math.sin(p * Math.PI) * 0.02})`;
+    }
+
+    function mountG(screen) {
+      const list = screen.querySelector("[data-stack='g']");
+      list.innerHTML = "";
+      PROOFS.forEach((p) => list.appendChild(elProof(p)));
+    }
+    function updateG(screen) {
+      const srect = screen.getBoundingClientRect();
+      screen.querySelectorAll("[data-stack='g'] .proof").forEach((node, i) => {
+        const r = node.getBoundingClientRect();
+        const mid = r.top + r.height * 0.4;
+        const t = smooth(clamp(1 - (mid - srect.top) / (srect.height * 0.7), 0, 1));
+        if (i === 0) {
+          node.style.marginTop = "-48px";
+          node.style.opacity = "1";
+          node.style.transform = "none";
+          return;
+        }
+        node.style.opacity = String(t);
+        node.style.transform = `translateY(${(1 - t) * 24}px)`;
+      });
+    }
+
+    function mountH(screen) {
+      const stack = screen.querySelector("[data-stack='h']");
+      stack.innerHTML = "";
+      PROOFS.forEach((p) => stack.appendChild(elProof(p)));
+    }
+    function updateH(screen) {
+      const p = progressIn(screen);
+      screen.querySelectorAll("[data-stack='h'] .proof").forEach((node, i) => {
+        const start = i * 0.25;
+        const end = start + 0.3;
+        const t = smooth(clamp((p - start) / (end - start), 0, 1));
+        const collapsed = i === 0 ? 1 : t;
+        const body = node.querySelector("p");
+        body.style.opacity = String(collapsed);
+        body.style.maxHeight = `${Math.round(collapsed * 48)}px`;
+        body.style.overflow = "hidden";
+        node.style.transform = `scale(${0.94 + collapsed * 0.06})`;
+        node.style.opacity = String(0.55 + collapsed * 0.45);
+        node.style.zIndex = String(i + 1);
+      });
+    }
+
+    const demos = {
+      a: { mount: mountA, update: updateA },
+      b: { mount: mountB, update: updateB },
+      c: { mount: mountC, update: updateC },
+      d: { mount: mountD, update: updateD },
+      e: { mount: mountE, update: updateE },
+      f: { mount: mountF, update: updateF },
+      g: { mount: mountG, update: updateG },
+      h: { mount: mountH, update: updateH },
+    };
+
+    function bindScreen(screen) {
+      const id = screen.dataset.demo;
+      const demo = demos[id];
+      demo.mount(screen);
+      const onScroll = () => demo.update(screen);
+      screen.addEventListener("scroll", onScroll, { passive: true });
+      // first paint
+      requestAnimationFrame(onScroll);
+      screen._replay = () => {
+        screen.scrollTo({ top: 0, behavior: "instant" in screen ? "instant" : "auto" });
+        if (id === "d" && screen._dReset) screen._dReset();
+        demo.mount(screen);
+        requestAnimationFrame(onScroll);
+      };
+    }
+
+    document.querySelectorAll(".phone-screen[data-demo]").forEach(bindScreen);
+
+    document.querySelectorAll("[data-replay]").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const id = btn.getAttribute("data-replay");
+        const screen = document.querySelector(`.phone-screen[data-demo='${id}']`);
+        if (screen?._replay) screen._replay();
+      });
+    });
+  </script>
+</body>
+</html>

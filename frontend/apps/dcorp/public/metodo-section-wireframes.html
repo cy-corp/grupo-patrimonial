@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>DCORP — Método · wireframes corte anotado</title>
+  <style>
+    :root {
+      --graphite: #1F1F1F;
+      --gold: #C9A96A;
+      --gray: #4D4D4D;
+      --line: #D9D9D9;
+      --white: #FFFFFF;
+      --fog: #F7F7F7;
+      --font: "Montserrat", "Segoe UI", system-ui, sans-serif;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: var(--font);
+      background: #111;
+      color: var(--graphite);
+    }
+    .deck {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 40px 20px 96px;
+    }
+    .deck-head { color: #fff; max-width: 560px; margin-bottom: 32px; }
+    .deck-head h1 {
+      margin: 0 0 10px;
+      font-size: 26px;
+      letter-spacing: -0.03em;
+    }
+    .deck-head p {
+      margin: 0;
+      color: rgba(255,255,255,.55);
+      font-size: 14px;
+      line-height: 1.55;
+    }
+    .nav {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 28px;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      padding: 12px 0;
+      background: linear-gradient(#111 70%, transparent);
+    }
+    .nav a {
+      text-decoration: none;
+      color: #111;
+      background: #fff;
+      font-size: 12px;
+      font-weight: 600;
+      padding: 8px 12px;
+      border-radius: 999px;
+    }
+    .frame {
+      background: var(--white);
+      border-radius: 12px;
+      overflow: hidden;
+      margin-bottom: 40px;
+      box-shadow: 0 24px 60px rgba(0,0,0,.35);
+    }
+    .frame-label {
+      background: #1a1a1a;
+      color: rgba(255,255,255,.7);
+      font-size: 12px;
+      padding: 12px 18px;
+      border-bottom: 1px solid #2a2a2a;
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .frame-label strong { color: var(--gold); font-weight: 600; }
+    .section {
+      padding: 48px 28px 56px;
+      max-width: 920px;
+      margin: 0 auto;
+    }
+    .eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+    .eyebrow span.line {
+      width: 40px;
+      height: 1px;
+      background: var(--gold);
+    }
+    .eyebrow p {
+      margin: 0;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+    h2 {
+      margin: 0;
+      font-size: clamp(1.4rem, 2.5vw, 1.85rem);
+      letter-spacing: -0.02em;
+      max-width: 16ch;
+    }
+    .lede {
+      margin: 12px 0 0;
+      color: var(--gray);
+      font-size: 15px;
+      line-height: 1.55;
+      max-width: 42ch;
+    }
+    .note {
+      margin-top: 28px;
+      padding-left: 14px;
+      border-left: 2px solid var(--gold);
+      color: var(--gray);
+      font-size: 13px;
+      line-height: 1.5;
+      max-width: 48ch;
+    }
+
+    /* ——— A: Corte elevação com callouts ——— */
+    .corte-wrap {
+      margin-top: 40px;
+      display: grid;
+      gap: 28px;
+    }
+    @media (min-width: 800px) {
+      .corte-wrap {
+        grid-template-columns: 1.1fr 0.9fr;
+        align-items: center;
+        gap: 40px;
+      }
+    }
+    .elevation {
+      position: relative;
+      aspect-ratio: 5 / 4;
+      background:
+        linear-gradient(180deg, #fafafa 0%, #f0f0f0 100%);
+      border: 1px solid var(--line);
+    }
+    .elevation svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+    .callouts {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      border-top: 1px solid var(--line);
+    }
+    .callouts li {
+      display: grid;
+      grid-template-columns: 2.5rem 1fr;
+      gap: 12px;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--line);
+      align-items: baseline;
+    }
+    .callouts .n {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--gold);
+      font-variant-numeric: tabular-nums;
+    }
+    .callouts strong {
+      display: block;
+      font-size: 14px;
+      color: var(--graphite);
+      font-weight: 600;
+    }
+    .callouts span {
+      display: block;
+      margin-top: 3px;
+      font-size: 12px;
+      color: var(--gray);
+      line-height: 1.4;
+    }
+
+    /* ——— B: Corte com labels flutuando no desenho ——— */
+    .inline-corte {
+      margin-top: 36px;
+      position: relative;
+      border: 1px solid var(--line);
+      background: var(--fog);
+      padding: 28px 16px 20px;
+    }
+    .inline-corte .house {
+      width: min(420px, 100%);
+      margin: 0 auto;
+      display: block;
+    }
+    .pin {
+      position: absolute;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--graphite);
+      max-width: 11rem;
+      line-height: 1.25;
+    }
+    .pin .dot {
+      flex: 0 0 auto;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: var(--graphite);
+      color: var(--gold);
+      font-size: 10px;
+      display: grid;
+      place-items: center;
+      font-variant-numeric: tabular-nums;
+    }
+    .pin.p1 { left: 4%; bottom: 18%; }
+    .pin.p2 { left: 6%; top: 38%; }
+    .pin.p3 { right: 3%; top: 42%; text-align: right; flex-direction: row-reverse; }
+    .pin.p4 { right: 4%; top: 22%; text-align: right; flex-direction: row-reverse; }
+    .pin.p5 { left: 50%; top: 8%; transform: translateX(-50%); }
+    @media (max-width: 640px) {
+      .pin { position: static; transform: none !important; margin-top: 10px; text-align: left !important; flex-direction: row !important; }
+      .inline-corte { padding-bottom: 12px; }
+      .pins-mobile { margin-top: 16px; display: flex; flex-direction: column; gap: 8px; }
+    }
+
+    /* ——— C: Folha de cronograma (extra) ——— */
+    .gantt {
+      margin-top: 36px;
+      border: 1px solid var(--line);
+    }
+    .gantt-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--line);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--gray);
+    }
+    .gantt-head strong { color: var(--gold); font-weight: 600; }
+    .gantt-bar {
+      display: grid;
+      grid-template-columns: 1.1fr 1.2fr 1fr 1.4fr 0.9fr;
+      min-height: 88px;
+    }
+    .gantt-bar > div {
+      border-right: 1px solid var(--line);
+      padding: 16px 12px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 10px;
+      background: #fff;
+    }
+    .gantt-bar > div:last-child { border-right: 0; }
+    .gantt-bar .n {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--gold);
+      font-variant-numeric: tabular-nums;
+    }
+    .gantt-bar .t {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--graphite);
+      line-height: 1.3;
+    }
+    .gantt-bar .fill {
+      height: 4px;
+      background: var(--gold);
+      opacity: 0.85;
+    }
+    @media (max-width: 700px) {
+      .gantt-bar {
+        grid-template-columns: 1fr;
+      }
+      .gantt-bar > div {
+        border-right: 0;
+        border-bottom: 1px solid var(--line);
+        flex-direction: row;
+        align-items: center;
+        min-height: 0;
+        padding: 14px 16px;
+      }
+      .gantt-bar > div:last-child { border-bottom: 0; }
+      .gantt-bar .fill { flex: 1; max-width: 48px; margin-left: auto; }
+    }
+  </style>
+</head>
+<body>
+  <div class="deck">
+    <header class="deck-head">
+      <h1>Método · wireframes</h1>
+      <p>
+        Sketches institucionais “fora da caixa” pro bloco de etapas no quem-somos.
+        Compara A (corte + lista lateral), B (callouts no desenho) e C (cronograma de obra).
+      </p>
+    </header>
+
+    <nav class="nav">
+      <a href="#a">A · Corte + lista</a>
+      <a href="#b">B · Callouts no desenho</a>
+      <a href="#c">C · Cronograma</a>
+    </nav>
+
+    <!-- A -->
+    <article class="frame" id="a">
+      <div class="frame-label">
+        <span><strong>A</strong> — Elevação esquemática + callouts (recomendado)</span>
+        <span>institucional · ainda sem lista 01 igual à atuação</span>
+      </div>
+      <div class="section">
+        <div class="eyebrow">
+          <span class="line"></span>
+          <p>Método</p>
+        </div>
+        <h2>Obra por etapas especializadas.</h2>
+        <p class="lede">
+          Cada fase com profissionais dedicados — sob planejamento único e inspeção DCORP.
+        </p>
+
+        <div class="corte-wrap">
+          <div class="elevation" aria-hidden="true">
+            <svg viewBox="0 0 480 384" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <!-- ground -->
+              <line x1="40" y1="320" x2="440" y2="320" stroke="#D9D9D9" stroke-width="1"/>
+              <!-- radier -->
+              <rect x="96" y="300" width="288" height="20" fill="#1F1F1F" opacity="0.12" stroke="#1F1F1F" stroke-width="1.5"/>
+              <!-- walls -->
+              <path d="M110 300 V140 H370 V300" stroke="#1F1F1F" stroke-width="2" fill="none"/>
+              <!-- roof -->
+              <path d="M90 140 L240 48 L390 140" stroke="#1F1F1F" stroke-width="2" fill="none"/>
+              <!-- panels hint -->
+              <line x1="170" y1="140" x2="170" y2="300" stroke="#C9A96A" stroke-width="1" stroke-dasharray="4 4"/>
+              <line x1="240" y1="140" x2="240" y2="300" stroke="#C9A96A" stroke-width="1" stroke-dasharray="4 4"/>
+              <line x1="310" y1="140" x2="310" y2="300" stroke="#C9A96A" stroke-width="1" stroke-dasharray="4 4"/>
+              <!-- door -->
+              <rect x="220" y="220" width="40" height="80" stroke="#1F1F1F" stroke-width="1.5" fill="none"/>
+              <!-- window -->
+              <rect x="130" y="180" width="36" height="36" stroke="#1F1F1F" stroke-width="1.5" fill="none"/>
+              <rect x="314" y="180" width="36" height="36" stroke="#1F1F1F" stroke-width="1.5" fill="none"/>
+              <!-- markers -->
+              <circle cx="240" cy="310" r="10" fill="#1F1F1F"/>
+              <text x="240" y="314" text-anchor="middle" fill="#C9A96A" font-size="9" font-family="Montserrat,sans-serif" font-weight="700">01</text>
+              <circle cx="200" cy="200" r="10" fill="#1F1F1F"/>
+              <text x="200" y="204" text-anchor="middle" fill="#C9A96A" font-size="9" font-family="Montserrat,sans-serif" font-weight="700">02</text>
+              <circle cx="280" cy="200" r="10" fill="#1F1F1F"/>
+              <text x="280" y="204" text-anchor="middle" fill="#C9A96A" font-size="9" font-family="Montserrat,sans-serif" font-weight="700">03</text>
+              <circle cx="340" cy="160" r="10" fill="#1F1F1F"/>
+              <text x="340" y="164" text-anchor="middle" fill="#C9A96A" font-size="9" font-family="Montserrat,sans-serif" font-weight="700">04</text>
+              <circle cx="240" cy="72" r="10" fill="#1F1F1F"/>
+              <text x="240" y="76" text-anchor="middle" fill="#C9A96A" font-size="9" font-family="Montserrat,sans-serif" font-weight="700">05</text>
+              <!-- leader lines -->
+              <line x1="250" y1="310" x2="400" y2="310" stroke="#C9A96A" stroke-width="1" opacity="0.5"/>
+              <line x1="210" y1="200" x2="60" y2="200" stroke="#C9A96A" stroke-width="1" opacity="0.5"/>
+            </svg>
+          </div>
+
+          <ol class="callouts">
+            <li>
+              <span class="n">01</span>
+              <div>
+                <strong>Fundação</strong>
+                <span>Terreno e radier</span>
+              </div>
+            </li>
+            <li>
+              <span class="n">02</span>
+              <div>
+                <strong>Estrutura e painéis</strong>
+                <span>Montagem industrializada</span>
+              </div>
+            </li>
+            <li>
+              <span class="n">03</span>
+              <div>
+                <strong>Instalações</strong>
+                <span>Elétrica e hidráulica</span>
+              </div>
+            </li>
+            <li>
+              <span class="n">04</span>
+              <div>
+                <strong>Revestimentos</strong>
+                <span>Acabamentos e pintura</span>
+              </div>
+            </li>
+            <li>
+              <span class="n">05</span>
+              <div>
+                <strong>Entrega</strong>
+                <span>Inspeção e limpeza final</span>
+              </div>
+            </li>
+          </ol>
+        </div>
+
+        <p class="note">
+          Mais produtividade, controle de custos, menos desperdício e prazo previsível — coordenado pela DCORP.
+        </p>
+      </div>
+    </article>
+
+    <!-- B -->
+    <article class="frame" id="b">
+      <div class="frame-label">
+        <span><strong>B</strong> — Callouts grudados no desenho</span>
+        <span>mais “fora da caixa” · mobile vira lista abaixo</span>
+      </div>
+      <div class="section">
+        <div class="eyebrow">
+          <span class="line"></span>
+          <p>Método</p>
+        </div>
+        <h2>Obra por etapas especializadas.</h2>
+        <p class="lede">
+          Um só planejamento. Equipes por fase. Inspeção DCORP em cada entrega parcial.
+        </p>
+
+        <div class="inline-corte">
+          <svg class="house" viewBox="0 0 360 280" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <line x1="20" y1="240" x2="340" y2="240" stroke="#D9D9D9"/>
+            <rect x="70" y="222" width="220" height="18" fill="#1F1F1F" opacity="0.1" stroke="#1F1F1F"/>
+            <path d="M80 222 V110 H280 V222" stroke="#1F1F1F" stroke-width="2"/>
+            <path d="M65 110 L180 36 L295 110" stroke="#1F1F1F" stroke-width="2"/>
+            <line x1="130" y1="110" x2="130" y2="222" stroke="#C9A96A" stroke-dasharray="3 3"/>
+            <line x1="180" y1="110" x2="180" y2="222" stroke="#C9A96A" stroke-dasharray="3 3"/>
+            <line x1="230" y1="110" x2="230" y2="222" stroke="#C9A96A" stroke-dasharray="3 3"/>
+            <rect x="162" y="160" width="36" height="62" stroke="#1F1F1F"/>
+            <rect x="100" y="140" width="28" height="28" stroke="#1F1F1F"/>
+            <rect x="232" y="140" width="28" height="28" stroke="#1F1F1F"/>
+          </svg>
+
+          <div class="pin p1"><span class="dot">01</span> Fundação · radier</div>
+          <div class="pin p2"><span class="dot">02</span> Estrutura e painéis</div>
+          <div class="pin p3"><span class="dot">03</span> Instalações</div>
+          <div class="pin p4"><span class="dot">04</span> Revestimentos</div>
+          <div class="pin p5"><span class="dot">05</span> Entrega</div>
+        </div>
+
+        <p class="note">
+          Coordenação única da DCORP — cronograma, padrão técnico e qualidade.
+        </p>
+      </div>
+    </article>
+
+    <!-- C -->
+    <article class="frame" id="c">
+      <div class="frame-label">
+        <span><strong>C</strong> — Folha de cronograma de obra</span>
+        <span>documento de canteiro · bem institucional</span>
+      </div>
+      <div class="section">
+        <div class="eyebrow">
+          <span class="line"></span>
+          <p>Método</p>
+        </div>
+        <h2>Obra por etapas especializadas.</h2>
+        <p class="lede">
+          Sequência industrializada — cada bloco uma equipe, um critério, uma inspeção.
+        </p>
+
+        <div class="gantt">
+          <div class="gantt-head">
+            <span>Cronograma de execução</span>
+            <strong>Coordenado pela DCORP</strong>
+          </div>
+          <div class="gantt-bar">
+            <div>
+              <span class="n">01</span>
+              <span class="t">Fundação</span>
+              <span class="fill"></span>
+            </div>
+            <div>
+              <span class="n">02</span>
+              <span class="t">Estrutura e painéis</span>
+              <span class="fill"></span>
+            </div>
+            <div>
+              <span class="n">03</span>
+              <span class="t">Instalações</span>
+              <span class="fill"></span>
+            </div>
+            <div>
+              <span class="n">04</span>
+              <span class="t">Revestimentos e acabamentos</span>
+              <span class="fill"></span>
+            </div>
+            <div>
+              <span class="n">05</span>
+              <span class="t">Entrega</span>
+              <span class="fill"></span>
+            </div>
+          </div>
+        </div>
+
+        <p class="note">
+          Produtividade, custo sob controle, menos desperdício, prazo previsível.
+        </p>
+      </div>
+    </article>
+  </div>
+</body>
+</html>

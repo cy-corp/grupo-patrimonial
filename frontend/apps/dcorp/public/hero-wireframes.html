@@ -1,0 +1,1075 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>DCORP — Hero wireframes</title>
+  <style>
+    :root {
+      --graphite: #1F1F1F;
+      --gold: #C9A96A;
+      --gray: #4D4D4D;
+      --line: #D9D9D9;
+      --white: #FFFFFF;
+      --fog: #F5F5F5;
+      --font: "Montserrat", "Segoe UI", system-ui, sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: var(--font);
+      background: #111;
+      color: var(--graphite);
+    }
+
+    .deck {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 40px 20px 80px;
+    }
+
+    .deck-head {
+      color: #fff;
+      margin-bottom: 36px;
+      max-width: 640px;
+    }
+    .deck-head p {
+      color: rgba(255,255,255,.55);
+      line-height: 1.55;
+      font-size: 14px;
+    }
+    .deck-head h1 {
+      margin: 0 0 10px;
+      font-size: 28px;
+      letter-spacing: -0.03em;
+    }
+    .deck-head .meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 18px;
+    }
+    .chip {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      border: 1px solid rgba(201,169,106,.45);
+      color: var(--gold);
+      padding: 6px 10px;
+      border-radius: 999px;
+    }
+
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding: 12px 0;
+      margin-bottom: 28px;
+      background: linear-gradient(#111, #111 70%, transparent);
+      backdrop-filter: blur(8px);
+    }
+    .nav a {
+      flex: 0 0 auto;
+      text-decoration: none;
+      color: #111;
+      background: #fff;
+      font-size: 12px;
+      font-weight: 600;
+      padding: 8px 12px;
+      border-radius: 8px;
+    }
+    .nav a:hover { background: var(--gold); }
+
+    .card {
+      background: #1a1a1a;
+      border: 1px solid #2a2a2a;
+      border-radius: 16px;
+      overflow: hidden;
+      margin-bottom: 36px;
+    }
+    .card-meta {
+      padding: 18px 20px 14px;
+      color: #fff;
+      display: grid;
+      gap: 6px;
+    }
+    .card-meta .tag {
+      color: var(--gold);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      font-weight: 700;
+    }
+    .card-meta h2 {
+      margin: 0;
+      font-size: 18px;
+      letter-spacing: -0.02em;
+    }
+    .card-meta p {
+      margin: 0;
+      color: rgba(255,255,255,.55);
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    /* Shared wireframe frame */
+    .frame {
+      position: relative;
+      aspect-ratio: 16 / 9;
+      background: var(--white);
+      overflow: hidden;
+      color: var(--graphite);
+    }
+    @media (max-width: 720px) {
+      .frame { aspect-ratio: 3 / 4; }
+    }
+
+    .wire {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(to right, rgba(31,31,31,.04) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(31,31,31,.04) 1px, transparent 1px);
+      background-size: 40px 40px;
+      opacity: .55;
+    }
+
+    .brand {
+      font-weight: 800;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      font-size: 11px;
+    }
+    .sig {
+      font-weight: 600;
+      font-style: italic;
+      color: var(--gold);
+    }
+    .rule {
+      height: 1px;
+      background: var(--gold);
+      width: 48px;
+    }
+    .cta {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      height: 40px;
+      padding: 0 18px;
+      border-radius: 8px;
+      background: linear-gradient(45deg, #A88B4E, #C9A96A 30%, #E0C48A 50%, #C9A96A 70%, #A88B4E);
+      color: #fff;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      border: none;
+    }
+    .ghost {
+      display: inline-flex;
+      align-items: center;
+      height: 40px;
+      padding: 0 16px;
+      border: 1px solid rgba(31,31,31,.25);
+      border-radius: 8px;
+      font-size: 11px;
+      font-weight: 600;
+      background: transparent;
+    }
+    .ghost.light {
+      border-color: rgba(255,255,255,.3);
+      color: #fff;
+    }
+    .ph {
+      background:
+        repeating-linear-gradient(-45deg, #ececec 0 8px, #e3e3e3 8px 16px);
+      border: 1px dashed #bdbdbd;
+      color: #888;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      padding: 12px;
+    }
+    .ph.dark {
+      background:
+        repeating-linear-gradient(-45deg, #2a2a2a 0 8px, #232323 8px 16px);
+      border-color: #444;
+      color: #777;
+    }
+
+    /* ========== A: Signature Frame ========== */
+    .a { background: var(--fog); }
+    .a .inner {
+      position: absolute;
+      inset: 8% 7%;
+      border: 1px solid rgba(31,31,31,.18);
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      padding: 4% 5%;
+    }
+    .a .inner::before,
+    .a .inner::after {
+      content: "";
+      position: absolute;
+      width: 18px;
+      height: 18px;
+      border: 1px solid var(--gold);
+    }
+    .a .inner::before { top: -1px; left: -1px; border-right: 0; border-bottom: 0; }
+    .a .inner::after { bottom: -1px; right: -1px; border-left: 0; border-top: 0; }
+    .a .top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+    }
+    .a .mid {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      max-width: 70%;
+      gap: 18px;
+    }
+    .a h3 {
+      margin: 0;
+      font-size: clamp(28px, 4.2vw, 56px);
+      line-height: 1.02;
+      letter-spacing: -0.04em;
+      font-weight: 700;
+    }
+    .a .sig { font-size: clamp(16px, 2vw, 24px); font-weight: 500; }
+    .a .bot {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .a .index {
+      display: flex;
+      gap: 22px;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--gray);
+    }
+    .a .index span { display: flex; align-items: center; gap: 8px; }
+    .a .index i {
+      width: 6px; height: 6px; border-radius: 50%; background: var(--gold); font-style: normal;
+    }
+
+    /* ========== B: Triptych ========== */
+    .b { display: grid; grid-template-columns: 1.15fr 1fr 1fr; }
+    .b .panel {
+      position: relative;
+      padding: 7% 8%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      border-right: 1px solid rgba(255,255,255,.08);
+      color: #fff;
+    }
+    .b .panel:last-child { border-right: 0; }
+    .b .p1 { background: var(--graphite); }
+    .b .p2 { background: #262626; }
+    .b .p3 { background: #2e2e2e; }
+    .b .num {
+      font-size: 11px;
+      color: var(--gold);
+      letter-spacing: 0.16em;
+      font-weight: 700;
+    }
+    .b h3 {
+      margin: 18px 0 10px;
+      font-size: clamp(18px, 2.2vw, 28px);
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+    }
+    .b p {
+      margin: 0;
+      color: rgba(255,255,255,.55);
+      font-size: 12px;
+      line-height: 1.5;
+      max-width: 28ch;
+    }
+    .b .lead {
+      grid-column: 1;
+      justify-content: center;
+      gap: 20px;
+    }
+    .b .lead .brand { color: rgba(255,255,255,.7); }
+    .b .lead .sig {
+      font-size: clamp(18px, 2.4vw, 32px);
+      line-height: 1.2;
+      max-width: 14ch;
+      display: block;
+    }
+    .b .lead .actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 8px; }
+    @media (max-width: 720px) {
+      .b { grid-template-columns: 1fr; grid-template-rows: 1.2fr .7fr .7fr .7fr; }
+      .b .panel { border-right: 0; border-bottom: 1px solid rgba(255,255,255,.08); }
+    }
+
+    /* ========== C: Blueprint ========== */
+    .c { background: #fafafa; }
+    .c .grid-bg {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(201,169,106,.18) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(201,169,106,.18) 1px, transparent 1px);
+      background-size: 48px 48px;
+      mask-image: radial-gradient(ellipse at 30% 40%, #000 20%, transparent 70%);
+    }
+    .c .coords {
+      position: absolute;
+      top: 5%;
+      left: 4%;
+      right: 4%;
+      display: flex;
+      justify-content: space-between;
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--gray);
+    }
+    .c .block {
+      position: absolute;
+      left: 8%;
+      top: 22%;
+      max-width: min(560px, 62%);
+    }
+    .c .stamp {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: 1px solid var(--gold);
+      color: var(--gold);
+      padding: 6px 10px;
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      font-weight: 700;
+      margin-bottom: 18px;
+    }
+    .c h3 {
+      margin: 0 0 14px;
+      font-size: clamp(30px, 4.5vw, 58px);
+      letter-spacing: -0.045em;
+      line-height: 0.98;
+      font-weight: 800;
+    }
+    .c .sig {
+      display: block;
+      font-size: clamp(15px, 1.8vw, 22px);
+      margin-bottom: 22px;
+    }
+    .c .actions { display: flex; gap: 10px; flex-wrap: wrap; }
+    .c .side {
+      position: absolute;
+      right: 5%;
+      top: 18%;
+      bottom: 12%;
+      width: min(240px, 28%);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .c .side .ph { flex: 1; min-height: 0; }
+    .c .side .note {
+      font-size: 10px;
+      color: var(--gray);
+      line-height: 1.4;
+      border-top: 1px solid var(--line);
+      padding-top: 10px;
+    }
+    @media (max-width: 720px) {
+      .c .side { display: none; }
+      .c .block { max-width: 86%; }
+    }
+
+    /* ========== D: Split Manifesto ========== */
+    .d { display: grid; grid-template-columns: 1.2fr .8fr; }
+    .d .copy {
+      padding: 7% 8%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 18px;
+      background: #fff;
+    }
+    .d .copy h3 {
+      margin: 0;
+      font-size: clamp(28px, 3.8vw, 48px);
+      letter-spacing: -0.04em;
+      line-height: 1.05;
+    }
+    .d .copy .sig { font-size: clamp(16px, 1.8vw, 22px); }
+    .d .copy .body {
+      margin: 0;
+      color: var(--gray);
+      font-size: 14px;
+      line-height: 1.55;
+      max-width: 42ch;
+    }
+    .d .copy .actions { display: flex; gap: 10px; flex-wrap: wrap; }
+    .d .media {
+      position: relative;
+      background: var(--graphite);
+      display: grid;
+      grid-template-rows: 1fr auto;
+    }
+    .d .media .ph { min-height: 100%; border: 0; border-radius: 0; }
+    .d .media .caption {
+      padding: 14px 16px;
+      color: rgba(255,255,255,.7);
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      border-top: 1px solid rgba(201,169,106,.35);
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .d .media .caption b { color: var(--gold); font-weight: 600; }
+    @media (max-width: 720px) {
+      .d { grid-template-columns: 1fr; grid-template-rows: 1.15fr .85fr; }
+    }
+
+    /* ========== D2: Letter D panel ========== */
+    .d2 {
+      background: var(--graphite);
+      position: relative;
+    }
+    .d2 .media-full {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      grid-template-rows: 1fr auto;
+    }
+    .d2 .media-full .ph {
+      min-height: 100%;
+      border: 0;
+      border-radius: 0;
+    }
+    .d2 .media-full .caption {
+      position: relative;
+      z-index: 2;
+      padding: 14px 16px;
+      color: rgba(255,255,255,.7);
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      border-top: 1px solid rgba(201,169,106,.35);
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      background: rgba(31,31,31,.72);
+    }
+    .d2 .media-full .caption b { color: var(--gold); font-weight: 600; }
+
+    /* White D: fills top→bottom, curved bowl opens into the media */
+    .d2 .letter {
+      position: absolute;
+      z-index: 3;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: min(58%, 680px);
+      /* D tipográfico mais fechado — menos “bola”, mais industrial */
+      border-radius: 0 16% 16% 0 / 0 26% 26% 0;
+      background: #fff;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 6% 14% 6% 6%;
+      gap: 16px;
+      box-shadow: 18px 0 48px rgba(0,0,0,.28);
+    }
+    .d2 .letter::after {
+      /* thin gold arc suggesting the D counter / brand accent on the curve */
+      content: "";
+      position: absolute;
+      right: 7%;
+      top: 12%;
+      bottom: 12%;
+      width: 2px;
+      border-radius: 999px;
+      background: linear-gradient(
+        to bottom,
+        transparent,
+        var(--gold) 18%,
+        var(--gold) 82%,
+        transparent
+      );
+      opacity: .85;
+      pointer-events: none;
+    }
+    .d2 .letter h3 {
+      margin: 0;
+      font-size: clamp(26px, 3.4vw, 44px);
+      letter-spacing: -0.04em;
+      line-height: 1.05;
+      max-width: 16ch;
+    }
+    .d2 .letter .sig {
+      font-size: clamp(15px, 1.7vw, 21px);
+      max-width: 22ch;
+    }
+    .d2 .letter .body {
+      margin: 0;
+      color: var(--gray);
+      font-size: 13px;
+      line-height: 1.55;
+      max-width: 38ch;
+    }
+    .d2 .letter .actions { display: flex; gap: 10px; flex-wrap: wrap; }
+    .d2 .ghost-d {
+      position: absolute;
+      right: 4%;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: clamp(120px, 22vw, 280px);
+      font-weight: 800;
+      color: rgba(255,255,255,.04);
+      line-height: 1;
+      letter-spacing: -0.08em;
+      pointer-events: none;
+      user-select: none;
+      z-index: 1;
+    }
+    @media (max-width: 720px) {
+      .d2 .letter {
+        position: relative;
+        width: 100%;
+        min-height: 58%;
+        border-radius: 0 0 28% 28% / 0 0 12% 12%;
+        padding: 10% 8% 16%;
+        box-shadow: none;
+      }
+      .d2 .letter::after { display: none; }
+      .d2 .ghost-d { display: none; }
+      .d2 .media-full {
+        position: relative;
+        min-height: 42%;
+      }
+    }
+
+    /* ========== E: Monument Type ========== */
+    .e { background: var(--graphite); color: #fff; }
+    .e .stack {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 5% 6%;
+    }
+    .e .toprow {
+      display: flex;
+      justify-content: space-between;
+      align-items: start;
+      gap: 16px;
+    }
+    .e .brand { color: rgba(255,255,255,.65); }
+    .e .mono {
+      font-size: clamp(42px, 9vw, 110px);
+      font-weight: 800;
+      letter-spacing: -0.06em;
+      line-height: 0.86;
+      text-transform: uppercase;
+      max-width: 11ch;
+    }
+    .e .mono em {
+      font-style: normal;
+      color: var(--gold);
+    }
+    .e .bottom {
+      display: grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap: 24px;
+      align-items: end;
+      border-top: 1px solid rgba(255,255,255,.12);
+      padding-top: 18px;
+    }
+    .e .sig {
+      font-size: clamp(16px, 2vw, 24px);
+      max-width: 18ch;
+      display: block;
+    }
+    .e .bottom-right {
+      display: flex;
+      flex-direction: column;
+      align-items: end;
+      gap: 12px;
+      text-align: right;
+    }
+    .e .bottom-right p {
+      margin: 0;
+      color: rgba(255,255,255,.5);
+      font-size: 12px;
+      max-width: 28ch;
+      line-height: 1.45;
+    }
+    @media (max-width: 720px) {
+      .e .bottom { grid-template-columns: 1fr; }
+      .e .bottom-right { align-items: start; text-align: left; }
+    }
+
+    /* ========== F: Floating Specimens ========== */
+    .f { background: #f3f3f3; }
+    .f .stage {
+      position: absolute;
+      inset: 0;
+      padding: 5% 6%;
+    }
+    .f .headline {
+      max-width: 52%;
+      margin-top: 4%;
+    }
+    .f .headline h3 {
+      margin: 12px 0;
+      font-size: clamp(26px, 3.6vw, 46px);
+      letter-spacing: -0.04em;
+      line-height: 1.05;
+    }
+    .f .sig { font-size: clamp(15px, 1.7vw, 20px); display: block; margin-bottom: 18px; }
+    .f .actions { display: flex; gap: 10px; flex-wrap: wrap; }
+    .f .float {
+      position: absolute;
+      background: #fff;
+      border: 1px solid var(--line);
+      box-shadow: 0 18px 40px rgba(31,31,31,.08);
+      padding: 14px;
+      width: min(220px, 28%);
+    }
+    .f .f1 { right: 8%; top: 16%; transform: rotate(-2deg); }
+    .f .f2 { right: 18%; bottom: 14%; transform: rotate(2.5deg); width: min(260px, 32%); }
+    .f .float .ph { height: 110px; margin-bottom: 10px; }
+    .f .float .label {
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gray);
+      margin-bottom: 4px;
+    }
+    .f .float strong {
+      font-size: 13px;
+      letter-spacing: -0.02em;
+    }
+    .f .rail {
+      position: absolute;
+      left: 6%;
+      bottom: 8%;
+      display: flex;
+      gap: 18px;
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gray);
+    }
+    .f .rail span::before {
+      content: "";
+      display: inline-block;
+      width: 18px;
+      height: 1px;
+      background: var(--gold);
+      margin-right: 8px;
+      vertical-align: middle;
+    }
+    @media (max-width: 720px) {
+      .f .headline { max-width: 100%; }
+      .f .float { display: none; }
+    }
+
+    /* ========== G: No-photo Institutional ========== */
+    .g { background: #fff; }
+    .g .cols {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      grid-template-columns: 72px 1fr 220px;
+    }
+    .g .spine {
+      border-right: 1px solid var(--line);
+      writing-mode: vertical-rl;
+      transform: rotate(180deg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      font-size: 11px;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--gray);
+    }
+    .g .spine .dot {
+      width: 6px; height: 6px; border-radius: 50%; background: var(--gold);
+    }
+    .g .main {
+      padding: 6% 7%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 20px;
+    }
+    .g .main h3 {
+      margin: 0;
+      font-size: clamp(30px, 4.2vw, 54px);
+      letter-spacing: -0.045em;
+      line-height: 1.02;
+      max-width: 14ch;
+    }
+    .g .main .sig {
+      font-size: clamp(16px, 2vw, 24px);
+      max-width: 22ch;
+    }
+    .g .main .actions { display: flex; gap: 10px; flex-wrap: wrap; }
+    .g .aside {
+      border-left: 1px solid var(--line);
+      padding: 8% 18px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      background: var(--fog);
+    }
+    .g .aside .item {
+      border-top: 1px solid var(--line);
+      padding-top: 12px;
+    }
+    .g .aside .item:first-child { border-top: 0; padding-top: 0; }
+    .g .aside .k {
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 6px;
+    }
+    .g .aside .v {
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      line-height: 1.3;
+    }
+    @media (max-width: 720px) {
+      .g .cols { grid-template-columns: 1fr; }
+      .g .spine, .g .aside { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="deck">
+    <header class="deck-head">
+      <h1>DCORP — Hero wireframes</h1>
+      <p>
+        Variações institucionais “fora da caixa”, com a assinatura
+        <em style="color:var(--gold)">Projetos que constroem oportunidades.</em>
+        A ideia é reduzir dependência de foto generica: tipografia, geometria e
+        estrutura fazem o trabalho. Áreas hachuradas = placeholder de mídia (só se precisar).
+      </p>
+      <div class="meta">
+        <span class="chip">Assinatura no 1º viewport</span>
+        <span class="chip">Sem creme</span>
+        <span class="chip">Grafite + ouro</span>
+        <span class="chip">Foto opcional / secundária</span>
+      </div>
+    </header>
+
+    <nav class="nav">
+      <a href="#a">A · Frame</a>
+      <a href="#b">B · Tríptico</a>
+      <a href="#c">C · Blueprint</a>
+      <a href="#d">D · Split</a>
+      <a href="#d2">D2 · Letra D</a>
+      <a href="#e">E · Monumento</a>
+      <a href="#f">F · Specimens</a>
+      <a href="#g">G · Sem foto</a>
+    </nav>
+
+    <!-- A -->
+    <article class="card" id="a">
+      <div class="card-meta">
+        <div class="tag">A · Signature Frame</div>
+        <h2>Quadro arquitetônico com a assinatura como peça central</h2>
+        <p>Cantos dourados, índice Planejamento / Execução / Resultados. Quase zero foto — a marca é o objeto.</p>
+      </div>
+      <div class="frame a">
+        <div class="wire"></div>
+        <div class="inner">
+          <div class="top">
+            <div class="brand">DCORP Engenharia</div>
+            <div class="rule"></div>
+          </div>
+          <div class="mid">
+            <h3>Construção industrial com método e precisão.</h3>
+            <span class="sig">Projetos que constroem oportunidades.</span>
+          </div>
+          <div class="bot">
+            <div class="index">
+              <span><i></i>Planejamento</span>
+              <span><i></i>Execução</span>
+              <span><i></i>Resultados</span>
+            </div>
+            <button class="cta">Solicitar orçamento</button>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- B -->
+    <article class="card" id="b">
+      <div class="card-meta">
+        <div class="tag">B · Tríptico institucional</div>
+        <h2>Assinatura + três pilares como arquitetura da hero</h2>
+        <p>A hero vira um “sistema”: a marca à esquerda, os três conceitos como painéis. Sem imagem.</p>
+      </div>
+      <div class="frame b">
+        <div class="panel p1 lead">
+          <div>
+            <div class="brand">DCORP</div>
+            <div class="rule" style="margin:14px 0"></div>
+            <span class="sig">Projetos que constroem oportunidades.</span>
+          </div>
+          <div class="actions">
+            <button class="cta">Solicitar orçamento</button>
+            <button class="ghost light">Sistemas</button>
+          </div>
+        </div>
+        <div class="panel p2">
+          <div>
+            <div class="num">01</div>
+            <h3>Planejamento</h3>
+            <p>Estratégia, viabilidade e inteligência técnica antes da obra.</p>
+          </div>
+        </div>
+        <div class="panel p2" style="background:#292929">
+          <div>
+            <div class="num">02</div>
+            <h3>Execução</h3>
+            <p>Sistemas industrializados, controle e previsibilidade de prazo.</p>
+          </div>
+        </div>
+        <div class="panel p3">
+          <div>
+            <div class="num">03</div>
+            <h3>Resultados</h3>
+            <p>Produtividade, qualidade e crescimento mensurável.</p>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- C -->
+    <article class="card" id="c">
+      <div class="card-meta">
+        <div class="tag">C · Blueprint industrial</div>
+        <h2>Linguagem de projeto técnico + carimbo da marca</h2>
+        <p>Grid dourado, coordenadas, carimbo. Foto vira “prancha” lateral opcional — não carrega a hero.</p>
+      </div>
+      <div class="frame c">
+        <div class="grid-bg"></div>
+        <div class="coords">
+          <span>DCORP / HERO-03</span>
+          <span>ESCALA 1:1</span>
+          <span>REV. A</span>
+        </div>
+        <div class="block">
+          <div class="stamp">Institucional</div>
+          <h3>Planejamento. Execução. Resultados.</h3>
+          <span class="sig">Projetos que constroem oportunidades.</span>
+          <div class="actions">
+            <button class="cta">Solicitar orçamento</button>
+            <button class="ghost">Falar com especialista</button>
+          </div>
+        </div>
+        <aside class="side">
+          <div class="ph">Detalhe de obra / sistema<br/>(opcional)</div>
+          <div class="note">Mídia secundária. Se a foto for fraca, remove e deixa só o grid.</div>
+        </aside>
+      </div>
+    </article>
+
+    <!-- D -->
+    <article class="card" id="d">
+      <div class="card-meta">
+        <div class="tag">D · Split manifesto</div>
+        <h2>Tipografia no claro + faixa de mídia estreita</h2>
+        <p>Foto não precisa ser “hero shot”: pode ser textura de concreto, detalhe metálico, EPS, junta — crop editorial.</p>
+      </div>
+      <div class="frame d">
+        <div class="copy">
+          <div class="brand">DCORP Engenharia</div>
+          <div class="rule"></div>
+          <h3>Inteligência construtiva para projetos industriais.</h3>
+          <span class="sig">Projetos que constroem oportunidades.</span>
+          <p class="body">Eficiência, tecnologia e crescimento — com controle de qualidade e entrega previsível.</p>
+          <div class="actions">
+            <button class="cta">Solicitar orçamento</button>
+            <button class="ghost">Ver sistemas</button>
+          </div>
+        </div>
+        <div class="media">
+          <div class="ph dark">Crop vertical<br/>detalhe / textura / sistema<br/>(não precisa ser “obra ampla”)</div>
+          <div class="caption">
+            <span>Construção industrial</span>
+            <b>01 / Planejamento</b>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- D2 -->
+    <article class="card" id="d2">
+      <div class="card-meta">
+        <div class="tag">D2 · Painel em forma de D</div>
+        <h2>O bloco branco vira a letra D: preenche topo/base e curva no encontro com a mídia</h2>
+        <p>
+          Movimento sem gimmick: a curva do D invade a foto. Texto fica no “tronco”
+          da letra. No mobile a curva vira um arco inferior (mais seguro pra leitura).
+        </p>
+      </div>
+      <div class="frame d2">
+        <div class="ghost-d" aria-hidden="true">D</div>
+        <div class="media-full">
+          <div class="ph dark">Crop / textura / sistema<br/>visível na curva do D</div>
+          <div class="caption">
+            <span>Construção industrial</span>
+            <b>01 / Planejamento</b>
+          </div>
+        </div>
+        <div class="letter">
+          <div class="brand">DCORP Engenharia</div>
+          <div class="rule"></div>
+          <h3>Inteligência construtiva para projetos industriais.</h3>
+          <span class="sig">Projetos que constroem oportunidades.</span>
+          <p class="body">Eficiência, tecnologia e crescimento — com controle de qualidade e entrega previsível.</p>
+          <div class="actions">
+            <button class="cta">Solicitar orçamento</button>
+            <button class="ghost">Ver sistemas</button>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- E -->
+    <article class="card" id="e">
+      <div class="card-meta">
+        <div class="tag">E · Monumento tipográfico</div>
+        <h2>A palavra da marca domina; a assinatura ancora embaixo</h2>
+        <p>Zero foto. Máxima autoridade institucional. Funciona mesmo com stock ruim.</p>
+      </div>
+      <div class="frame e">
+        <div class="wire" style="opacity:.12"></div>
+        <div class="stack">
+          <div class="toprow">
+            <div class="brand">DCORP Engenharia</div>
+            <button class="cta">Solicitar orçamento</button>
+          </div>
+          <div class="mono">
+            CONSTRU<em>ÇÃO</em><br />INDUSTRIAL
+          </div>
+          <div class="bottom">
+            <span class="sig">Projetos que constroem oportunidades.</span>
+            <div class="bottom-right">
+              <p>Planejamento estruturado, execução eficiente e resultados concretos.</p>
+              <div class="rule"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- F -->
+    <article class="card" id="f">
+      <div class="card-meta">
+        <div class="tag">F · Specimens flutuantes</div>
+        <h2>Assinatura + “amostras” de sistemas como peças de catálogo</h2>
+        <p>Em vez de uma foto wide fraca, dois cards de detalhe (EPS / laje). Mais produto, menos stock.</p>
+      </div>
+      <div class="frame f">
+        <div class="stage">
+          <div class="headline">
+            <div class="brand">DCORP</div>
+            <div class="rule" style="margin-top:14px"></div>
+            <h3>Soluções industrializadas com precisão de engenharia.</h3>
+            <span class="sig">Projetos que constroem oportunidades.</span>
+            <div class="actions">
+              <button class="cta">Solicitar orçamento</button>
+              <button class="ghost">Explorar sistemas</button>
+            </div>
+          </div>
+          <div class="rail">
+            <span>Planejamento</span>
+            <span>Execução</span>
+            <span>Resultados</span>
+          </div>
+        </div>
+        <div class="float f1">
+          <div class="ph">Painel EPS<br/>close-up</div>
+          <div class="label">Sistema 01</div>
+          <strong>Painel Monolítico EPS</strong>
+        </div>
+        <div class="float f2">
+          <div class="ph">Concrete Laje<br/>detalhe</div>
+          <div class="label">Sistema 02</div>
+          <strong>Sistema Concrete Laje</strong>
+        </div>
+      </div>
+    </article>
+
+    <!-- G -->
+    <article class="card" id="g">
+      <div class="card-meta">
+        <div class="tag">G · Editorial sem foto</div>
+        <h2>Coluna lateral + assinatura + dados institucionais</h2>
+        <p>Mais “relatório / escritório de engenharia” do que landing genérica. Muito alinhado ao tom profissional.</p>
+      </div>
+      <div class="frame g">
+        <div class="cols">
+          <div class="spine">
+            <span class="dot"></span>
+            DCORP Engenharia
+            <span class="dot"></span>
+          </div>
+          <div class="main">
+            <div class="rule"></div>
+            <h3>Construir hoje para gerar mais oportunidades amanhã.</h3>
+            <span class="sig">Projetos que constroem oportunidades.</span>
+            <div class="actions">
+              <button class="cta">Solicitar orçamento</button>
+              <button class="ghost">Conhecer a DCORP</button>
+            </div>
+          </div>
+          <aside class="aside">
+            <div class="item">
+              <div class="k">Posição</div>
+              <div class="v">Construção industrial</div>
+            </div>
+            <div class="item">
+              <div class="k">Método</div>
+              <div class="v">Planejamento · Execução · Resultados</div>
+            </div>
+            <div class="item">
+              <div class="k">Foco</div>
+              <div class="v">Produtividade e previsibilidade</div>
+            </div>
+            <div class="item">
+              <div class="k">CTA</div>
+              <div class="v">Orçamento técnico</div>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </article>
+  </div>
+</body>
+</html>
