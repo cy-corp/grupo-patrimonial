@@ -150,7 +150,7 @@ export function RendalHomeHero() {
             <Link
               href="/"
               aria-label="Grupo Rendal - início"
-              className="relative z-[1] flex h-16 w-[7.5rem] shrink-0 items-center justify-center rounded-full border border-white/20 bg-white/10 p-1.5 shadow-[inset_0_0.5px_0_rgba(255,255,255,0.45),0_8px_24px_rgba(0,0,0,0.14)] backdrop-blur-md transition-[background-color,transform] duration-[var(--duration-quick)] ease-[var(--ease-smooth-out)] hover:bg-white/15 active:scale-[0.96] sm:h-[4.5rem] sm:w-[8.5rem] sm:p-2"
+              className="relative z-[1] flex h-16 w-[7.5rem] shrink-0 items-center justify-center rounded-full border border-white/10 bg-white/[0.08] p-1.5 shadow-[inset_0_0.5px_0_rgba(255,255,255,0.28),0_8px_24px_rgba(0,0,0,0.08)] backdrop-blur-md transition-[background-color,transform] duration-[var(--duration-quick)] ease-[var(--ease-smooth-out)] hover:bg-white/15 active:scale-[0.96] sm:h-[4.5rem] sm:w-[8.5rem] sm:border-white/20 sm:p-2 sm:shadow-[inset_0_0.5px_0_rgba(255,255,255,0.45),0_8px_24px_rgba(0,0,0,0.14)]"
             >
               <Image
                 src="/brands/rendal-logo-sem-subtitulo.png"

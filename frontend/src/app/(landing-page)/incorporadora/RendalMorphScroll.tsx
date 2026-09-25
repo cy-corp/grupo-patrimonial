@@ -95,13 +95,12 @@ function ProofSlideTile({
   reduceMotion: boolean | null;
 }) {
   const start = index === 0 ? 0 : 0.08 + (index - 1) * 0.4;
-  const end = index === 0 ? 0 : start + 0.4;
 
-  const opacity = useTransform(
-    progress,
-    index === 0 ? [0, 1] : [start, start + 0.2, end],
-    index === 0 || reduceMotion ? [1, 1] : [0, 1, 1],
-  );
+  const opacity = useTransform(progress, (p) => {
+    if (index === 0 || reduceMotion) return 1;
+    const t = Math.min(1, Math.max(0, (p - start) / 0.2));
+    return t * t * (3 - 2 * t);
+  });
   const y = useTransform(progress, (p) => {
     if (reduceMotion) return index * (CARD_H + CARD_GAP);
     if (index === 0) return 0;
@@ -170,9 +169,9 @@ export function RendalMorphScroll() {
     offset: ["start 0.85", "start 0.05"],
   });
   const proofProgress = useSpring(proofRaw, {
-    stiffness: 280,
-    damping: 40,
-    mass: 0.12,
+    stiffness: 220,
+    damping: 52,
+    mass: 0.14,
     restDelta: 0.001,
   });
 
