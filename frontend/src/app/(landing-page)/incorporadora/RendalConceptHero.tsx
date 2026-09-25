@@ -7,6 +7,7 @@ import {
   useRef,
   useState,
   type CSSProperties,
+  type MouseEvent,
   type PointerEvent,
 } from "react";
 import {
@@ -111,6 +112,15 @@ function HeroCopy({ hint }: { hint: string }) {
   );
 }
 
+function scrollToGuess(event: MouseEvent<HTMLAnchorElement>) {
+  const target = document.getElementById("chute");
+  if (!target) return;
+  event.preventDefault();
+  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  target.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" });
+  window.history.replaceState(null, "", "#chute");
+}
+
 function FinaleCopy() {
   return (
     <>
@@ -121,13 +131,14 @@ function FinaleCopy() {
       <p className="mt-2 hidden text-base leading-7 text-pretty text-[#1F1F1F]/70 sm:block">
         Antes de ver o valor, chute quanto você pagaria por ela.
       </p>
-      <Link
+      <a
         href="#chute"
+        onClick={scrollToGuess}
         className={cn(CTA, "mt-4")}
         style={{ transitionTimingFunction: EASE }}
       >
         Chutar o preço
-      </Link>
+      </a>
     </>
   );
 }
@@ -289,7 +300,7 @@ export function RendalConceptHero() {
       <section
         id="conteudo"
         ref={trackRef}
-        className="relative h-[340vh] bg-[#F8F1E3] md:h-[400vh]"
+        className="relative h-[240vh] bg-[#F8F1E3] md:h-[400vh]"
         aria-label="Do traço à casa Rendal"
       >
         <div ref={stageRef} className="sticky top-0 h-svh overflow-hidden">
@@ -298,7 +309,7 @@ export function RendalConceptHero() {
             className="absolute inset-x-0 top-0 z-20 px-6 pt-24 sm:pt-32"
             style={{ opacity: copyOpacity, y: copyY, pointerEvents: copyEvents }}
           >
-            <HeroCopy hint="Passe o cursor no desenho: o traço já é a casa." />
+            <HeroCopy hint="Passe o mouse no desenho." />
           </motion.div>
 
           <div

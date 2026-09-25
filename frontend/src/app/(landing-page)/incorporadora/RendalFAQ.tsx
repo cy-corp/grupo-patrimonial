@@ -2,7 +2,6 @@
 
 import { useId, useState } from "react";
 import { CaretDown } from "@phosphor-icons/react";
-import { cn } from "@/lib/utils";
 import { RendalReveal } from "./RendalReveal";
 
 const FAQ = [
@@ -40,8 +39,6 @@ const FAQ = [
   },
 ] as const;
 
-const EASE = "cubic-bezier(0.32,0.72,0,1)";
-
 function FaqItem({
   question,
   answer,
@@ -57,39 +54,31 @@ function FaqItem({
   const buttonId = useId();
 
   return (
-    <div className="rounded-2xl bg-white ring-1 ring-[#1F1F1F]/10">
+    <div
+      className="t-acc rounded-2xl bg-white ring-1 ring-[#1F1F1F]/10"
+      data-open={open ? "true" : "false"}
+    >
       <button
         type="button"
         id={buttonId}
         aria-expanded={open}
         aria-controls={panelId}
         onClick={onToggle}
-        className="flex w-full cursor-pointer items-center justify-between gap-4 px-6 py-5 text-left transition-all duration-700 hover:bg-[#F8F1E3]/60 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0F5B63] active:scale-[0.99] sm:px-8"
-        style={{ transitionTimingFunction: EASE }}
+        className="t-acc-head flex w-full cursor-pointer items-center justify-between gap-4 px-6 py-5 text-left transition-colors duration-200 hover:bg-[#F8F1E3]/60 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0F5B63] sm:px-8"
       >
         <span className="text-base font-semibold text-balance text-[#1F1F1F] sm:text-lg">
           {question}
         </span>
-        <CaretDown
-          weight="bold"
-          className={cn(
-            "size-5 shrink-0 text-[#0F5B63] transition-transform duration-700",
-            open && "rotate-180",
-          )}
-          style={{ transitionTimingFunction: EASE }}
-          aria-hidden
-        />
+        <span className="t-acc-chevron shrink-0 text-[#0F5B63]">
+          <CaretDown weight="bold" className="size-5" aria-hidden />
+        </span>
       </button>
-      <div
-        id={panelId}
-        role="region"
-        aria-labelledby={buttonId}
-        hidden={!open}
-        className="px-6 pb-5 sm:px-8 sm:pb-6"
-      >
-        <p className="text-base leading-7 text-pretty text-[#1F1F1F]/65">
-          {answer}
-        </p>
+      <div id={panelId} role="region" aria-labelledby={buttonId} className="t-acc-panel">
+        <div className="t-acc-panel-inner px-6 sm:px-8">
+          <p className="pb-5 text-base leading-7 text-pretty text-[#1F1F1F]/65 sm:pb-6">
+            {answer}
+          </p>
+        </div>
       </div>
     </div>
   );
@@ -100,7 +89,7 @@ export function RendalFAQ() {
 
   return (
     <section
-      className="bg-[#FFFFFF] px-6 py-16 sm:py-20 md:py-24"
+      className="bg-[#FFFFFF] px-6 py-12 sm:py-20 md:py-24"
       aria-labelledby="faq-titulo"
     >
       <div className="mx-auto max-w-3xl">

@@ -49,22 +49,30 @@ export function RendalPriceGuess() {
   };
 
   const gap = guess - PRICE_FROM;
+  const overshot = gap > 0;
+  const headline = overshot
+    ? `${formatPrice(gap)} a menos do que você imaginou.`
+    : "Você ficou abaixo. Esse chute não acertou.";
+  const detail = overshot
+    ? "Laje que vira lazer, lavabo no social e orçamento racional onde ninguém olha."
+    : "A casa custa mais do que você marcou.";
   const fill = ((guess - MIN) / (MAX - MIN)) * 100;
 
   return (
     <section
       id="chute"
-      className="relative z-10 scroll-mt-24 bg-[#F8F1E3] px-6 pb-20 pt-16 sm:px-8 sm:pb-24 sm:pt-20 lg:px-10"
+      className="relative z-10 scroll-mt-24 bg-[#F8F1E3] px-6 pb-12 pt-10 sm:px-8 sm:pb-24 sm:pt-20 lg:px-10"
       aria-labelledby="chute-titulo"
     >
       <RendalReveal className="mx-auto max-w-7xl">
         <div className="grid overflow-hidden rounded-4xl bg-[#0E2A2D] text-white shadow-[0_28px_60px_rgba(31,31,31,0.18)] lg:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)]">
-          <div className="relative aspect-square sm:aspect-[4/3] lg:aspect-auto lg:min-h-[36rem]">
+          <div className="relative aspect-[16/10] sm:aspect-[4/3] lg:aspect-auto lg:min-h-[36rem]">
             <Image
               src={FACADE}
               alt="Fachada Rendal à noite, com laje de lazer iluminada e madeira ripada"
               fill
-              sizes="(max-width: 1024px) 100vw, 640px"
+              quality={90}
+              sizes="(max-width: 1024px) 100vw, 60vw"
               className="object-cover object-center"
             />
             <motion.div
@@ -83,7 +91,7 @@ export function RendalPriceGuess() {
               }
             >
               <span className="h-8 w-px bg-white/70 sm:h-20" />
-              <div className="relative h-36 w-32 perspective-[900px] sm:h-52 sm:w-40">
+              <div className="relative h-36 w-36 perspective-[900px] sm:h-52 sm:w-44">
                 <div
                   className={cn(
                     "relative size-full transition-transform duration-1000 transform-3d motion-reduce:transition-none",
@@ -111,7 +119,7 @@ export function RendalPriceGuess() {
                     <span className="text-xs font-semibold uppercase tracking-widest text-[#1F1F1F]/60">
                       A partir de
                     </span>
-                    <span className="mt-1 whitespace-nowrap text-xl font-semibold sm:text-2xl tabular-nums tracking-tight">
+                    <span className="mt-1 text-lg font-semibold leading-tight tabular-nums tracking-tight sm:text-2xl">
                       {formatPrice(PRICE_FROM)}
                     </span>
                   </div>
@@ -185,58 +193,64 @@ export function RendalPriceGuess() {
               </div>
             </div>
 
-            <div aria-live="polite" className="mt-10 min-h-[9.5rem]">
-              {revealed ? (
-                <motion.div
-                  initial={reduceMotion ? false : { y: 12, opacity: 0 }}
-                  animate={{ y: 0, opacity: 1 }}
-                  transition={{ duration: 0.5, delay: reduceMotion ? 0 : 0.45, ease: [0.32, 0.72, 0, 1] }}
-                >
-                  <p className="text-sm font-semibold text-[#C9A96A]">
-                    Preço real: a partir de {formatPrice(PRICE_FROM)}
-                  </p>
-                  <p className="mt-2 text-2xl font-semibold tracking-tight text-balance sm:text-3xl">
-                    {gap > 0
-                      ? `${formatPrice(gap)} a menos do que você imaginou.`
-                      : "Olho bom. Você chegou no preço."}
-                  </p>
-                  <p className="mt-3 max-w-[40ch] text-base leading-7 text-pretty text-white/70">
-                    {gap > 0
-                      ? "Essa distância é o projeto: laje que vira lazer, lavabo no social e o orçamento racional onde ninguém olha."
-                      : "Agora imagine a visita chutando. A casa entrega mais do que o preço sugere."}
-                  </p>
-                  <p className="mt-3 max-w-[40ch] text-sm leading-6 text-pretty text-white/50">
-                    E não é só impressão: em casos de referência, a avaliação da
-                    Caixa ficou 30 a 40% acima do preço de venda.
-                  </p>
-                  <div className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-3">
-                    <Link
-                      href="/empreendimentos"
-                      className="inline-flex h-12 items-center justify-center rounded-full bg-[#C9A96A] px-6 text-base font-semibold text-[#1F1F1F] transition-colors duration-700 hover:bg-[#D8BC84] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white active:scale-[0.98]"
-                      style={{ transitionTimingFunction: EASE }}
-                    >
-                      Ver empreendimentos
-                    </Link>
-                    <button
-                      type="button"
-                      onClick={reset}
-                      className="text-sm font-semibold text-white/60 underline-offset-4 transition-colors duration-700 hover:text-white hover:underline"
-                      style={{ transitionTimingFunction: EASE }}
-                    >
-                      Chutar de novo
-                    </button>
-                  </div>
-                </motion.div>
-              ) : (
+            <div className="mt-8 grid [&>*]:col-start-1 [&>*]:row-start-1">
+              <div className={cn("flex", revealed && "invisible")} aria-hidden={revealed}>
                 <button
                   type="button"
                   onClick={() => setRevealed(true)}
-                  className="inline-flex h-12 items-center justify-center rounded-full bg-white px-6 text-base font-semibold text-[#0E2A2D] transition-colors duration-700 hover:bg-[#F8F1E3] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#C9A96A] active:scale-[0.98]"
+                  tabIndex={revealed ? -1 : undefined}
+                  className="inline-flex h-12 cursor-pointer items-center justify-center self-start rounded-full bg-white px-6 text-base font-semibold text-[#0E2A2D] transition-colors duration-700 hover:bg-[#F8F1E3] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#C9A96A] active:scale-[0.98]"
                   style={{ transitionTimingFunction: EASE }}
                 >
                   Virar a etiqueta
                 </button>
-              )}
+              </div>
+              <div
+                aria-live="polite"
+                aria-hidden={!revealed}
+                className={cn(!revealed && "invisible")}
+              >
+                <p className="text-sm font-semibold text-[#C9A96A]">
+                  Preço real: a partir de {formatPrice(PRICE_FROM)}
+                </p>
+                <div className="grid [&>*]:col-start-1 [&>*]:row-start-1">
+                  <div aria-hidden className="invisible">
+                    <p className="mt-2 text-xl font-semibold tracking-tight text-balance sm:text-2xl">
+                      {formatPrice(MAX - PRICE_FROM)} a menos do que você imaginou.
+                    </p>
+                    <p className="mt-2 max-w-[40ch] text-sm leading-6 text-pretty">
+                      Laje que vira lazer, lavabo no social e orçamento racional onde ninguém olha.
+                    </p>
+                  </div>
+                  <div>
+                    <p className="mt-2 text-xl font-semibold tracking-tight text-balance sm:text-2xl">
+                      {headline}
+                    </p>
+                    <p className="mt-2 max-w-[40ch] text-sm leading-6 text-pretty text-white/70">
+                      {detail}
+                    </p>
+                  </div>
+                </div>
+                <div className="mt-5 flex flex-wrap items-center gap-x-6 gap-y-3">
+                  <Link
+                    href="/empreendimentos"
+                    tabIndex={revealed ? undefined : -1}
+                    className="inline-flex h-12 items-center justify-center rounded-full bg-[#C9A96A] px-6 text-base font-semibold text-[#1F1F1F] transition-colors duration-700 hover:bg-[#D8BC84] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white active:scale-[0.98]"
+                    style={{ transitionTimingFunction: EASE }}
+                  >
+                    Ver empreendimentos
+                  </Link>
+                  <button
+                    type="button"
+                    onClick={reset}
+                    tabIndex={revealed ? undefined : -1}
+                    className="cursor-pointer text-sm font-semibold text-white/60 underline-offset-4 transition-colors duration-700 hover:text-white hover:underline"
+                    style={{ transitionTimingFunction: EASE }}
+                  >
+                    Chutar de novo
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
         </div>

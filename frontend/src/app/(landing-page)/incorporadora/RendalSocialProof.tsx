@@ -10,12 +10,12 @@ const EASE = "cubic-bezier(0.32,0.72,0,1)";
 export function RendalSocialProof() {
   return (
     <section
-      className="bg-[#F8F1E3] px-6 py-16 sm:py-20 md:py-24"
+      className="bg-[#F8F1E3] px-6 py-12 sm:py-20 md:py-24"
       aria-labelledby="prova-titulo"
     >
       <div className="mx-auto grid max-w-5xl gap-10 lg:grid-cols-2 lg:items-center lg:gap-16">
         <RendalReveal>
-          <div className="relative aspect-[4/3] overflow-hidden rounded-2xl bg-[#1F1F1F]">
+          <div className="relative aspect-video overflow-hidden rounded-2xl bg-[#1F1F1F] sm:aspect-[4/3]">
             <Image
               src="/referencia/capetinga-dener/render-laje-dia.jpg"
               alt="Laje de lazer do Residencial Capetinga, referência de produto Rendal"

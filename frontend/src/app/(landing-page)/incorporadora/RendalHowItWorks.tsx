@@ -27,7 +27,7 @@ const STEPS = [
 export function RendalHowItWorks() {
   return (
     <section
-      className="bg-[#FFFFFF] px-6 py-16 sm:py-20 md:py-24"
+      className="bg-[#FFFFFF] px-6 py-12 sm:py-20 md:py-24"
       aria-labelledby="como-titulo"
     >
       <div className="mx-auto max-w-5xl">

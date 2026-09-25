@@ -95,7 +95,7 @@ export function RendalAnatomy() {
   return (
     <section
       id="valor"
-      className="bg-[#F8F1E3] px-6 py-20 sm:px-8 sm:py-24 lg:px-10 lg:py-32"
+      className="bg-[#F8F1E3] px-6 py-12 sm:px-8 sm:py-24 lg:px-10 lg:py-32"
       aria-labelledby="valor-titulo"
     >
       <div className="mx-auto max-w-7xl">
@@ -132,9 +132,9 @@ export function RendalAnatomy() {
           </p>
         </RendalReveal>
 
-        <div className="mt-16 grid gap-10 lg:mt-20 lg:grid-cols-[minmax(0,1.35fr)_minmax(0,1fr)] lg:items-start lg:gap-16">
+        <div className="mt-10 grid gap-8 lg:mt-20 lg:grid-cols-[minmax(0,1.35fr)_minmax(0,1fr)] lg:items-start lg:gap-16">
           <RendalReveal className="lg:sticky lg:top-28">
-            <figure className="relative m-0 aspect-[4/3] overflow-hidden rounded-4xl bg-[#1F1F1F] shadow-[0_28px_60px_rgba(31,31,31,0.16)] lg:aspect-[16/10]">
+            <figure className="relative m-0 aspect-video overflow-hidden rounded-4xl bg-[#1F1F1F] shadow-[0_28px_60px_rgba(31,31,31,0.16)] sm:aspect-[4/3] lg:aspect-[16/10]">
               <Image
                 src="/wireframes/scroll-laje-golden.jpg"
                 alt="Laje de lazer Rendal ao pôr do sol, com pergolas, jardineiras e madeira ripada na fachada"
@@ -154,7 +154,7 @@ export function RendalAnatomy() {
                     onFocus={() => setActive(index)}
                     onClick={() => setActive(index)}
                     className={cn(
-                      "absolute flex size-9 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full text-sm font-semibold tabular-nums shadow-[0_8px_24px_rgba(31,31,31,0.28)] transition-all duration-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white",
+                      "absolute flex size-9 -translate-x-1/2 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full text-sm font-semibold tabular-nums shadow-[0_8px_24px_rgba(31,31,31,0.28)] transition-all duration-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white",
                       on
                         ? "scale-110 bg-[#C9A96A] text-[#1F1F1F]"
                         : "bg-white/90 text-[#1F1F1F] hover:scale-105",
@@ -192,7 +192,7 @@ export function RendalAnatomy() {
                         onFocus={() => setActive(index)}
                         onClick={() => setActive(index)}
                         className={cn(
-                          "flex w-full items-start gap-4 rounded-2xl p-4 text-left transition-all duration-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#0F5B63]",
+                          "flex w-full cursor-pointer items-start gap-4 rounded-2xl p-4 text-left transition-all duration-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#0F5B63]",
                           on
                             ? "bg-white shadow-[0_12px_32px_rgba(31,31,31,0.08)]"
                             : "hover:bg-white/50",
