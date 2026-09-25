@@ -149,14 +149,17 @@ export function RendalHomeHero() {
           <header className="relative z-20 flex min-h-11 items-center justify-between gap-3 sm:min-h-12">
             <Link
               href="/"
-              className="relative z-[1] min-w-0 shrink text-white"
+              aria-label="Grupo Rendal - início"
+              className="relative z-[1] flex h-16 w-[7.5rem] shrink-0 items-center justify-center rounded-full border border-white/20 bg-white/10 p-1.5 shadow-[inset_0_0.5px_0_rgba(255,255,255,0.45),0_8px_24px_rgba(0,0,0,0.14)] backdrop-blur-md transition-[background-color,transform] duration-[var(--duration-quick)] ease-[var(--ease-smooth-out)] hover:bg-white/15 active:scale-[0.96] sm:h-[4.5rem] sm:w-[8.5rem] sm:p-2"
             >
-              <p className="m-0 truncate text-[17px] font-bold uppercase tracking-[0.04em] sm:text-[20px] md:text-[22px]">
-                Grupo Rendal
-              </p>
-              <p className="m-0 mt-0.5 hidden text-[11px] font-medium tracking-[0.02em] text-white/65 sm:block">
-                Participações e Soluções
-              </p>
+              <Image
+                src="/brands/rendal-logo-sem-subtitulo.png"
+                alt="Grupo Rendal"
+                width={1016}
+                height={813}
+                priority
+                className="h-full w-full object-contain object-center"
+              />
             </Link>
 
             {/* Desktop nav — só quando há largura real (evita colisão em zoom 200%) */}
