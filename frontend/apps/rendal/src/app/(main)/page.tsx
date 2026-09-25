@@ -11,4 +11,4 @@ export const metadata: Metadata = {
   },
 };
 
-export { default } from "@/app/(landing-page)/incorporadora/page";
+export { default } from "@/app/(landing-page)/incorporadora/concept/page";
