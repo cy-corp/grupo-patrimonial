@@ -10,6 +10,7 @@ import {
   useSpring,
   useTransform,
 } from "framer-motion";
+import { RendalTaglineReveal } from "./RendalTaglineReveal";
 
 const FRAMES = [
   {
@@ -73,6 +74,7 @@ export function RendalMorphScroll() {
   const [progress, setProgress] = useState(0);
   const [exact, setExact] = useState(0);
   const [ready, setReady] = useState(false);
+  const [arriveProgress, setArriveProgress] = useState(reduceMotion ? 1 : 0);
 
   const { scrollYProgress } = useScroll({
     target: trackRef,
@@ -86,6 +88,22 @@ export function RendalMorphScroll() {
     restDelta: 0.0001,
   });
 
+  /** Whole sticky cluster fades in as it leaves the hero */
+  const { scrollYProgress: clusterArrive } = useScroll({
+    target: trackRef,
+    offset: ["start 0.92", "start 0.35"],
+  });
+  const clusterOpacity = useTransform(
+    clusterArrive,
+    [0, 0.45, 1],
+    reduceMotion ? [1, 1, 1] : [0, 0.9, 1],
+  );
+  const clusterY = useTransform(
+    clusterArrive,
+    [0, 1],
+    reduceMotion ? [0, 0] : [28, 0],
+  );
+
   const { scrollYProgress: arrive } = useScroll({
     target: frameRef,
     offset: ["start 1", "start 0.72"],
@@ -94,25 +112,36 @@ export function RendalMorphScroll() {
   const pageOpacity = useTransform(arrive, [0, 0.2, 1], [0, 0.65, 1]);
 
   const stickyRef = useRef<HTMLDivElement>(null);
-  const cardRef = useRef<HTMLDivElement>(null);
+  const clusterRef = useRef<HTMLDivElement>(null);
   const [trail, setTrail] = useState(0);
+
+  useMotionValueEvent(clusterArrive, "change", (v) => {
+    setArriveProgress(Math.min(1, Math.max(0, v)));
+  });
+
+  useEffect(() => {
+    if (reduceMotion) {
+      setArriveProgress(1);
+      return;
+    }
+  }, [reduceMotion]);
 
   useEffect(() => {
     if (reduceMotion) return;
     const sticky = stickyRef.current;
-    const card = cardRef.current;
-    if (!sticky || !card) return;
+    const cluster = clusterRef.current;
+    if (!sticky || !cluster) return;
     const measure = () => {
       const breathing = window.innerWidth >= 768 ? 96 : 72;
       const empty =
         sticky.getBoundingClientRect().bottom -
-        card.getBoundingClientRect().bottom;
+        cluster.getBoundingClientRect().bottom;
       setTrail(Math.round(empty - breathing));
     };
     measure();
     const ro = new ResizeObserver(measure);
     ro.observe(sticky);
-    ro.observe(card);
+    ro.observe(cluster);
     window.addEventListener("resize", measure);
     return () => {
       ro.disconnect();
@@ -165,11 +194,12 @@ export function RendalMorphScroll() {
 
   return (
     <section
+      id="conteudo"
       ref={trackRef}
       className={
         reduceMotion
-          ? "relative z-0 bg-transparent pt-10 md:pt-16"
-          : "pointer-events-none relative z-0 h-[230vh] bg-transparent md:h-[250vh] md:pt-8"
+          ? "relative z-0 bg-transparent pt-8 md:pt-14"
+          : "pointer-events-none relative z-0 h-[230vh] bg-transparent md:h-[250vh]"
       }
       style={reduceMotion ? undefined : { marginBottom: -trail }}
       aria-label="Do croqui ao produto Rendal"
@@ -182,33 +212,43 @@ export function RendalMorphScroll() {
             : "pointer-events-auto sticky top-0 flex min-h-svh flex-col justify-center md:min-h-dvh"
         }
       >
-        <div className="relative z-0 flex w-full flex-col px-3 py-4 sm:px-5 sm:pb-8 sm:pt-6 md:px-8 md:pt-8 lg:px-10">
-          <div
-            ref={cardRef}
-            className="mx-auto w-full max-w-[1100px] rounded-2xl border border-white/80 bg-[#FBFCFC] px-4 pb-5 pt-5 shadow-[0_18px_50px_rgba(31,31,31,0.08)] sm:px-6 sm:pb-6 sm:pt-6 md:rounded-[2rem] md:px-8 md:pb-7 md:pt-7"
-          >
+        <motion.div
+          ref={clusterRef}
+          className="relative z-0 flex w-full flex-col gap-5 px-3 py-4 sm:gap-6 sm:px-5 sm:py-6 md:gap-7 md:px-8 lg:px-10"
+          style={
+            reduceMotion
+              ? undefined
+              : {
+                  opacity: clusterOpacity,
+                  y: clusterY,
+                }
+          }
+        >
+          <RendalTaglineReveal progress={arriveProgress} />
+
+          <div className="mx-auto w-full max-w-[1100px] rounded-2xl border border-white/80 bg-[#FBFCFC] px-4 pb-5 pt-5 shadow-[0_18px_50px_rgba(31,31,31,0.08)] sm:px-6 sm:pb-6 sm:pt-6 md:rounded-[2rem] md:px-8 md:pb-7 md:pt-7">
             <div className="mb-4 flex items-end justify-between gap-4 md:mb-5">
               <div className="min-w-0">
                 <p className="m-0 font-sans text-xs font-semibold uppercase tracking-widest text-[#0F5B63]">
                   Do papel à obra
                 </p>
-                <div className="mt-2.5 md:mt-3">
+                <div className="mt-1 md:mt-1.5">
                   <motion.p
                     key={stage.label}
                     initial={reduceMotion ? false : { y: 12, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
-                    transition={{ duration: 0.3, ease: [0.32, 0.72, 0, 1] }}
+                    transition={{ duration: 0.35, ease: [0.32, 0.72, 0, 1] }}
                     className="m-0 font-sans text-2xl font-semibold leading-8 tracking-tight text-balance text-[#1F1F1F] sm:text-3xl sm:leading-9 md:text-4xl md:leading-10"
                   >
                     {stage.label}
                   </motion.p>
                 </div>
-                <div className="mt-1.5 md:mt-2">
+                <div className="mt-1 md:mt-1.5">
                   <motion.p
                     key={stage.sub}
                     initial={reduceMotion ? false : { y: 8, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
-                    transition={{ duration: 0.3, ease: [0.32, 0.72, 0, 1] }}
+                    transition={{ duration: 0.35, ease: [0.32, 0.72, 0, 1] }}
                     className="m-0 max-w-[42ch] font-sans text-sm leading-5 text-pretty text-[#1F1F1F]/60 sm:text-base sm:leading-7"
                   >
                     {stage.sub}
@@ -225,7 +265,7 @@ export function RendalMorphScroll() {
 
             <div
               ref={frameRef}
-              className="relative mx-auto aspect-video max-h-[min(46svh,22rem)] w-full overflow-hidden rounded-xl border border-[#1F1F1F]/10 bg-[#EDE6DA] sm:max-h-[min(52svh,28rem)] md:max-h-[min(56svh,34rem)] md:rounded-2xl lg:max-h-none"
+              className="relative mx-auto aspect-video max-h-[min(36svh,18rem)] w-full overflow-hidden rounded-xl border border-[#1F1F1F]/10 bg-[#EDE6DA] sm:max-h-[min(42svh,24rem)] md:max-h-[min(48svh,30rem)] md:rounded-2xl lg:max-h-none"
               style={{ opacity: ready || reduceMotion ? 1 : 0.55 }}
             >
               {!reduceMotion && (
@@ -295,7 +335,7 @@ export function RendalMorphScroll() {
               })}
             </div>
           </div>
-        </div>
+        </motion.div>
       </div>
     </section>
   );

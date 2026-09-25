@@ -165,7 +165,7 @@ export function RendalHomeHero() {
   }, [pathname, activeIndex, movePillToIndex]);
 
   return (
-    <section className="relative min-h-svh overflow-hidden bg-[#1F1F1F] text-white">
+    <section className="relative mb-[-1px] min-h-svh overflow-hidden bg-[#1F1F1F] text-white">
       <a
         href="#conteudo"
         className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[60] focus:rounded-lg focus:bg-white focus:px-3 focus:py-2 focus:text-sm focus:font-semibold focus:text-[#1F1F1F]"
@@ -193,7 +193,16 @@ export function RendalHomeHero() {
         className="absolute inset-0"
         style={{
           background:
-            "linear-gradient(180deg, rgba(15,40,55,.28) 0%, rgba(15,15,15,.12) 30%, rgba(15,15,15,.42) 68%, rgba(15,15,15,.62) 100%)",
+            "linear-gradient(180deg, rgba(15,40,55,.28) 0%, rgba(15,15,15,.12) 30%, rgba(15,15,15,.42) 68%, rgba(15,15,15,.5) 85%, transparent 100%)",
+        }}
+        aria-hidden
+      />
+      {/* Continuity fade into cream */}
+      <div
+        className="pointer-events-none absolute inset-x-0 bottom-0 z-[5] h-20 sm:h-28 md:h-32"
+        style={{
+          background:
+            "linear-gradient(180deg, rgba(248,241,227,0) 0%, rgba(248,241,227,0.35) 45%, #F8F1E3 88%, #F8F1E3 100%)",
         }}
         aria-hidden
       />

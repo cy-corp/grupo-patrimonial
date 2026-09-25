@@ -3,7 +3,6 @@
 import { RendalHomeHero } from "./RendalHomeHero";
 import { RendalBenefits } from "./RendalBenefits";
 import { RendalMorphScroll } from "./RendalMorphScroll";
-import { RendalTaglineReveal } from "./RendalTaglineReveal";
 import { RendalHowItWorks } from "./RendalHowItWorks";
 import { RendalSocialProof } from "./RendalSocialProof";
 import { RendalFAQ } from "./RendalFAQ";
@@ -13,7 +12,6 @@ export default function IncorporadoraPage() {
   return (
     <main className="relative isolate flex min-h-screen flex-col bg-[#F8F1E3] font-sans">
       <RendalHomeHero />
-      <RendalTaglineReveal />
       <RendalMorphScroll />
       <RendalBenefits />
       <RendalHowItWorks />
