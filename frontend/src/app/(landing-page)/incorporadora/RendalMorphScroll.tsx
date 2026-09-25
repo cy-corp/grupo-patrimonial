@@ -8,6 +8,8 @@ import {
   useReducedMotion,
   useScroll,
   useSpring,
+  useTransform,
+  type MotionValue,
 } from "framer-motion";
 
 const FRAMES = [
@@ -48,17 +50,32 @@ const FRAMES = [
   },
 ] as const;
 
+const PROOFS = [
+  {
+    title: "Laje de lazer",
+    body: "Em vez de telhado que só gasta, a cobertura vira área de estar.",
+  },
+  {
+    title: "Lavabo social",
+    body: "Visitante se atende sem entrar na área íntima da casa.",
+  },
+  {
+    title: "Acabamento que se vê",
+    body: "Alto padrão no olho. Racionalização só no que não aparece.",
+  },
+] as const;
+
+const CARD_H = 76;
+const CARD_GAP = 8;
 const LAST = FRAMES.length - 1;
 /** Hold no frame final antes de liberar o pin */
 const HOLD_END = 0.12;
-
 function mapFrameExact(t: number) {
   const clamped = Math.min(1, Math.max(0, t));
   if (clamped >= 1 - HOLD_END) return LAST;
   return (clamped / (1 - HOLD_END)) * LAST;
 }
 
-/** Stepper chega a 100% quando o frame final trava (não só no fim absoluto do scroll) */
 function mapStepper(t: number) {
   const clamped = Math.min(1, Math.max(0, t));
   const end = 1 - HOLD_END;
@@ -66,25 +83,126 @@ function mapStepper(t: number) {
   return clamped / end;
 }
 
+function ProofSlideTile({
+  card,
+  index,
+  progress,
+  reduceMotion,
+}: {
+  card: (typeof PROOFS)[number];
+  index: number;
+  progress: MotionValue<number>;
+  reduceMotion: boolean | null;
+}) {
+  const start = index === 0 ? 0 : 0.08 + (index - 1) * 0.4;
+  const end = index === 0 ? 0 : start + 0.4;
+
+  const opacity = useTransform(
+    progress,
+    index === 0 ? [0, 1] : [start, start + 0.2, end],
+    index === 0 || reduceMotion ? [1, 1] : [0, 1, 1],
+  );
+  const y = useTransform(progress, (p) => {
+    if (reduceMotion) return index * (CARD_H + CARD_GAP);
+    if (index === 0) return 0;
+    let offset = 0;
+    for (let j = 1; j <= index; j += 1) {
+      const s = 0.08 + (j - 1) * 0.4;
+      const e = s + 0.4;
+      const t = Math.min(1, Math.max(0, (p - s) / (e - s)));
+      const soft = t * t * (3 - 2 * t);
+      offset += soft * (CARD_H + CARD_GAP);
+    }
+    return offset;
+  });
+
+  return (
+    <motion.article
+      style={{
+        y: reduceMotion ? index * (CARD_H + CARD_GAP) : y,
+        opacity: reduceMotion ? 1 : opacity,
+        zIndex: index + 1,
+      }}
+      className="absolute inset-x-0 top-0 rounded-[1.15rem] border border-black/[0.05] bg-white px-3.5 py-2.5 shadow-[0_10px_28px_rgba(15,20,25,0.12)]"
+    >
+      <h2 className="m-0 text-[13px] font-bold tracking-[-0.02em] text-[#1F1F1F]">
+        {card.title}
+      </h2>
+      <p className="mt-0.5 m-0 text-[12px] leading-snug text-[#4D4D4D]">
+        {card.body}
+      </p>
+    </motion.article>
+  );
+}
+
 export function RendalMorphScroll() {
   const reduceMotion = useReducedMotion();
   const trackRef = useRef<HTMLElement>(null);
+  const frameRef = useRef<HTMLDivElement>(null);
   const [progress, setProgress] = useState(0);
   const [exact, setExact] = useState(0);
   const [ready, setReady] = useState(false);
 
   const { scrollYProgress } = useScroll({
     target: trackRef,
-    // Progress only while the pin is active (section fills the viewport).
     offset: ["start start", "end end"],
   });
 
+  // Spring curto: o frame acompanha o scroll em vez de atrasar
   const smooth = useSpring(scrollYProgress, {
-    stiffness: 100,
-    damping: 34,
-    mass: 0.3,
+    stiffness: 280,
+    damping: 40,
+    mass: 0.12,
     restDelta: 0.0001,
   });
+
+  // Primeira imagem sobe pra dentro do quadro quando o frame entra na tela
+  const { scrollYProgress: arrive } = useScroll({
+    target: frameRef,
+    offset: ["start 1", "start 0.72"],
+  });
+  const pageY = useTransform(arrive, [0, 1], ["78%", "0%"]);
+  const pageOpacity = useTransform(arrive, [0, 0.2, 1], [0, 0.65, 1]);
+
+  // Cards começam a abrir antes do pin e terminam logo que ele engata
+  const { scrollYProgress: proofRaw } = useScroll({
+    target: trackRef,
+    offset: ["start 0.85", "start 0.05"],
+  });
+  const proofProgress = useSpring(proofRaw, {
+    stiffness: 280,
+    damping: 40,
+    mass: 0.12,
+    restDelta: 0.001,
+  });
+
+  // Espaço vazio abaixo do card pinado; a próxima seção sobe até sobrar só o respiro
+  const stickyRef = useRef<HTMLDivElement>(null);
+  const cardRef = useRef<HTMLDivElement>(null);
+  const [trail, setTrail] = useState(0);
+
+  useEffect(() => {
+    if (reduceMotion) return;
+    const sticky = stickyRef.current;
+    const card = cardRef.current;
+    if (!sticky || !card) return;
+    const measure = () => {
+      const breathing = window.innerWidth >= 768 ? 96 : 72;
+      const empty =
+        sticky.getBoundingClientRect().bottom -
+        card.getBoundingClientRect().bottom;
+      setTrail(Math.round(empty - breathing));
+    };
+    measure();
+    const ro = new ResizeObserver(measure);
+    ro.observe(sticky);
+    ro.observe(card);
+    window.addEventListener("resize", measure);
+    return () => {
+      ro.disconnect();
+      window.removeEventListener("resize", measure);
+    };
+  }, [reduceMotion]);
 
   useEffect(() => {
     let cancelled = false;
@@ -111,7 +229,6 @@ export function RendalMorphScroll() {
     const t = Math.min(1, Math.max(0, v));
     const frameExact = mapFrameExact(t);
     setExact(frameExact);
-    // Fecha o último tick quando o frame final já é o dominante
     const onFinal = frameExact >= LAST - 0.05;
     setProgress(onFinal ? 1 : mapStepper(t));
   });
@@ -129,6 +246,7 @@ export function RendalMorphScroll() {
   const soft = blend * blend * (3 - 2 * blend);
   const stageIndex = Math.min(LAST, Math.round(exact));
   const stage = FRAMES[stageIndex] ?? FRAMES[0];
+  const stackH = CARD_H * PROOFS.length + CARD_GAP * (PROOFS.length - 1);
 
   return (
     <section
@@ -136,20 +254,66 @@ export function RendalMorphScroll() {
       className={
         reduceMotion
           ? "relative z-0 bg-transparent pt-10 md:pt-28"
-          : // Tall track = pin stays mid-screen while scroll only advances frames; unlocks after last.
-            "relative z-0 h-[300vh] bg-transparent pt-10 md:h-[320vh] md:pt-28"
+          : "pointer-events-none relative z-0 h-[230vh] bg-transparent md:h-[250vh] md:pt-16"
       }
+      style={reduceMotion ? undefined : { marginBottom: -trail }}
       aria-label="Do croqui ao produto Rendal"
     >
       <div
+        ref={stickyRef}
         className={
           reduceMotion
             ? "relative flex flex-col"
-            : "sticky top-0 flex min-h-dvh flex-col justify-center"
+            : // Morph sempre no meio; cards mobile absolutos no topo do pin
+              "pointer-events-auto sticky top-0 flex min-h-dvh flex-col justify-center"
         }
       >
-        <div className="flex w-full flex-col px-3 py-4 sm:px-5 sm:pb-8 sm:pt-6 md:px-8 md:pt-8 lg:px-10">
-          <div className="mx-auto w-full max-w-[1100px] rounded-[1.75rem] border border-white/80 bg-[#FBFCFC] px-4 pb-5 pt-5 shadow-[0_18px_50px_rgba(31,31,31,0.08)] sm:px-6 sm:pb-6 sm:pt-6 md:rounded-[2.25rem] md:px-8 md:pb-7 md:pt-7">
+        {/* Mobile: 3 cards entram no scroll e ficam no topo enquanto o morph trava no meio */}
+        {!reduceMotion && (
+          <div className="pointer-events-none absolute inset-x-0 top-2 z-20 px-3 sm:px-4 md:hidden">
+            <div
+              className="pointer-events-auto relative mx-auto w-full max-w-[21rem]"
+              style={{ height: stackH }}
+              aria-label="Diferenciais do produto"
+            >
+              {PROOFS.map((card, i) => (
+                <ProofSlideTile
+                  key={card.title}
+                  card={card}
+                  index={i}
+                  progress={proofProgress}
+                  reduceMotion={reduceMotion}
+                />
+              ))}
+            </div>
+          </div>
+        )}
+
+        {reduceMotion && (
+          <div className="relative z-10 mb-6 px-3 md:hidden">
+            <div className="mx-auto flex max-w-[21rem] flex-col gap-3">
+              {PROOFS.map((card) => (
+                <article
+                  key={card.title}
+                  className="rounded-[1.25rem] border border-black/[0.05] bg-white px-4 py-4 shadow-[0_14px_36px_rgba(15,20,25,0.14)]"
+                >
+                  <h2 className="m-0 text-[14px] font-bold tracking-[-0.02em] text-[#1F1F1F]">
+                    {card.title}
+                  </h2>
+                  <p className="mt-1.5 m-0 text-[12.5px] leading-relaxed text-[#4D4D4D]">
+                    {card.body}
+                  </p>
+                </article>
+              ))}
+            </div>
+          </div>
+        )}
+
+        <div className="relative z-0 flex w-full translate-y-12 flex-col px-3 py-4 sm:px-5 sm:pb-8 sm:pt-6 md:translate-y-0 md:px-8 md:pt-8 lg:px-10">
+          <div
+            ref={cardRef}
+            className="mx-auto w-full max-w-[1100px] rounded-[1.75rem] border border-white/80 bg-[#FBFCFC] px-4 pb-5 pt-5 shadow-[0_18px_50px_rgba(31,31,31,0.08)] sm:px-6 sm:pb-6 sm:pt-6 md:rounded-[2.25rem] md:px-8 md:pb-7 md:pt-7"
+          >
             <div className="mb-4 flex items-end justify-between gap-4 md:mb-5">
               <div className="min-w-0">
                 <p className="m-0 font-sans text-[10px] font-bold uppercase tracking-[0.4em] text-[#0F5B63]">
@@ -187,11 +351,15 @@ export function RendalMorphScroll() {
             </div>
 
             <div
+              ref={frameRef}
               className="relative mx-auto aspect-video w-full overflow-hidden rounded-[1.15rem] border border-graphite/10 bg-[#EDE6DA] md:rounded-[1.5rem]"
               style={{ opacity: ready || reduceMotion ? 1 : 0.55 }}
             >
               {!reduceMotion && (
-                <>
+                <motion.div
+                  className="absolute inset-0"
+                  style={{ y: pageY, opacity: pageOpacity }}
+                >
                   <div className="absolute inset-0">
                     <Image
                       src={FRAMES[base].src}
@@ -215,7 +383,7 @@ export function RendalMorphScroll() {
                       />
                     </div>
                   )}
-                </>
+                </motion.div>
               )}
 
               {reduceMotion && (

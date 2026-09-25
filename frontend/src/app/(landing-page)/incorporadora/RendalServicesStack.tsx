@@ -1,6 +1,8 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useEffect, useRef, useState, type CSSProperties } from "react";
+import { useReducedMotion } from "framer-motion";
+import { cn } from "@/lib/utils";
 
 const services = [
   {
@@ -36,16 +38,47 @@ const services = [
 ];
 
 export function RendalServicesStack() {
+  const reduceMotion = useReducedMotion();
+  const sectionRef = useRef<HTMLElement>(null);
+  const [shown, setShown] = useState(false);
+
+  useEffect(() => {
+    const section = sectionRef.current;
+    if (reduceMotion || !section) {
+      setShown(true);
+      return;
+    }
+
+    const update = () => {
+      // Só revela quando a seção já entrou de fato (pin liberado e página descendo)
+      if (section.getBoundingClientRect().top <= window.innerHeight * 0.82) {
+        setShown(true);
+      }
+    };
+
+    update();
+    window.addEventListener("scroll", update, { passive: true });
+    window.addEventListener("resize", update);
+    return () => {
+      window.removeEventListener("scroll", update);
+      window.removeEventListener("resize", update);
+    };
+  }, [reduceMotion]);
+
   return (
-    <section className="bg-transparent pt-10 md:pt-14">
+    <section
+      ref={sectionRef}
+      className={cn("t-stagger relative z-0 bg-transparent", shown && "is-shown")}
+      style={
+        {
+          "--stagger-dur": "800ms",
+          "--stagger-distance": "28px",
+          "--stagger-stagger": "120ms",
+        } as CSSProperties
+      }
+    >
       <div className="container mx-auto grid grid-cols-1 gap-10 px-6 lg:grid-cols-12 lg:gap-16 lg:px-24">
-        <motion.header
-          initial={{ opacity: 0, transform: "translateY(16px)" }}
-          whileInView={{ opacity: 1, transform: "translateY(0px)" }}
-          viewport={{ once: true, amount: 0.4 }}
-          transition={{ duration: 0.45, ease: [0.23, 1, 0.32, 1] }}
-          className="lg:col-span-4"
-        >
+        <header className="t-stagger-line lg:col-span-4">
           <span className="mb-4 block font-sans text-[10px] font-bold uppercase tracking-[0.4em] text-[#0F5B63]">
             Atuação
           </span>
@@ -56,9 +89,9 @@ export function RendalServicesStack() {
             Cada etapa do ciclo imobiliário com critério técnico e financeiro,
             antes da DCorp executar a obra.
           </p>
-        </motion.header>
+        </header>
 
-        <div className="lg:col-span-8">
+        <div className="t-stagger-line t-stagger-line--2 lg:col-span-8">
           <div className="flex flex-col gap-3 pb-16 md:gap-4 md:pb-24">
             {services.map((service) => (
               <article
