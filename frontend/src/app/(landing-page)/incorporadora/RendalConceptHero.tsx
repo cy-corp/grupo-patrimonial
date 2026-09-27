@@ -26,12 +26,12 @@ import { cn } from "@/lib/utils";
 const EASE = "cubic-bezier(0.32,0.72,0,1)";
 
 const FRAMES = [
-  { src: "/morph/frame-01.jpg", label: "Do terreno ao traço" },
+  { src: "/morph/frame-01.jpg", label: "Do terreno ao projeto" },
   { src: "/morph/frame-02.jpg", label: "Uso no desenho" },
-  { src: "/morph/frame-03.jpg", label: "Elevação fechada" },
-  { src: "/morph/frame-04.jpg", label: "Presença na rua" },
-  { src: "/morph/frame-05.jpg", label: "Valor onde se vê" },
-  { src: "/morph/frame-06.jpg", label: "Produto legível" },
+  { src: "/morph/frame-03.jpg", label: "Elevação definida" },
+  { src: "/morph/frame-04.jpg", label: "Volume na rua" },
+  { src: "/morph/frame-05.jpg", label: "Capital no que se vê" },
+  { src: "/morph/frame-06.jpg", label: "Produto definido" },
   { src: "/morph/frame-07.jpg", label: "Casa pronta" },
 ] as const;
 const LAST = FRAMES.length - 1;
@@ -86,15 +86,14 @@ function HeroCopy({ hint }: { hint: string }) {
     <div className="mx-auto flex max-w-[680px] flex-col items-center text-center">
       <h1 className="text-4xl font-semibold tracking-tight text-balance sm:text-5xl lg:text-6xl">
         <span className={cn("block pb-1", HEADLINE_GRADIENT)}>
-          Casa que parece cara.
+          Aplicação inteligente
         </span>
         <span className={cn("block pb-1", HEADLINE_GRADIENT)}>
-          Preço que cabe.
+          do seu dinheiro.
         </span>
       </h1>
       <p className="mt-4 max-w-[34rem] text-base leading-7 text-pretty text-[#1F1F1F]/70 sm:text-lg sm:leading-8">
-        Laje que vira lazer, lavabo no social e fachada de empreendimento, no
-        preço de casa popular.
+        Cada centavo no lugar certo — da laje ao acabamento.
       </p>
       <div className="mt-6 flex flex-col items-center gap-3 sm:flex-row sm:gap-6">
         <Link
@@ -124,12 +123,12 @@ function scrollToGuess(event: MouseEvent<HTMLAnchorElement>) {
 function FinaleCopy() {
   return (
     <>
-      <p className="text-sm font-semibold text-[#0F5B63]">Do traço à casa</p>
+      <p className="text-sm font-semibold text-[#0F5B63]">Do projeto à obra</p>
       <h2 className="mt-2 text-2xl font-semibold tracking-tight text-balance text-[#1F1F1F] sm:text-3xl">
-        Parece cara. Agora, o preço.
+        Agora, o investimento.
       </h2>
       <p className="mt-2 hidden text-base leading-7 text-pretty text-[#1F1F1F]/70 sm:block">
-        Antes de ver o valor, chute quanto você pagaria por ela.
+        Antes de ver o valor, estime quanto essa casa pediria de capital.
       </p>
       <a
         href="#chute"
@@ -137,7 +136,7 @@ function FinaleCopy() {
         className={cn(CTA, "mt-4")}
         style={{ transitionTimingFunction: EASE }}
       >
-        Chutar o preço
+        Estimar o valor
       </a>
     </>
   );
@@ -147,20 +146,22 @@ function StaticHero() {
   return (
     <section
       id="conteudo"
-      className="relative bg-[#F8F1E3] px-4 pb-16 pt-36 sm:px-6 sm:pt-36"
+      className="rendal-hero-paper relative bg-[#F8F1E3] px-4 pb-16 pt-36 sm:px-6 sm:pt-36"
     >
-      <HeroCopy hint="Do croqui à casa pronta, no mesmo preço." />
-      <div className="relative mx-auto mt-8 aspect-[4/5] max-h-[70svh] w-full max-w-6xl overflow-hidden rounded-3xl bg-[#EDE6DA] md:mt-12 md:aspect-video md:max-h-none">
-        <Image
-          src={DUSK}
-          alt="Fachada Rendal ao entardecer, com laje de lazer e luz acesa"
-          fill
-          sizes="(max-width: 768px) 100vw, 1150px"
-          className="object-cover"
-        />
-      </div>
-      <div className="mx-auto mt-8 max-w-6xl">
-        <FinaleCopy />
+      <div className="relative z-10">
+        <HeroCopy hint="Do projeto à casa pronta." />
+        <div className="relative mx-auto mt-8 aspect-[4/5] max-h-[70svh] w-full max-w-6xl overflow-hidden rounded-3xl bg-[#EDE6DA] md:mt-12 md:aspect-video md:max-h-none">
+          <Image
+            src={DUSK}
+            alt="Fachada Rendal ao entardecer, com laje de lazer e luz acesa"
+            fill
+            sizes="(max-width: 768px) 100vw, 1150px"
+            className="object-cover"
+          />
+        </div>
+        <div className="mx-auto mt-8 max-w-6xl">
+          <FinaleCopy />
+        </div>
       </div>
     </section>
   );
@@ -300,10 +301,10 @@ export function RendalConceptHero() {
       <section
         id="conteudo"
         ref={trackRef}
-        className="rendal-hero-track relative h-[240vh] bg-[#F8F1E3] md:mb-0 md:h-[400vh]"
-        aria-label="Do traço à casa Rendal"
+        className="rendal-hero-paper rendal-hero-track relative h-[240vh] bg-[#F8F1E3] md:mb-0 md:h-[400vh]"
+        aria-label="Do projeto à casa Rendal"
       >
-        <div ref={stageRef} className="sticky top-0 h-svh overflow-hidden">
+        <div ref={stageRef} className="sticky top-0 z-10 h-svh overflow-hidden">
           <motion.div
             ref={copyRef}
             className="absolute inset-x-0 top-0 z-20 px-6 pt-36 sm:pt-32"

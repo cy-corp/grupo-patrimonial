@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Conceito",
   description:
-    "Estudo visual da home Rendal. Casa que parece cara, preço que cabe.",
+    "Estudo visual da home Rendal. Aplicação inteligente do seu dinheiro.",
   robots: { index: false, follow: false },
 };
 

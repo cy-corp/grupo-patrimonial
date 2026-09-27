@@ -17,11 +17,11 @@ export function RendalFinalCta() {
             id="cta-final-titulo"
             className="text-3xl font-semibold tracking-tight text-balance text-white sm:text-4xl md:text-5xl"
           >
-            Pronto para ver a casa que parece cara?
+            Pronto para conhecer o produto?
           </h2>
           <p className="mt-4 text-base leading-7 text-pretty text-white/75 sm:text-lg sm:leading-8">
             Visita sem compromisso. Sem reserva obrigatória no primeiro contato.
-            Conheça o produto e decida no seu tempo.
+            Conheça o empreendimento e decida no seu tempo.
           </p>
           <Link
             href="/empreendimentos"

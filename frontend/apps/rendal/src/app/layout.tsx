@@ -14,14 +14,14 @@ export const metadata: Metadata = {
     template: "%s | Rendal",
   },
   description:
-    "Casas Rendal para classes B e C: laje de lazer, lavabo social e acabamento onde se vê. Mais casa no mesmo investimento.",
+    "Rendal Incorporadora: capital no lugar certo — da laje ao acabamento. Conheça empreendimentos e agende visita.",
   openGraph: {
     type: "website",
     locale: "pt_BR",
     siteName: "Rendal Incorporadora",
-    title: "Casa com presença no preço que cabe | Rendal",
+    title: "Aplicação inteligente do seu dinheiro | Rendal",
     description:
-      "Lazer na laje e acabamento onde o olho chega. Veja empreendimentos e agende visita sem compromisso.",
+      "Cada centavo no lugar certo. Veja empreendimentos e agende visita sem compromisso.",
   },
 };
 

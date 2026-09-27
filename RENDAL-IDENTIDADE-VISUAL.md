@@ -275,3 +275,13 @@ Toda aplicação deve preservar a integridade visual definida neste manual.
 > Mais que negócios, soluções para a vida.
 
 > Diferentes negócios. Um só propósito.
+
+## Mensagem-mãe do site (produto / home)
+
+Complementar às assinaturas acima — uso na landing e materiais digitais da incorporadora:
+
+> Aplicação inteligente do seu dinheiro.
+
+> Cada centavo no lugar certo — da laje ao acabamento.
+
+Detalhamento de tom e pilares: [RENDAL-CONTEXTO-MARCA.md](./RENDAL-CONTEXTO-MARCA.md).

@@ -12,28 +12,28 @@ import { RendalReveal } from "./RendalReveal";
 const BENEFITS = [
   {
     icon: Stairs,
-    title: "Laje que vira lazer",
-    body: "Com o mesmo custo de um telhado comum, a cobertura vira área de estar, pergola e vista.",
+    title: "Laje de lazer",
+    body: "O capital do telhado tradicional vira área de estar, pergola e uso na cobertura.",
   },
   {
     icon: Bathtub,
     title: "Lavabo social",
-    body: "Visitante se atende sem cruzar a área íntima. Conforto de casa pensada, em qualquer faixa de renda.",
+    body: "Visitante se atende sem cruzar a área íntima. Conforto resolvido no projeto.",
   },
   {
     icon: Eye,
-    title: "Acabamento onde se vê",
-    body: "Porcelanato, pia e presença visual no olho. Racionalização só no que o cliente não enxerga.",
+    title: "Acabamento no que se vê",
+    body: "Porcelanato, pia e fachada recebem o investimento. O técnico fica no essencial.",
   },
   {
     icon: Wallet,
-    title: "Mais casa no mesmo investimento",
-    body: "Você não paga menos por menos. Paga o preço da casa popular e leva produto com presença de empreendimento.",
+    title: "Capital bem aplicado",
+    body: "Cada centavo no lugar certo — da laje ao acabamento. Sem desperdício onde não agrega.",
   },
   {
     icon: House,
-    title: "Fluxo que vende sozinho",
-    body: "Térreo social, lazer em cima, quartos privados. O dia a dia já está no desenho, antes da visita.",
+    title: "Fluxo pensado",
+    body: "Térreo social, lazer em cima, quartos privados. O dia a dia já está no desenho.",
   },
 ] as const;
 
@@ -50,11 +50,11 @@ export function RendalBenefits() {
               id="beneficios-titulo"
               className="text-3xl font-semibold tracking-tight text-balance text-[#1F1F1F] sm:text-4xl md:text-5xl"
             >
-              O que muda no dia a dia e no bolso
+              Onde o orçamento trabalha
             </h2>
             <p className="mt-4 text-base leading-7 text-pretty text-[#1F1F1F]/70 sm:text-lg sm:leading-8">
-              Valor onde se vê. Inteligência onde não se vê. Cinco decisões que
-              fazem a casa parecer cara sem inflar o orçamento.
+              Investe no que gera valor. Racionaliza o resto. Cinco decisões de
+              produto.
             </p>
           </header>
         </RendalReveal>

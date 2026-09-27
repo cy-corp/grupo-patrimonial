@@ -6,16 +6,16 @@ import { RendalReveal } from "./RendalReveal";
 
 const FAQ = [
   {
-    q: "Para quem é a casa Rendal?",
-    a: "Para famílias das classes B e C que querem presença de empreendimento sem pagar o preço do luxo. Valor onde se vê, racionalização onde não se vê.",
+    q: "Para quem é o produto Rendal?",
+    a: "Para quem busca casa com laje de lazer, lavabo social e acabamento bem aplicado — com o orçamento alocado no que gera valor, sem excesso técnico.",
   },
   {
     q: "O que é a laje de lazer?",
-    a: "Em vez de gastar com telhado tradicional, a cobertura é impermeabilizada e vira área de estar. Com o mesmo investimento do telhado, você ganha lazer e vista.",
+    a: "Em vez de gastar com telhado tradicional, a cobertura é impermeabilizada e vira área de estar. O mesmo capital do telhado entrega lazer e uso.",
   },
   {
     q: "Por que a avaliação da Caixa costuma ficar acima do preço?",
-    a: "Porque o produto entrega acabamento e área perceptíveis que a avaliação reconhece. Em casos de referência, a diferença chega a 30 a 40% acima do preço de venda.",
+    a: "Porque o produto entrega acabamento e área que a avaliação reconhece. Em casos de referência, a diferença chega a 30 a 40% acima do preço de venda — como lógica de mercado, não como garantia.",
   },
   {
     q: "A visita tem compromisso de compra?",
@@ -30,8 +30,8 @@ const FAQ = [
     a: "Depende do empreendimento e da fase de obra. Na visita ou no contato, você recebe o cronograma da unidade que está olhando.",
   },
   {
-    q: "O que significa inteligência onde não se vê?",
-    a: "É alocar orçamento no que o olho e o uso sentem, e racionalizar estrutura, tubulação e itens técnicos que não mudam a percepção da casa.",
+    q: "O que significa aplicação inteligente do capital?",
+    a: "Investir no que o comprador vê e usa — laje, acabamento, lavabo — e racionalizar estrutura e instalações no essencial, sem desperdício.",
   },
   {
     q: "Como falo com a Rendal sobre uma unidade?",
@@ -99,11 +99,10 @@ export function RendalFAQ() {
               id="faq-titulo"
               className="text-3xl font-semibold tracking-tight text-balance text-[#1F1F1F] sm:text-4xl md:text-5xl"
             >
-              Perguntas antes de visitar
+              Perguntas frequentes
             </h2>
             <p className="mt-4 text-base leading-7 text-pretty text-[#1F1F1F]/70 sm:text-lg">
-              Objeções comuns de quem compara casa popular com produto de
-              presença.
+              Antes de visitar: método, produto e próximo passo.
             </p>
           </header>
         </RendalReveal>

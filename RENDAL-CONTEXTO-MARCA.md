@@ -7,7 +7,7 @@ Captura o discurso comercial / diferencial do cliente para orientar copy, wirefr
 
 ## Visão em uma frase
 
-Entregar produto com aparência e percepção de alto padrão pelo custo acessível (classes B e C) — valorizando o que o cliente vê e sente, e racionalizando o que não agrega percepção de valor.
+Entregar produto com valor perceptível pelo orçamento racionalizado — investindo no que o comprador vê e usa, e economizando onde a economia não prejudica o resultado.
 
 ---
 
@@ -23,37 +23,37 @@ A Rendal opera em duas frentes que o site precisa equilibrar sem misturar com a 
 
 ### 2. Produto residencial com valor agregado (classes B e C)
 
-- Casa que **parece premium** no preço acessível / popular
-- Prova tangível: laje de lazer, lavabo social, acabamentos visíveis
-- Linguagem próxima, clara, sem jargão de luxo inacessível
-- Não falar “barato” — falar **mais pelo mesmo investimento**
+- Casa com laje de lazer, lavabo social e acabamento bem aplicado
+- Prova tangível: laje, lavabo, fachada — decisões de orçamento legíveis
+- Linguagem institucional, clara, sem tom de “oferta popular”
+- Não falar “barato” — falar **aplicação inteligente do capital**
 
 ### Como casar no site
 
 | Camada | Papel |
 |--------|--------|
-| Hero + prova visual | Produto B/C (emoção + diferencial) |
+| Hero + prova visual | Método + produto (institucional + diferencial) |
 | Método / inteligência | Por que o valor é possível (sem parecer “obra barata”) |
 | Empreendimentos / investidores | Braço incorporadora |
 | Contato | Ambos (comprador, área, investidor) |
 
-Tom geral: **premium acessível** — sóbrio o bastante para impressionar um cliente sofisticado; claro o bastante para classes B e C se reconhecerem.
+Tom geral: **institucional e sóbrio** — seguro o bastante para impressionar um decisor; claro o bastante para classes B e C se reconhecerem.
 
 ---
 
 ## Diferencial central: valor agregado inteligente
 
-A lógica da Rendal não é “barato”. É **alocar o orçamento onde cria valor perceptível** e economizar onde a economia não prejudica o resultado final.
+A lógica da Rendal não é “barato”. É **alocar o orçamento onde cria valor** e racionalizar onde a economia não prejudica o resultado final.
 
 ### Como isso se traduz na obra
 
-| Investe (visível / percepção) | Racionaliza (invisível / técnico) |
-|-------------------------------|-----------------------------------|
+| Investe (visível / uso) | Racionaliza (invisível / técnico) |
+|-------------------------|-----------------------------------|
 | Pia alto padrão | Tubulação: não precisa ser marca “de propaganda” |
 | Porcelanato alto padrão | Estrutura com soluções mais eficientes (ex.: EPS) onde fizer sentido |
-| Acabamentos e presença visual | Telhado tradicional (madeira + carpinteiro) quando a laje impermeabilizada resolve |
+| Acabamentos e fachada | Telhado tradicional (madeira + carpinteiro) quando a laje impermeabilizada resolve |
 
-Resultado pretendido: o visitante olha e pensa que a casa é cara — com o mesmo orçamento de uma casa popular.
+Resultado pretendido: o capital trabalha no que gera percepção e uso — com orçamento racionalizado.
 
 ### Efeito Caixa / avaliação
 
@@ -65,7 +65,7 @@ Exemplo do cliente:
 - Avaliação da Caixa: **R$ 300 mil**
 - Se quiser passar por R$ 300 mil, a Caixa aprova
 
-Isso reforça o posicionamento de **mais valor pelo mesmo (ou preço competitivo)**.
+Usar como **lógica de mercado**, com nuance — sem prometer rentabilidade ou garantia.
 
 ---
 
@@ -93,39 +93,43 @@ Referência de projeto: Capetinga / Dener — arquivos em
 - Tecnologia / casa usual (uso cotidiano pensado).
 - Fluxo social no térreo + lazer na cobertura + privacidade dos quartos.
 
-### 4. Mesmo preço, mais produto
+### 4. Capital bem aplicado
 
-> “Se você for comprar uma casa popular em qualquer lugar do Brasil, é o mesmo preço. Eu entrego mais pelo mesmo preço.”
+Ideia do cliente (áudio): entregar **mais produto** pelo orçamento da faixa — sem discurso de “barato”. No site, traduzir como **aplicação inteligente do dinheiro**, não como comparação de preço popular.
 
 ---
 
 ## O que o site deve comunicar
 
-### Mensagem-mãe
+### Mensagem-mãe (site)
 
-**Mais valor. Mesmo investimento.**  
-(ou variação alinhada às assinaturas do manual: *Estratégia hoje. Mais valor sempre.*)
+**Aplicação inteligente do seu dinheiro.**  
+Sub: *Cada centavo no lugar certo — da laje ao acabamento.*
 
-### Pilares de conteúdo sugeridos
+Assinatura de marca (manual): *Estratégia hoje. Mais valor sempre.*
 
-1. **Valor perceptível** — acabamentos e presença de produto premium.
-2. **Inteligência construtiva** — onde economiza sem perder qualidade de uso.
+### Pilares de conteúdo
+
+1. **Capital no que se vê** — laje, acabamento, fachada.
+2. **Racionalização no essencial** — estrutura e instalações sem desperdício.
 3. **Lazer integrado** — laje como extensão da casa, não “só telhado”.
-4. **Conforto inteligente** — lavabo, fluxo, privacidade, tecnologia.
-5. **Valorização** — avaliação / liquidez (com cuidado regulatório: sem prometer rentabilidade).
+4. **Conforto no projeto** — lavabo, fluxo, privacidade.
+5. **Avaliação** — Caixa / liquidez (com cuidado regulatório: sem prometer rentabilidade).
 
 ### Tom
 
-- Seguro, sofisticado, direto.
+- Institucional, seguro, direto.
 - Sem jargão de “obra barata”.
 - Sem exagero de “luxo inacessível”.
-- Posição: **premium acessível / popular com percepção cara**.
+- Sem gancho de “casa que parece cara / preço que cabe”.
+- Posição: **incorporadora que aloca bem o orçamento**.
 
 ### O que evitar no discurso
 
-- Focar só em economia (“somos baratos”).
+- Focar só em economia (“somos baratos”) ou em “mesmo preço de casa popular” como headline.
+- Frases de agência (“presença”, “onde o olho chega”, “do croqui/traço”).
 - Detalhar demais marcas de tubulação / “o que não usamos” de forma pejorativa.
-- Prometer números de valorização/financiamento como garantia absoluta (usar como lógica de mercado, com nuance).
+- Prometer números de valorização/financiamento como garantia absoluta.
 
 ---
 
@@ -133,11 +137,11 @@ Referência de projeto: Capetinga / Dener — arquivos em
 
 | Público | Classe / perfil | O que precisa ouvir |
 |---------|-----------------|---------------------|
-| Comprador final | B e C | Casa que parece cara, com lazer e conforto, no preço acessível |
+| Comprador final | B e C | Orçamento bem aplicado: lazer, conforto e acabamento no projeto |
 | Investidor / parceiro | Capital | Produto com melhor percepção e avaliação, giro e diferenciação |
 | Proprietário de área | Diversos | Empreendimento com conceito claro e valor agregado no produto |
 | Imobiliária | Canal | Argumento de venda visual (laje, lavabo, acabamento) |
-| Cliente sofisticado (site) | Decisor / look & feel | Experiência visual sóbria e “cara” — o site vende o padrão da marca |
+| Cliente sofisticado (site) | Decisor / look & feel | Experiência visual sóbria e institucional |
 
 ---
 
@@ -156,18 +160,15 @@ Pasta: `frontend/apps/rendal/public/referencia/capetinga-dener/`
 
 ---
 
-## Implicações para o site (próximo passo)
+## Implicações para o site
 
-Wireframe vivo: [`frontend/apps/rendal/public/hero-wireframes.html`](./frontend/apps/rendal/public/hero-wireframes.html)  
-Abrir via app Rendal: `/hero-wireframes.html`
+### Home (direção atual · concept)
 
-### Home (direção A · scroll-story)
+1. **Hero** — mensagem-mãe institucional + sub da laje ao acabamento.
+2. **Estimativa de valor** — prova interativa do preço (tom de capital, não de “chute popular”).
+3. **Anatomia** — investe × racionaliza (prova visual + método).
+4. **Como funciona** — três passos até a chave.
+5. **Case Capetinga** — referência de produto.
+6. **FAQ + CTA** — visita sem compromisso.
 
-1. **Scroll-story sticky** — 4 beats: fachada → valor → laje → incorporação (imagens + copy).
-2. **Três provas B/C** — laje, lavabo, acabamento.
-3. **Método** — investe × racionaliza (tom institucional).
-4. **Case Capetinga** — plantas térreo / laje.
-5. **Três portas** — comprador · área · investidor (braço incorporadora).
-6. **Contato / CTA**.
-
-Alternativas B/C no mesmo HTML se o scroll for pesado demais para a v1.
+Wireframe vivo (histórico): [`frontend/apps/rendal/public/hero-wireframes.html`](./frontend/apps/rendal/public/hero-wireframes.html)

@@ -8,13 +8,13 @@ const STEPS = [
     num: "01",
     icon: MagnifyingGlass,
     title: "Conheça o produto",
-    body: "Veja plantas, laje de lazer e acabamentos do empreendimento. Entenda o que entra no preço antes de agendar.",
+    body: "Veja plantas, laje de lazer e acabamentos. Entenda onde o capital foi aplicado antes de agendar.",
   },
   {
     num: "02",
     icon: CalendarBlank,
     title: "Agende uma visita",
-    body: "Marque um horário sem compromisso. A equipe mostra o que você vê na fachada e o que fica racional por trás.",
+    body: "Marque um horário sem compromisso. A equipe apresenta o projeto e as decisões de orçamento.",
   },
   {
     num: "03",
@@ -40,8 +40,7 @@ export function RendalHowItWorks() {
               Três passos até a chave
             </h2>
             <p className="mt-4 text-base leading-7 text-pretty text-[#1F1F1F]/70 sm:text-lg sm:leading-8">
-              Sem jargão de incorporação. Do primeiro clique à reserva, o caminho
-              do comprador.
+              Do primeiro contato à reserva — caminho claro para o comprador.
             </p>
           </header>
         </RendalReveal>

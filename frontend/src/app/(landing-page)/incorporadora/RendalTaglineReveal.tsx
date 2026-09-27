@@ -3,8 +3,8 @@
 import { useEffect, useRef, useState } from "react";
 import { cn } from "@/lib/utils";
 
-const LINE_A = ["Casa", "que", "parece", "cara."];
-const LINE_B = ["Preço", "que", "cabe."];
+const LINE_A = ["Aplicação", "inteligente"];
+const LINE_B = ["do", "seu", "dinheiro."];
 const WORDS = [...LINE_A, ...LINE_B];
 const EASE = "cubic-bezier(0.32,0.72,0,1)";
 

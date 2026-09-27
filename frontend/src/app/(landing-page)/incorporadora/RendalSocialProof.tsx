@@ -29,7 +29,7 @@ export function RendalSocialProof() {
         <RendalReveal delayMs={120}>
           <div>
             <p className="text-sm font-semibold uppercase tracking-widest text-[#0F5B63]">
-              Prova de produto
+              Referência de produto
             </p>
             <h2
               id="prova-titulo"
@@ -38,9 +38,9 @@ export function RendalSocialProof() {
               Residencial Capetinga
             </h2>
             <p className="mt-4 text-base leading-7 text-pretty text-[#1F1F1F]/70 sm:text-lg sm:leading-8">
-              Referência de projeto com laje de lazer, lavabo social e acabamento
-              de presença. O mesmo critério que a Rendal leva aos próximos
-              lançamentos.
+              Projeto com laje de lazer, lavabo social e acabamento onde o
+              capital gera valor. O mesmo critério que a Rendal leva aos
+              próximos lançamentos.
             </p>
 
             <blockquote className="mt-8 rounded-2xl bg-white p-6 ring-1 ring-[#1F1F1F]/10 sm:p-8">
@@ -50,11 +50,11 @@ export function RendalSocialProof() {
                 aria-hidden
               />
               <p className="mt-3 text-lg leading-8 text-pretty text-[#1F1F1F]">
-                Subi na laje e entendi o argumento. Parece casa de outro
-                patamar, com o orçamento que a gente já tinha planejado.
+                Cada real no lugar certo — da laje ao acabamento. O orçamento
+                trabalha no que importa.
               </p>
               <footer className="mt-4 text-sm font-semibold text-[#1F1F1F]/70">
-                Camila Ferreira · compradora em visita ao produto referência
+                Critério de produto · Residencial Capetinga
               </footer>
             </blockquote>
 

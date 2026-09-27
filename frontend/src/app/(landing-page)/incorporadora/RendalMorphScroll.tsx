@@ -15,38 +15,38 @@ import { RendalTaglineReveal } from "./RendalTaglineReveal";
 const FRAMES = [
   {
     src: "/morph/frame-01.jpg",
-    label: "Do terreno ao traço",
+    label: "Do terreno ao projeto",
     sub: "Antes da fachada, o critério começa no papel.",
   },
   {
     src: "/morph/frame-02.jpg",
     label: "Uso no desenho",
-    sub: "Vagas, acesso, o dia a dia já entram no projeto.",
+    sub: "Vagas, acesso e o dia a dia já entram no projeto.",
   },
   {
     src: "/morph/frame-03.jpg",
-    label: "Elevação fechada",
-    sub: "Proporção definida. Sem improviso na obra.",
+    label: "Elevação definida",
+    sub: "Proporção fechada. Sem improviso na obra.",
   },
   {
     src: "/morph/frame-04.jpg",
-    label: "Presença na rua",
-    sub: "Volume e sombra: o que o cliente sente de fora.",
+    label: "Volume na rua",
+    sub: "Forma e sombra: o que se lê de fora.",
   },
   {
     src: "/morph/frame-05.jpg",
-    label: "Valor onde se vê",
-    sub: "Madeira, laje e luz preenchendo o que era linha.",
+    label: "Capital no que se vê",
+    sub: "Madeira, laje e luz — investimento onde agrega.",
   },
   {
     src: "/morph/frame-06.jpg",
-    label: "Produto legível",
-    sub: "Do croqui à decisão: a casa já se vende sozinha.",
+    label: "Produto definido",
+    sub: "Do projeto à decisão: a casa fica legível.",
   },
   {
     src: "/morph/frame-07.jpg",
-    label: "Casa que parece cara",
-    sub: "Preço que cabe. Presença de empreendimento Rendal.",
+    label: "Aplicação inteligente",
+    sub: "Cada centavo no lugar certo — da laje ao acabamento.",
   },
 ] as const;
 
@@ -202,7 +202,7 @@ export function RendalMorphScroll() {
           : "pointer-events-none relative z-0 h-[230vh] bg-transparent md:h-[250vh]"
       }
       style={reduceMotion ? undefined : { marginBottom: -trail }}
-      aria-label="Do croqui ao produto Rendal"
+      aria-label="Do projeto ao produto Rendal"
     >
       <div
         ref={stickyRef}

@@ -15,33 +15,33 @@ import { cn } from "@/lib/utils";
 const EASE = "cubic-bezier(0.32,0.72,0,1)";
 
 const LINES = [
-  ["Valor", "onde", "se", "vê."],
-  ["Inteligência", "onde", "não", "se", "vê."],
+  ["Investe", "no", "que", "se", "vê."],
+  ["Racionaliza", "o", "resto."],
 ] as const;
 const TOTAL = LINES.reduce((sum, line) => sum + line.length, 0);
 
 const SEEN = [
   {
     title: "Laje com pergola",
-    body: "O dinheiro do telhado comum vira mesa, estar e vista.",
+    body: "O investimento do telhado vira área de lazer e uso.",
     x: 70,
     y: 36,
   },
   {
     title: "Jardineira na borda",
-    body: "Verde na linha do olhar, de dentro da laje e da calçada.",
+    body: "Paisagismo na fachada e na cobertura, onde agrega.",
     x: 62,
     y: 64,
   },
   {
     title: "Madeira ripada",
-    body: "Textura quente na fachada, bem onde a visita chega.",
+    body: "Acabamento na fachada — o primeiro contato com a casa.",
     x: 22,
     y: 86,
   },
   {
     title: "Luz indireta",
-    body: "Jardineiras e arandelas acesas fazem a casa render à noite.",
+    body: "Iluminação que valoriza o volume à noite.",
     x: 24,
     y: 50,
   },
@@ -50,17 +50,17 @@ const SEEN = [
 const HIDDEN = [
   {
     title: "Estrutura racional",
-    body: "Dimensionada para a casa, sem excesso onde o olho não chega.",
+    body: "Dimensionada para o projeto, sem excesso técnico.",
     tone: "bg-white",
   },
   {
-    title: "Instalações desenhadas junto",
-    body: "Tubulação e elétrica resolvidas na planta, antes da obra.",
+    title: "Instalações no projeto",
+    body: "Hidráulica e elétrica resolvidas na planta, antes da obra.",
     tone: "bg-[#E4F0F1]",
   },
   {
     title: "Técnico no essencial",
-    body: "O que não muda a percepção da casa fica no ponto certo.",
+    body: "O que não muda o resultado fica no ponto certo.",
     tone: "bg-[#F0E2C4]",
   },
 ] as const;
@@ -130,7 +130,7 @@ export function RendalAnatomy() {
         </h2>
         <RendalReveal>
           <p className="mx-auto mt-6 max-w-[36rem] text-center text-lg leading-8 text-pretty text-[#1F1F1F]/70">
-            O orçamento vai para o que você sente ao chegar. O resto é
+            O orçamento vai para laje, acabamento e uso. O restante é
             engenharia sem desperdício.
           </p>
         </RendalReveal>
@@ -183,7 +183,7 @@ export function RendalAnatomy() {
 
           <RendalReveal delayMs={120}>
             <div>
-              <p className="text-sm font-semibold text-[#0F5B63]">Onde se vê</p>
+              <p className="text-sm font-semibold text-[#0F5B63]">Onde o capital trabalha</p>
               <ol className="m-0 mt-4 flex list-none flex-col gap-2 p-0">
                 {SEEN.map((item, index) => {
                   const on = active === index;
@@ -198,7 +198,7 @@ export function RendalAnatomy() {
                           "flex w-full cursor-pointer items-start gap-4 rounded-2xl p-4 text-left transition-all duration-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#0F5B63]",
                           on
                             ? "bg-white shadow-[0_12px_32px_rgba(31,31,31,0.08)]"
-                            : "max-lg:items-center max-lg:py-3 hover:bg-white/50",
+                            : "bg-[#EDE6DA] max-lg:items-center max-lg:py-3 hover:bg-[#E8E0D2]",
                         )}
                         style={{ transitionTimingFunction: EASE }}
                       >
@@ -233,7 +233,7 @@ export function RendalAnatomy() {
               </ol>
 
               <p className="mt-6 text-sm font-semibold text-[#1F1F1F]/50 lg:mt-10">
-                Onde não se vê
+                Onde racionalizamos
               </p>
               <ul className="m-0 mt-3 grid list-none grid-cols-1 gap-2 p-0 lg:mt-4 lg:gap-4">
                 {HIDDEN.map((item) => (

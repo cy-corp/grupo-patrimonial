@@ -14,7 +14,7 @@ const PROJECTS = [
     status: "Referência de produto",
     city: "Região de Campinas, SP",
     blurb:
-      "Laje de lazer, lavabo social e acabamento de presença. O case que define o padrão Rendal para classes B e C.",
+      "Laje de lazer, lavabo social e acabamento onde o capital gera valor. Referência de produto Rendal.",
     image: "/referencia/capetinga-dener/render-fachada-dia.jpg",
     imageAlt: "Fachada do Residencial Capetinga ao dia",
   },
@@ -37,11 +37,11 @@ export default function EmpreendimentosPage() {
               color: "transparent",
             }}
           >
-            Casas com presença, no preço que cabe
+            Aplicação inteligente do capital
           </h1>
           <p className="mt-6 text-base leading-7 text-pretty text-white/75 sm:text-lg sm:leading-8">
-            Conheça o produto Rendal. Visita sem compromisso. Sem reserva
-            obrigatória no primeiro contato.
+            Cada centavo no lugar certo — da laje ao acabamento. Visita sem
+            compromisso.
           </p>
         </div>
       </section>

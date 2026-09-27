@@ -51,17 +51,17 @@ export function RendalPriceGuess() {
   const gap = guess - PRICE_FROM;
   const overshot = gap > 0;
   const headline = overshot
-    ? `${formatPrice(gap)} a menos do que você imaginou.`
-    : "Você ficou abaixo. Esse chute não acertou.";
+    ? `${formatPrice(gap)} a menos do que você estimou.`
+    : "Sua estimativa ficou abaixo do valor.";
   const detail = overshot
-    ? "Laje que vira lazer, lavabo no social e orçamento racional onde ninguém olha."
-    : "A casa custa mais do que você marcou.";
+    ? "Capital alocado na laje, no lavabo social e no acabamento — não em excesso técnico."
+    : "O produto pede mais capital do que você marcou.";
   const fill = ((guess - MIN) / (MAX - MIN)) * 100;
 
   return (
     <section
       id="chute"
-      className="relative z-10 scroll-mt-24 bg-[#F8F1E3] px-6 pb-12 pt-0 sm:px-8 sm:pb-24 md:pt-8 lg:px-10"
+      className="relative z-10 scroll-mt-24 bg-[#F8F1E3] px-6 pb-12 pt-0 sm:px-8 sm:pb-24 md:pt-20 lg:px-10 lg:pt-24"
       aria-labelledby="chute-titulo"
     >
       <RendalReveal className="mx-auto max-w-7xl">
@@ -134,10 +134,10 @@ export function RendalPriceGuess() {
               id="chute-titulo"
               className="text-3xl font-semibold tracking-tight text-balance sm:text-4xl lg:text-5xl"
             >
-              Quanto custa essa casa?
+              Quanto capital essa casa pede?
             </h2>
             <p className="mt-4 max-w-[36ch] text-lg leading-8 text-pretty text-white/70">
-              Arraste até o valor que você pagaria. Depois, vire a etiqueta.
+              Arraste até o valor que você estimaria. Depois, veja o preço.
             </p>
 
             <div className="mt-8 lg:mt-10">
@@ -146,7 +146,7 @@ export function RendalPriceGuess() {
                   htmlFor={sliderId}
                   className="text-sm font-semibold text-white/60"
                 >
-                  Seu chute
+                  Seu valor
                 </label>
                 <output
                   htmlFor={sliderId}
@@ -222,10 +222,10 @@ export function RendalPriceGuess() {
                 <div className="grid [&>*]:col-start-1 [&>*]:row-start-1">
                   <div aria-hidden className="invisible">
                     <p className="mt-2 text-xl font-semibold tracking-tight text-balance sm:text-2xl">
-                      {formatPrice(MAX - PRICE_FROM)} a menos do que você imaginou.
+                      {formatPrice(MAX - PRICE_FROM)} a menos do que você estimou.
                     </p>
                     <p className="mt-2 max-w-[40ch] text-sm leading-6 text-pretty">
-                      Laje que vira lazer, lavabo no social e orçamento racional onde ninguém olha.
+                      Capital alocado na laje, no lavabo social e no acabamento — não em excesso técnico.
                     </p>
                   </div>
                   <div>
@@ -253,7 +253,7 @@ export function RendalPriceGuess() {
                     className="cursor-pointer text-sm font-semibold text-white/60 underline-offset-4 transition-colors duration-700 hover:text-white hover:underline"
                     style={{ transitionTimingFunction: EASE }}
                   >
-                    Chutar de novo
+                    Estimar de novo
                   </button>
                 </div>
                 </div>

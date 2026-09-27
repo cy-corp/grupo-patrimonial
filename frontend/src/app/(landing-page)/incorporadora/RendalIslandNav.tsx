@@ -37,7 +37,7 @@ export function RendalIslandNav() {
       </a>
 
       <header className="pointer-events-none fixed inset-x-0 top-0 z-[60] flex justify-center px-4 pt-4 sm:pt-6">
-        <div className="pointer-events-auto flex w-full max-w-5xl items-center justify-between gap-8 rounded-full bg-white/70 py-2 pl-5 pr-2 shadow-[0_8px_32px_rgba(31,31,31,0.08)] ring-1 ring-[#1F1F1F]/5 backdrop-blur-xl lg:w-max">
+        <div className="pointer-events-auto flex w-max max-w-full items-center justify-between gap-3 rounded-full bg-white/70 py-2 pl-5 pr-2 shadow-[0_8px_32px_rgba(31,31,31,0.08)] ring-1 ring-[#1F1F1F]/5 backdrop-blur-xl sm:gap-4 lg:gap-8">
           <Link
             href="/concept"
             aria-label="Rendal, início"
@@ -70,14 +70,14 @@ export function RendalIslandNav() {
           <div className="flex items-center gap-2">
             <Link
               href="/empreendimentos"
-              className="hidden h-10 items-center justify-center rounded-full bg-[#0F5B63] px-4 text-sm font-semibold text-white transition-colors duration-700 hover:bg-[#0A474E] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0F5B63] active:scale-[0.98] sm:inline-flex"
+              className="hidden h-10 cursor-pointer items-center justify-center rounded-full bg-[#0F5B63] px-4 text-sm font-semibold text-white transition-colors duration-700 hover:bg-[#0A474E] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0F5B63] active:scale-[0.98] lg:inline-flex"
               style={{ transitionTimingFunction: EASE }}
             >
               Ver empreendimentos
             </Link>
             <button
               type="button"
-              className="relative inline-flex size-10 items-center justify-center rounded-full text-[#1F1F1F] transition-colors duration-700 hover:bg-[#1F1F1F]/5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#0F5B63] lg:hidden"
+              className="relative inline-flex size-10 cursor-pointer items-center justify-center rounded-full text-[#1F1F1F] transition-colors duration-700 hover:bg-[#1F1F1F]/5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#0F5B63] lg:hidden"
               style={{ transitionTimingFunction: EASE }}
               aria-expanded={open}
               aria-controls={menuId}

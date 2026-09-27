@@ -421,7 +421,7 @@ export function RendalHomeHero() {
             <div className="grid grid-cols-2 gap-0 md:contents">
               <div className="flex flex-col items-center justify-center px-2 py-1.5 text-center leading-5 text-white md:flex-1 md:px-3">
                 <strong className="text-xs font-semibold min-[380px]:whitespace-nowrap sm:text-sm">
-                  Mais valor{" "}
+                  Capital{" "}
                   <span
                     className="text-[10px] font-normal tracking-widest text-[#C9A96A] sm:text-xs"
                     aria-hidden
@@ -430,7 +430,7 @@ export function RendalHomeHero() {
                   </span>
                 </strong>
                 <span className="mt-0.5 text-[11px] font-medium min-[380px]:whitespace-nowrap text-white/75 sm:text-xs">
-                  mesmo investimento
+                  no lugar certo
                 </span>
               </div>
               <div
@@ -516,8 +516,8 @@ export function RendalHomeHero() {
   );
 }
 
-const HERO_LINE_A = ["Casa", "que", "parece", "cara."];
-const HERO_LINE_B = ["Preço", "que", "cabe."];
+const HERO_LINE_A = ["Aplicação", "inteligente"];
+const HERO_LINE_B = ["do", "seu", "dinheiro."];
 const HERO_WORDS = [...HERO_LINE_A, ...HERO_LINE_B];
 
 function HeroHeadline() {
