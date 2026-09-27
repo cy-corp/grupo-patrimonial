@@ -4,6 +4,7 @@ import { companies, formatCnpj } from "@/lib/companies";
 import { siteConfigs } from "@grupo-patrimonial/site-config";
 import { DcorpChromeProvider } from "./dcorp-chrome";
 import { DcorpWhatsAppFab } from "./DcorpWhatsAppFab";
+import { RendalFooterDiorama } from "./RendalFooterDiorama";
 import { SiteHeader } from "./SiteHeader";
 
 export function getSiteConfig(id: CompanyId) {
@@ -31,14 +32,14 @@ export function SiteShell({
         className={
           isDcorp
             ? "border-t border-[#D9D9D9] bg-[#1F1F1F] px-6 py-12"
-            : "border-t border-graphite/10 bg-[#F3F0EA] px-6 py-12"
+            : "relative z-10 -mt-8 overflow-hidden rounded-t-[32px] bg-[#F8F1E3] pt-12 pb-[calc(var(--diorama-h)_-_2.5rem)] shadow-[0_-16px_40px_rgba(0,0,0,0.12)] [--diorama-h:clamp(13rem,34vw,36rem)] md:-mt-12 md:rounded-t-[56px] md:pt-16"
         }
       >
         <div
           className={
             isDcorp
               ? "container mx-auto flex flex-col gap-6 text-sm text-white/65 md:flex-row md:items-start md:justify-between"
-              : "container mx-auto flex flex-col gap-4 text-sm text-graphite/65 md:flex-row md:items-center md:justify-between"
+              : "relative z-10 container mx-auto flex flex-col gap-4 px-6 text-sm text-graphite/65 md:flex-row md:items-center md:justify-between"
           }
         >
           <div className="space-y-1">
@@ -100,6 +101,12 @@ export function SiteShell({
             </Link>
           ) : null}
         </div>
+
+        {isDcorp ? null : (
+          <div className="pointer-events-none absolute inset-x-0 bottom-0 z-0 h-[var(--diorama-h)]">
+            <RendalFooterDiorama />
+          </div>
+        )}
       </footer>
 
       {isDcorp ? <DcorpWhatsAppFab /> : null}
