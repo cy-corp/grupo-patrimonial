@@ -98,7 +98,7 @@ export function RendalAnatomy() {
   return (
     <section
       id="valor"
-      className="bg-[#F8F1E3] px-6 py-12 sm:px-8 sm:py-24 lg:px-10 lg:py-32"
+      className="bg-[#F8F1E3] px-6 py-12 sm:px-8 sm:py-24 md:pt-8 lg:px-10 lg:pt-12 lg:pb-32"
       aria-labelledby="valor-titulo"
     >
       <div className="mx-auto max-w-7xl">

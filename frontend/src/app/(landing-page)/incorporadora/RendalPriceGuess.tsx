@@ -61,7 +61,7 @@ export function RendalPriceGuess() {
   return (
     <section
       id="chute"
-      className="relative z-10 scroll-mt-24 bg-[#F8F1E3] px-6 pb-12 pt-0 sm:px-8 sm:pb-24 md:pt-20 lg:px-10 lg:pt-24"
+      className="relative z-10 scroll-mt-24 bg-[#F8F1E3] px-6 pb-12 pt-8 sm:px-8 sm:pb-24 sm:pt-10 md:pb-12 md:pt-20 lg:px-10 lg:pb-16 lg:pt-24"
       aria-labelledby="chute-titulo"
     >
       <RendalReveal className="mx-auto max-w-7xl">
