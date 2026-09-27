@@ -61,12 +61,12 @@ export function RendalPriceGuess() {
   return (
     <section
       id="chute"
-      className="relative z-10 scroll-mt-24 bg-[#F8F1E3] px-6 pb-12 pt-10 sm:px-8 sm:pb-24 sm:pt-20 lg:px-10"
+      className="relative z-10 scroll-mt-24 bg-[#F8F1E3] px-6 pb-12 pt-0 sm:px-8 sm:pb-24 md:pt-8 lg:px-10"
       aria-labelledby="chute-titulo"
     >
       <RendalReveal className="mx-auto max-w-7xl">
         <div className="grid overflow-hidden rounded-4xl bg-[#0E2A2D] text-white shadow-[0_28px_60px_rgba(31,31,31,0.18)] lg:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)]">
-          <div className="relative aspect-[16/10] sm:aspect-[4/3] lg:aspect-auto lg:min-h-[36rem]">
+          <div className="relative aspect-video lg:aspect-auto lg:min-h-[36rem]">
             <Image
               src={FACADE}
               alt="Fachada Rendal à noite, com laje de lazer iluminada e madeira ripada"
@@ -128,11 +128,11 @@ export function RendalPriceGuess() {
             </motion.div>
           </div>
 
-          <div className="flex flex-col justify-center px-6 py-10 sm:px-10 sm:py-12 lg:px-12 lg:py-16">
+          <div className="flex flex-col justify-center px-6 py-8 sm:px-10 sm:py-12 lg:px-12 lg:py-16">
             <span className="mb-6 block h-px w-12 bg-[#C9A96A]" aria-hidden />
             <h2
               id="chute-titulo"
-              className="text-4xl font-semibold tracking-tight text-balance sm:text-5xl"
+              className="text-3xl font-semibold tracking-tight text-balance sm:text-4xl lg:text-5xl"
             >
               Quanto custa essa casa?
             </h2>
@@ -140,7 +140,7 @@ export function RendalPriceGuess() {
               Arraste até o valor que você pagaria. Depois, vire a etiqueta.
             </p>
 
-            <div className="mt-10">
+            <div className="mt-8 lg:mt-10">
               <div className="flex items-baseline justify-between gap-4">
                 <label
                   htmlFor={sliderId}
@@ -193,23 +193,29 @@ export function RendalPriceGuess() {
               </div>
             </div>
 
-            <div className="mt-8 grid [&>*]:col-start-1 [&>*]:row-start-1">
-              <div className={cn("flex", revealed && "invisible")} aria-hidden={revealed}>
-                <button
-                  type="button"
-                  onClick={() => setRevealed(true)}
-                  tabIndex={revealed ? -1 : undefined}
-                  className="inline-flex h-12 cursor-pointer items-center justify-center self-start rounded-full bg-white px-6 text-base font-semibold text-[#0E2A2D] transition-colors duration-700 hover:bg-[#F8F1E3] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#C9A96A] active:scale-[0.98]"
-                  style={{ transitionTimingFunction: EASE }}
-                >
-                  Virar a etiqueta
-                </button>
-              </div>
+            <div className="mt-8">
+              <button
+                type="button"
+                onClick={() => setRevealed(true)}
+                tabIndex={revealed ? -1 : undefined}
+                className={cn(
+                  "inline-flex h-12 cursor-pointer items-center justify-center rounded-full bg-white px-6 text-base font-semibold text-[#0E2A2D] transition-colors duration-700 hover:bg-[#F8F1E3] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#C9A96A] active:scale-[0.98]",
+                  revealed && "hidden",
+                )}
+                style={{ transitionTimingFunction: EASE }}
+              >
+                Virar a etiqueta
+              </button>
               <div
                 aria-live="polite"
                 aria-hidden={!revealed}
-                className={cn(!revealed && "invisible")}
+                className={cn(
+                  "grid transition-[grid-template-rows] duration-500 motion-reduce:transition-none",
+                  revealed ? "grid-rows-[1fr]" : "grid-rows-[0fr]",
+                )}
+                style={{ transitionTimingFunction: EASE }}
               >
+                <div className="min-h-0 overflow-hidden">
                 <p className="text-sm font-semibold text-[#C9A96A]">
                   Preço real: a partir de {formatPrice(PRICE_FROM)}
                 </p>
@@ -249,6 +255,7 @@ export function RendalPriceGuess() {
                   >
                     Chutar de novo
                   </button>
+                </div>
                 </div>
               </div>
             </div>

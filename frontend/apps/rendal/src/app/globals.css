@@ -34,6 +34,12 @@ html {
   animation: rendal-scroll-cue 2.8s cubic-bezier(0.37, 0, 0.63, 1) infinite;
 }
 
+@media (max-width: 767px) {
+  .rendal-hero-track {
+    margin-bottom: calc((min(70svh, (100vw - 2rem) * 1.25) - 100svh) / 2 + 1.25rem);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;

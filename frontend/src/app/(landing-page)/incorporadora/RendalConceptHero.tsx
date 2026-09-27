@@ -147,10 +147,10 @@ function StaticHero() {
   return (
     <section
       id="conteudo"
-      className="relative bg-[#F8F1E3] px-4 pb-16 pt-28 sm:px-6 sm:pt-36"
+      className="relative bg-[#F8F1E3] px-4 pb-16 pt-36 sm:px-6 sm:pt-36"
     >
       <HeroCopy hint="Do croqui à casa pronta, no mesmo preço." />
-      <div className="relative mx-auto mt-12 aspect-[4/5] w-full max-w-6xl overflow-hidden rounded-3xl bg-[#EDE6DA] md:aspect-video">
+      <div className="relative mx-auto mt-8 aspect-[4/5] max-h-[70svh] w-full max-w-6xl overflow-hidden rounded-3xl bg-[#EDE6DA] md:mt-12 md:aspect-video md:max-h-none">
         <Image
           src={DUSK}
           alt="Fachada Rendal ao entardecer, com laje de lazer e luz acesa"
@@ -300,13 +300,13 @@ export function RendalConceptHero() {
       <section
         id="conteudo"
         ref={trackRef}
-        className="relative h-[240vh] bg-[#F8F1E3] md:h-[400vh]"
+        className="rendal-hero-track relative h-[240vh] bg-[#F8F1E3] md:mb-0 md:h-[400vh]"
         aria-label="Do traço à casa Rendal"
       >
         <div ref={stageRef} className="sticky top-0 h-svh overflow-hidden">
           <motion.div
             ref={copyRef}
-            className="absolute inset-x-0 top-0 z-20 px-6 pt-24 sm:pt-32"
+            className="absolute inset-x-0 top-0 z-20 px-6 pt-36 sm:pt-32"
             style={{ opacity: copyOpacity, y: copyY, pointerEvents: copyEvents }}
           >
             <HeroCopy hint="Passe o mouse no desenho." />
@@ -314,7 +314,7 @@ export function RendalConceptHero() {
 
           <div
             ref={areaRef}
-            className="absolute inset-x-0 bottom-4 top-20 flex items-center justify-center sm:bottom-6 sm:top-24"
+            className="absolute inset-0 flex items-center justify-center md:top-24 md:bottom-6"
           >
             <motion.div
               ref={cardRef}
@@ -322,7 +322,7 @@ export function RendalConceptHero() {
               onPointerLeave={() => {
                 hovering.current = false;
               }}
-              className="relative aspect-[4/5] max-h-full w-[calc(100vw-2rem)] overflow-hidden bg-[#F2EEE6] shadow-[0_28px_60px_rgba(31,31,31,0.16)] md:aspect-video md:w-[min(calc(100vw-3rem),calc((100svh-7.5rem)*16/9))]"
+              className="relative aspect-[4/5] h-[min(70svh,calc((100vw-2rem)*1.25))] w-auto max-w-[calc(100vw-2rem)] overflow-hidden bg-[#F2EEE6] shadow-[0_28px_60px_rgba(31,31,31,0.16)] md:aspect-video md:h-auto md:max-h-full md:w-[min(calc(100vw-3rem),calc((100svh-7.5rem)*16/9))] md:max-w-none"
               style={
                 {
                   scale,

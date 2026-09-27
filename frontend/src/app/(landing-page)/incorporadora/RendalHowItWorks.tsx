@@ -32,7 +32,7 @@ export function RendalHowItWorks() {
     >
       <div className="mx-auto max-w-5xl">
         <RendalReveal>
-          <header className="mx-auto mb-12 max-w-[680px] text-center md:mb-16">
+          <header className="mx-auto mb-8 max-w-[680px] text-center md:mb-16">
             <h2
               id="como-titulo"
               className="text-3xl font-semibold tracking-tight text-balance text-[#1F1F1F] sm:text-4xl md:text-5xl"
@@ -46,11 +46,11 @@ export function RendalHowItWorks() {
           </header>
         </RendalReveal>
 
-        <ol className="m-0 grid list-none gap-6 p-0 md:grid-cols-3 md:gap-8">
+        <ol className="-mx-6 flex list-none snap-x snap-mandatory gap-4 overflow-x-auto px-6 pb-1 [scrollbar-width:none] md:mx-0 md:grid md:snap-none md:grid-cols-3 md:gap-8 md:overflow-visible md:px-0 md:pb-0 [&::-webkit-scrollbar]:hidden">
           {STEPS.map((step, index) => {
             const Icon = step.icon;
             return (
-              <li key={step.num}>
+              <li key={step.num} className="w-[calc(100vw-4.5rem)] shrink-0 snap-start md:w-auto">
                 <RendalReveal delayMs={index * 100}>
                   <article className="h-full rounded-2xl bg-[#F8F1E3] p-6 sm:p-8">
                     <div className="flex items-center justify-between gap-4">

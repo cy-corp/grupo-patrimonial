@@ -15,7 +15,7 @@ export function RendalSocialProof() {
     >
       <div className="mx-auto grid max-w-5xl gap-10 lg:grid-cols-2 lg:items-center lg:gap-16">
         <RendalReveal>
-          <div className="relative aspect-video overflow-hidden rounded-2xl bg-[#1F1F1F] sm:aspect-[4/3]">
+          <div className="relative aspect-video overflow-hidden rounded-2xl bg-[#1F1F1F] lg:aspect-[4/3]">
             <Image
               src="/referencia/capetinga-dener/render-laje-dia.jpg"
               alt="Laje de lazer do Residencial Capetinga, referência de produto Rendal"
