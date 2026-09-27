@@ -26,13 +26,13 @@ import { cn } from "@/lib/utils";
 const EASE = "cubic-bezier(0.32,0.72,0,1)";
 
 const FRAMES = [
-  { src: "/morph/frame-01.jpg", label: "Do terreno ao projeto" },
-  { src: "/morph/frame-02.jpg", label: "Uso no desenho" },
-  { src: "/morph/frame-03.jpg", label: "Elevação definida" },
-  { src: "/morph/frame-04.jpg", label: "Volume na rua" },
-  { src: "/morph/frame-05.jpg", label: "Capital no que se vê" },
-  { src: "/morph/frame-06.jpg", label: "Produto definido" },
-  { src: "/morph/frame-07.jpg", label: "Casa pronta" },
+  { src: "/morph/frame-01.jpg", label: "O terreno dá o primeiro limite" },
+  { src: "/morph/frame-02.jpg", label: "A planta organiza a rotina" },
+  { src: "/morph/frame-03.jpg", label: "A proporção vem antes do acabamento" },
+  { src: "/morph/frame-04.jpg", label: "A casa ganha forma na rua" },
+  { src: "/morph/frame-05.jpg", label: "Detalhes que importam" },
+  { src: "/morph/frame-06.jpg", label: "Cada ambiente encontra seu lugar" },
+  { src: "/morph/frame-07.jpg", label: "Uma casa pensada para viver" },
 ] as const;
 const LAST = FRAMES.length - 1;
 const RENDER = FRAMES[LAST].src;
@@ -93,7 +93,7 @@ function HeroCopy({ hint }: { hint: string }) {
         </span>
       </h1>
       <p className="mt-4 max-w-[34rem] text-base leading-7 text-pretty text-[#1F1F1F]/70 sm:text-lg sm:leading-8">
-        Cada centavo no lugar certo — da laje ao acabamento.
+        Laje de lazer, acabamento bem escolhido e conforto pensado desde a planta.
       </p>
       <div className="mt-6 flex flex-col items-center gap-3 sm:flex-row sm:gap-6">
         <Link

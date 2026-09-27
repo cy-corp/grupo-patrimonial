@@ -7,20 +7,20 @@ const STEPS = [
   {
     num: "01",
     icon: MagnifyingGlass,
-    title: "Conheça o produto",
-    body: "Veja plantas, laje de lazer e acabamentos. Entenda onde o capital foi aplicado antes de agendar.",
+    title: "Compare plantas e acabamentos",
+    body: "Veja a distribuição dos ambientes, a laje de lazer e os acabamentos antes de marcar sua visita.",
   },
   {
     num: "02",
     icon: CalendarBlank,
     title: "Agende uma visita",
-    body: "Marque um horário sem compromisso. A equipe apresenta o projeto e as decisões de orçamento.",
+    body: "Conheça o empreendimento no seu ritmo e tire dúvidas sobre a unidade, o projeto e as condições.",
   },
   {
     num: "03",
     icon: Key,
-    title: "Reserve sua unidade",
-    body: "Escolha a casa, alinhe condições e avance com documentação. O próximo passo fica claro desde o primeiro contato.",
+    title: "Escolha como avançar",
+    body: "Se fizer sentido para você, alinhe a unidade, as condições e a documentação com a equipe.",
   },
 ] as const;
 
@@ -37,10 +37,10 @@ export function RendalHowItWorks() {
               id="como-titulo"
               className="text-3xl font-semibold tracking-tight text-balance text-[#1F1F1F] sm:text-4xl md:text-5xl"
             >
-              Três passos até a chave
+              Um caminho claro até a sua unidade
             </h2>
             <p className="mt-4 text-base leading-7 text-pretty text-[#1F1F1F]/70 sm:text-lg sm:leading-8">
-              Do primeiro contato à reserva — caminho claro para o comprador.
+              Informação para decidir com segurança, sem pressão para comprar.
             </p>
           </header>
         </RendalReveal>

@@ -38,9 +38,9 @@ export function RendalSocialProof() {
               Residencial Capetinga
             </h2>
             <p className="mt-4 text-base leading-7 text-pretty text-[#1F1F1F]/70 sm:text-lg sm:leading-8">
-              Projeto com laje de lazer, lavabo social e acabamento onde o
-              capital gera valor. O mesmo critério que a Rendal leva aos
-              próximos lançamentos.
+              Um projeto que reúne laje de lazer, lavabo social e acabamento
+              pensado para o uso diário. É assim que a Rendal transforma
+              decisões de orçamento em experiência de morar.
             </p>
 
             <blockquote className="mt-8 rounded-2xl bg-white p-6 ring-1 ring-[#1F1F1F]/10 sm:p-8">
@@ -50,11 +50,11 @@ export function RendalSocialProof() {
                 aria-hidden
               />
               <p className="mt-3 text-lg leading-8 text-pretty text-[#1F1F1F]">
-                Cada real no lugar certo — da laje ao acabamento. O orçamento
-                trabalha no que importa.
+                A cobertura deixou de ser apenas um telhado e passou a fazer
+                parte da casa.
               </p>
               <footer className="mt-4 text-sm font-semibold text-[#1F1F1F]/70">
-                Critério de produto · Residencial Capetinga
+                Decisão de projeto · Residencial Capetinga
               </footer>
             </blockquote>
 
@@ -63,7 +63,7 @@ export function RendalSocialProof() {
               className="mt-8 inline-flex min-h-11 items-center justify-center rounded-full bg-[#0F5B63] px-6 py-2.5 text-base font-semibold text-white transition-all duration-700 hover:bg-[#0A3F45] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0F5B63] active:scale-[0.98]"
               style={{ transitionTimingFunction: EASE }}
             >
-              Ver empreendimentos
+              Conhecer o empreendimento
             </Link>
           </div>
         </RendalReveal>

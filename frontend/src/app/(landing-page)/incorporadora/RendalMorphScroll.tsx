@@ -15,38 +15,38 @@ import { RendalTaglineReveal } from "./RendalTaglineReveal";
 const FRAMES = [
   {
     src: "/morph/frame-01.jpg",
-    label: "Do terreno ao projeto",
-    sub: "Antes da fachada, o critério começa no papel.",
+    label: "O terreno dá o primeiro limite",
+    sub: "Implantação, acesso e relação com a rua orientam o projeto.",
   },
   {
     src: "/morph/frame-02.jpg",
-    label: "Uso no desenho",
-    sub: "Vagas, acesso e o dia a dia já entram no projeto.",
+    label: "A planta organiza a rotina",
+    sub: "Vagas, circulação e ambientes entram no desenho desde o começo.",
   },
   {
     src: "/morph/frame-03.jpg",
-    label: "Elevação definida",
-    sub: "Proporção fechada. Sem improviso na obra.",
+    label: "A proporção vem antes do acabamento",
+    sub: "Volumes, aberturas e alturas definem a presença da casa.",
   },
   {
     src: "/morph/frame-04.jpg",
-    label: "Volume na rua",
-    sub: "Forma e sombra: o que se lê de fora.",
+    label: "A casa ganha forma na rua",
+    sub: "Fachada, sombra e entrada tornam o projeto reconhecível.",
   },
   {
     src: "/morph/frame-05.jpg",
-    label: "Capital no que se vê",
-    sub: "Madeira, laje e luz — investimento onde agrega.",
+    label: "Detalhes que importam",
+    sub: "Madeira, laje e luz entram para melhorar o uso da casa.",
   },
   {
     src: "/morph/frame-06.jpg",
-    label: "Produto definido",
-    sub: "Do projeto à decisão: a casa fica legível.",
+    label: "Cada ambiente encontra seu lugar",
+    sub: "Convívio no térreo, lazer na cobertura e privacidade nos quartos.",
   },
   {
     src: "/morph/frame-07.jpg",
-    label: "Aplicação inteligente",
-    sub: "Cada centavo no lugar certo — da laje ao acabamento.",
+    label: "Uma casa pensada para viver",
+    sub: "Mais conforto, lazer e acabamento onde fazem diferença.",
   },
 ] as const;
 

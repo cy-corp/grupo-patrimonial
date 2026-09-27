@@ -183,7 +183,7 @@ export function RendalAnatomy() {
 
           <RendalReveal delayMs={120}>
             <div>
-              <p className="text-sm font-semibold text-[#0F5B63]">Onde o capital trabalha</p>
+              <p className="text-sm font-semibold text-[#0F5B63]">O que entra no projeto</p>
               <ol className="m-0 mt-4 flex list-none flex-col gap-2 p-0">
                 {SEEN.map((item, index) => {
                   const on = active === index;

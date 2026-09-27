@@ -54,8 +54,8 @@ export function RendalPriceGuess() {
     ? `${formatPrice(gap)} a menos do que você estimou.`
     : "Sua estimativa ficou abaixo do valor.";
   const detail = overshot
-    ? "Capital alocado na laje, no lavabo social e no acabamento — não em excesso técnico."
-    : "O produto pede mais capital do que você marcou.";
+    ? "O valor aparece na laje, no lavabo social e no acabamento, sem excesso onde ele não muda a experiência."
+    : "A casa pede um investimento maior do que você estimou.";
   const fill = ((guess - MIN) / (MAX - MIN)) * 100;
 
   return (
@@ -134,7 +134,7 @@ export function RendalPriceGuess() {
               id="chute-titulo"
               className="text-3xl font-semibold tracking-tight text-balance sm:text-4xl lg:text-5xl"
             >
-              Quanto capital essa casa pede?
+              Quanto vale esta casa para você?
             </h2>
             <p className="mt-4 max-w-[36ch] text-lg leading-8 text-pretty text-white/70">
               Arraste até o valor que você estimaria. Depois, veja o preço.
@@ -225,7 +225,7 @@ export function RendalPriceGuess() {
                       {formatPrice(MAX - PRICE_FROM)} a menos do que você estimou.
                     </p>
                     <p className="mt-2 max-w-[40ch] text-sm leading-6 text-pretty">
-                      Capital alocado na laje, no lavabo social e no acabamento — não em excesso técnico.
+                      O valor aparece na laje, no lavabo social e no acabamento, sem excesso onde ele não muda a experiência.
                     </p>
                   </div>
                   <div>
@@ -244,7 +244,7 @@ export function RendalPriceGuess() {
                     className="inline-flex h-12 items-center justify-center rounded-full bg-[#C9A96A] px-6 text-base font-semibold text-[#1F1F1F] transition-colors duration-700 hover:bg-[#D8BC84] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white active:scale-[0.98]"
                     style={{ transitionTimingFunction: EASE }}
                   >
-                    Ver empreendimentos
+                    Ver unidades
                   </Link>
                   <button
                     type="button"

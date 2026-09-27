@@ -13,27 +13,27 @@ const BENEFITS = [
   {
     icon: Stairs,
     title: "Laje de lazer",
-    body: "O capital do telhado tradicional vira área de estar, pergola e uso na cobertura.",
+    body: "A cobertura vira uma extensão da casa, com área de estar, pérgola e espaço para receber.",
   },
   {
     icon: Bathtub,
     title: "Lavabo social",
-    body: "Visitante se atende sem cruzar a área íntima. Conforto resolvido no projeto.",
+    body: "Quem visita usa o lavabo sem atravessar os quartos. Mais privacidade no dia a dia.",
   },
   {
     icon: Eye,
-    title: "Acabamento no que se vê",
-    body: "Porcelanato, pia e fachada recebem o investimento. O técnico fica no essencial.",
+    title: "Acabamento que aparece",
+    body: "Fachada, porcelanato e pia recebem atenção porque fazem parte da experiência de morar.",
   },
   {
     icon: Wallet,
-    title: "Capital bem aplicado",
-    body: "Cada centavo no lugar certo — da laje ao acabamento. Sem desperdício onde não agrega.",
+    title: "Orçamento racionalizado",
+    body: "A economia fica no que não muda o uso da casa. O investimento vai para o que o morador percebe.",
   },
   {
     icon: House,
-    title: "Fluxo pensado",
-    body: "Térreo social, lazer em cima, quartos privados. O dia a dia já está no desenho.",
+    title: "Planta que acompanha a rotina",
+    body: "Convívio no térreo, lazer na cobertura e quartos mais reservados. Cada ambiente tem seu lugar.",
   },
 ] as const;
 
@@ -50,11 +50,11 @@ export function RendalBenefits() {
               id="beneficios-titulo"
               className="text-3xl font-semibold tracking-tight text-balance text-[#1F1F1F] sm:text-4xl md:text-5xl"
             >
-              Onde o orçamento trabalha
+              Cinco escolhas que mudam a casa
             </h2>
             <p className="mt-4 text-base leading-7 text-pretty text-[#1F1F1F]/70 sm:text-lg sm:leading-8">
-              Investe no que gera valor. Racionaliza o resto. Cinco decisões de
-              produto.
+              Mais espaço para viver, conforto no uso diário e acabamento onde
+              ele faz diferença.
             </p>
           </header>
         </RendalReveal>

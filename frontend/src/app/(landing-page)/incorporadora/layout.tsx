@@ -3,11 +3,11 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Aplicação inteligente do seu dinheiro | Rendal",
   description:
-    "Rendal Incorporadora: capital no lugar certo — da laje ao acabamento. Conheça empreendimentos e agende visita sem compromisso.",
+    "Rendal Incorporadora: casas com laje de lazer, conforto no projeto e acabamento bem escolhido. Conheça os empreendimentos.",
   openGraph: {
     title: "Aplicação inteligente do seu dinheiro | Rendal",
     description:
-      "Cada centavo no lugar certo. Laje de lazer, lavabo social e acabamento onde gera valor.",
+      "Laje de lazer, lavabo social e acabamento pensado para o uso diário. Conheça os empreendimentos Rendal.",
   },
 };
 

@@ -7,35 +7,35 @@ import { RendalReveal } from "./RendalReveal";
 const FAQ = [
   {
     q: "Para quem é o produto Rendal?",
-    a: "Para quem busca casa com laje de lazer, lavabo social e acabamento bem aplicado — com o orçamento alocado no que gera valor, sem excesso técnico.",
+    a: "Para quem procura uma casa confortável, com área de lazer, boa distribuição dos ambientes e acabamento pensado para o uso diário.",
   },
   {
     q: "O que é a laje de lazer?",
-    a: "Em vez de gastar com telhado tradicional, a cobertura é impermeabilizada e vira área de estar. O mesmo capital do telhado entrega lazer e uso.",
+    a: "É uma cobertura impermeabilizada e preparada para uso. Em vez de servir apenas como proteção, ela recebe área de estar, pérgola e outros espaços de lazer.",
   },
   {
     q: "Por que a avaliação da Caixa costuma ficar acima do preço?",
-    a: "Porque o produto entrega acabamento e área que a avaliação reconhece. Em casos de referência, a diferença chega a 30 a 40% acima do preço de venda — como lógica de mercado, não como garantia.",
+    a: "Em projetos de referência, a avaliação chegou a ficar entre 30% e 40% acima do preço de venda. O resultado depende da unidade, do empreendimento e da análise do banco, portanto não é uma garantia.",
   },
   {
     q: "A visita tem compromisso de compra?",
-    a: "Não. Você agenda, conhece o produto e decide com calma. Reserva só acontece quando você quiser avançar.",
+    a: "Não. Você conhece o empreendimento, tira suas dúvidas e decide com calma. Só avança para a reserva quando quiser.",
   },
   {
     q: "Dá para financiar?",
-    a: "Sim. A equipe orienta o caminho com a Caixa e outros bancos, alinhando documentação e condições ao perfil do comprador.",
+    a: "A equipe orienta o processo com a Caixa e outros bancos, conforme a documentação, a unidade escolhida e o perfil do comprador. A aprovação depende da análise da instituição.",
   },
   {
     q: "Qual o prazo até a entrega?",
     a: "Depende do empreendimento e da fase de obra. Na visita ou no contato, você recebe o cronograma da unidade que está olhando.",
   },
   {
-    q: "O que significa aplicação inteligente do capital?",
-    a: "Investir no que o comprador vê e usa — laje, acabamento, lavabo — e racionalizar estrutura e instalações no essencial, sem desperdício.",
+    q: "O que está incluído na unidade?",
+    a: "Isso varia por empreendimento. Na visita, a equipe apresenta a planta, os acabamentos e o memorial descritivo da unidade que você está avaliando.",
   },
   {
     q: "Como falo com a Rendal sobre uma unidade?",
-    a: "Use Ver empreendimentos para conhecer o produto, ou Contato para agendar visita. O próximo passo fica claro no primeiro retorno da equipe.",
+    a: "Use Ver empreendimentos para consultar as unidades ou Contato para falar com a equipe e agendar uma visita.",
   },
 ] as const;
 

@@ -421,16 +421,10 @@ export function RendalHomeHero() {
             <div className="grid grid-cols-2 gap-0 md:contents">
               <div className="flex flex-col items-center justify-center px-2 py-1.5 text-center leading-5 text-white md:flex-1 md:px-3">
                 <strong className="text-xs font-semibold min-[380px]:whitespace-nowrap sm:text-sm">
-                  Capital{" "}
-                  <span
-                    className="text-[10px] font-normal tracking-widest text-[#C9A96A] sm:text-xs"
-                    aria-hidden
-                  >
-                    ★★★★★
-                  </span>
+                  Laje de lazer
                 </strong>
                 <span className="mt-0.5 text-[11px] font-medium min-[380px]:whitespace-nowrap text-white/75 sm:text-xs">
-                  no lugar certo
+                  área de uso na cobertura
                 </span>
               </div>
               <div
@@ -439,10 +433,10 @@ export function RendalHomeHero() {
               />
               <div className="flex flex-col items-center justify-center border-l border-white/20 px-2 py-1.5 text-center leading-5 text-white md:flex-1 md:border-l-0 md:px-3">
                 <strong className="text-xs font-semibold min-[380px]:whitespace-nowrap sm:text-sm">
-                  Avaliação Caixa
+                  Avaliação de referência
                 </strong>
                 <span className="mt-0.5 text-[11px] font-medium min-[380px]:whitespace-nowrap text-white/75 sm:text-xs">
-                  30 a 40% acima
+                  casos até 30 a 40% acima
                 </span>
               </div>
             </div>
