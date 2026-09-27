@@ -51,14 +51,17 @@ const HIDDEN = [
   {
     title: "Estrutura racional",
     body: "Dimensionada para a casa, sem excesso onde o olho não chega.",
+    tone: "bg-white",
   },
   {
     title: "Instalações desenhadas junto",
     body: "Tubulação e elétrica resolvidas na planta, antes da obra.",
+    tone: "bg-[#E4F0F1]",
   },
   {
     title: "Técnico no essencial",
     body: "O que não muda a percepção da casa fica no ponto certo.",
+    tone: "bg-[#F0E2C4]",
   },
 ] as const;
 
@@ -232,16 +235,16 @@ export function RendalAnatomy() {
               <p className="mt-6 text-sm font-semibold text-[#1F1F1F]/50 lg:mt-10">
                 Onde não se vê
               </p>
-              <ul className="m-0 mt-3 grid list-none grid-cols-2 gap-2 p-0 lg:mt-4 lg:grid-cols-1 lg:gap-4">
+              <ul className="m-0 mt-3 grid list-none grid-cols-1 gap-2 p-0 lg:mt-4 lg:gap-4">
                 {HIDDEN.map((item) => (
                   <li
                     key={item.title}
-                    className="rounded-2xl px-3 py-3 ring-1 ring-[#1F1F1F]/10 lg:p-4"
+                    className={cn("rounded-2xl px-4 py-3 lg:p-4", item.tone)}
                   >
                     <span className="block text-sm font-semibold text-[#1F1F1F] lg:text-base">
                       {item.title}
                     </span>
-                    <span className="mt-1 hidden text-sm leading-6 text-pretty text-[#1F1F1F]/60 lg:block">
+                    <span className="mt-1 block text-sm leading-6 text-pretty text-[#1F1F1F]/60">
                       {item.body}
                     </span>
                   </li>

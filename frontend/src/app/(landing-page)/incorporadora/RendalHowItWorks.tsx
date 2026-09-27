@@ -46,13 +46,13 @@ export function RendalHowItWorks() {
           </header>
         </RendalReveal>
 
-        <ol className="-mx-6 flex list-none snap-x snap-mandatory gap-4 overflow-x-auto px-6 pb-1 [scrollbar-width:none] md:mx-0 md:grid md:snap-none md:grid-cols-3 md:gap-8 md:overflow-visible md:px-0 md:pb-0 [&::-webkit-scrollbar]:hidden">
+        <ol className="m-0 grid list-none grid-cols-1 gap-4 p-0 md:grid-cols-3 md:gap-8">
           {STEPS.map((step, index) => {
             const Icon = step.icon;
             return (
-              <li key={step.num} className="w-[calc(100vw-4.5rem)] shrink-0 snap-start md:w-auto">
-                <RendalReveal delayMs={index * 100}>
-                  <article className="h-full rounded-2xl bg-[#F8F1E3] p-6 sm:p-8">
+              <li key={step.num} className="min-w-0">
+                <RendalReveal delayMs={index * 100} className="h-full">
+                  <article className="flex h-full flex-col rounded-2xl bg-[#F8F1E3] p-6 sm:p-8">
                     <div className="flex items-center justify-between gap-4">
                       <span className="text-sm font-semibold tabular-nums tracking-widest text-[#0F5B63]">
                         {step.num}
