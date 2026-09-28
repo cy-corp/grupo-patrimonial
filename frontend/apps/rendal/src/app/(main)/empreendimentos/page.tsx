@@ -17,7 +17,7 @@ import { RendalReveal } from "@/components/rendal/RendalReveal";
 export const metadata: Metadata = {
   title: "Empreendimentos",
   description:
-    "Casas pensadas para o dia a dia. Laje de lazer, lavabo social e acabamento onde faz diferença.",
+    "Casas pensadas para o dia a dia. Veja plantas e condições antes de visitar.",
   alternates: { canonical: "/empreendimentos" },
 };
 

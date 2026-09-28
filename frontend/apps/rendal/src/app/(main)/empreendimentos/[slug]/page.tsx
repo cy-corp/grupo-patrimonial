@@ -34,7 +34,7 @@ export async function generateMetadata({
   if (!item) return { title: "Empreendimento" };
   return {
     title: item.nome,
-    description: `${item.nome} em ${item.cidade}. Veja plantas, laje de lazer e condições antes de visitar.`,
+    description: `${item.nome} em ${item.cidade}. Veja plantas e condições antes de visitar.`,
     alternates: { canonical: `/empreendimentos/${item.slug}` },
     openGraph: {
       title: item.nome,

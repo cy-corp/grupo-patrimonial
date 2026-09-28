@@ -17,11 +17,17 @@ export const metadata: Metadata = {
     template: "%s | Rendal",
   },
   description:
-    "Rendal Incorporadora: capital no lugar certo — da laje ao acabamento. Conheça empreendimentos e agende visita.",
+    "Cada centavo no lugar certo. Conheça os empreendimentos e agende visita sem compromisso.",
   openGraph: {
     type: "website",
     locale: "pt_BR",
     siteName: "Rendal Incorporadora",
+    title: "Aplicação inteligente do seu dinheiro | Rendal",
+    description:
+      "Cada centavo no lugar certo. Veja empreendimentos e agende visita sem compromisso.",
+  },
+  twitter: {
+    card: "summary_large_image",
     title: "Aplicação inteligente do seu dinheiro | Rendal",
     description:
       "Cada centavo no lugar certo. Veja empreendimentos e agende visita sem compromisso.",
