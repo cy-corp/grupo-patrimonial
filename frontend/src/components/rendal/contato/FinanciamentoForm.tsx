@@ -553,7 +553,7 @@ export function FinanciamentoForm({ empreendimento }: { empreendimento?: string 
   const qual = etapa.id === "conjuge" ? "conjuge" : "voce";
 
   return (
-    <section ref={sectionRef} id="financiamento" aria-labelledby="financiamento-titulo" className="scroll-mt-28 overflow-clip rounded-3xl bg-white ring-1 ring-[#1F1F1F]/10">
+    <section ref={sectionRef} id="financiamento" aria-labelledby="financiamento-titulo" className="scroll-mt-28 overflow-x-hidden rounded-3xl bg-white ring-1 ring-[#1F1F1F]/10">
       <div className="grid lg:grid-cols-[minmax(0,1fr)_20rem]">
         <div className="min-w-0 p-5 sm:p-8">
           <header>
@@ -612,13 +612,13 @@ export function FinanciamentoForm({ empreendimento }: { empreendimento?: string 
             </div>
           </div>
 
-          <form onSubmit={onSubmit} noValidate className="relative mt-6">
+          <form onSubmit={onSubmit} noValidate className="relative mt-6 min-w-0 max-w-full">
             <HoneypotField />
-            <div key={etapa.id} className="rendal-step" style={{ ["--step-from" as string]: `${direction * 16}px` }}>
+            <div key={etapa.id} className="rendal-step min-w-0 max-w-full" style={{ ["--step-from" as string]: `${direction * 16}px` }}>
               <h3 ref={headingRef} tabIndex={-1} className="text-xl font-semibold tracking-tight text-[#1F1F1F] outline-none">
                 {copy.title}
               </h3>
-              <p className="mt-1 text-sm leading-6 text-[#1F1F1F]/60">{copy.text}</p>
+              <p className="mt-1 text-sm leading-6 break-words text-[#1F1F1F]/60">{copy.text}</p>
 
               {etapa.id === "imovel" ? (
                 <div className="mt-6 flex flex-col gap-4">

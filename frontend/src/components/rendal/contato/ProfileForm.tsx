@@ -86,9 +86,9 @@ export function ProfileForm({
         })}
       </div>
 
-      <div className="t-acc mt-8" data-open="true">
+      <div className="t-acc mt-8 min-w-0" data-open="true">
         <div className="t-acc-panel">
-          <div className="t-acc-panel-inner">
+          <div className="t-acc-panel-inner min-w-0">
             {perfil === "financiar" ? (
               <FinanciamentoForm empreendimento={empreendimento} />
             ) : (

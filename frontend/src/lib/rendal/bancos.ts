@@ -567,7 +567,7 @@ export function erroConta(conta: ContaBancaria) {
     code: bancoByCode(conta.code) ? "" : "Escolha o banco na lista.",
     agencia: /^\d{4}$/.test(conta.agencia) ? "" : "A agência tem 4 dígitos.",
     conta: /^\d{4,13}$/.test(conta.conta) ? "" : "Informe a conta, sem o dígito.",
-    digito: conta.digito === "" || /^[0-9xX]{1,2}$/.test(conta.digito) ? "" : "Use 1 ou 2 caracteres.",
+    digito: conta.digito === "" || /^[0-9A-Za-z]{1,2}$/.test(conta.digito) ? "" : "Use 1 ou 2 caracteres.",
   };
 }
 
@@ -585,7 +585,7 @@ export function sanitizeContas(value: unknown): ContaBancaria[] {
         code,
         agencia: typeof row.agencia === "string" ? row.agencia.replace(/\D/g, "").slice(0, 4) : "",
         conta: typeof row.conta === "string" ? row.conta.replace(/\D/g, "").slice(0, 13) : "",
-        digito: typeof row.digito === "string" ? row.digito.replace(/[^0-9xX]/g, "").slice(0, 2) : "",
+        digito: typeof row.digito === "string" ? row.digito.replace(/[^0-9A-Za-z]/g, "").slice(0, 2) : "",
       },
     ];
   });

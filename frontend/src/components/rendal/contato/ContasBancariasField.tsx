@@ -164,7 +164,7 @@ export function ContasBancariasField({
         Conta bancária <span className="font-normal text-[#1F1F1F]/55">(opcional)</span>
       </legend>
       <p className="text-sm leading-6 text-[#1F1F1F]/55">
-        O número na frente é o código do banco. O dígito fica separado e pode ficar em branco.
+        O número na frente é o código do banco. O dígito fica separado, pode ser letra (como X) e pode ficar em branco.
       </p>
 
       {value.map((conta, index) => {
@@ -219,7 +219,7 @@ export function ContasBancariasField({
                 autoComplete="off"
                 maxLength={2}
                 error={show ? errors.digito : ""}
-                onChange={(digito) => patch(conta.id, { digito: digito.replace(/[^0-9xX]/g, "").slice(0, 2) })}
+                onChange={(digito) => patch(conta.id, { digito: digito.replace(/[^0-9A-Za-z]/g, "").slice(0, 2) })}
               />
             </div>
           </div>

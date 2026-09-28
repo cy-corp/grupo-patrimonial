@@ -25,10 +25,8 @@ function nomeSeguro(name: string) {
 
 function nomeVisivel(name: string) {
   const clean = name.replace(/\s+/g, " ").trim() || "arquivo";
-  if (clean.length <= 36) return clean;
-  const dot = clean.lastIndexOf(".");
-  const ext = dot > 0 && clean.length - dot <= 8 ? clean.slice(dot) : "";
-  return `${clean.slice(0, 32 - ext.length)}…${ext}`;
+  if (clean.length <= 28) return clean;
+  return `${clean.slice(0, 24)}…`;
 }
 
 async function prepararArquivo(file: File) {
@@ -154,15 +152,18 @@ export function DocumentosStep({
             ) : null}
             <ul className="mt-3 flex min-w-0 flex-col gap-2">
               {arquivos.map((arquivo) => (
-                <li key={arquivo.pathname} className="flex min-w-0 items-center gap-2 overflow-hidden rounded-xl bg-white px-3 py-2 text-sm">
+                <li
+                  key={arquivo.pathname}
+                  className="grid min-w-0 grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-2 overflow-hidden rounded-xl bg-white px-3 py-2 text-sm"
+                >
                   <FileText className="size-4 shrink-0 text-[#0F5B63]" aria-hidden />
-                  <span className="min-w-0 flex-1 truncate font-semibold" title={arquivo.name}>
+                  <span className="min-w-0 truncate font-semibold" title={arquivo.name}>
                     {nomeVisivel(arquivo.name)}
                   </span>
                   <button
                     type="button"
                     onClick={() => onArquivos(slot.id, arquivos.filter((item) => item.pathname !== arquivo.pathname))}
-                    className="inline-flex size-11 cursor-pointer items-center justify-center rounded-full text-[#1F1F1F]/55"
+                    className="inline-flex size-11 shrink-0 cursor-pointer items-center justify-center rounded-full text-[#1F1F1F]/55"
                     aria-label={`Remover ${arquivo.name}`}
                   >
                     <Trash weight="bold" className="size-4" aria-hidden />

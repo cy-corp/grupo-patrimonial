@@ -212,6 +212,7 @@ html[data-js] .no-js-only {
 
 .t-acc-panel {
   display: grid;
+  min-width: 0;
   grid-template-rows: 0fr;
   transition: grid-template-rows var(--acc-collapse) var(--acc-ease);
 }
@@ -223,6 +224,7 @@ html[data-js] .no-js-only {
 
 .t-acc-panel-inner {
   min-height: 0;
+  min-width: 0;
   overflow: hidden;
   opacity: 0;
   filter: blur(2px);
