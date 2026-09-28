@@ -23,6 +23,14 @@ function nomeSeguro(name: string) {
   return clean || "arquivo";
 }
 
+function nomeVisivel(name: string) {
+  const clean = name.replace(/\s+/g, " ").trim() || "arquivo";
+  if (clean.length <= 36) return clean;
+  const dot = clean.lastIndexOf(".");
+  const ext = dot > 0 && clean.length - dot <= 8 ? clean.slice(dot) : "";
+  return `${clean.slice(0, 32 - ext.length)}…${ext}`;
+}
+
 async function prepararArquivo(file: File) {
   if (!file.type.startsWith("image/") || file.type === "image/heic" || file.type === "image/heif" || file.size < 1_500_000) {
     return file;
@@ -92,7 +100,7 @@ export function DocumentosStep({
           multipart: pronto.size > 4 * 1024 * 1024,
           onUploadProgress: (event) => setProgresso(((i + event.percentage / 100) / files.length) * 100),
         });
-        next = [...next, { pathname: blob.pathname, name: pronto.name, size: pronto.size }];
+        next = [...next, { pathname: blob.pathname, name: nomeVisivel(pronto.name), size: pronto.size }];
         onArquivos(id, next);
       }
     } catch (error) {
@@ -109,7 +117,7 @@ export function DocumentosStep({
   }
 
   return (
-    <div className="mt-6 flex flex-col gap-3">
+    <div className="mt-6 flex min-w-0 flex-col gap-3">
       <p className="text-sm text-[#1F1F1F]/60">
         {enviados} de {slots.length} itens com arquivo. Foto ou PDF, até 10 MB.
       </p>
@@ -119,7 +127,7 @@ export function DocumentosStep({
         const escolha = slot.escolha === "renda" ? draft.comprovanteRenda : slot.escolha === "renda-conjuge" ? draft.comprovanteRendaConjuge : "";
         const erroEscolha = slot.escolha === "renda" ? erros.comprovanteRenda : slot.escolha === "renda-conjuge" ? erros.comprovanteRendaConjuge : "";
         return (
-          <div key={slot.id} className="rounded-2xl bg-[#F8F1E3]/70 p-3">
+          <div key={slot.id} className="min-w-0 overflow-hidden rounded-2xl bg-[#F8F1E3]/70 p-3">
             <div className="flex items-start justify-between gap-3">
               <div>
                 <p className="text-sm font-semibold text-[#1F1F1F]">{slot.label}</p>
@@ -144,11 +152,13 @@ export function DocumentosStep({
                 {erroEscolha ? <p className="text-sm text-[#B4432F]">{erroEscolha}</p> : null}
               </div>
             ) : null}
-            <ul className="mt-3 flex flex-col gap-2">
+            <ul className="mt-3 flex min-w-0 flex-col gap-2">
               {arquivos.map((arquivo) => (
-                <li key={arquivo.pathname} className="flex items-center gap-2 rounded-xl bg-white px-3 py-2 text-sm">
+                <li key={arquivo.pathname} className="flex min-w-0 items-center gap-2 overflow-hidden rounded-xl bg-white px-3 py-2 text-sm">
                   <FileText className="size-4 shrink-0 text-[#0F5B63]" aria-hidden />
-                  <span className="min-w-0 flex-1 truncate font-semibold">{arquivo.name}</span>
+                  <span className="min-w-0 flex-1 truncate font-semibold" title={arquivo.name}>
+                    {nomeVisivel(arquivo.name)}
+                  </span>
                   <button
                     type="button"
                     onClick={() => onArquivos(slot.id, arquivos.filter((item) => item.pathname !== arquivo.pathname))}

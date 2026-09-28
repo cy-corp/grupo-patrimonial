@@ -555,7 +555,7 @@ export function FinanciamentoForm({ empreendimento }: { empreendimento?: string 
   return (
     <section ref={sectionRef} id="financiamento" aria-labelledby="financiamento-titulo" className="scroll-mt-28 overflow-clip rounded-3xl bg-white ring-1 ring-[#1F1F1F]/10">
       <div className="grid lg:grid-cols-[minmax(0,1fr)_20rem]">
-        <div className="p-5 sm:p-8">
+        <div className="min-w-0 p-5 sm:p-8">
           <header>
             <p className="inline-flex items-center gap-1.5 rounded-full bg-[#F8F1E3] px-3 py-1 text-xs font-semibold text-[#0F5B63]">
               <Clock weight="bold" className="size-3.5" aria-hidden />
