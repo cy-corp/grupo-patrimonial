@@ -13,6 +13,7 @@ import { faqCapetinga } from "@/lib/rendal/content/faq";
 import {
   empreendimentos,
   getEmpreendimento,
+  midiasDoEmpreendimento,
 } from "@/lib/rendal/content/empreendimentos";
 import { RendalReveal } from "@/components/rendal/RendalReveal";
 import { getRendalSiteUrl, rendalWhatsapp } from "@/lib/rendal/site";
@@ -99,7 +100,7 @@ export default async function EmpreendimentoPage({
         <div className="mx-auto max-w-6xl">
           <SectionHeader id="galeria-titulo" title="Galeria" align="start" />
           <div className="mt-8">
-            <Gallery images={item.galeria} />
+            <Gallery images={midiasDoEmpreendimento(item)} />
           </div>
         </div>
       </section>

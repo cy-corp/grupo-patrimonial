@@ -1,4 +1,13 @@
-export type Midia = { src: string; alt: string };
+export type Midia = { src: string; alt: string; fit?: "cover" | "contain" };
+
+export type Planta = {
+  id: "terreo" | "laje";
+  label: string;
+  imagem: Midia & { width: number; height: number };
+};
+
+/** Percent of the plant image, measured on the source file. */
+export type Area = { x: number; y: number; w: number; h: number };
 
 export type EmpreendimentoStatus = "lancamento" | "obra" | "entregue" | "referencia";
 
@@ -14,8 +23,8 @@ export type DiaPasso = {
   titulo: string;
   texto: string;
   ambiente: string;
-  planta: "terreo" | "laje";
-  box: { x: number; y: number; w: number; h: number };
+  planta: Planta["id"];
+  areas: Area[];
 };
 
 export type Empreendimento = {
@@ -31,7 +40,7 @@ export type Empreendimento = {
   heroDia: Midia;
   heroNoite: Midia;
   galeria: Midia[];
-  plantas: Array<{ id: string; label: string; imagem: Midia }>;
+  plantas: Planta[];
   hotspots: Hotspot[];
   racional: Array<{ titulo: string; texto: string }>;
   diaNaCasa: DiaPasso[];
@@ -81,6 +90,8 @@ export const empreendimentos: Empreendimento[] = [
         imagem: {
           src: `${CAPETINGA}/planta-terreo.jpg`,
           alt: "Planta do térreo do Residencial Capetinga",
+          width: 487,
+          height: 1024,
         },
       },
       {
@@ -89,6 +100,8 @@ export const empreendimentos: Empreendimento[] = [
         imagem: {
           src: `${CAPETINGA}/planta-laje.jpg`,
           alt: "Planta da laje do Residencial Capetinga",
+          width: 645,
+          height: 1024,
         },
       },
     ],
@@ -129,7 +142,7 @@ export const empreendimentos: Empreendimento[] = [
         texto: "A manhã acontece num espaço só, sem corredor entre cozinha e estar.",
         ambiente: "Cozinha e sala",
         planta: "terreo",
-        box: { x: 18, y: 22, w: 46, h: 34 },
+        areas: [{ x: 9.6, y: 51.8, w: 36.8, h: 13.1 }],
       },
       {
         hora: "15h",
@@ -137,7 +150,7 @@ export const empreendimentos: Empreendimento[] = [
         texto: "O lavabo social recebe quem chega. A área íntima fica reservada.",
         ambiente: "Lavabo social",
         planta: "terreo",
-        box: { x: 62, y: 28, w: 22, h: 22 },
+        areas: [{ x: 17.4, y: 64.9, w: 9.2, h: 5.4 }],
       },
       {
         hora: "19h",
@@ -145,7 +158,7 @@ export const empreendimentos: Empreendimento[] = [
         texto: "A cobertura impermeabilizada vira o lugar do fim do dia.",
         ambiente: "Laje de lazer",
         planta: "laje",
-        box: { x: 22, y: 30, w: 56, h: 40 },
+        areas: [{ x: 6.2, y: 64.6, w: 43.1, h: 31.6 }],
       },
       {
         hora: "22h",
@@ -153,7 +166,10 @@ export const empreendimentos: Empreendimento[] = [
         texto: "O descanso fica separado do estar e da laje.",
         ambiente: "Quartos",
         planta: "terreo",
-        box: { x: 14, y: 58, w: 70, h: 28 },
+        areas: [
+          { x: 9.6, y: 20, w: 36.6, h: 9.2 },
+          { x: 18.1, y: 40.2, w: 20.9, h: 11.3 },
+        ],
       },
     ],
     memorialPdf: `${CAPETINGA}/projeto-arquitetonico-dener-capetinga.pdf`,
@@ -169,6 +185,14 @@ export const empreendimentos: Empreendimento[] = [
 
 export function getEmpreendimento(slug: string) {
   return empreendimentos.find((item) => item.slug === slug);
+}
+
+/** Photos followed by the plants, shared by the gallery and the plant viewers. */
+export function midiasDoEmpreendimento(item: Empreendimento): Midia[] {
+  return [
+    ...item.galeria,
+    ...item.plantas.map(({ imagem }) => ({ src: imagem.src, alt: imagem.alt, fit: "contain" as const })),
+  ];
 }
 
 export function primaryEmpreendimentoHref() {

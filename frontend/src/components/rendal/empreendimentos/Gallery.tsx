@@ -42,39 +42,124 @@ function GalleryArrow({
   );
 }
 
-export function Gallery({ images }: { images: Midia[] }) {
-  const [open, setOpen] = useState(false);
-  const [index, setIndex] = useState(0);
+export function Lightbox({
+  images,
+  index,
+  open,
+  onOpenChange,
+  onIndexChange,
+}: {
+  images: Midia[];
+  index: number;
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+  onIndexChange: (index: number) => void;
+}) {
   const current = images[index] ?? images[0];
   const canNav = images.length > 1;
+  const contain = current?.fit === "contain";
+
+  const step = (delta: number) => onIndexChange((index + delta + images.length) % images.length);
 
   useEffect(() => {
     if (!open) return;
     const onKey = (event: KeyboardEvent) => {
-      if (event.key === "ArrowRight") {
-        setIndex((value) => (value + 1) % images.length);
-      }
-      if (event.key === "ArrowLeft") {
-        setIndex((value) => (value - 1 + images.length) % images.length);
-      }
+      if (event.key === "ArrowRight") onIndexChange((index + 1) % images.length);
+      if (event.key === "ArrowLeft") onIndexChange((index - 1 + images.length) % images.length);
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [open, images.length]);
+  }, [open, index, images.length, onIndexChange]);
 
   if (!current) return null;
 
   return (
+    <Dialog.Root open={open} onOpenChange={onOpenChange}>
+      <Dialog.Portal>
+        <Dialog.Backdrop className="fixed inset-0 z-[120] bg-[#0E2A2D]/60" />
+        <Dialog.Popup className="fixed inset-3 z-[121] m-auto flex h-fit max-h-[92svh] w-full max-w-5xl flex-col outline-none sm:inset-6">
+          <div className="mb-3 flex items-center justify-between gap-4 px-1">
+            <Dialog.Title className="truncate text-sm font-semibold text-white/90 sm:text-base">
+              {current.alt}
+            </Dialog.Title>
+            <Dialog.Close className="inline-flex min-h-11 shrink-0 cursor-pointer items-center rounded-full px-4 text-sm font-semibold text-white/90 ring-1 ring-white/25 hover:bg-white/10">
+              Fechar
+            </Dialog.Close>
+          </div>
+
+          <div
+            className={cn(
+              "relative overflow-hidden rounded-2xl",
+              contain ? "bg-[#EDE6DA]" : "bg-[#0E2A2D]",
+            )}
+          >
+            <div
+              className={cn(
+                "relative w-full",
+                contain ? "h-[76svh]" : "aspect-[16/10] max-h-[72svh]",
+              )}
+              style={contain ? { touchAction: "pinch-zoom" } : undefined}
+            >
+              <Image
+                key={current.src}
+                src={current.src}
+                alt={current.alt}
+                fill
+                sizes="(max-width: 1024px) 100vw, 1024px"
+                className={contain ? "object-contain p-2" : "object-cover"}
+                priority
+              />
+            </div>
+            {canNav ? (
+              <>
+                <GalleryArrow direction="prev" onClick={() => step(-1)} />
+                <GalleryArrow direction="next" onClick={() => step(1)} />
+              </>
+            ) : null}
+          </div>
+
+          {canNav ? (
+            <p className="mt-3 text-center text-sm tabular-nums text-white/70">
+              <span className="font-semibold text-white">{String(index + 1).padStart(2, "0")}</span>
+              <span className="mx-1.5 text-white/35">/</span>
+              {String(images.length).padStart(2, "0")}
+            </p>
+          ) : null}
+        </Dialog.Popup>
+      </Dialog.Portal>
+    </Dialog.Root>
+  );
+}
+
+/** Lightbox state that can be opened at a given image, e.g. from a plant preview. */
+export function useLightbox(images: Midia[]) {
+  const [open, setOpen] = useState(false);
+  const [index, setIndex] = useState(0);
+
+  const openAt = (src: string) => {
+    const found = images.findIndex((image) => image.src === src);
+    setIndex(found === -1 ? 0 : found);
+    setOpen(true);
+  };
+
+  const props = { images, index, open, onOpenChange: setOpen, onIndexChange: setIndex };
+  return { openAt, props };
+}
+
+export function Gallery({ images }: { images: Midia[] }) {
+  const { openAt, props } = useLightbox(images);
+
+  if (!images.length) return null;
+
+  return (
     <>
       <ul className="m-0 grid list-none grid-cols-1 gap-3 p-0 sm:grid-cols-2 lg:grid-cols-3">
-        {images.map((image, i) => (
+        {images.map((image) => (
           <li key={image.src}>
             <button
               type="button"
-              onClick={() => {
-                setIndex(i);
-                setOpen(true);
-              }}
+              aria-label={`Ampliar: ${image.alt}`}
+              onClick={() => openAt(image.src)}
               className="relative block aspect-[16/10] w-full cursor-pointer overflow-hidden rounded-2xl bg-[#EDE6DA] transition-transform duration-500 hover:scale-[1.01] motion-reduce:transition-none motion-reduce:hover:scale-100"
               style={{ transitionTimingFunction: EASE }}
             >
@@ -83,62 +168,14 @@ export function Gallery({ images }: { images: Midia[] }) {
                 alt={image.alt}
                 fill
                 sizes="(max-width: 1024px) 100vw, 33vw"
-                className="object-cover"
+                className={image.fit === "contain" ? "object-contain p-3" : "object-cover"}
               />
             </button>
           </li>
         ))}
       </ul>
 
-      <Dialog.Root open={open} onOpenChange={setOpen}>
-        <Dialog.Portal>
-          <Dialog.Backdrop className="fixed inset-0 z-[80] bg-[#0E2A2D]/60" />
-          <Dialog.Popup className="fixed inset-3 z-[81] m-auto flex h-fit max-h-[90svh] w-full max-w-5xl flex-col outline-none sm:inset-6">
-            <div className="mb-3 flex items-center justify-between gap-4 px-1">
-              <Dialog.Title className="truncate text-sm font-semibold text-white/90 sm:text-base">
-                {current.alt}
-              </Dialog.Title>
-              <Dialog.Close className="inline-flex min-h-11 shrink-0 cursor-pointer items-center rounded-full px-4 text-sm font-semibold text-white/90 ring-1 ring-white/25 hover:bg-white/10">
-                Fechar
-              </Dialog.Close>
-            </div>
-
-            <div className="relative overflow-hidden rounded-2xl bg-[#0E2A2D]">
-              <div className="relative aspect-[16/10] w-full max-h-[72svh]">
-                <Image
-                  key={current.src}
-                  src={current.src}
-                  alt={current.alt}
-                  fill
-                  sizes="(max-width: 1024px) 100vw, 1024px"
-                  className="object-cover"
-                  priority
-                />
-              </div>
-              {canNav ? (
-                <>
-                  <GalleryArrow
-                    direction="prev"
-                    onClick={() => setIndex((value) => (value - 1 + images.length) % images.length)}
-                  />
-                  <GalleryArrow
-                    direction="next"
-                    onClick={() => setIndex((value) => (value + 1) % images.length)}
-                  />
-                </>
-              ) : null}
-            </div>
-
-            {canNav ? (
-              <p className="mt-3 text-center text-sm tabular-nums text-white/70">
-                <span className="font-semibold text-white">{String(index + 1).padStart(2, "0")}</span>
-                <span className="mx-1.5 text-white/35">/</span>
-                {String(images.length).padStart(2, "0")}
-              </p>
-            ) : null}
-          </Dialog.Popup>
-        </Dialog.Portal>
-      </Dialog.Root>
+      <Lightbox {...props} />
     </>
   );
 }
