@@ -7,6 +7,7 @@ import {
   confirmationLeadEmail,
   financiamentoConfirmationEmail,
   internalLeadEmail,
+  leadEmailCopy,
 } from "@/lib/contact/templates";
 import { empreendimentos } from "@/lib/rendal/content/empreendimentos";
 import {
@@ -69,6 +70,11 @@ async function sendPair(input: {
   const { company, inbox, from } = mailForCompany(input.companyId);
   if (!inbox) return { ok: false as const, message: GENERIC_CONTACT_ERROR };
 
+  const copy = leadEmailCopy({
+    companyId: input.companyId,
+    subject: input.subject,
+    kind: input.kind,
+  });
   const internal = internalLeadEmail({
     company,
     name: input.name,
@@ -77,11 +83,14 @@ async function sendPair(input: {
     subject: input.subject,
     message: input.message,
     kind: input.kind,
+    label: copy.internalLabel,
   });
-  const confirm = input.confirmation ?? {
-    subject: `Recebemos sua mensagem — ${company.name}`,
-    ...confirmationLeadEmail({ company, name: input.name }),
-  };
+  const confirm = input.confirmation ?? confirmationLeadEmail({
+    company,
+    name: input.name,
+    subject: copy.subject,
+    paragraphs: copy.paragraphs,
+  });
   const resend = resendClient();
   const brand = input.companyId === "dcorp" ? "DCorp" : "Rendal";
 
@@ -202,6 +211,7 @@ export async function sendQuote(formData: FormData) {
           subject: fields.service,
           message: fields.details,
           kind: "quote",
+          label: "Orçamento",
         });
         await resendClient().emails.send({
           from: mailForCompany("dcorp").from,

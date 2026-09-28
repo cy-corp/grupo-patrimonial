@@ -40,7 +40,13 @@ As configurações de publicação e os Root Directories da Vercel estão docume
 O contato envia dois e-mails por envio válido:
 
 1. Interno para `CONTACT_EMAIL_RENDAL` ou `CONTACT_EMAIL_DCORP` (`replyTo` = e-mail do lead).
-2. Confirmação para o visitante, do `noreply@` da mesma empresa.
+2. Confirmação para o visitante, do `noreply@` da mesma empresa, com texto próprio do assunto.
+
+Assuntos ligados ao envio:
+
+- Rendal: terreno ou parceria, investimento, produto imobiliário, lista de lançamento, parceria, simulação de financiamento (inclui checklist de documentos) e outros.
+- DCORP: orçamento, parceria tecnológica, engenharia e execução e outros.
+- Orçamento legado (`submitOrcamento`): confirmação de orçamento e cópia interna para a DCORP quando a caixa é diferente.
 
 Proteção no servidor: honeypot, Cloudflare Turnstile, validação de campos e rate limit no Upstash (IP, e-mail e par IP+e-mail).
 

@@ -8,8 +8,16 @@ const limiters = new Map<string, Ratelimit>();
 
 function getRedis() {
   if (redis !== undefined) return redis;
-  const url = process.env.UPSTASH_REDIS_REST_URL?.trim() ?? "";
-  const token = process.env.UPSTASH_REDIS_REST_TOKEN?.trim() ?? "";
+  const url = (
+    process.env.UPSTASH_REDIS_REST_URL ||
+    process.env.KV_REST_API_URL ||
+    ""
+  ).trim();
+  const token = (
+    process.env.UPSTASH_REDIS_REST_TOKEN ||
+    process.env.KV_REST_API_TOKEN ||
+    ""
+  ).trim();
   if (!url || !token) {
     redis = null;
     return redis;

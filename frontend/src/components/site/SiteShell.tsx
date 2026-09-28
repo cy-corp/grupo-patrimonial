@@ -124,7 +124,7 @@ export function SiteShell({
         )}
       </footer>
 
-      {isDcorp ? <DcorpWhatsAppFab /> : null}
+      <DcorpWhatsAppFab companyId={companyId} />
     </div>
   );
 
