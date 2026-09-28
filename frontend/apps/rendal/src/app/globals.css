@@ -222,6 +222,7 @@ html[data-js] .no-js-only {
 }
 
 .t-acc-panel-inner {
+  min-height: 0;
   overflow: hidden;
   opacity: 0;
   filter: blur(2px);

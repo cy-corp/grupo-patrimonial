@@ -56,12 +56,21 @@ export function ProfileForm({
               aria-checked={on}
               onClick={() => setPerfil(item.id)}
               className={cn(
-                "flex min-h-24 cursor-pointer flex-col items-start justify-between rounded-3xl p-4 text-left ring-1 transition-colors duration-700",
+                "flex min-h-24 min-w-0 cursor-pointer flex-col items-start justify-between rounded-3xl p-4 text-left ring-1 transition-colors duration-700",
                 on ? "bg-[#0F5B63] text-white ring-[#0F5B63]" : "bg-white text-[#1F1F1F] ring-[#1F1F1F]/10",
               )}
             >
               <Icon weight="duotone" className="size-7" aria-hidden />
-              <span className="text-base font-semibold">{item.label}</span>
+              <span className="max-w-full text-base font-semibold leading-snug">
+                {item.id === "parceiro" ? (
+                  <>
+                    Sou imobiliária
+                    <span className="block">parceiro</span>
+                  </>
+                ) : (
+                  item.label
+                )}
+              </span>
             </button>
           );
         })}

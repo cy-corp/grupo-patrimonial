@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useId, useState } from "react";
+import { useEffect, useId, useLayoutEffect, useRef, useState } from "react";
 import { siteConfigs } from "@grupo-patrimonial/site-config";
 import { cn } from "@/lib/utils";
 import { EASE } from "@/lib/rendal/tokens";
@@ -23,11 +23,29 @@ export function RendalIslandNav() {
   const links = siteConfigs.rendal.links;
   const pathname = usePathname();
   const menuId = useId();
+  const islandRef = useRef<HTMLElement>(null);
   const [open, setOpen] = useState(false);
+  const [menuPad, setMenuPad] = useState<number | null>(null);
   const home = pathname === "/" || pathname === "/concept";
   const cta = home
     ? { href: "/empreendimentos", label: "Ver empreendimentos" }
     : { href: "/contato", label: "Fale com a Rendal" };
+
+  useLayoutEffect(() => {
+    const node = islandRef.current;
+    if (!node) return;
+    const update = () => {
+      setMenuPad(Math.ceil(node.getBoundingClientRect().bottom + 16));
+    };
+    update();
+    const observer = new ResizeObserver(update);
+    observer.observe(node);
+    window.addEventListener("resize", update);
+    return () => {
+      observer.disconnect();
+      window.removeEventListener("resize", update);
+    };
+  }, []);
 
   useEffect(() => {
     if (!open) return;
@@ -52,8 +70,8 @@ export function RendalIslandNav() {
         Ir para o conteúdo
       </a>
 
-      <header className="pointer-events-none fixed inset-x-0 top-0 z-[60] flex justify-center px-4 pt-[max(1rem,env(safe-area-inset-top))] sm:pt-6">
-        <div className="pointer-events-auto flex w-max max-w-full items-center justify-between gap-3 rounded-full bg-white/70 py-2 pl-5 pr-2 shadow-[0_8px_32px_rgba(31,31,31,0.08)] ring-1 ring-[#1F1F1F]/5 backdrop-blur-xl sm:gap-4 lg:gap-6">
+      <header ref={islandRef} className="pointer-events-none fixed inset-x-0 top-0 z-[60] flex justify-center px-4 pt-[max(1rem,env(safe-area-inset-top))] sm:pt-6">
+        <div className="pointer-events-auto flex w-max max-w-full items-center justify-between gap-4 rounded-full bg-white/70 py-2 pl-5 pr-2 shadow-[0_8px_32px_rgba(31,31,31,0.08)] ring-1 ring-[#1F1F1F]/5 backdrop-blur-xl lg:gap-6">
           <Link href="/" aria-label="Rendal, início" className="shrink-0" onClick={() => setOpen(false)}>
             <Image
               src="/brands/rendal-logo-sem-subtitulo.png"
@@ -83,13 +101,14 @@ export function RendalIslandNav() {
             ))}
           </nav>
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2.5">
             <Link
-              href={cta.href}
-              className="hidden h-10 min-h-11 cursor-pointer items-center justify-center rounded-full bg-[#0F5B63] px-4 text-sm font-semibold text-white transition-colors duration-700 hover:bg-[#0A474E] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0F5B63] lg:inline-flex"
+              href="/contato?perfil=financiar#financiamento"
+              onClick={() => setOpen(false)}
+              className="inline-flex h-10 shrink-0 items-center justify-center rounded-full bg-[#0F5B63] px-3.5 text-sm font-semibold whitespace-nowrap text-white transition-colors duration-700 hover:bg-[#0A474E] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0F5B63] lg:min-h-11 lg:px-4"
               style={{ transitionTimingFunction: EASE }}
             >
-              {cta.label}
+              Financie aqui
             </Link>
             <button
               type="button"
@@ -124,10 +143,14 @@ export function RendalIslandNav() {
         id={menuId}
         inert={!open}
         className={cn(
-          "fixed inset-0 z-50 flex flex-col justify-center overflow-y-auto bg-white/80 px-8 py-24 backdrop-blur-3xl transition-opacity duration-700 lg:hidden",
+          "fixed inset-0 z-50 flex flex-col overflow-y-auto bg-white/80 px-8 pt-[calc(max(1rem,env(safe-area-inset-top))+4.75rem)] pb-16 backdrop-blur-3xl transition-opacity duration-700 lg:hidden",
           open ? "opacity-100" : "pointer-events-none opacity-0",
         )}
-        style={{ transitionTimingFunction: EASE }}
+        style={{
+          transitionTimingFunction: EASE,
+          justifyContent: "safe center",
+          ...(menuPad != null ? { paddingTop: menuPad } : {}),
+        }}
       >
         <nav aria-label="Seções" className="flex flex-col gap-5">
           {links.map((link) => (

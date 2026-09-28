@@ -490,10 +490,6 @@ export function FinanciamentoForm({ empreendimento }: { empreendimento?: string 
                 ) : null}
               </div>
 
-              <div className="mt-6 lg:hidden">
-                <DocsToggle open={docsOpen} onToggle={() => setDocsOpen((v) => !v)} checklist={checklist} />
-              </div>
-
               <div
                 className={cn(
                   "mt-6 flex items-center gap-3",
@@ -571,6 +567,10 @@ export function FinanciamentoForm({ empreendimento }: { empreendimento?: string 
                   .
                 </p>
               ) : null}
+
+              <div className={cn("mt-6 lg:hidden", step === LAST && "pb-24 sm:pb-0")}>
+                <DocsToggle open={docsOpen} onToggle={() => setDocsOpen((v) => !v)} checklist={checklist} />
+              </div>
             </form>
           </div>
 
@@ -1014,7 +1014,7 @@ function DocsToggle({
       </button>
       <div className="t-acc-panel" id="fin-docs" inert={!open}>
         <div className="t-acc-panel-inner">
-          <div className="px-4 pb-4">
+          <div className="px-4 pt-3 pb-4">
             <DocList checklist={checklist} />
             <p className="mt-3 text-xs leading-5 text-[#1F1F1F]/55">Não precisa enviar nada agora. Só vá separando.</p>
           </div>
