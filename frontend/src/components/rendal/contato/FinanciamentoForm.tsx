@@ -532,7 +532,7 @@ export function FinanciamentoForm({ empreendimento }: { empreendimento?: string 
         <h2 className="mt-5 text-2xl font-semibold tracking-tight text-[#1F1F1F] sm:text-3xl">
           {first ? `Pronto, ${first}!` : "Pronto!"} A cotação está com a equipe.
         </h2>
-        <p className="mt-2 max-w-xl text-base leading-7 text-[#1F1F1F]/70">O retorno chega em até um dia útil, pelo WhatsApp e pelo e-mail.</p>
+        <p className="mt-2 max-w-xl text-base leading-7 text-[#1F1F1F]/70">O retorno chega em até dois dias úteis, pelo WhatsApp e pelo e-mail.</p>
         <p className="mt-6 flex gap-2 rounded-2xl bg-[#F8F1E3] p-4 text-sm leading-6 text-[#1F1F1F]/80">
           <ShieldCheck weight="duotone" className="mt-0.5 size-5 shrink-0 text-[#0F5B63]" aria-hidden />
           {FINANCIAMENTO_DISCLAIMER}

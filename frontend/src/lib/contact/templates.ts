@@ -19,7 +19,7 @@ const RENDAL_COPY = {
     subject: "Recebemos as informações do terreno",
     paragraphs: [
       "Recebemos os dados do terreno.",
-      "A equipe analisa a área, a documentação e o formato de parceria e retorna em até um dia útil.",
+      "A equipe analisa a área, a documentação e o formato de parceria e retorna em até dois dias úteis.",
     ],
   },
   Investimento: {
@@ -27,7 +27,7 @@ const RENDAL_COPY = {
     subject: "Recebemos seu interesse em investimento",
     paragraphs: [
       "Recebemos seu pedido de apresentação.",
-      "A equipe retorna em até um dia útil com o próximo passo.",
+      "A equipe retorna em até dois dias úteis com o próximo passo.",
     ],
   },
   "Produto imobiliário": {
@@ -35,7 +35,7 @@ const RENDAL_COPY = {
     subject: "Recebemos seu interesse no empreendimento",
     paragraphs: [
       "Recebemos seu contato sobre o produto.",
-      "A equipe retorna em até um dia útil para alinhar unidade, visita e condições.",
+      "A equipe retorna em até dois dias úteis para alinhar unidade, visita e condições.",
     ],
   },
   Outros: {
@@ -43,7 +43,7 @@ const RENDAL_COPY = {
     subject: "Recebemos sua mensagem",
     paragraphs: [
       "Recebemos sua mensagem.",
-      "A equipe analisa o pedido e retorna em até um dia útil.",
+      "A equipe analisa o pedido e retorna em até dois dias úteis.",
     ],
   },
   "Lista de lançamento": {
@@ -59,7 +59,7 @@ const RENDAL_COPY = {
     subject: "Recebemos seu pedido de parceria",
     paragraphs: [
       "Recebemos os dados da imobiliária ou do parceiro.",
-      "A equipe comercial retorna em até um dia útil.",
+      "A equipe comercial retorna em até dois dias úteis.",
     ],
   },
   "Simulação de financiamento": {
@@ -67,7 +67,7 @@ const RENDAL_COPY = {
     subject: "Recebemos seu pedido de orientação de crédito",
     paragraphs: [
       "Recebemos seu pedido de orientação de crédito.",
-      "A equipe retorna em até um dia útil.",
+      "A equipe retorna em até dois dias úteis.",
     ],
   },
 } as const satisfies Record<(typeof SUBJECTS_BY_COMPANY.rendal)[number], LeadCopy>;
@@ -183,7 +183,7 @@ export function financiamentoConfirmationEmail(input: {
   const text = [
     `Olá, ${first}.`,
     "",
-    "Recebemos seu pedido de orientação de crédito e os documentos enviados. A equipe retorna em até um dia útil.",
+    "Recebemos seu pedido de orientação de crédito e os documentos enviados. A equipe retorna em até dois dias úteis.",
     "",
     "Documentos recebidos:",
     checklistText(input.checklist),
@@ -204,7 +204,7 @@ export function financiamentoConfirmationEmail(input: {
     <div style="font-family:Arial,sans-serif;color:#1F1F1F;line-height:1.6;max-width:560px">
       <p style="font-size:12px;letter-spacing:0.16em;text-transform:uppercase;color:#0F5B63;font-weight:700">${escapeHtml(input.company.legalName)}</p>
       <p>Olá, ${escapeHtml(first)}.</p>
-      <p>Recebemos seu pedido de orientação de crédito e os documentos enviados. A equipe retorna em até um dia útil.</p>
+      <p>Recebemos seu pedido de orientação de crédito e os documentos enviados. A equipe retorna em até dois dias úteis.</p>
       <p style="margin-bottom:8px"><strong>Documentos recebidos:</strong></p>
       <ul style="padding-left:20px;margin-top:0">${items}</ul>
       <p style="color:#4D4D4D;font-size:13px">${escapeHtml(input.disclaimer)}</p>

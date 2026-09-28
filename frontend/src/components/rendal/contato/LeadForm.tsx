@@ -48,7 +48,7 @@ export function LeadForm({
   subject,
   perfil,
   submitLabel = "Enviar",
-  success = "Recebemos. Retornamos em até 1 dia útil.",
+  success = "Recebemos. Retornamos em até 2 dias úteis.",
   emailOptional = false,
   phoneOptional = false,
   compact = false,
