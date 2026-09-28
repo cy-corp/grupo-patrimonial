@@ -6,12 +6,15 @@ import { useEffect, useId, useRef, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { RendalReveal } from "./RendalReveal";
 import { cn } from "@/lib/utils";
+import {
+  empreendimentos,
+  primaryEmpreendimentoHref,
+} from "@/lib/rendal/content/empreendimentos";
 
 const EASE = "cubic-bezier(0.32,0.72,0,1)";
 const FACADE = "/wireframes/fachada-noite.jpg";
 
-// TODO(comercial): substituir pelo "a partir de" real do empreendimento.
-const PRICE_FROM = 289_000;
+const PRICE_FROM = empreendimentos[0]?.precoAPartirDe ?? 289_000;
 const MIN = 150_000;
 const MAX = 900_000;
 const STEP = 10_000;
@@ -239,7 +242,7 @@ export function RendalPriceGuess() {
                 </div>
                 <div className="mt-5 flex flex-wrap items-center gap-x-6 gap-y-3">
                   <Link
-                    href="/empreendimentos"
+                    href={primaryEmpreendimentoHref()}
                     tabIndex={revealed ? undefined : -1}
                     className="inline-flex h-12 items-center justify-center rounded-full bg-[#C9A96A] px-6 text-base font-semibold text-[#1F1F1F] transition-colors duration-700 hover:bg-[#D8BC84] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white active:scale-[0.98]"
                     style={{ transitionTimingFunction: EASE }}

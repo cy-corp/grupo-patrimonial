@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Quotes } from "@phosphor-icons/react";
 import { RendalReveal } from "./RendalReveal";
+import { primaryEmpreendimentoHref } from "@/lib/rendal/content/empreendimentos";
 
 const EASE = "cubic-bezier(0.32,0.72,0,1)";
 
@@ -17,7 +18,7 @@ export function RendalSocialProof() {
         <RendalReveal>
           <div className="relative aspect-video overflow-hidden rounded-2xl bg-[#1F1F1F] lg:aspect-[4/3]">
             <Image
-              src="/referencia/capetinga-dener/render-laje-dia.jpg"
+              src="/wireframes/laje-dia.jpg"
               alt="Laje de lazer do Residencial Capetinga, referência de produto Rendal"
               fill
               sizes="(max-width: 1024px) 100vw, 50vw"
@@ -50,8 +51,8 @@ export function RendalSocialProof() {
                 aria-hidden
               />
               <p className="mt-3 text-lg leading-8 text-pretty text-[#1F1F1F]">
-                A cobertura deixou de ser apenas um telhado e passou a fazer
-                parte da casa.
+                O capital foi alocado onde o morador sente: no uso, no acabamento
+                e no que a casa entrega no dia a dia.
               </p>
               <footer className="mt-4 text-sm font-semibold text-[#1F1F1F]/70">
                 Decisão de projeto · Residencial Capetinga
@@ -59,7 +60,7 @@ export function RendalSocialProof() {
             </blockquote>
 
             <Link
-              href="/empreendimentos"
+              href={primaryEmpreendimentoHref()}
               className="mt-8 inline-flex min-h-11 items-center justify-center rounded-full bg-[#0F5B63] px-6 py-2.5 text-base font-semibold text-white transition-all duration-700 hover:bg-[#0A3F45] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0F5B63] active:scale-[0.98]"
               style={{ transitionTimingFunction: EASE }}
             >

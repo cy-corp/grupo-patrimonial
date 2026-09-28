@@ -12,11 +12,11 @@ const PROJECTS = [
     slug: "capetinga",
     name: "Residencial Capetinga",
     status: "Referência de produto",
-    city: "Região de Campinas, SP",
+    city: "Capetinga, MG",
     blurb:
       "Laje de lazer, lavabo social e acabamento onde o capital gera valor. Referência de produto Rendal.",
-    image: "/referencia/capetinga-dener/render-fachada-dia.jpg",
-    imageAlt: "Fachada do Residencial Capetinga ao dia",
+    image: "/morph/frame-06.jpg",
+    imageAlt: "Residencial Capetinga durante o dia",
   },
 ] as const;
 

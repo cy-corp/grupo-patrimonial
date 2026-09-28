@@ -53,28 +53,44 @@ export function parseContactForm(formData: FormData):
     return { ok: false, message: GENERIC_CONTACT_ERROR };
   }
 
-  const name = collapse(str(formData, "name"));
-  const email = normalizeEmail(str(formData, "email"));
-  const phone = digitsOnly(str(formData, "phone"));
   const subject = collapse(str(formData, "subject"));
+  const launchList = subject === "Lista de lançamento";
+  const emailOptional = launchList || str(formData, "emailOptional") === "1";
+  const phoneOptional = launchList || str(formData, "phoneOptional") === "1";
+
+  let name = collapse(str(formData, "name"));
+  let email = normalizeEmail(str(formData, "email"));
+  let phone = digitsOnly(str(formData, "phone"));
+  const contato = collapse(str(formData, "contato"));
+  if (contato.includes("@")) email = normalizeEmail(contato);
+  else if (contato) phone = digitsOnly(contato);
+  if (launchList && name.length < 2) name = "Lista de lançamento";
+
   const message = str(formData, "message").replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F]/g, "").trim();
   const turnstileToken = str(formData, "turnstileToken");
 
   if (name.length < 2 || name.length > CONTACT_LIMITS.name) {
     return { ok: false, message: "Informe um nome válido." };
   }
-  if (
-    email.length < 6 ||
-    email.length > CONTACT_LIMITS.email ||
-    !EMAIL_RE.test(email)
-  ) {
+  if (email) {
+    if (email.length > CONTACT_LIMITS.email || !EMAIL_RE.test(email)) {
+      return { ok: false, message: "Informe um e-mail válido." };
+    }
+  } else if (!emailOptional) {
     return { ok: false, message: "Informe um e-mail válido." };
   }
-  if (
-    phone.length < CONTACT_LIMITS.phoneDigits.min ||
-    phone.length > CONTACT_LIMITS.phoneDigits.max
-  ) {
+  if (phone) {
+    if (
+      phone.length < CONTACT_LIMITS.phoneDigits.min ||
+      phone.length > CONTACT_LIMITS.phoneDigits.max
+    ) {
+      return { ok: false, message: "Informe um telefone válido." };
+    }
+  } else if (!phoneOptional) {
     return { ok: false, message: "Informe um telefone válido." };
+  }
+  if (!email && !phone) {
+    return { ok: false, message: "Informe um WhatsApp ou e-mail." };
   }
   if (!(SUBJECTS_BY_COMPANY[companyRaw] as readonly string[]).includes(subject)) {
     return { ok: false, message: GENERIC_CONTACT_ERROR };

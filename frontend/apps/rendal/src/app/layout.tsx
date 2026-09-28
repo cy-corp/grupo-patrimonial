@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Manrope } from "next/font/google";
 import "./globals.css";
 
+import { getRendalSiteUrl } from "@/lib/rendal/site";
+
 const manrope = Manrope({
   variable: "--font-montserrat",
   subsets: ["latin"],
@@ -9,6 +11,7 @@ const manrope = Manrope({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(getRendalSiteUrl()),
   title: {
     default: "Rendal Incorporadora",
     template: "%s | Rendal",

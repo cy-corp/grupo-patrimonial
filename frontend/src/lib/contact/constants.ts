@@ -1,7 +1,14 @@
 import type { CompanyId } from "@/lib/companies";
 
 export const SUBJECTS_BY_COMPANY: Record<CompanyId, readonly string[]> = {
-  rendal: ["Terreno ou parceria", "Investimento", "Produto imobiliário", "Outros"],
+  rendal: [
+    "Terreno ou parceria",
+    "Investimento",
+    "Produto imobiliário",
+    "Outros",
+    "Lista de lançamento",
+    "Parceria",
+  ],
   dcorp: [
     "Solicitar orçamento",
     "Parceria tecnológica",

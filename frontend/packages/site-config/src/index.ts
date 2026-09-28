@@ -22,8 +22,9 @@ export const siteConfigs: Record<SiteBrandId, SiteBrandConfig> = {
     links: [
       { label: "A Rendal", href: "/quem-somos" },
       { label: "Empreendimentos", href: "/empreendimentos" },
+      { label: "Proprietários", href: "/proprietarios" },
       { label: "Investidores", href: "/investidores" },
-      { label: "Contato", href: "/contato" },
+      { label: "Parceiros", href: "/parceiros" },
     ],
     ctaLabel: "Fale com a Rendal",
   },

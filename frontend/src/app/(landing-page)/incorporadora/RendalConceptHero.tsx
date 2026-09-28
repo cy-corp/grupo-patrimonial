@@ -20,7 +20,6 @@ import {
   useTransform,
   type MotionValue,
 } from "framer-motion";
-import { RendalIslandNav } from "./RendalIslandNav";
 import { cn } from "@/lib/utils";
 
 const EASE = "cubic-bezier(0.32,0.72,0,1)";
@@ -284,21 +283,14 @@ export function RendalConceptHero() {
   };
 
   if (reduceMotion) {
-    return (
-      <>
-        <RendalIslandNav />
-        <StaticHero />
-      </>
-    );
+    return <StaticHero />;
   }
 
   const lensMask =
     "radial-gradient(circle var(--lr) at var(--lx) var(--ly), #000 calc(100% - 1.5px), transparent 100%)";
 
   return (
-    <>
-      <RendalIslandNav />
-      <section
+    <section
         id="conteudo"
         ref={trackRef}
         className="rendal-hero-paper rendal-hero-track relative h-[240vh] bg-[#F8F1E3] md:mb-0 md:h-[400vh]"
@@ -423,6 +415,5 @@ export function RendalConceptHero() {
           </div>
         </div>
       </section>
-    </>
   );
 }

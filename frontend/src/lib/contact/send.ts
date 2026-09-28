@@ -43,7 +43,7 @@ async function sendPair(input: {
   const internalResult = await resend.emails.send({
     from,
     to: inbox,
-    replyTo: input.email,
+    replyTo: input.email || undefined,
     subject: `[${brand}] ${input.subject} — ${input.name}`,
     text: internal.text,
     html: internal.html,
@@ -53,16 +53,18 @@ async function sendPair(input: {
     return { ok: false as const, message: GENERIC_CONTACT_ERROR };
   }
 
-  const confirmation = await resend.emails.send({
-    from,
-    to: input.email,
-    subject: `Recebemos sua mensagem — ${company.name}`,
-    text: confirm.text,
-    html: confirm.html,
-  });
+  if (input.email) {
+    const confirmation = await resend.emails.send({
+      from,
+      to: input.email,
+      subject: `Recebemos sua mensagem — ${company.name}`,
+      text: confirm.text,
+      html: confirm.html,
+    });
 
-  if (confirmation.error) {
-    console.error("contact.confirmation_failed", confirmation.error.name);
+    if (confirmation.error) {
+      console.error("contact.confirmation_failed", confirmation.error.name);
+    }
   }
 
   return { ok: true as const, message: "Mensagem enviada com sucesso!" };
@@ -85,7 +87,7 @@ export async function sendContact(formData: FormData) {
   const turnstile = await verifyTurnstile(fields.turnstileToken, ip);
   if (!turnstile.ok) return { success: false, message: turnstile.message };
 
-  const limited = await enforceLeadRateLimit("contact", ip, fields.email);
+  const limited = await enforceLeadRateLimit("contact", ip, fields.email || fields.phone);
   if (!limited.ok) return { success: false, message: limited.message };
 
   try {
@@ -93,7 +95,7 @@ export async function sendContact(formData: FormData) {
       companyId: fields.companyId,
       name: fields.name,
       email: fields.email,
-      phone: formatPhoneBr(fields.phone),
+      phone: fields.phone ? formatPhoneBr(fields.phone) : "—",
       subject: fields.subject,
       message: fields.message,
       kind: "contact",

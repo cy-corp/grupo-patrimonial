@@ -256,8 +256,7 @@ export function SiteHeader({ companyId }: { companyId: CompanyId }) {
 
   const headerLogoVariant = attached ? "hero" : "header";
 
-  // Rendal home and the concept page own their own hero chrome.
-  if (!isDcorp && isHome) return null;
+  if (!isDcorp) return null;
 
   return (
     <header
@@ -283,7 +282,6 @@ export function SiteHeader({ companyId }: { companyId: CompanyId }) {
           className={cn(
             "site-glass site-glass-sheen site-header-bar flex h-[3.75rem] items-center gap-2 px-2.5 sm:px-3",
             isDcorp ? "rounded-xl site-glass-dcorp" : "rounded-full",
-            companyId === "rendal" && "site-glass-rendal",
             attached && "site-header-bar--attached",
           )}
         >
@@ -415,7 +413,6 @@ export function SiteHeader({ companyId }: { companyId: CompanyId }) {
             "t-dropdown t-dropdown-panel site-header-dropdown site-glass",
             isDcorp ? "2xl:hidden" : "min-[1150px]:hidden",
             isDcorp && "site-glass-dcorp rounded-xl",
-            companyId === "rendal" && "site-glass-rendal",
             open && "is-open",
             closing && "is-closing",
           )}

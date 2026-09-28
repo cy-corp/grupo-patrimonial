@@ -20,6 +20,28 @@ html {
   background: linear-gradient(180deg, #22a0ab 0%, #14707a 55%, #0f5b63 100%);
 }
 
+@keyframes partner-slide {
+  from {
+    opacity: 0;
+    transform: translateX(var(--partner-from, 28px));
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes journey-fade {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 @keyframes rendal-scroll-cue {
   0%,
   100% {
@@ -32,6 +54,39 @@ html {
 
 .rendal-scroll-cue {
   animation: rendal-scroll-cue 2.8s cubic-bezier(0.37, 0, 0.63, 1) infinite;
+}
+
+@keyframes rendal-card-yaw {
+  0%,
+  68%,
+  100% {
+    transform: rotateY(0deg);
+  }
+  78% {
+    transform: rotateY(16deg);
+  }
+  88% {
+    transform: rotateY(-7deg);
+  }
+}
+
+.rendal-card-yaw {
+  animation: rendal-card-yaw 4.2s cubic-bezier(0.32, 0.72, 0, 1) infinite;
+}
+
+@keyframes rendal-tap-hand {
+  0%,
+  64%,
+  100% {
+    transform: translateY(0) scale(1);
+  }
+  76% {
+    transform: translateY(3px) scale(0.9);
+  }
+}
+
+.rendal-tap-hand {
+  animation: rendal-tap-hand 4.2s cubic-bezier(0.32, 0.72, 0, 1) infinite;
 }
 
 /* Grão de papel — atmosfera no creme da hero, sem competir com o morph */
@@ -52,6 +107,24 @@ html {
   background-size: 180px 180px;
 }
 
+/* Hero escuro com granulado forte + degradê — investidores e superfícies flat */
+.rendal-hero-grain::before {
+  opacity: 0.88;
+  mix-blend-mode: soft-light;
+  background-size: 140px 140px;
+}
+
+.rendal-hero-grain::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 0%, rgba(201, 169, 106, 0.18), transparent 55%),
+    linear-gradient(165deg, #12383c 0%, #0E2A2D 42%, #0a1f22 100%);
+}
+
 @media (max-width: 767px) {
   .rendal-hero-track {
     margin-bottom: calc((min(70svh, (100vw - 2rem) * 1.25) - 100svh) / 2 + 1.25rem);
@@ -63,9 +136,15 @@ html {
     scroll-behavior: auto;
   }
 
-  .rendal-scroll-cue {
+  .rendal-scroll-cue,
+  .rendal-card-yaw,
+  .rendal-tap-hand {
     animation: none;
   }
+}
+
+html[data-js] .no-js-only {
+  display: none;
 }
 
 :root {
