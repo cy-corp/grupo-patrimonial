@@ -110,7 +110,7 @@ export default async function EmpreendimentoPage({
         id="banco-titulo"
         title="Financiamento e avaliação"
         subtitle="Oriente o crédito antes de escolher a unidade. A equipe analisa seu perfil com a Caixa e outros bancos e retorna uma orientação no seu nome."
-        href={`/contato?perfil=financiar&empreendimento=${item.slug}#financiamento`}
+        href={`/contato?perfil=financiar&empreendimento=${item.slug}#perfil`}
         cta="Faça seu financiamento aqui"
       />
 

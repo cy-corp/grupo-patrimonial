@@ -108,7 +108,7 @@ export function SiteShell({
                   <Link href="/politica-de-privacidade" className="inline-flex min-h-11 items-center text-graphite/75 sm:w-full sm:justify-end">
                     Política de Privacidade
                   </Link>
-                  <Link href="/contato" className="inline-flex min-h-11 items-center font-semibold text-primary sm:w-full sm:justify-end">
+                  <Link href="/contato#perfil" className="inline-flex min-h-11 items-center font-semibold text-primary sm:w-full sm:justify-end">
                     Fale com a Rendal
                   </Link>
                 </div>

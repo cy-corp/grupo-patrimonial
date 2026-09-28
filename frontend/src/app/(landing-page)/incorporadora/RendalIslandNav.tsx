@@ -9,10 +9,10 @@ import { cn } from "@/lib/utils";
 import { EASE } from "@/lib/rendal/tokens";
 
 const ATALHOS = [
-  { label: "Quero financiar", href: "/contato?perfil=financiar#financiamento" },
-  { label: "Tenho um terreno", href: "/contato?perfil=terreno" },
-  { label: "Quero investir", href: "/contato?perfil=investir" },
-  { label: "Sou imobiliária", href: "/contato?perfil=parceiro" },
+  { label: "Quero financiar", href: "/contato?perfil=financiar#perfil" },
+  { label: "Tenho um terreno", href: "/contato?perfil=terreno#perfil" },
+  { label: "Quero investir", href: "/contato?perfil=investir#perfil" },
+  { label: "Sou imobiliária", href: "/contato?perfil=parceiro#perfil" },
 ];
 
 function active(pathname: string, href: string) {
@@ -29,7 +29,7 @@ export function RendalIslandNav() {
   const home = pathname === "/" || pathname === "/concept";
   const cta = home
     ? { href: "/empreendimentos", label: "Ver empreendimentos" }
-    : { href: "/contato", label: "Fale com a Rendal" };
+    : { href: "/contato#perfil", label: "Fale com a Rendal" };
 
   useLayoutEffect(() => {
     const node = islandRef.current;
@@ -103,7 +103,7 @@ export function RendalIslandNav() {
 
           <div className="flex items-center gap-2.5">
             <Link
-              href="/contato?perfil=financiar#financiamento"
+              href="/contato?perfil=financiar#perfil"
               onClick={() => setOpen(false)}
               className="inline-flex h-10 shrink-0 items-center justify-center rounded-full bg-[#0F5B63] px-3.5 text-sm font-semibold whitespace-nowrap text-white transition-colors duration-700 hover:bg-[#0A474E] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0F5B63] lg:min-h-11 lg:px-4"
               style={{ transitionTimingFunction: EASE }}

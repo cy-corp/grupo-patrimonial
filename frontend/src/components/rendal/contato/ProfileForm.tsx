@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import {
   Bank,
@@ -22,7 +22,7 @@ export const CONTACT_PROFILES = [
   { id: "financiar", label: "Quero financiar", icon: Bank, subject: "Simulação de financiamento" },
   { id: "terreno", label: "Tenho um terreno", icon: MapTrifold, subject: "Terreno ou parceria" },
   { id: "investir", label: "Quero investir", icon: ChartLineUp, subject: "Investimento" },
-  { id: "parceiro", label: "Sou imobiliária/parceiro", icon: Handshake, subject: "Parceria" },
+  { id: "parceiro", label: "Sou parceiro", icon: Handshake, subject: "Parceria" },
 ] as const satisfies ReadonlyArray<{
   id: ContactProfileId;
   label: string;
@@ -40,11 +40,30 @@ export function ProfileForm({
   empreendimento?: string;
 }) {
   const [perfil, setPerfil] = useState<ContactProfileId>(initial);
+  const filtersRef = useRef<HTMLDivElement>(null);
   const current = CONTACT_PROFILES.find((item) => item.id === perfil) ?? CONTACT_PROFILES[0];
+
+  useEffect(() => {
+    setPerfil(initial);
+    const hash = window.location.hash;
+    if (hash !== "#perfil" && hash !== "#financiamento") return;
+    const el = filtersRef.current;
+    if (!el) return;
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    el.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" });
+    el.focus({ preventScroll: true });
+  }, [initial]);
 
   return (
     <div>
-      <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5" role="radiogroup" aria-label="Perfil">
+      <div
+        ref={filtersRef}
+        id="perfil"
+        tabIndex={-1}
+        className="grid scroll-mt-36 grid-cols-2 gap-3 outline-none sm:grid-cols-3 lg:grid-cols-5"
+        role="radiogroup"
+        aria-label="Perfil"
+      >
         {CONTACT_PROFILES.map((item) => {
           const Icon = item.icon;
           const on = perfil === item.id;
@@ -61,16 +80,7 @@ export function ProfileForm({
               )}
             >
               <Icon weight="duotone" className="size-7" aria-hidden />
-              <span className="max-w-full text-base font-semibold leading-snug">
-                {item.id === "parceiro" ? (
-                  <>
-                    Sou imobiliária
-                    <span className="block">parceiro</span>
-                  </>
-                ) : (
-                  item.label
-                )}
-              </span>
+              <span className="max-w-full text-base font-semibold leading-snug">{item.label}</span>
             </button>
           );
         })}

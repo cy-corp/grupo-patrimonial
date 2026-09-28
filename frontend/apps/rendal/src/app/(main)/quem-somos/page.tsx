@@ -128,7 +128,7 @@ export default function QuemSomosPage() {
       <FinalCta
         title="Vamos conversar sobre o próximo empreendimento?"
         subtitle="Conte o que você está olhando. A equipe retorna para marcar a conversa certa."
-        href="/contato"
+        href="/contato#perfil"
         cta="Fale com a Rendal"
       />
     </main>
