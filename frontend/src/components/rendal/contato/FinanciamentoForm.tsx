@@ -171,7 +171,7 @@ function OptionCombobox({
         onChange(next.value);
       }}
       onInputValueChange={(next, details) => {
-        if (details.reason !== "input-change" && details.reason !== "input-paste") return;
+        if (details.reason !== "input-change") return;
         setTexto(next);
         if (!livreRef.current) return;
         onChange(next.slice(0, 80));
