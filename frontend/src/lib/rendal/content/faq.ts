@@ -7,7 +7,7 @@ export const faqHome: FaqItem[] = [
   },
   {
     q: "O que é a laje de lazer?",
-    a: "É uma cobertura impermeabilizada e preparada para uso. Em vez de servir apenas como proteção, ela recebe área de estar, pérgola e outros espaços de lazer.",
+    a: "É uma cobertura impermeabilizada e preparada para uso. Em vez de servir apenas como proteção, ela recebe área de estar, pergola e outros espaços de lazer.",
   },
   {
     q: "Por que a avaliação da Caixa costuma ficar acima do preço?",

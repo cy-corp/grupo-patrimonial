@@ -304,7 +304,7 @@ Seções:
    Linha do tempo de um dia que "acende" ambientes na planta:
    - *07h — Café na cozinha integrada à sala.* (planta térreo, destaca cozinha/sala)
    - *15h — A visita chega e usa o lavabo, sem passar pelos quartos.* (térreo, destaca lavabo + fluxo)
-   - *19h — Jantar na laje, com pérgola e floreira.* (laje, destaca área de estar)
+   - *19h — Jantar na laje, com pergola e floreira.* (laje, destaca área de estar)
    - *22h — Os quartos ficam reservados, longe do movimento.* (térreo, destaca quartos)
    Implementação: planta em `<figure>` sticky + passos que ativam por `IntersectionObserver` (não scroll-scrub). Destaque = máscara SVG/overlay com polígonos por ambiente (coordenadas em % no conteúdo), opacidade do resto a 35%.
    Desktop: planta sticky à esquerda, passos à direita.

@@ -13,7 +13,7 @@ const BENEFITS = [
   {
     icon: Stairs,
     title: "Laje de lazer",
-    body: "A cobertura vira uma extensão da casa, com área de estar, pérgola e espaço para receber.",
+    body: "A cobertura vira uma extensão da casa, com área de estar, pergola e espaço para receber.",
   },
   {
     icon: Bathtub,

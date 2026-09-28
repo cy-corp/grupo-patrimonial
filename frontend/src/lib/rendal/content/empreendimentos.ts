@@ -107,7 +107,7 @@ export const empreendimentos: Empreendimento[] = [
     ],
     hotspots: [
       {
-        titulo: "Laje com pérgola",
+        titulo: "Laje com pergola",
         texto: "A cobertura vira área de estar, em vez de telhado sem uso.",
         x: 58,
         y: 42,
@@ -154,7 +154,7 @@ export const empreendimentos: Empreendimento[] = [
       },
       {
         hora: "19h",
-        titulo: "Jantar na laje, com pérgola e floreira.",
+        titulo: "Jantar na laje, com pergola e floreira.",
         texto: "A cobertura impermeabilizada vira o lugar do fim do dia.",
         ambiente: "Laje de lazer",
         planta: "laje",
