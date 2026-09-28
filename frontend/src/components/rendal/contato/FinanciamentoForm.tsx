@@ -1,1135 +1,982 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState, type FormEvent, type ReactNode } from "react";
-import Link from "next/link";
-import {
-  ArrowLeft,
-  ArrowRight,
-  Bank,
-  Briefcase,
-  CaretDown,
-  Check,
-  Clock,
-  DotsThree,
-  FileText,
-  PencilSimple,
-  Plus,
-  ShieldCheck,
-  Storefront,
-  WhatsappLogo,
-} from "@phosphor-icons/react";
+import { useEffect, useLayoutEffect, useMemo, useRef, useState, type FormEvent, type ReactNode } from "react";
+import { ArrowLeft, ArrowRight, CaretDown, Check, Clock, PencilSimple, ShieldCheck, WhatsappLogo } from "@phosphor-icons/react";
 import { Combobox } from "@base-ui/react/combobox";
 import { submitContact } from "@/lib/actions";
 import { HoneypotField } from "@/components/contato/HoneypotField";
 import { TurnstileField } from "@/components/contato/TurnstileField";
+import { ContasBancariasField } from "@/components/rendal/contato/ContasBancariasField";
+import { DocumentosStep } from "@/components/rendal/contato/DocumentosStep";
 import { empreendimentos } from "@/lib/rendal/content/empreendimentos";
 import {
-  checklistFinanciamento,
-  checklistText,
-  FAIXAS_RENDA,
+  documentosDaCotacao,
+  draftVazio,
+  errosEtapa,
+  ESTADOS_CIVIS,
+  etapasVisiveis,
   FINANCIAMENTO_DISCLAIMER,
   FINANCIAMENTO_SUBJECT,
-  isFgts,
-  isTipoRenda,
-  labelFgts,
-  labelTipoRenda,
-  OPCOES_FGTS,
-  TIPOS_RENDA,
-  type ChecklistItem,
-  type FgtsId,
-  type TipoRendaId,
+  formatDataBr,
+  labelEstadoCivil,
+  labelRegime,
+  labelTipologia,
+  maskCep,
+  maskCpf,
+  maskMoney,
+  maskPhone,
+  maskRg,
+  pessoaVazia,
+  PRAZOS,
+  precisaConjuge,
+  primeiraEtapaInvalida,
+  REGIMES,
+  sanitizeDraft,
+  TIPOLOGIAS,
+  UFS,
+  type Draft,
+  type EtapaId,
+  type Pessoa,
+  type Uf,
 } from "@/lib/rendal/financiamento";
 import { rendalWhatsapp } from "@/lib/rendal/site";
 import { track } from "@/lib/rendal/track";
 import { EASE } from "@/lib/rendal/tokens";
 import { cn } from "@/lib/utils";
 
-type Draft = {
-  tipoRenda: TipoRendaId | "";
-  faixa: string;
-  fgts: FgtsId | "";
-  name: string;
-  phone: string;
-  email: string;
-  empreendimento: string;
-  obs: string;
-};
-
-const EMPTY: Draft = {
-  tipoRenda: "",
-  faixa: "",
-  fgts: "",
-  name: "",
-  phone: "",
-  email: "",
-  empreendimento: "",
-  obs: "",
-};
-
-const STEPS = ["Renda", "Valor", "FGTS", "Contato"] as const;
-const LAST = STEPS.length - 1;
-const DRAFT_KEY = "rendal:financiamento:v1";
+const DRAFT_KEY = "rendal:financiamento:v2";
 const DRAFT_TTL_MS = 7 * 24 * 60 * 60 * 1000;
+const UF_POR_CIDADE: Record<string, Uf> = { Capetinga: "MG" };
 
-const RENDA_ICON: Record<TipoRendaId, typeof Bank> = {
-  clt: Briefcase,
-  autonomo: Storefront,
-  servidor: Bank,
-  outro: DotsThree,
+const COPY: Record<EtapaId, { title: string; text: string }> = {
+  imovel: { title: "Qual imóvel você quer financiar?", text: "Cidade, valor e o prazo que você tem em mente." },
+  valores: { title: "Entrada, FGTS e saldo devedor", text: "Se não tiver entrada, coloque zero." },
+  voce: { title: "Seus dados", text: "Do jeito que a ficha do banco pede." },
+  endereco: { title: "Onde você mora", text: "O CEP preenche a rua. O número fica com você." },
+  identidade: { title: "RG e filiação", text: "A ficha pede isso mesmo quando o documento enviado é a CNH." },
+  civil: { title: "Estado civil", text: "Casado e união estável seguem para os dados do cônjuge." },
+  conjuge: { title: "Dados do cônjuge", text: "Os documentos do cônjuge entram sempre, compondo renda ou não." },
+  documentos: { title: "Envie os documentos", text: "Holerites e extratos pedem 3 arquivos. Os outros itens têm limite." },
+  banco: { title: "Banco e prazo do contrato", text: "A conta ajuda a cotar. O contrato fechado muda a urgência." },
+  revisao: { title: "Confira e envie", text: "Se precisar editar, clique no item." },
 };
 
-const EMAIL_RE = /^[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,}$/i;
+const inputClass =
+  "mt-2 h-12 w-full rounded-2xl border border-[#1F1F1F]/15 bg-white px-4 text-base font-normal text-[#1F1F1F] outline-none transition-colors duration-300 placeholder:text-[#1F1F1F]/35 focus-visible:border-[#0F5B63] focus-visible:outline-2 focus-visible:outline-[#0F5B63]";
 
-function maskPhone(value: string) {
-  const d = value.replace(/\D/g, "").slice(0, 11);
-  if (d.length <= 2) return d.length ? `(${d}` : "";
-  if (d.length <= 6) return `(${d.slice(0, 2)}) ${d.slice(2)}`;
-  if (d.length <= 10) return `(${d.slice(0, 2)}) ${d.slice(2, 6)}-${d.slice(6)}`;
-  return `(${d.slice(0, 2)}) ${d.slice(2, 7)}-${d.slice(7)}`;
+function Field({
+  label,
+  error,
+  hint,
+  optional,
+  plain,
+  labelId,
+  children,
+}: {
+  label: string;
+  error?: string;
+  hint?: string;
+  optional?: boolean;
+  plain?: boolean;
+  labelId?: string;
+  children: ReactNode;
+}) {
+  const text = (
+    <>
+      {label}
+      {optional ? <span className="font-normal text-[#1F1F1F]/55"> (opcional)</span> : null}
+    </>
+  );
+  const body = (
+    <>
+      {plain ? <span id={labelId} className="block">{text}</span> : text}
+      {children}
+      {error ? <span className="mt-1.5 block font-normal text-[#B4432F]">{error}</span> : hint ? <span className="mt-1.5 block font-normal text-[#1F1F1F]/55">{hint}</span> : null}
+    </>
+  );
+  const className = "block text-sm font-semibold text-[#1F1F1F]";
+  return plain ? <div className={className}>{body}</div> : <label className={className}>{body}</label>;
 }
 
-function contactErrors(draft: Draft) {
-  const phone = draft.phone.replace(/\D/g, "");
-  const email = draft.email.trim();
+type Opcao = { value: string; label: string };
+
+function OptionCombobox({
+  value,
+  options,
+  onChange,
+  placeholder,
+  empty,
+  labelledBy,
+  invalid,
+  customValue,
+  customPlaceholder,
+}: {
+  value: string;
+  options: readonly Opcao[];
+  onChange: (value: string) => void;
+  placeholder: string;
+  empty: string;
+  labelledBy: string;
+  invalid?: boolean;
+  customValue?: string;
+  customPlaceholder?: string;
+}) {
+  const conhecido = options.some((item) => item.value === value);
+  const [livre, setLivre] = useState(() => Boolean(customValue) && value !== "" && !conhecido);
+  const [aberto, setAberto] = useState(false);
+  const [texto, setTexto] = useState(() => {
+    if (Boolean(customValue) && value !== "" && !conhecido) return value;
+    return options.find((item) => item.value === value)?.label ?? "";
+  });
+  const inputRef = useRef<HTMLInputElement>(null);
+  const livreRef = useRef(livre);
+  livreRef.current = livre;
+  const selected = livre ? null : options.find((item) => item.value === value) ?? null;
+
+  useEffect(() => {
+    if (aberto) return;
+    setTexto(livre ? value : selected?.label ?? "");
+  }, [aberto, livre, selected, value]);
+
+  useEffect(() => {
+    if (livre) inputRef.current?.focus();
+  }, [livre]);
+
+  const items = useMemo(() => {
+    const termo = texto.trim().toLocaleLowerCase("pt-BR");
+    const atual = (livre ? value : selected?.label ?? "").toLocaleLowerCase("pt-BR");
+    if (!termo || termo === atual) return options;
+    return options.filter((item) => item.label.toLocaleLowerCase("pt-BR").includes(termo));
+  }, [livre, options, selected, texto, value]);
+
+  return (
+    <Combobox.Root
+      items={items}
+      value={selected}
+      inputValue={texto}
+      open={aberto}
+      onOpenChange={setAberto}
+      autoHighlight={false}
+      filter={null}
+      onValueChange={(next) => {
+        if (!next) return;
+        if (customValue && next.value === customValue) {
+          setLivre(true);
+          setTexto("");
+          onChange("");
+          return;
+        }
+        setLivre(false);
+        setTexto(next.label);
+        onChange(next.value);
+      }}
+      onInputValueChange={(next, details) => {
+        if (details.reason !== "input-change" && details.reason !== "input-paste") return;
+        setTexto(next);
+        if (!livreRef.current) return;
+        onChange(next.slice(0, 80));
+      }}
+      itemToStringLabel={(item) => item?.label ?? ""}
+      isItemEqualToValue={(a, b) => a.value === b.value}
+    >
+      <div className="relative mt-2">
+        <Combobox.Input
+          ref={inputRef}
+          aria-labelledby={labelledBy}
+          aria-invalid={invalid || undefined}
+          placeholder={livre ? customPlaceholder || placeholder : placeholder}
+          onKeyDown={(event) => {
+            if (event.key === "Enter") event.preventDefault();
+          }}
+          className={cn(inputClass, "mt-0 pr-12", invalid && "border-[#B4432F] focus-visible:border-[#B4432F] focus-visible:outline-[#B4432F]")}
+        />
+        <Combobox.Trigger
+          aria-label="Abrir lista"
+          className="absolute top-1/2 right-1.5 inline-flex size-11 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full text-[#1F1F1F]/55"
+        >
+          <CaretDown weight="bold" className="size-4" aria-hidden />
+        </Combobox.Trigger>
+      </div>
+      <Combobox.Portal>
+        <Combobox.Positioner sideOffset={8} className="z-50 w-(--anchor-width) outline-none">
+          <Combobox.Popup className="max-h-72 overflow-y-auto rounded-2xl bg-white p-1.5 shadow-[0_16px_40px_rgba(31,31,31,0.12)] ring-1 ring-[#1F1F1F]/10 outline-none">
+            {items.length === 0 ? (
+              <p className="px-3 py-3 text-sm text-[#1F1F1F]/55">{empty}</p>
+            ) : (
+              <Combobox.List>
+                {(item: Opcao) => (
+                  <Combobox.Item
+                    key={item.value || item.label}
+                    value={item}
+                    className="flex min-h-11 cursor-pointer items-center gap-3 rounded-xl px-3 text-sm font-semibold text-[#1F1F1F] outline-none data-highlighted:bg-[#F8F1E3]"
+                  >
+                    <span className="min-w-0 flex-1 truncate">{item.label}</span>
+                    <Combobox.ItemIndicator className="text-[#0F5B63]">
+                      <Check weight="bold" className="size-4" aria-hidden />
+                    </Combobox.ItemIndicator>
+                  </Combobox.Item>
+                )}
+              </Combobox.List>
+            )}
+          </Combobox.Popup>
+        </Combobox.Positioner>
+      </Combobox.Portal>
+    </Combobox.Root>
+  );
+}
+
+const UF_OPCOES: Opcao[] = [{ value: "", label: "Escolher" }, ...UFS.map((uf) => ({ value: uf, label: uf }))];
+
+const EMPREENDIMENTO_OPCOES: Opcao[] = [
+  { value: "", label: "Ainda não escolhi" },
+  ...empreendimentos.map((item) => ({ value: item.nome, label: item.nome })),
+  { value: "__outro", label: "Outro" },
+];
+
+function UfSelect({ value, onChange, error }: { value: string; onChange: (value: Uf | "") => void; error?: string }) {
+  const labelId = "financiamento-uf";
+  return (
+    <Field label="UF" error={error} plain labelId={labelId}>
+      <OptionCombobox
+        labelledBy={labelId}
+        value={value}
+        options={UF_OPCOES}
+        placeholder="UF"
+        empty="Nenhuma UF com essas letras."
+        invalid={Boolean(error)}
+        onChange={(next) => onChange(next as Uf | "")}
+      />
+    </Field>
+  );
+}
+
+function Choice({
+  checked,
+  onSelect,
+  label,
+}: {
+  checked: boolean;
+  onSelect: () => void;
+  label: string;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onSelect}
+      aria-pressed={checked}
+      className={cn(
+        "min-h-12 cursor-pointer rounded-2xl px-3 text-sm font-semibold ring-1 transition-[color,background-color,box-shadow,ring-color] duration-500",
+        checked ? "bg-[#0F5B63] text-white ring-[#0F5B63]" : "bg-white text-[#1F1F1F] ring-[#1F1F1F]/12",
+      )}
+      style={{ transitionTimingFunction: EASE }}
+    >
+      {label}
+    </button>
+  );
+}
+
+const TIPO_MOVE = `transform 560ms ${EASE}, width 560ms ${EASE}, height 560ms ${EASE}, opacity 420ms ${EASE}`;
+
+function TipoGrid({ value, onChange }: { value: string; onChange: (id: Draft["tipologia"]) => void }) {
+  const gridRef = useRef<HTMLDivElement>(null);
+  const pillRef = useRef<HTMLSpanElement>(null);
+  const shown = useRef(false);
+
+  useLayoutEffect(() => {
+    const grid = gridRef.current;
+    const pill = pillRef.current;
+    if (!grid || !pill) return;
+    const button = value ? grid.querySelector<HTMLButtonElement>(`[data-tipo="${value}"]`) : null;
+
+    const place = (visible: boolean) => {
+      if (!button) {
+        pill.style.opacity = "0";
+        return;
+      }
+      pill.style.transform = `translate(${button.offsetLeft}px, ${button.offsetTop}px)`;
+      pill.style.width = `${button.offsetWidth}px`;
+      pill.style.height = `${button.offsetHeight}px`;
+      pill.style.opacity = visible ? "1" : "0";
+    };
+
+    const freeze = (fn: () => void) => {
+      pill.style.transition = "none";
+      fn();
+      void pill.offsetWidth;
+      pill.style.transition = TIPO_MOVE;
+    };
+
+    if (!button) {
+      freeze(() => place(false));
+      shown.current = false;
+    } else if (!shown.current) {
+      freeze(() => place(false));
+      requestAnimationFrame(() => {
+        pill.style.opacity = "1";
+      });
+      shown.current = true;
+    } else {
+      place(true);
+    }
+
+    const observer = new ResizeObserver(() => freeze(() => place(shown.current)));
+    observer.observe(grid);
+    return () => observer.disconnect();
+  }, [value]);
+
+  return (
+    <div ref={gridRef} className="relative grid grid-cols-2 gap-2">
+      <span
+        ref={pillRef}
+        aria-hidden
+        className="pointer-events-none absolute top-0 left-0 z-0 rounded-2xl bg-[#0F5B63] opacity-0 will-change-transform motion-reduce:!transition-none"
+        style={{ transition: TIPO_MOVE }}
+      />
+      {TIPOLOGIAS.map((item) => {
+        const checked = value === item.id;
+        return (
+          <button
+            key={item.id}
+            type="button"
+            data-tipo={item.id}
+            aria-pressed={checked}
+            onClick={() => onChange(item.id)}
+            className={cn(
+              "relative z-10 min-h-12 cursor-pointer rounded-2xl bg-transparent px-3 text-sm font-semibold ring-1 transition-[color,box-shadow] duration-500",
+              checked ? "text-white ring-transparent" : "text-[#1F1F1F] ring-[#1F1F1F]/12",
+            )}
+            style={{ transitionTimingFunction: EASE }}
+          >
+            {item.label}
+          </button>
+        );
+      })}
+    </div>
+  );
+}
+
+function inicial(slug?: string): Draft {
+  const item = empreendimentos.find((emp) => emp.slug === slug);
+  const draft = draftVazio();
+  if (!item) return draft;
   return {
-    name: draft.name.trim().length < 2 ? "Como podemos te chamar?" : "",
-    phone: phone.length < 10 ? "Confira o número com DDD." : "",
-    email: email && !EMAIL_RE.test(email) ? "Esse e-mail parece incompleto." : "",
+    ...draft,
+    tipologia: "apartamento",
+    cidade: item.cidade,
+    uf: UF_POR_CIDADE[item.cidade] ?? "",
+    empreendimento: item.nome,
   };
 }
 
-function readDraft(): { draft: Draft; step: number } | null {
-  try {
-    const raw = window.localStorage.getItem(DRAFT_KEY);
-    if (!raw) return null;
-    const saved = JSON.parse(raw) as { at: number; step: number; draft: Partial<Draft> };
-    if (Date.now() - saved.at > DRAFT_TTL_MS) return null;
-    const draft = { ...EMPTY, ...saved.draft };
-    if (!isTipoRenda(draft.tipoRenda)) draft.tipoRenda = "";
-    if (!isFgts(draft.fgts)) draft.fgts = "";
-    if (!FAIXAS_RENDA.some((item) => item === draft.faixa)) draft.faixa = "";
-    const hasAnswer = draft.tipoRenda || draft.faixa || draft.fgts || draft.name || draft.phone;
-    if (!hasAnswer) return null;
-    return { draft, step: Math.min(Math.max(saved.step, 0), LAST) };
-  } catch {
-    return null;
-  }
-}
-
 export function FinanciamentoForm({ empreendimento }: { empreendimento?: string }) {
-  const initialEmp = empreendimentos.find((item) => item.slug === empreendimento)?.nome ?? "";
-  const [draft, setDraft] = useState<Draft>({ ...EMPTY, empreendimento: initialEmp });
-  const [step, setStep] = useState(0);
+  const esconderTipologia = empreendimentos.some((item) => item.slug === empreendimento);
+  const [draft, setDraft] = useState<Draft>(() => inicial(empreendimento));
+  const [etapaId, setEtapaId] = useState<EtapaId>("imovel");
   const [direction, setDirection] = useState<1 | -1>(1);
-  const [returnTo, setReturnTo] = useState<number | null>(null);
-  const [restored, setRestored] = useState(false);
-  const [touched, setTouched] = useState<Record<string, boolean>>({});
   const [tried, setTried] = useState(false);
-  const [showObs, setShowObs] = useState(false);
-  const [docsOpen, setDocsOpen] = useState(false);
+  const [restored, setRestored] = useState(false);
+  const [cepErro, setCepErro] = useState("");
   const [status, setStatus] = useState<"idle" | "sending" | "ok" | "error">("idle");
   const [errorMessage, setErrorMessage] = useState("");
   const [resetSignal, setResetSignal] = useState(0);
-  const [sent, setSent] = useState<{ first: string; checklist: ChecklistItem[] } | null>(null);
-
+  const [voltarDaEdicao, setVoltarDaEdicao] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
   const headingRef = useRef<HTMLHeadingElement>(null);
   const hydratedRef = useRef(false);
   const stepChangedRef = useRef(false);
-  const startedRef = useRef(false);
 
-  const checklist = useMemo(
-    () => checklistFinanciamento({ tipoRenda: draft.tipoRenda, fgts: draft.fgts }),
-    [draft.tipoRenda, draft.fgts],
-  );
-  const errors = contactErrors(draft);
+  const etapas = useMemo(() => etapasVisiveis(draft.estadoCivil), [draft.estadoCivil]);
+  const index = Math.max(0, etapas.findIndex((etapa) => etapa.id === etapaId));
+  const etapa = etapas[index] ?? etapas[0];
+  const erros = tried ? errosEtapa(etapa.id, draft, { tipologiaObrigatoria: !esconderTipologia }) : {};
+  const copy = COPY[etapa.id];
 
   useEffect(() => {
-    const saved = readDraft();
-    if (saved) {
-      setDraft({ ...saved.draft, empreendimento: initialEmp || saved.draft.empreendimento });
-      setStep(saved.step);
-      setShowObs(Boolean(saved.draft.obs));
-      setRestored(true);
-    }
+    try {
+      const raw = window.localStorage.getItem(DRAFT_KEY);
+      if (raw) {
+        const saved = JSON.parse(raw) as { at: number; etapaId: EtapaId; draft: unknown };
+        if (Date.now() - saved.at < DRAFT_TTL_MS) {
+          const next = sanitizeDraft(saved.draft);
+          if (esconderTipologia) {
+            next.tipologia = "apartamento";
+            next.empreendimento = inicial(empreendimento).empreendimento || next.empreendimento;
+          }
+          setDraft(next);
+          setEtapaId(saved.etapaId || "imovel");
+          setRestored(true);
+        }
+      }
+    } catch { }
     hydratedRef.current = true;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
+    if (!etapas.some((item) => item.id === etapaId)) setEtapaId("civil");
+  }, [etapas, etapaId]);
+
+  useEffect(() => {
     if (!hydratedRef.current || status === "ok") return;
     try {
-      window.localStorage.setItem(DRAFT_KEY, JSON.stringify({ at: Date.now(), step, draft }));
+      window.localStorage.setItem(DRAFT_KEY, JSON.stringify({ at: Date.now(), etapaId, draft }));
     } catch { }
-  }, [draft, step, status]);
+  }, [draft, etapaId, status]);
 
   useEffect(() => {
     if (!stepChangedRef.current) return;
     const section = sectionRef.current;
-    if (section && section.getBoundingClientRect().top < 0) {
-      section.scrollIntoView({ block: "start" });
-    }
+    if (section && section.getBoundingClientRect().top < 0) section.scrollIntoView({ block: "start" });
     headingRef.current?.focus({ preventScroll: true });
-    track("financiamento_step", { step: String(step + 1), nome: STEPS[step] });
-  }, [step]);
+    track("financiamento_step", { step: String(index + 1), nome: etapa.label });
+  }, [etapa.id, etapa.label, index]);
 
-  function update<K extends keyof Draft>(key: K, value: Draft[K]) {
-    setDraft((current) => ({ ...current, [key]: value }));
-    if (!startedRef.current) {
-      startedRef.current = true;
-      track("financiamento_start");
-    }
+  function update(partial: Partial<Draft>) {
+    setDraft((current) => ({ ...current, ...partial }));
   }
 
-  function goTo(next: number) {
+  function updatePessoa(qual: "voce" | "conjuge", partial: Partial<Pessoa>) {
+    setDraft((current) => ({ ...current, [qual]: { ...current[qual], ...partial } }));
+  }
+
+  function goTo(id: EtapaId, fromReview = false) {
     stepChangedRef.current = true;
-    setDirection(next > step ? 1 : -1);
-    setStep(next);
+    const nextIndex = etapas.findIndex((item) => item.id === id);
+    setDirection(nextIndex >= index ? 1 : -1);
+    setTried(false);
+    if (id === "revisao") setVoltarDaEdicao(false);
+    else if (fromReview) setVoltarDaEdicao(true);
+    setEtapaId(id);
   }
 
-  function advance() {
-    if (returnTo !== null) {
-      goTo(returnTo);
-      setReturnTo(null);
+  function continuar() {
+    const atuais = errosEtapa(etapa.id, draft, { tipologiaObrigatoria: !esconderTipologia });
+    if (Object.keys(atuais).length) {
+      setTried(true);
       return;
     }
-    goTo(Math.min(step + 1, LAST));
+    if (voltarDaEdicao) {
+      goTo("revisao");
+      return;
+    }
+    const next = etapas[index + 1];
+    if (next) goTo(next.id);
   }
 
-  function edit(target: number) {
-    setReturnTo(step);
-    goTo(target);
-  }
-
-  function restart() {
-    setDraft({ ...EMPTY, empreendimento: initialEmp });
-    setTouched({});
-    setTried(false);
-    setShowObs(false);
-    setRestored(false);
-    setReturnTo(null);
-    goTo(0);
+  async function buscarCep(valor: string) {
+    const digits = valor.replace(/\D/g, "");
+    if (digits.length !== 8) return;
+    setCepErro("");
     try {
-      window.localStorage.removeItem(DRAFT_KEY);
-    } catch { }
-  }
-
-  const answered = [Boolean(draft.tipoRenda), Boolean(draft.faixa), Boolean(draft.fgts)];
-
-  function summaryLines() {
-    return [
-      `Tipo de renda: ${labelTipoRenda(draft.tipoRenda) || "—"}`,
-      `Renda bruta mensal: ${draft.faixa || "—"}`,
-      `FGTS: ${labelFgts(draft.fgts) || "—"}`,
-      `Empreendimento: ${draft.empreendimento || "Ainda não escolhi"}`,
-    ];
+      const response = await fetch(`https://viacep.com.br/ws/${digits}/json/`);
+      const data = (await response.json()) as { erro?: boolean; logradouro?: string; bairro?: string; localidade?: string; uf?: string };
+      if (data.erro) {
+        setCepErro("CEP não encontrado.");
+        return;
+      }
+      const uf = UFS.includes(data.uf as Uf) ? (data.uf as Uf) : "";
+      setDraft((current) => ({
+        ...current,
+        logradouro: data.logradouro || current.logradouro,
+        bairro: data.bairro || current.bairro,
+        cidadeEndereco: data.localidade || current.cidadeEndereco,
+        ufEndereco: uf || current.ufEndereco,
+      }));
+    } catch {
+      setCepErro("Não consegui buscar o CEP. Preencha o endereço.");
+    }
   }
 
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    setTried(true);
-    const invalid = (Object.keys(errors) as Array<keyof typeof errors>).find((key) => errors[key]);
-    if (invalid) {
-      event.currentTarget.querySelector<HTMLInputElement>(`[name="${invalid}"]`)?.focus();
+    const invalida = primeiraEtapaInvalida(draft, { tipologiaObrigatoria: !esconderTipologia });
+    if (invalida) {
+      goTo(invalida);
+      setTried(true);
       return;
     }
-
     const data = new FormData(event.currentTarget);
-    const obs = draft.obs.trim();
     data.set("company", "rendal");
     data.set("subject", FINANCIAMENTO_SUBJECT);
-    data.set("emailOptional", "1");
-    data.set("tipoRenda", draft.tipoRenda);
-    data.set("fgts", draft.fgts);
-    data.set("empreendimento", draft.empreendimento);
-    data.set(
-      "message",
-      [
-        "Perfil: financiar (pré-aprovação)",
-        ...summaryLines(),
-        obs ? `\nObservação:\n${obs}` : "",
-        "\nChecklist de documentos para orientar:",
-        checklistText(checklist),
-        `\n${FINANCIAMENTO_DISCLAIMER}`,
-      ]
-        .filter(Boolean)
-        .join("\n"),
-    );
-
+    data.set("name", draft.voce.nome);
+    data.set("email", draft.voce.email);
+    data.set("phone", draft.voce.tel);
+    data.set("message", "Cotação de crédito imobiliário");
+    data.set("dossier", JSON.stringify(draft));
     setStatus("sending");
     setErrorMessage("");
     const result = await submitContact(data);
     if (result.success) {
-      track("financiamento_submit", {
-        renda: draft.tipoRenda || "—",
-        fgts: draft.fgts || "—",
-        empreendimento: draft.empreendimento || "—",
-      });
-      setSent({ first: draft.name.trim().split(/\s+/)[0] ?? "", checklist });
+      track("financiamento_submit", { empreendimento: draft.empreendimento || "—" });
       setStatus("ok");
-      try {
-        window.localStorage.removeItem(DRAFT_KEY);
-      } catch { }
+      try { window.localStorage.removeItem(DRAFT_KEY); } catch { }
       requestAnimationFrame(() => sectionRef.current?.scrollIntoView({ block: "start" }));
       return;
     }
     setStatus("error");
-    setErrorMessage(result.message);
+    setErrorMessage(result.message ?? "Não foi possível enviar agora.");
     setResetSignal((value) => value + 1);
   }
 
   const whatsappFallback = rendalWhatsapp(
-    [
-      "Olá! Quero uma orientação de crédito.",
-      draft.name.trim() ? `Nome: ${draft.name.trim()}` : "",
-      ...summaryLines(),
-    ]
-      .filter(Boolean)
-      .join("\n"),
+    ["Olá! Quero uma cotação de crédito.", draft.voce.nome && `Nome: ${draft.voce.nome}`, draft.empreendimento && `Imóvel: ${draft.empreendimento}`, draft.valorImovel && `Valor: ${draft.valorImovel}`].filter(Boolean).join("\n"),
   );
 
-  return (
-    <section
-      ref={sectionRef}
-      id="financiamento"
-      aria-labelledby="financiamento-titulo"
-      className="scroll-mt-28 overflow-clip rounded-3xl bg-white ring-1 ring-[#1F1F1F]/10"
-    >
-      {status === "ok" && sent ? (
-        <Success first={sent.first} checklist={sent.checklist} />
-      ) : (
-        <div className="grid lg:grid-cols-[minmax(0,1fr)_22rem]">
-          <div className="p-5 sm:p-8">
-            <header>
-              <p className="inline-flex items-center gap-1.5 rounded-full bg-[#F8F1E3] px-3 py-1 text-xs font-semibold text-[#0F5B63]">
-                <Clock weight="bold" className="size-3.5" aria-hidden />
-                Pré-aprovação · menos de 1 minuto
-              </p>
-              <h2
-                id="financiamento-titulo"
-                className="mt-4 text-2xl font-semibold tracking-tight text-balance text-[#1F1F1F] sm:text-3xl"
-              >
-                Descubra quanto cabe no seu nome
-              </h2>
-              <p className={cn("mt-2 max-w-xl text-base leading-7 text-pretty text-[#1F1F1F]/70", step > 0 && "max-sm:hidden")}>
-                Quatro respostas rápidas e a equipe da Rendal retorna uma orientação de crédito, antes de você escolher a unidade.
-              </p>
-              <ul className={cn("mt-4 flex flex-wrap gap-x-4 gap-y-1.5 text-sm text-[#1F1F1F]/70", step > 0 && "max-sm:hidden")}>
-                {["Sem consulta ao CPF", "Sem compromisso", "Retorno em até 1 dia útil"].map((item) => (
-                  <li key={item} className="inline-flex items-center gap-1.5">
-                    <Check weight="bold" className="size-4 text-[#0F5B63]" aria-hidden />
-                    {item}
-                  </li>
-                ))}
-              </ul>
-            </header>
-
-            {restored && step > 0 ? (
-              <p className="mt-6 flex flex-wrap items-center justify-between gap-2 rounded-2xl bg-[#F8F1E3] px-4 py-3 text-sm text-[#1F1F1F]">
-                <span>Guardamos suas respostas. Continue de onde parou.</span>
-                <button
-                  type="button"
-                  onClick={restart}
-                  className="min-h-11 cursor-pointer px-1 font-semibold text-[#0F5B63] underline-offset-2 hover:underline"
-                >
-                  Recomeçar
-                </button>
-              </p>
-            ) : null}
-
-            <Progress step={step} />
-
-            <form onSubmit={onSubmit} noValidate className="relative mt-6">
-              <HoneypotField />
-              <div
-                key={step}
-                className="rendal-step"
-                style={{ ["--step-from" as string]: `${direction * 16}px` }}
-              >
-                <h3
-                  ref={headingRef}
-                  tabIndex={-1}
-                  className="text-xl font-semibold tracking-tight text-balance text-[#1F1F1F] outline-none sm:text-2xl"
-                >
-                  {step === 0 && "Como você recebe sua renda?"}
-                  {step === 1 && "Quanto entra por mês, em média?"}
-                  {step === 2 && "Pretende usar o FGTS?"}
-                  {step === 3 && "Pronto! Para onde mandamos sua orientação?"}
-                </h3>
-                <p className="mt-1.5 text-sm leading-6 text-pretty text-[#1F1F1F]/65">
-                  {step === 0 && "Isso define quais documentos você vai precisar."}
-                  {step === 1 && "Valor bruto, antes dos descontos. Se vai comprar com alguém, some as rendas."}
-                  {step === 2 && "Ele pode entrar na entrada ou abater parcelas. Na dúvida, a equipe explica."}
-                  {step === 3 && "Usamos só para te retornar. Nada de spam."}
-                </p>
-
-                {step === 0 ? (
-                  <Choices legend="Tipo de renda" className="sm:grid-cols-2">
-                    {TIPOS_RENDA.map((item) => {
-                      const Icon = RENDA_ICON[item.id];
-                      return (
-                        <Choice
-                          key={item.id}
-                          name="tipoRendaChoice"
-                          checked={draft.tipoRenda === item.id}
-                          onSelect={() => update("tipoRenda", item.id)}
-                          icon={<Icon weight="duotone" className="size-7 shrink-0" aria-hidden />}
-                          label={item.label}
-                          hint={item.hint}
-                        />
-                      );
-                    })}
-                  </Choices>
-                ) : null}
-
-                {step === 1 ? (
-                  <Choices legend="Renda bruta mensal" className="sm:grid-cols-2">
-                    {FAIXAS_RENDA.map((item) => (
-                      <Choice
-                        key={item}
-                        name="faixaChoice"
-                        checked={draft.faixa === item}
-                        onSelect={() => update("faixa", item)}
-                        label={item}
-                        muted={item === "Prefiro não dizer agora"}
-                      />
-                    ))}
-                  </Choices>
-                ) : null}
-
-                {step === 2 ? (
-                  <Choices legend="Uso do FGTS" className="grid-cols-3">
-                    {OPCOES_FGTS.map((item) => (
-                      <Choice
-                        key={item.id}
-                        name="fgtsChoice"
-                        checked={draft.fgts === item.id}
-                        onSelect={() => update("fgts", item.id)}
-                        label={item.label}
-                        center
-                      />
-                    ))}
-                  </Choices>
-                ) : null}
-
-                {step === 3 ? (
-                  <div className="mt-6 flex flex-col gap-4">
-                    <Answers draft={draft} onEdit={edit} />
-                    <TextField
-                      label="Nome completo"
-                      name="name"
-                      autoComplete="name"
-                      value={draft.name}
-                      onChange={(value) => update("name", value)}
-                      onBlur={() => setTouched((t) => ({ ...t, name: true }))}
-                      error={(touched.name || tried) && errors.name}
-                      valid={!errors.name}
-                    />
-                    <TextField
-                      label="WhatsApp"
-                      name="phone"
-                      type="tel"
-                      inputMode="tel"
-                      autoComplete="tel-national"
-                      placeholder="(00) 00000-0000"
-                      value={draft.phone}
-                      onChange={(value) => update("phone", maskPhone(value))}
-                      onBlur={() => setTouched((t) => ({ ...t, phone: true }))}
-                      error={(touched.phone || tried) && errors.phone}
-                      valid={!errors.phone}
-                      hint="A orientação chega por aqui."
-                    />
-                    <TextField
-                      label="E-mail"
-                      optional
-                      name="email"
-                      type="email"
-                      inputMode="email"
-                      autoComplete="email"
-                      value={draft.email}
-                      onChange={(value) => update("email", value)}
-                      onBlur={() => setTouched((t) => ({ ...t, email: true }))}
-                      error={(touched.email || tried) && errors.email}
-                      valid={Boolean(draft.email.trim()) && !errors.email}
-                      hint="Para receber a lista de documentos."
-                    />
-                    <EmpreendimentoField
-                      value={draft.empreendimento}
-                      onChange={(value) => update("empreendimento", value)}
-                    />
-                    {showObs ? (
-                      <label className="block text-sm font-semibold text-[#1F1F1F]">
-                        Observação <span className="font-normal text-[#1F1F1F]/55">(opcional)</span>
-                        <textarea
-                          value={draft.obs}
-                          onChange={(event) => update("obs", event.target.value)}
-                          rows={3}
-                          maxLength={1500}
-                          placeholder="Ex.: vou comprar com meu cônjuge, tenho um valor de entrada…"
-                          className={cn(inputClass, "h-auto py-3")}
-                          autoFocus={!draft.obs}
-                        />
-                      </label>
-                    ) : (
-                      <button
-                        type="button"
-                        onClick={() => setShowObs(true)}
-                        className="inline-flex min-h-11 cursor-pointer items-center gap-2 self-start text-sm font-semibold text-[#0F5B63]"
-                      >
-                        <Plus weight="bold" className="size-4" aria-hidden />
-                        Adicionar observação
-                      </button>
-                    )}
-
-                    <p className="flex gap-2 rounded-2xl bg-[#F8F1E3] p-4 text-sm leading-6 text-[#1F1F1F]/80">
-                      <ShieldCheck weight="duotone" className="mt-0.5 size-5 shrink-0 text-[#0F5B63]" aria-hidden />
-                      {FINANCIAMENTO_DISCLAIMER}
-                    </p>
-                    <TurnstileField resetSignal={resetSignal} />
-                  </div>
-                ) : null}
-              </div>
-
-              <div
-                className={cn(
-                  "mt-6 flex items-center gap-3",
-                  step === LAST && "sticky bottom-0 -mx-5 border-t border-[#1F1F1F]/8 bg-white/95 px-5 py-4 backdrop-blur sm:static sm:mx-0 sm:border-0 sm:bg-transparent sm:p-0 sm:backdrop-blur-none",
-                )}
-              >
-                {step > 0 ? (
-                  <button
-                    type="button"
-                    onClick={() => goTo(step - 1)}
-                    className="inline-flex size-12 shrink-0 cursor-pointer items-center justify-center rounded-full text-[#1F1F1F] ring-1 ring-[#1F1F1F]/15 transition-colors duration-300 hover:bg-[#F8F1E3] sm:w-auto sm:gap-2 sm:px-5"
-                    aria-label="Voltar"
-                  >
-                    <ArrowLeft weight="bold" className="size-4" aria-hidden />
-                    <span className="hidden text-base font-semibold sm:inline">Voltar</span>
-                  </button>
-                ) : null}
-                {step < LAST ? (
-                  answered[step] ? (
-                    <button
-                      type="button"
-                      onClick={advance}
-                      className="inline-flex h-12 flex-1 cursor-pointer items-center justify-center gap-2 rounded-full bg-[#0F5B63] px-6 text-base font-semibold text-white transition-colors duration-700 hover:bg-[#0A474E] sm:flex-none"
-                      style={{ transitionTimingFunction: EASE }}
-                    >
-                      Continuar
-                      <ArrowRight weight="bold" className="size-4" aria-hidden />
-                    </button>
-                  ) : (
-                    <p className="text-sm text-[#1F1F1F]/55">Toque em uma opção para seguir.</p>
-                  )
-                ) : (
-                  <button
-                    type="submit"
-                    disabled={status === "sending"}
-                    className="inline-flex h-12 flex-1 cursor-pointer items-center justify-center gap-2 rounded-full bg-[#0F5B63] px-6 text-base font-semibold text-white transition-colors duration-700 hover:bg-[#0A474E] disabled:cursor-wait disabled:opacity-70 sm:flex-none"
-                    style={{ transitionTimingFunction: EASE }}
-                  >
-                    {status === "sending" ? (
-                      <>
-                        <span className="size-4 animate-spin rounded-full border-2 border-white/40 border-t-white" aria-hidden />
-                        Enviando…
-                      </>
-                    ) : (
-                      <>
-                        Receber minha orientação
-                        <ArrowRight weight="bold" className="size-4" aria-hidden />
-                      </>
-                    )}
-                  </button>
-                )}
-              </div>
-
-              <div role="status" aria-live="polite">
-                {status === "error" ? (
-                  <div className="mt-4 rounded-2xl bg-[#FBEDEA] p-4 text-sm leading-6 text-[#7A2E22]">
-                    <p className="font-semibold">{errorMessage || "Não foi possível enviar agora."}</p>
-                    <p className="mt-1">
-                      Suas respostas continuam aqui. Tente de novo ou{" "}
-                      <a href={whatsappFallback} className="font-semibold underline underline-offset-2">
-                        mande direto pelo WhatsApp
-                      </a>
-                      .
-                    </p>
-                  </div>
-                ) : null}
-              </div>
-
-              {step === LAST ? (
-                <p className="mt-4 text-xs leading-5 text-[#1F1F1F]/55">
-                  Ao enviar, você concorda com o uso dos dados para retorno deste contato.{" "}
-                  <a href="/politica-de-privacidade" className="font-semibold text-[#0F5B63] underline-offset-2 hover:underline">
-                    Política de privacidade
-                  </a>
-                  .
-                </p>
-              ) : null}
-
-              <div className={cn("mt-6 lg:hidden", step === LAST && "pb-24 sm:pb-0")}>
-                <DocsToggle open={docsOpen} onToggle={() => setDocsOpen((v) => !v)} checklist={checklist} />
-              </div>
-            </form>
-          </div>
-
-          <aside
-            aria-label="Resumo e documentos"
-            className="hidden border-l border-[#1F1F1F]/8 bg-[#F8F1E3]/60 p-8 lg:block"
-          >
-            <div className="sticky top-28">
-              <h3 className="text-sm font-semibold text-[#1F1F1F]/55">Seu perfil</h3>
-              <dl className="mt-3 flex flex-col gap-2 text-sm">
-                {[
-                  { label: "Renda", value: labelTipoRenda(draft.tipoRenda), step: 0 },
-                  { label: "Valor", value: draft.faixa, step: 1 },
-                  { label: "FGTS", value: labelFgts(draft.fgts), step: 2 },
-                ].map((row) => (
-                  <div key={row.label} className="flex items-center justify-between gap-3">
-                    <dt className="text-[#1F1F1F]/60">{row.label}</dt>
-                    <dd className={cn("text-right font-semibold", row.value ? "text-[#1F1F1F]" : "text-[#1F1F1F]/30")}>
-                      {row.value || "—"}
-                    </dd>
-                  </div>
-                ))}
-                {draft.empreendimento ? (
-                  <div className="flex items-center justify-between gap-3">
-                    <dt className="text-[#1F1F1F]/60">Imóvel</dt>
-                    <dd className="text-right font-semibold text-[#1F1F1F]">{draft.empreendimento}</dd>
-                  </div>
-                ) : null}
-              </dl>
-
-              <div className="mt-8 flex items-baseline justify-between gap-2">
-                <h3 className="text-sm font-semibold text-[#1F1F1F]/55">O que preparar</h3>
-                <span className="text-xs text-[#1F1F1F]/55">{checklist.length} documentos</span>
-              </div>
-              <DocList checklist={checklist} className="mt-3" />
-              <p className="mt-4 text-xs leading-5 text-[#1F1F1F]/55">
-                Não precisa enviar nada agora. Só vá separando.
-              </p>
-            </div>
-          </aside>
-        </div>
-      )}
-    </section>
-  );
-}
-
-const inputClass =
-  "mt-2 h-12 w-full rounded-2xl border border-[#1F1F1F]/15 bg-white px-4 text-base font-normal text-[#1F1F1F] outline-none transition-colors duration-300 placeholder:text-[#1F1F1F]/35 focus-visible:border-[#0F5B63] focus-visible:outline-2 focus-visible:outline-[#0F5B63]";
-
-const EMP_MAX = 80;
-
-type EmpChoice = { kind: "none" } | { kind: "listed" | "custom"; nome: string };
-
-function fold(value: string) {
-  return value.normalize("NFD").replace(/\p{M}/gu, "").toLowerCase();
-}
-
-function toChoice(value: string): EmpChoice {
-  const nome = value.trim();
-  if (!nome) return { kind: "none" };
-  return empreendimentos.some((item) => item.nome === nome)
-    ? { kind: "listed", nome }
-    : { kind: "custom", nome: nome.slice(0, EMP_MAX) };
-}
-
-function choiceLabel(choice: EmpChoice) {
-  return choice.kind === "none" ? "" : choice.nome;
-}
-
-function sameChoice(a: EmpChoice, b: EmpChoice) {
-  if (a.kind === "none" || b.kind === "none") return a.kind === b.kind;
-  return a.kind === b.kind && a.nome === b.nome;
-}
-
-function empreendimentoItems(query: string): EmpChoice[] {
-  const typed = query.trim().slice(0, EMP_MAX);
-  const exact = empreendimentos.some((item) => fold(item.nome) === fold(typed));
-  const items: EmpChoice[] = [{ kind: "none" }, ...empreendimentos.map((item) => ({ kind: "listed" as const, nome: item.nome }))];
-  if (typed && !exact) items.push({ kind: "custom", nome: typed });
-  return items;
-}
-
-function EmpreendimentoField({ value, onChange }: { value: string; onChange: (value: string) => void }) {
-  const [query, setQuery] = useState("");
-  const selected = useMemo(() => toChoice(value), [value]);
-  const items = useMemo(() => empreendimentoItems(query), [query]);
-
-  return (
-    <div className="text-sm font-semibold text-[#1F1F1F]">
-      <span id="fin-emp-label">
-        Empreendimento <span className="font-normal text-[#1F1F1F]/55">(opcional)</span>
-      </span>
-      <Combobox.Root
-        items={items}
-        value={selected}
-        onValueChange={(next) => onChange(next && next.kind !== "none" ? next.nome : "")}
-        onInputValueChange={setQuery}
-        itemToStringLabel={choiceLabel}
-        isItemEqualToValue={sameChoice}
-        autoHighlight
-      >
-        <div className="relative mt-2">
-          <Combobox.Input
-            aria-labelledby="fin-emp-label"
-            placeholder="Buscar ou escrever outro nome"
-            className={cn(inputClass, "mt-0 pr-12")}
-          />
-          <Combobox.Trigger
-            aria-label="Abrir lista de empreendimentos"
-            className="absolute top-1/2 right-1.5 inline-flex size-10 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full text-[#1F1F1F]/55"
-          >
-            <CaretDown weight="bold" className="size-4" aria-hidden />
-          </Combobox.Trigger>
-        </div>
-        <Combobox.Portal>
-          <Combobox.Positioner sideOffset={8} className="z-50 w-(--anchor-width) outline-none">
-            <Combobox.Popup className="max-h-72 overflow-y-auto rounded-2xl bg-white p-1.5 shadow-[0_16px_40px_rgba(31,31,31,0.12)] ring-1 ring-[#1F1F1F]/10 outline-none">
-              <Combobox.List>
-                {(item: EmpChoice) => (
-                  <Combobox.Item
-                    key={item.kind === "none" ? "none" : `${item.kind}:${item.nome}`}
-                    value={item}
-                    className={cn(
-                      "flex min-h-11 cursor-pointer items-center gap-2 rounded-xl px-3 text-sm font-semibold text-[#1F1F1F] outline-none data-highlighted:bg-[#F8F1E3]",
-                      item.kind === "custom" && "text-[#0F5B63]",
-                      item.kind === "none" && "font-medium text-[#1F1F1F]/60",
-                    )}
-                  >
-                    {item.kind === "custom" ? <Plus weight="bold" className="size-4 shrink-0" aria-hidden /> : null}
-                    <span className="min-w-0 flex-1 truncate">
-                      {item.kind === "none" ? "Ainda não escolhi" : item.kind === "custom" ? `Usar “${item.nome}”` : item.nome}
-                    </span>
-                    {item.kind === "listed" ? (
-                      <Combobox.ItemIndicator className="text-[#0F5B63]">
-                        <Check weight="bold" className="size-4" aria-hidden />
-                      </Combobox.ItemIndicator>
-                    ) : null}
-                  </Combobox.Item>
-                )}
-              </Combobox.List>
-            </Combobox.Popup>
-          </Combobox.Positioner>
-        </Combobox.Portal>
-      </Combobox.Root>
-      <p className="mt-1.5 font-normal text-[#1F1F1F]/55">Não está na lista? Escreva o nome e toque em Usar.</p>
-    </div>
-  );
-}
-
-function Progress({ step }: { step: number }) {
-  return (
-    <div className={cn("mt-8", step > 0 && "max-sm:mt-5")}>
-      <div className="flex items-baseline justify-between gap-3 text-sm">
-        <p className="font-semibold text-[#1F1F1F]">
-          {step === LAST ? "Última etapa" : `Etapa ${step + 1} de ${STEPS.length}`}
-          <span className="font-normal text-[#1F1F1F]/55"> · {STEPS[step]}</span>
-        </p>
-        <p className="text-[#1F1F1F]/55" aria-hidden>
-          {Math.round(((step + 1) / STEPS.length) * 100)}%
-        </p>
-      </div>
-      <div
-        className="mt-3 grid grid-cols-4 gap-1.5"
-        role="progressbar"
-        aria-label="Progresso"
-        aria-valuemin={1}
-        aria-valuemax={STEPS.length}
-        aria-valuenow={step + 1}
-        aria-valuetext={`Etapa ${step + 1} de ${STEPS.length}`}
-      >
-        {STEPS.map((label, index) => (
-          <span key={label} className="h-1.5 overflow-hidden rounded-full bg-[#EDE6DA]">
-            <span
-              className="block h-full origin-left rounded-full bg-[#0F5B63] transition-transform duration-500"
-              style={{ transform: `scaleX(${index <= step ? 1 : 0})`, transitionTimingFunction: EASE }}
-            />
-          </span>
-        ))}
-      </div>
-    </div>
-  );
-}
-
-function Choices({
-  legend,
-  className,
-  children,
-}: {
-  legend: string;
-  className?: string;
-  children: ReactNode;
-}) {
-  return (
-    <fieldset className="mt-6">
-      <legend className="sr-only">{legend}</legend>
-      <div className={cn("grid gap-3", className)}>{children}</div>
-    </fieldset>
-  );
-}
-
-function Choice({
-  name,
-  checked,
-  onSelect,
-  label,
-  hint,
-  icon,
-  center,
-  muted,
-}: {
-  name: string;
-  checked: boolean;
-  onSelect: () => void;
-  label: string;
-  hint?: string;
-  icon?: ReactNode;
-  center?: boolean;
-  muted?: boolean;
-}) {
-  return (
-    <label
-      className={cn(
-        "group relative flex min-h-16 cursor-pointer items-center gap-3 rounded-2xl px-4 py-3 ring-1 transition-[background-color,color,box-shadow,transform] duration-300 select-none active:scale-[0.98]",
-        "has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-[#0F5B63]",
-        checked
-          ? "bg-[#0F5B63] text-white ring-[#0F5B63]"
-          : "bg-white text-[#1F1F1F] ring-[#1F1F1F]/12 hover:ring-[#0F5B63]/45",
-        center && "justify-center text-center",
-      )}
-      style={{ transitionTimingFunction: EASE }}
-    >
-      <input
-        type="radio"
-        name={name}
-        checked={checked}
-        onChange={onSelect}
-        onClick={() => checked && onSelect()}
-        className="sr-only"
-      />
-      {icon}
-      <span className={cn("flex min-w-0 flex-col", !center && "flex-1")}>
-        <span className={cn("text-base font-semibold", muted && !checked && "text-[#1F1F1F]/65")}>{label}</span>
-        {hint ? (
-          <span className={cn("text-sm", checked ? "text-white/75" : "text-[#1F1F1F]/55")}>{hint}</span>
-        ) : null}
-      </span>
-      {!center ? (
-        <span
-          className={cn(
-            "inline-flex size-6 shrink-0 items-center justify-center rounded-full transition-colors duration-300",
-            checked ? "bg-white text-[#0F5B63]" : "ring-1 ring-[#1F1F1F]/20",
-          )}
-          aria-hidden
-        >
-          {checked ? <Check weight="bold" className="size-3.5" /> : null}
-        </span>
-      ) : null}
-    </label>
-  );
-}
-
-function Answers({ draft, onEdit }: { draft: Draft; onEdit: (step: number) => void }) {
-  const items = [
-    { value: labelTipoRenda(draft.tipoRenda), text: labelTipoRenda(draft.tipoRenda), step: 0, label: "tipo de renda" },
-    { value: draft.faixa, text: draft.faixa, step: 1, label: "renda mensal" },
-    { value: labelFgts(draft.fgts), text: draft.fgts ? `FGTS: ${labelFgts(draft.fgts)}` : "", step: 2, label: "FGTS" },
-  ];
-  return (
-    <ul className="flex flex-wrap gap-2" aria-label="Suas respostas">
-      {items.map((item) => (
-        <li key={item.step}>
-          <button
-            type="button"
-            onClick={() => onEdit(item.step)}
-            className="inline-flex min-h-9 cursor-pointer items-center gap-1.5 rounded-full bg-[#F8F1E3] px-3 text-sm font-semibold text-[#1F1F1F] transition-colors duration-300 hover:bg-[#EDE6DA]"
-            aria-label={`Alterar ${item.label}${item.value ? `: ${item.value}` : ""}`}
-          >
-            {item.text || <span className="text-[#1F1F1F]/45">Responder {item.label}</span>}
-            <PencilSimple weight="bold" className="size-3.5 text-[#0F5B63]" aria-hidden />
-          </button>
-        </li>
-      ))}
-    </ul>
-  );
-}
-
-function TextField({
-  label,
-  name,
-  value,
-  onChange,
-  onBlur,
-  error,
-  valid,
-  hint,
-  optional,
-  type = "text",
-  inputMode,
-  autoComplete,
-  placeholder,
-}: {
-  label: string;
-  name: string;
-  value: string;
-  onChange: (value: string) => void;
-  onBlur: () => void;
-  error: string | false;
-  valid: boolean;
-  hint?: string;
-  optional?: boolean;
-  type?: string;
-  inputMode?: "text" | "tel" | "email";
-  autoComplete?: string;
-  placeholder?: string;
-}) {
-  const describedBy = error ? `${name}-erro` : hint ? `${name}-dica` : undefined;
-  return (
-    <div>
-      <label htmlFor={`fin-${name}`} className="block text-sm font-semibold text-[#1F1F1F]">
-        {label}
-        {optional ? <span className="font-normal text-[#1F1F1F]/55"> (opcional)</span> : null}
-      </label>
-      <span className="relative block">
-        <input
-          id={`fin-${name}`}
-          name={name}
-          type={type}
-          inputMode={inputMode}
-          autoComplete={autoComplete}
-          placeholder={placeholder}
-          value={value}
-          onChange={(event) => onChange(event.target.value)}
-          onBlur={onBlur}
-          aria-invalid={Boolean(error)}
-          aria-describedby={describedBy}
-          className={cn(inputClass, "pr-11", error && "border-[#B4432F] focus-visible:border-[#B4432F] focus-visible:outline-[#B4432F]")}
-        />
-        <span
-          className={cn(
-            "pointer-events-none absolute top-1/2 right-4 mt-1 inline-flex size-5 -translate-y-1/2 items-center justify-center rounded-full bg-[#0F5B63] text-white transition-[opacity,transform] duration-300",
-            valid && value ? "scale-100 opacity-100" : "scale-50 opacity-0",
-          )}
-          style={{ transitionTimingFunction: EASE }}
-          aria-hidden
-        >
-          <Check weight="bold" className="size-3" />
-        </span>
-      </span>
-      {error ? (
-        <p id={`${name}-erro`} className="mt-1.5 text-sm text-[#B4432F]">
-          {error}
-        </p>
-      ) : hint ? (
-        <p id={`${name}-dica`} className="mt-1.5 text-sm text-[#1F1F1F]/55">
-          {hint}
-        </p>
-      ) : null}
-    </div>
-  );
-}
-
-function DocList({
-  checklist,
-  className,
-  checkable,
-}: {
-  checklist: ChecklistItem[];
-  className?: string;
-  checkable?: { done: Set<string>; toggle: (id: string) => void };
-}) {
-  return (
-    <ul className={cn("flex flex-col gap-2.5", className)}>
-      {checklist.map((item) => {
-        const done = checkable?.done.has(item.id);
-        const body = (
-          <>
-            <span
-              className={cn(
-                "mt-0.5 inline-flex size-5 shrink-0 items-center justify-center rounded-md transition-colors duration-300",
-                done ? "bg-[#0F5B63] text-white" : checkable ? "bg-white ring-1 ring-[#1F1F1F]/20" : "text-[#0F5B63]",
-              )}
-              aria-hidden
-            >
-              {checkable ? (done ? <Check weight="bold" className="size-3" /> : null) : <FileText weight="duotone" className="size-5" />}
-            </span>
-            <span className="flex flex-col">
-              <span className={cn("text-sm font-semibold text-[#1F1F1F]", done && "text-[#1F1F1F]/50 line-through")}>
-                {item.label}
-              </span>
-              {item.detail ? <span className="text-xs leading-5 text-[#1F1F1F]/55">{item.detail}</span> : null}
-            </span>
-          </>
-        );
-        return (
-          <li key={item.id} className="rendal-doc-in">
-            {checkable ? (
-              <label className="flex min-h-11 cursor-pointer items-start gap-3">
-                <input
-                  type="checkbox"
-                  className="sr-only"
-                  checked={done}
-                  onChange={() => checkable.toggle(item.id)}
-                />
-                {body}
-              </label>
-            ) : (
-              <span className="flex items-start gap-3">{body}</span>
-            )}
-          </li>
-        );
-      })}
-    </ul>
-  );
-}
-
-function DocsToggle({
-  open,
-  onToggle,
-  checklist,
-}: {
-  open: boolean;
-  onToggle: () => void;
-  checklist: ChecklistItem[];
-}) {
-  return (
-    <div className="t-acc rounded-2xl bg-[#F8F1E3]/70" data-open={open}>
-      <button
-        type="button"
-        onClick={onToggle}
-        aria-expanded={open}
-        aria-controls="fin-docs"
-        className="flex min-h-12 w-full cursor-pointer items-center justify-between gap-3 px-4 text-left text-sm font-semibold text-[#1F1F1F]"
-      >
-        <span className="inline-flex items-center gap-2">
-          <FileText weight="duotone" className="size-5 text-[#0F5B63]" aria-hidden />
-          O que você vai precisar · {checklist.length} documentos
-        </span>
-        <span className="t-acc-chevron text-[#1F1F1F]/55" aria-hidden>
-          <CaretDown weight="bold" className="size-4" />
-        </span>
-      </button>
-      <div className="t-acc-panel" id="fin-docs" inert={!open}>
-        <div className="t-acc-panel-inner">
-          <div className="px-4 pt-3 pb-4">
-            <DocList checklist={checklist} />
-            <p className="mt-3 text-xs leading-5 text-[#1F1F1F]/55">Não precisa enviar nada agora. Só vá separando.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function Success({ first, checklist }: { first: string; checklist: ChecklistItem[] }) {
-  const [done, setDone] = useState<Set<string>>(() => new Set());
-  const headingRef = useRef<HTMLHeadingElement>(null);
-
-  useEffect(() => {
-    headingRef.current?.focus({ preventScroll: true });
-  }, []);
-
-  function toggle(id: string) {
-    setDone((current) => {
-      const next = new Set(current);
-      if (next.has(id)) next.delete(id);
-      else next.add(id);
-      return next;
-    });
-  }
-
-  const steps = [
-    { title: "Recebemos seus dados", body: "Seu pedido já está com a equipe." },
-    { title: "Análise do seu perfil", body: "Cruzamos renda, FGTS e as linhas da Caixa e de outros bancos." },
-    { title: "Retorno pelo WhatsApp", body: "Em até 1 dia útil, com quanto cabe no seu nome." },
-  ];
-
-  return (
-    <div className="rendal-step grid gap-8 p-5 sm:p-8 lg:grid-cols-2 lg:gap-12" style={{ ["--step-from" as string]: "0px" }}>
-      <div>
-        <span className="rendal-pop inline-flex size-14 items-center justify-center rounded-full bg-[#0F5B63] text-white" aria-hidden>
+  if (status === "ok") {
+    const first = draft.voce.nome.trim().split(/\s+/)[0] ?? "";
+    return (
+      <section ref={sectionRef} id="financiamento" className="scroll-mt-28 overflow-clip rounded-3xl bg-white p-5 ring-1 ring-[#1F1F1F]/10 sm:p-8">
+        <span className="inline-flex size-14 items-center justify-center rounded-full bg-[#0F5B63] text-white" aria-hidden>
           <Check weight="bold" className="size-7" />
         </span>
-        <h2
-          ref={headingRef}
-          tabIndex={-1}
-          id="financiamento-titulo"
-          className="mt-5 text-2xl font-semibold tracking-tight text-balance text-[#1F1F1F] outline-none sm:text-3xl"
-        >
-          {first ? `Pronto, ${first}!` : "Pronto!"} Seu pedido está com a gente.
+        <h2 className="mt-5 text-2xl font-semibold tracking-tight text-[#1F1F1F] sm:text-3xl">
+          {first ? `Pronto, ${first}!` : "Pronto!"} A cotação está com a equipe.
         </h2>
-        <p className="mt-2 text-base leading-7 text-[#1F1F1F]/70">Veja o que acontece agora.</p>
-
-        <ol className="mt-6 flex flex-col">
-          {steps.map((item, index) => (
-            <li key={item.title} className="relative flex gap-4 pb-6 last:pb-0">
-              {index < steps.length - 1 ? (
-                <span className="absolute top-8 bottom-0 left-[15px] w-px bg-[#1F1F1F]/12" aria-hidden />
-              ) : null}
-              <span
-                className={cn(
-                  "relative inline-flex size-8 shrink-0 items-center justify-center rounded-full text-sm font-semibold",
-                  index === 0 ? "bg-[#0F5B63] text-white" : "bg-[#F8F1E3] text-[#1F1F1F]",
-                )}
-                aria-hidden
-              >
-                {index === 0 ? <Check weight="bold" className="size-4" /> : index + 1}
-              </span>
-              <span>
-                <span className="block text-base font-semibold text-[#1F1F1F]">{item.title}</span>
-                <span className="block text-sm leading-6 text-[#1F1F1F]/65">{item.body}</span>
-              </span>
-            </li>
-          ))}
-        </ol>
-
+        <p className="mt-2 max-w-xl text-base leading-7 text-[#1F1F1F]/70">O retorno chega em até um dia útil, pelo WhatsApp e pelo e-mail.</p>
         <p className="mt-6 flex gap-2 rounded-2xl bg-[#F8F1E3] p-4 text-sm leading-6 text-[#1F1F1F]/80">
           <ShieldCheck weight="duotone" className="mt-0.5 size-5 shrink-0 text-[#0F5B63]" aria-hidden />
           {FINANCIAMENTO_DISCLAIMER}
         </p>
-      </div>
+        <a
+          href={whatsappFallback}
+          className="mt-6 inline-flex h-12 items-center justify-center gap-2 rounded-full bg-[#0F5B63] px-5 text-base font-semibold text-white"
+        >
+          <WhatsappLogo weight="fill" className="size-5" aria-hidden />
+          Falar agora
+        </a>
+      </section>
+    );
+  }
 
-      <div className="rounded-3xl bg-[#F8F1E3]/70 p-5 sm:p-6">
-        <div className="flex items-baseline justify-between gap-3">
-          <h3 className="text-lg font-semibold text-[#1F1F1F]">Enquanto isso, vá separando</h3>
-          <span className="text-sm text-[#1F1F1F]/55" aria-live="polite">
-            {done.size} de {checklist.length}
-          </span>
-        </div>
-        <p className="mt-1 text-sm text-[#1F1F1F]/60">Marque o que você já tem em mãos.</p>
-        <div className="mt-3 h-1.5 overflow-hidden rounded-full bg-white">
-          <span
-            className="block h-full origin-left rounded-full bg-[#0F5B63] transition-transform duration-500"
-            style={{ transform: `scaleX(${done.size / checklist.length})`, transitionTimingFunction: EASE }}
-          />
-        </div>
-        <DocList checklist={checklist} className="mt-5" checkable={{ done, toggle }} />
-        {done.size === checklist.length ? (
-          <p className="rendal-step mt-4 text-sm font-semibold text-[#0F5B63]" style={{ ["--step-from" as string]: "0px" }}>
-            Tudo pronto. Isso deixa o retorno bem mais rápido.
-          </p>
-        ) : null}
+  const pessoa = etapa.id === "conjuge" ? draft.conjuge : draft.voce;
+  const prefix = etapa.id === "conjuge" ? "conjuge." : "";
+  const qual = etapa.id === "conjuge" ? "conjuge" : "voce";
 
-        <div className="mt-6 flex flex-wrap gap-3">
-          <a
-            href={rendalWhatsapp("Olá! Acabei de pedir uma orientação de crédito pelo site.")}
-            className="inline-flex h-12 flex-1 items-center whitespace-nowrap justify-center gap-2 rounded-full bg-[#0F5B63] px-5 text-base font-semibold text-white transition-colors duration-700 hover:bg-[#0A474E]"
-            style={{ transitionTimingFunction: EASE }}
-          >
-            <WhatsappLogo weight="fill" className="size-5" aria-hidden />
-            Falar agora
-          </a>
-          <Link
-            href="/empreendimentos"
-            className="inline-flex h-12 flex-1 items-center justify-center whitespace-nowrap rounded-full bg-white px-5 text-base font-semibold text-[#1F1F1F] ring-1 ring-[#1F1F1F]/10"
-          >
-            Ver empreendimentos
-          </Link>
+  return (
+    <section ref={sectionRef} id="financiamento" aria-labelledby="financiamento-titulo" className="scroll-mt-28 overflow-clip rounded-3xl bg-white ring-1 ring-[#1F1F1F]/10">
+      <div className="grid lg:grid-cols-[minmax(0,1fr)_20rem]">
+        <div className="p-5 sm:p-8">
+          <header>
+            <p className="inline-flex items-center gap-1.5 rounded-full bg-[#F8F1E3] px-3 py-1 text-xs font-semibold text-[#0F5B63]">
+              <Clock weight="bold" className="size-3.5" aria-hidden />
+              Cotação de crédito
+            </p>
+            <h2 id="financiamento-titulo" className="mt-4 text-2xl font-semibold tracking-tight text-balance text-[#1F1F1F] sm:text-3xl">
+              Vamos iniciar seu financiamento
+            </h2>
+            <p className={cn("mt-2 max-w-xl text-base leading-7 text-[#1F1F1F]/70", index > 0 && "max-sm:hidden")}>
+              Um passo por vez. Dá para parar e continuar neste aparelho.
+            </p>
+          </header>
+
+          {restored && index > 0 ? (
+            <p className="mt-6 flex flex-wrap items-center justify-between gap-2 rounded-2xl bg-[#F8F1E3] px-4 py-3 text-sm">
+              <span>Guardamos suas respostas. Continue de onde parou.</span>
+              <button
+                type="button"
+                className="min-h-11 cursor-pointer font-semibold text-[#0F5B63]"
+                onClick={() => {
+                  setDraft(inicial(empreendimento));
+                  setEtapaId("imovel");
+                  setRestored(false);
+                  try { window.localStorage.removeItem(DRAFT_KEY); } catch { }
+                }}
+              >
+                Recomeçar
+              </button>
+            </p>
+          ) : null}
+
+          <div className="mt-8">
+            <p className="text-sm font-semibold text-[#1F1F1F]">
+              Etapa {index + 1} de {etapas.length}
+              <span className="font-normal text-[#1F1F1F]/55"> · {etapa.label}</span>
+            </p>
+            <div
+              className="mt-3 grid gap-1.5"
+              style={{ gridTemplateColumns: `repeat(${etapas.length}, minmax(0, 1fr))` }}
+              role="progressbar"
+              aria-valuemin={1}
+              aria-valuemax={etapas.length}
+              aria-valuenow={index + 1}
+              aria-label="Progresso da cotação"
+            >
+              {etapas.map((item, itemIndex) => (
+                <span key={item.id} className="h-1.5 overflow-hidden rounded-full bg-[#EDE6DA]">
+                  <span
+                    className="block h-full origin-left rounded-full bg-[#0F5B63] transition-transform duration-500"
+                    style={{ transform: `scaleX(${itemIndex <= index ? 1 : 0})`, transitionTimingFunction: EASE }}
+                  />
+                </span>
+              ))}
+            </div>
+          </div>
+
+          <form onSubmit={onSubmit} noValidate className="relative mt-6">
+            <HoneypotField />
+            <div key={etapa.id} className="rendal-step" style={{ ["--step-from" as string]: `${direction * 16}px` }}>
+              <h3 ref={headingRef} tabIndex={-1} className="text-xl font-semibold tracking-tight text-[#1F1F1F] outline-none">
+                {copy.title}
+              </h3>
+              <p className="mt-1 text-sm leading-6 text-[#1F1F1F]/60">{copy.text}</p>
+
+              {etapa.id === "imovel" ? (
+                <div className="mt-6 flex flex-col gap-4">
+                  {esconderTipologia ? null : (
+                    <>
+                      <TipoGrid value={draft.tipologia} onChange={(tipologia) => update({ tipologia })} />
+                      {erros.tipologia ? <p className="text-sm text-[#B4432F]">{erros.tipologia}</p> : null}
+                    </>
+                  )}
+                  <Field label="Empreendimento" optional plain labelId="financiamento-empreendimento">
+                    <OptionCombobox
+                      labelledBy="financiamento-empreendimento"
+                      value={draft.empreendimento}
+                      options={EMPREENDIMENTO_OPCOES}
+                      placeholder="Buscar empreendimento"
+                      customValue="__outro"
+                      customPlaceholder="Digite o nome do imóvel"
+                      empty="Nenhum empreendimento com esse nome."
+                      onChange={(next) => {
+                        const item = empreendimentos.find((emp) => emp.nome === next);
+                        update(item
+                          ? { empreendimento: next, tipologia: "apartamento", cidade: item.cidade, uf: UF_POR_CIDADE[item.cidade] ?? "" }
+                          : { empreendimento: next });
+                      }}
+                    />
+                  </Field>
+                  <Field label="Cidade do imóvel" error={erros.cidade}>
+                    <input className={inputClass} value={draft.cidade} onChange={(event) => update({ cidade: event.target.value })} />
+                  </Field>
+                  <UfSelect value={draft.uf} error={erros.uf} onChange={(uf) => update({ uf })} />
+                  <Field label="Valor do imóvel" error={erros.valorImovel}>
+                    <input inputMode="numeric" className={inputClass} value={draft.valorImovel} placeholder="R$ 0" onChange={(event) => update({ valorImovel: maskMoney(event.target.value) })} />
+                  </Field>
+                  <div>
+                    <p className="text-sm font-semibold text-[#1F1F1F]">Prazo desejado</p>
+                    <div className="mt-2 grid grid-cols-3 gap-2">
+                      {PRAZOS.map((anos) => (
+                        <Choice key={anos} label={`${anos} anos`} checked={draft.prazo === String(anos)} onSelect={() => update({ prazo: String(anos) })} />
+                      ))}
+                    </div>
+                    {erros.prazo ? <p className="mt-1.5 text-sm text-[#B4432F]">{erros.prazo}</p> : null}
+                  </div>
+                </div>
+              ) : null}
+
+              {etapa.id === "valores" ? (
+                <div className="mt-6 flex flex-col gap-4">
+                  <Field label="Valor de entrada" error={erros.entrada} hint="Zero, se não houver.">
+                    <input inputMode="numeric" className={inputClass} value={draft.entrada} placeholder="R$ 0" onChange={(event) => update({ entrada: maskMoney(event.target.value) })} />
+                  </Field>
+                  <div>
+                    <p className="text-sm font-semibold text-[#1F1F1F]">Vai usar FGTS?</p>
+                    <div className="mt-2 grid grid-cols-2 gap-2">
+                      <Choice label="Sim" checked={draft.fgts === "sim"} onSelect={() => update({ fgts: "sim" })} />
+                      <Choice label="Não" checked={draft.fgts === "nao"} onSelect={() => update({ fgts: "nao", fgtsValor: "" })} />
+                    </div>
+                    {erros.fgts ? <p className="mt-1.5 text-sm text-[#B4432F]">{erros.fgts}</p> : null}
+                  </div>
+                  {draft.fgts === "sim" ? (
+                    <Field label="Valor do FGTS" error={erros.fgtsValor}>
+                      <input inputMode="numeric" className={inputClass} value={draft.fgtsValor} placeholder="R$ 0" onChange={(event) => update({ fgtsValor: maskMoney(event.target.value) })} />
+                    </Field>
+                  ) : null}
+                  <div>
+                    <p className="text-sm font-semibold text-[#1F1F1F]">Tem saldo devedor do imóvel adquirido?</p>
+                    <div className="mt-2 grid grid-cols-2 gap-2">
+                      <Choice label="Sim" checked={draft.saldoDevedor === "sim"} onSelect={() => update({ saldoDevedor: "sim" })} />
+                      <Choice label="Não" checked={draft.saldoDevedor === "nao"} onSelect={() => update({ saldoDevedor: "nao", saldoValor: "" })} />
+                    </div>
+                    {erros.saldoDevedor ? <p className="mt-1.5 text-sm text-[#B4432F]">{erros.saldoDevedor}</p> : null}
+                  </div>
+                  {draft.saldoDevedor === "sim" ? (
+                    <Field label="Valor do saldo devedor" error={erros.saldoValor}>
+                      <input inputMode="numeric" className={inputClass} value={draft.saldoValor} placeholder="R$ 0" onChange={(event) => update({ saldoValor: maskMoney(event.target.value) })} />
+                    </Field>
+                  ) : null}
+                </div>
+              ) : null}
+
+              {etapa.id === "voce" || etapa.id === "conjuge" ? (
+                <div className="mt-6 flex flex-col gap-4">
+                  <Field label="Nome completo" error={erros[`${prefix}nome`]}>
+                    <input autoComplete="name" className={inputClass} value={pessoa.nome} onChange={(event) => updatePessoa(qual, { nome: event.target.value })} />
+                  </Field>
+                  <Field label="CPF" error={erros[`${prefix}cpf`]}>
+                    <input inputMode="numeric" autoComplete="off" className={inputClass} value={pessoa.cpf} onChange={(event) => updatePessoa(qual, { cpf: maskCpf(event.target.value) })} />
+                  </Field>
+                  <Field label="Data de nascimento" error={erros[`${prefix}nascimento`]}>
+                    <input type="date" className={inputClass} value={pessoa.nascimento} onChange={(event) => updatePessoa(qual, { nascimento: event.target.value })} />
+                  </Field>
+                  <Field label="Telefone" error={erros[`${prefix}tel`]}>
+                    <input inputMode="tel" autoComplete="tel-national" className={inputClass} value={pessoa.tel} placeholder="(00) 00000-0000" onChange={(event) => updatePessoa(qual, { tel: maskPhone(event.target.value) })} />
+                  </Field>
+                  <Field label="E-mail" error={erros[`${prefix}email`]}>
+                    <input type="email" inputMode="email" autoComplete="email" className={inputClass} value={pessoa.email} onChange={(event) => updatePessoa(qual, { email: event.target.value })} />
+                  </Field>
+                  <Field label="Profissão" error={erros[`${prefix}profissao`]}>
+                    <input className={inputClass} value={pessoa.profissao} onChange={(event) => updatePessoa(qual, { profissao: event.target.value })} />
+                  </Field>
+                  <Field label="Renda mensal" error={erros[`${prefix}renda`]} hint="Valor bruto, antes dos descontos.">
+                    <input inputMode="numeric" className={inputClass} value={pessoa.renda} placeholder="R$ 0" onChange={(event) => updatePessoa(qual, { renda: maskMoney(event.target.value) })} />
+                  </Field>
+                  {etapa.id === "conjuge" ? (
+                    <>
+                      <Field label="RG com dígito" error={erros["conjuge.rg"]}>
+                        <input inputMode="text" autoComplete="off" className={inputClass} value={pessoa.rg} placeholder="00.000.000-0" onChange={(event) => updatePessoa("conjuge", { rg: maskRg(event.target.value) })} />
+                      </Field>
+                      <Field label="Data de emissão do RG" error={erros["conjuge.rgEmissao"]}>
+                        <input type="date" className={inputClass} value={pessoa.rgEmissao} onChange={(event) => updatePessoa("conjuge", { rgEmissao: event.target.value })} />
+                      </Field>
+                      <Field label="Órgão expedidor" error={erros["conjuge.rgOrgao"]}>
+                        <input className={inputClass} value={pessoa.rgOrgao} placeholder="SSP/MG" onChange={(event) => updatePessoa("conjuge", { rgOrgao: event.target.value })} />
+                      </Field>
+                      <Field label="Nome do pai" error={erros["conjuge.pai"]}>
+                        <input className={inputClass} value={pessoa.pai} onChange={(event) => updatePessoa("conjuge", { pai: event.target.value })} />
+                      </Field>
+                      <Field label="Nome da mãe" error={erros["conjuge.mae"]}>
+                        <input className={inputClass} value={pessoa.mae} onChange={(event) => updatePessoa("conjuge", { mae: event.target.value })} />
+                      </Field>
+                    </>
+                  ) : null}
+                </div>
+              ) : null}
+
+              {etapa.id === "endereco" ? (
+                <div className="mt-6 flex flex-col gap-4">
+                  <Field label="CEP" error={erros.cep || cepErro}>
+                    <input inputMode="numeric" autoComplete="postal-code" className={inputClass} value={draft.cep} placeholder="00000-000" onChange={(event) => { const cep = maskCep(event.target.value); update({ cep }); if (cep.replace(/\D/g, "").length === 8) void buscarCep(cep); }} />
+                  </Field>
+                  <Field label="Rua" error={erros.logradouro}>
+                    <input autoComplete="address-line1" className={inputClass} value={draft.logradouro} onChange={(event) => update({ logradouro: event.target.value })} />
+                  </Field>
+                  <div className="grid grid-cols-[7rem_minmax(0,1fr)] gap-3">
+                    <Field label="Número" error={erros.numero}>
+                      <input className={inputClass} value={draft.numero} onChange={(event) => update({ numero: event.target.value })} />
+                    </Field>
+                    <Field label="Complemento" optional>
+                      <input className={inputClass} value={draft.complemento} onChange={(event) => update({ complemento: event.target.value })} />
+                    </Field>
+                  </div>
+                  <Field label="Bairro" error={erros.bairro}>
+                    <input className={inputClass} value={draft.bairro} onChange={(event) => update({ bairro: event.target.value })} />
+                  </Field>
+                  <Field label="Cidade" error={erros.cidadeEndereco}>
+                    <input className={inputClass} value={draft.cidadeEndereco} onChange={(event) => update({ cidadeEndereco: event.target.value })} />
+                  </Field>
+                  <UfSelect value={draft.ufEndereco} error={erros.ufEndereco} onChange={(ufEndereco) => update({ ufEndereco })} />
+                </div>
+              ) : null}
+
+              {etapa.id === "identidade" ? (
+                <div className="mt-6 flex flex-col gap-4">
+                  <Field label="RG com dígito" error={erros.rg}>
+                    <input inputMode="text" autoComplete="off" className={inputClass} value={draft.voce.rg} placeholder="00.000.000-0" onChange={(event) => updatePessoa("voce", { rg: maskRg(event.target.value) })} />
+                  </Field>
+                  <Field label="Data de emissão" error={erros.rgEmissao}>
+                    <input type="date" className={inputClass} value={draft.voce.rgEmissao} onChange={(event) => updatePessoa("voce", { rgEmissao: event.target.value })} />
+                  </Field>
+                  <Field label="Órgão expedidor" error={erros.rgOrgao}>
+                    <input className={inputClass} value={draft.voce.rgOrgao} placeholder="SSP/MG" onChange={(event) => updatePessoa("voce", { rgOrgao: event.target.value })} />
+                  </Field>
+                  <Field label="Nome do pai" error={erros.pai}>
+                    <input className={inputClass} value={draft.voce.pai} onChange={(event) => updatePessoa("voce", { pai: event.target.value })} />
+                  </Field>
+                  <Field label="Nome da mãe" error={erros.mae}>
+                    <input className={inputClass} value={draft.voce.mae} onChange={(event) => updatePessoa("voce", { mae: event.target.value })} />
+                  </Field>
+                </div>
+              ) : null}
+
+              {etapa.id === "civil" ? (
+                <div className="mt-6 flex flex-col gap-4">
+                  <div className="grid grid-cols-2 gap-2">
+                    {ESTADOS_CIVIS.map((item) => (
+                      <Choice
+                        key={item.id}
+                        label={item.label}
+                        checked={draft.estadoCivil === item.id}
+                        onSelect={() => update({ estadoCivil: item.id, ...(precisaConjuge(item.id) ? {} : { regime: "", dataCasamento: "", compoeRenda: "", conjuge: pessoaVazia(), comprovanteRendaConjuge: "" }) })}
+                      />
+                    ))}
+                  </div>
+                  {erros.estadoCivil ? <p className="text-sm text-[#B4432F]">{erros.estadoCivil}</p> : null}
+                  {draft.estadoCivil === "casado" ? (
+                    <div className="grid gap-2">
+                      <p className="text-sm font-semibold text-[#1F1F1F]">Regime de casamento</p>
+                      {REGIMES.map((item) => (
+                        <Choice key={item.id} label={item.label} checked={draft.regime === item.id} onSelect={() => update({ regime: item.id })} />
+                      ))}
+                      {erros.regime ? <p className="text-sm text-[#B4432F]">{erros.regime}</p> : null}
+                    </div>
+                  ) : null}
+                  {precisaConjuge(draft.estadoCivil) ? (
+                    <>
+                      <Field label={draft.estadoCivil === "uniao" ? "Data da união" : "Data do casamento"} error={erros.dataCasamento}>
+                        <input type="date" className={inputClass} value={draft.dataCasamento} onChange={(event) => update({ dataCasamento: event.target.value })} />
+                      </Field>
+                      <div>
+                        <p className="text-sm font-semibold text-[#1F1F1F]">O cônjuge vai compor renda?</p>
+                        <div className="mt-2 grid grid-cols-2 gap-2">
+                          <Choice label="Sim" checked={draft.compoeRenda === "sim"} onSelect={() => update({ compoeRenda: "sim" })} />
+                          <Choice label="Não" checked={draft.compoeRenda === "nao"} onSelect={() => update({ compoeRenda: "nao" })} />
+                        </div>
+                        {erros.compoeRenda ? <p className="mt-1.5 text-sm text-[#B4432F]">{erros.compoeRenda}</p> : null}
+                      </div>
+                    </>
+                  ) : null}
+                </div>
+              ) : null}
+
+              {etapa.id === "documentos" ? (
+                <DocumentosStep
+                  draft={draft}
+                  erros={erros}
+                  onComprovante={(qualComprovante, value) => update(qualComprovante === "renda" ? { comprovanteRenda: value } : { comprovanteRendaConjuge: value })}
+                  onArquivos={(id, arquivos) => update({ arquivos: { ...draft.arquivos, [id]: arquivos } })}
+                />
+              ) : null}
+
+              {etapa.id === "banco" ? (
+                <div className="mt-6 flex flex-col gap-4">
+                  <div>
+                    <p className="text-sm font-semibold text-[#1F1F1F]">Já tem contrato de compra e venda?</p>
+                    <div className="mt-2 grid grid-cols-2 gap-2">
+                      <Choice label="Sim" checked={draft.contrato === "sim"} onSelect={() => update({ contrato: "sim" })} />
+                      <Choice label="Não" checked={draft.contrato === "nao"} onSelect={() => update({ contrato: "nao", prazoContrato: "", multa: "" })} />
+                    </div>
+                    {erros.contrato ? <p className="mt-1.5 text-sm text-[#B4432F]">{erros.contrato}</p> : null}
+                  </div>
+                  {draft.contrato === "sim" ? (
+                    <>
+                      <Field label="Data limite de pagamento" error={erros.prazoContrato}>
+                        <input type="date" className={inputClass} value={draft.prazoContrato} onChange={(event) => update({ prazoContrato: event.target.value })} />
+                      </Field>
+                      <div>
+                        <p className="text-sm font-semibold text-[#1F1F1F]">Tem multa?</p>
+                        <div className="mt-2 grid grid-cols-2 gap-2">
+                          <Choice label="Sim" checked={draft.multa === "sim"} onSelect={() => update({ multa: "sim" })} />
+                          <Choice label="Não" checked={draft.multa === "nao"} onSelect={() => update({ multa: "nao" })} />
+                        </div>
+                        {erros.multa ? <p className="mt-1.5 text-sm text-[#B4432F]">{erros.multa}</p> : null}
+                      </div>
+                    </>
+                  ) : null}
+                  <ContasBancariasField value={draft.contas} tried={tried} onChange={(contas) => update({ contas })} />
+                  {Object.entries(erros).filter(([key]) => key.startsWith("conta.")).length ? (
+                    <p className="text-sm text-[#B4432F]">Complete agência, conta e o banco de cada item adicionado.</p>
+                  ) : null}
+                  <Field label="Observação" optional>
+                    <textarea rows={3} maxLength={1500} className={cn(inputClass, "h-auto py-3")} value={draft.obs} onChange={(event) => update({ obs: event.target.value })} />
+                  </Field>
+                </div>
+              ) : null}
+
+              {etapa.id === "revisao" ? (
+                <div className="mt-6 flex flex-col gap-3">
+                  <Revisao draft={draft} onEdit={(id) => goTo(id, true)} />
+                  <p className="flex gap-2 rounded-2xl bg-[#F8F1E3] p-4 text-sm leading-6 text-[#1F1F1F]/80">
+                    <ShieldCheck weight="duotone" className="mt-0.5 size-5 shrink-0 text-[#0F5B63]" aria-hidden />
+                    {FINANCIAMENTO_DISCLAIMER}
+                  </p>
+                  <TurnstileField resetSignal={resetSignal} />
+                </div>
+              ) : null}
+            </div>
+
+            <div className={cn("mt-6 flex items-center gap-3", etapa.id === "revisao" && "sticky bottom-0 -mx-5 border-t border-[#1F1F1F]/8 bg-white/95 px-5 py-4 backdrop-blur sm:static sm:mx-0 sm:border-0 sm:bg-transparent sm:p-0")}>
+              {index > 0 || voltarDaEdicao ? (
+                <button type="button" onClick={() => (voltarDaEdicao ? goTo("revisao") : goTo(etapas[index - 1].id))} className="inline-flex size-12 shrink-0 cursor-pointer items-center justify-center rounded-full text-[#1F1F1F] ring-1 ring-[#1F1F1F]/15" aria-label="Voltar">
+                  <ArrowLeft weight="bold" className="size-4" aria-hidden />
+                </button>
+              ) : null}
+              {etapa.id === "revisao" ? (
+                <button type="submit" disabled={status === "sending"} className="ml-auto inline-flex h-12 cursor-pointer items-center justify-center gap-2 rounded-full bg-[#0F5B63] px-6 text-base font-semibold text-white disabled:cursor-wait disabled:opacity-70">
+                  {status === "sending" ? "Enviando…" : "Enviar cotação"}
+                  {status === "sending" ? null : <ArrowRight weight="bold" className="size-4" aria-hidden />}
+                </button>
+              ) : (
+                <button type="button" onClick={continuar} className="ml-auto inline-flex h-12 cursor-pointer items-center justify-center gap-2 rounded-full bg-[#0F5B63] px-6 text-base font-semibold text-white">
+                  Continuar
+                  <ArrowRight weight="bold" className="size-4" aria-hidden />
+                </button>
+              )}
+            </div>
+            {status === "error" ? (
+              <p className="mt-4 rounded-2xl bg-[#FBEDEA] p-4 text-sm leading-6 text-[#7A2E22]" role="status">
+                {errorMessage || "Não foi possível enviar agora."}{" "}
+                <a href={whatsappFallback} className="font-semibold underline">Mande pelo WhatsApp</a>.
+              </p>
+            ) : null}
+            {etapa.id === "revisao" ? (
+              <p className="mt-4 text-xs leading-5 text-[#1F1F1F]/55">
+                Ao enviar, você concorda com o uso destes dados e documentos só para a cotação.{" "}
+                <a href="/politica-de-privacidade" className="font-semibold text-[#0F5B63] underline-offset-2 hover:underline">Política de privacidade</a>.
+              </p>
+            ) : null}
+          </form>
         </div>
+        <aside className="hidden border-l border-[#1F1F1F]/8 bg-[#F8F1E3]/60 p-8 lg:block" aria-label="Documentos da cotação">
+          <div className="sticky top-28">
+            <h3 className="text-sm font-semibold text-[#1F1F1F]/55">Documentos</h3>
+            <ul className="mt-3 flex flex-col gap-2 text-sm">
+              {documentosDaCotacao(draft).map((slot) => {
+                const ok = (draft.arquivos[slot.id]?.length ?? 0) >= slot.min;
+                return (
+                  <li key={slot.id} className="flex items-start gap-2">
+                    <Check weight="bold" className={cn("mt-0.5 size-4 shrink-0", ok ? "text-[#0F5B63]" : "text-[#1F1F1F]/25")} aria-hidden />
+                    <span className={ok ? "font-semibold text-[#1F1F1F]" : "text-[#1F1F1F]/60"}>{slot.label}</span>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+        </aside>
       </div>
-    </div>
+    </section>
+  );
+}
+
+function Revisao({ draft, onEdit }: { draft: Draft; onEdit: (id: EtapaId) => void }) {
+  const blocos: { id: EtapaId; titulo: string; linhas: string[] }[] = [
+    { id: "imovel", titulo: "Imóvel", linhas: [labelTipologia(draft.tipologia), `${draft.cidade}/${draft.uf}`, draft.valorImovel, draft.prazo ? `${draft.prazo} anos` : ""].filter(Boolean) },
+    { id: "valores", titulo: "Valores", linhas: [`Entrada ${draft.entrada}`, draft.fgts === "sim" ? `FGTS ${draft.fgtsValor}` : "Sem FGTS", draft.saldoDevedor === "sim" ? `Saldo devedor ${draft.saldoValor}` : "Sem saldo devedor"] },
+    { id: "voce", titulo: "Você", linhas: [draft.voce.nome, draft.voce.cpf, draft.voce.renda] },
+    { id: "endereco", titulo: "Endereço", linhas: [`${draft.logradouro}, ${draft.numero}`, `${draft.cidadeEndereco}/${draft.ufEndereco}`, draft.cep] },
+    { id: "identidade", titulo: "Identidade", linhas: [draft.voce.rg, draft.voce.rgOrgao, formatDataBr(draft.voce.rgEmissao)] },
+    { id: "civil", titulo: "Estado civil", linhas: [labelEstadoCivil(draft.estadoCivil), labelRegime(draft.regime), formatDataBr(draft.dataCasamento)].filter(Boolean) },
+  ];
+  if (precisaConjuge(draft.estadoCivil)) {
+    blocos.push({ id: "conjuge", titulo: "Cônjuge", linhas: [draft.conjuge.nome, draft.conjuge.cpf, draft.compoeRenda === "sim" ? "Compõe renda" : "Não compõe renda"] });
+  }
+  blocos.push({
+    id: "documentos",
+    titulo: "Documentos",
+    linhas: documentosDaCotacao(draft).map((slot) => `${slot.label}: ${draft.arquivos[slot.id]?.length ?? 0}`),
+  });
+  blocos.push({
+    id: "banco",
+    titulo: "Banco e contrato",
+    linhas: [
+      draft.contrato === "sim" ? `Contrato até ${formatDataBr(draft.prazoContrato)}` : "Sem contrato",
+      draft.contas.length ? `${draft.contas.length} conta${draft.contas.length > 1 ? "s" : ""}` : "Sem conta",
+    ],
+  });
+  return (
+    <ul className="flex flex-col gap-2">
+      {blocos.map((bloco) => (
+        <li key={bloco.id}>
+          <button type="button" onClick={() => onEdit(bloco.id)} className="flex w-full cursor-pointer items-center gap-3 rounded-2xl bg-[#F8F1E3]/80 px-4 py-3 text-left">
+            <span className="min-w-0 flex-1">
+              <span className="text-xs font-semibold tracking-wide text-[#0F5B63] uppercase">{bloco.titulo}</span>
+              <span className="mt-1 block text-sm leading-6 text-[#1F1F1F]">{bloco.linhas.join(" · ")}</span>
+            </span>
+            <PencilSimple weight="bold" className="size-4 shrink-0 text-[#0F5B63]" aria-hidden />
+            <span className="sr-only">Editar {bloco.titulo}</span>
+          </button>
+        </li>
+      ))}
+    </ul>
   );
 }

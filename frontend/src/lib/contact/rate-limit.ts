@@ -75,3 +75,18 @@ export async function enforceLeadRateLimit(kind: "contact" | "quote", ip: string
 
   return { ok: true as const };
 }
+
+export async function enforceUploadRateLimit(ip: string) {
+  const client = getRedis();
+  if (!client) {
+    if (isProduction()) {
+      return { ok: false as const, message: "Envio de arquivo indisponível agora." };
+    }
+    return { ok: true as const };
+  }
+  const ok = await pass(limiter("upload-hour", 40, "1 h"), `upload:ip:${ip}`);
+  if (!ok) {
+    return { ok: false as const, message: "Muitos arquivos em pouco tempo. Espere um pouco e tente de novo." };
+  }
+  return { ok: true as const };
+}

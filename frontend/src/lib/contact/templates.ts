@@ -183,9 +183,9 @@ export function financiamentoConfirmationEmail(input: {
   const text = [
     `Olá, ${first}.`,
     "",
-    "Recebemos seu pedido de orientação de crédito. A equipe retorna em até um dia útil.",
+    "Recebemos seu pedido de orientação de crédito e os documentos enviados. A equipe retorna em até um dia útil.",
     "",
-    "Enquanto isso, vá separando:",
+    "Documentos recebidos:",
     checklistText(input.checklist),
     "",
     input.disclaimer,
@@ -204,8 +204,8 @@ export function financiamentoConfirmationEmail(input: {
     <div style="font-family:Arial,sans-serif;color:#1F1F1F;line-height:1.6;max-width:560px">
       <p style="font-size:12px;letter-spacing:0.16em;text-transform:uppercase;color:#0F5B63;font-weight:700">${escapeHtml(input.company.legalName)}</p>
       <p>Olá, ${escapeHtml(first)}.</p>
-      <p>Recebemos seu pedido de orientação de crédito. A equipe retorna em até um dia útil.</p>
-      <p style="margin-bottom:8px"><strong>Enquanto isso, vá separando:</strong></p>
+      <p>Recebemos seu pedido de orientação de crédito e os documentos enviados. A equipe retorna em até um dia útil.</p>
+      <p style="margin-bottom:8px"><strong>Documentos recebidos:</strong></p>
       <ul style="padding-left:20px;margin-top:0">${items}</ul>
       <p style="color:#4D4D4D;font-size:13px">${escapeHtml(input.disclaimer)}</p>
       <p style="color:#4D4D4D;font-size:13px">Esta é uma confirmação automática. Não é necessário responder este e-mail.</p>

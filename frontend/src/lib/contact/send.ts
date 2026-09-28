@@ -10,12 +10,15 @@ import {
   leadEmailCopy,
 } from "@/lib/contact/templates";
 import { empreendimentos } from "@/lib/rendal/content/empreendimentos";
+import { linkArquivo } from "@/lib/rendal/arquivo-link";
+import { getRendalSiteUrl } from "@/lib/rendal/site";
 import {
-  checklistFinanciamento,
+  documentosDaCotacao,
   FINANCIAMENTO_DISCLAIMER,
   FINANCIAMENTO_SUBJECT,
-  isFgts,
-  isTipoRenda,
+  parseDossier,
+  primeiraEtapaInvalida,
+  textoDossier,
 } from "@/lib/rendal/financiamento";
 import { requestIp, verifyTurnstile } from "@/lib/contact/turnstile";
 import {
@@ -28,21 +31,20 @@ function resendClient() {
   return new Resend(process.env.RESEND_API_KEY);
 }
 
-function collapseLine(value: FormDataEntryValue | null) {
-  return typeof value === "string" ? value.replace(/[\u0000-\u001F\u007F]/g, " ").replace(/\s+/g, " ").trim() : "";
-}
-
 function financiamentoExtras(formData: FormData, name: string) {
-  const tipoRenda = formData.get("tipoRenda");
-  const fgts = formData.get("fgts");
-  const empreendimento = collapseLine(formData.get("empreendimento")).slice(0, 80);
+  const parsed = parseDossier(formData.get("dossier"));
+  if (!parsed.ok) return { error: parsed.message };
+  const draft = parsed.draft;
+  if (primeiraEtapaInvalida(draft, { tipologiaObrigatoria: true })) {
+    return { error: "Faltam dados ou documentos da cotação." };
+  }
+  const empreendimento = draft.empreendimento;
   const known = empreendimentos.find((item) => item.nome === empreendimento);
-  const checklist = checklistFinanciamento({
-    tipoRenda: isTipoRenda(tipoRenda) ? tipoRenda : "",
-    fgts: isFgts(fgts) ? fgts : "",
-  });
+  const origin = getRendalSiteUrl();
   const company = companies.rendal;
+  const checklist = documentosDaCotacao(draft).map((slot) => ({ id: slot.id, label: slot.label }));
   return {
+    message: textoDossier(draft, (arquivo) => linkArquivo(origin, arquivo.pathname)),
     subjectSuffix: empreendimento ? ` · ${known?.nome ?? empreendimento}` : "",
     confirmation: {
       subject: `Recebemos seu pedido de orientação de crédito — ${company.name}`,
@@ -124,7 +126,7 @@ async function sendPair(input: {
   return { ok: true as const, message: "Mensagem enviada com sucesso!" };
 }
 
-export async function sendContact(formData: FormData) {
+export async function sendContact(formData: FormData): Promise<{ success: boolean; message: string }> {
   const parsed = parseContactForm(formData);
   if (!parsed.ok) return { success: false, message: parsed.message };
   const fields = parsed.fields;
@@ -148,6 +150,9 @@ export async function sendContact(formData: FormData) {
     fields.companyId === "rendal" && fields.subject === FINANCIAMENTO_SUBJECT
       ? financiamentoExtras(formData, fields.name)
       : undefined;
+  if (financiamento && "error" in financiamento) {
+    return { success: false, message: financiamento.error || "Não foi possível ler os dados da cotação." };
+  }
 
   try {
     const sent = await sendPair({
@@ -156,9 +161,10 @@ export async function sendContact(formData: FormData) {
       email: fields.email,
       phone: fields.phone ? formatPhoneBr(fields.phone) : "—",
       subject: fields.subject,
-      message: fields.message,
+      message: financiamento?.message ?? fields.message,
       kind: "contact",
-      ...financiamento,
+      subjectSuffix: financiamento?.subjectSuffix,
+      confirmation: financiamento?.confirmation,
     });
     return sent.ok
       ? { success: true, message: sent.message }

@@ -10,7 +10,7 @@ export function mailForCompany(companyId: CompanyId) {
   const from =
     companyId === "dcorp"
       ? process.env.RESEND_FROM_DCORP || "DCorp Engenharia <noreply@dcorp.com.br>"
-      : process.env.RESEND_FROM_RENDAL || "Grupo Rendal <noreply@gruporendal.com.br>";
+      : process.env.RESEND_FROM_RENDAL || "Grupo Rendal <noreply@gruporendal.com>";
 
   return { company, inbox: inbox.trim(), from: from.trim() };
 }

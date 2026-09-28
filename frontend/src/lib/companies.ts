@@ -56,7 +56,7 @@ export const companies: Record<CompanyId, Company> = {
     name: "Rendal",
     legalName: "Grupo Rendal",
     role: "Incorporação",
-    email: "contato@gruporendal.com.br",
+    email: "contato@gruporendal.com",
     phone: formatPhoneBr(RENDAL_PHONE),
     phoneHref: `tel:+55${RENDAL_PHONE}`,
     whatsapp: process.env.NEXT_PUBLIC_WHATSAPP_RENDAL ?? `55${RENDAL_PHONE}`,
