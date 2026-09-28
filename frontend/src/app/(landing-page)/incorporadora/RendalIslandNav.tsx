@@ -9,6 +9,7 @@ import { cn } from "@/lib/utils";
 import { EASE } from "@/lib/rendal/tokens";
 
 const ATALHOS = [
+  { label: "Quero financiar", href: "/contato?perfil=financiar#financiamento" },
   { label: "Tenho um terreno", href: "/contato?perfil=terreno" },
   { label: "Quero investir", href: "/contato?perfil=investir" },
   { label: "Sou imobiliária", href: "/contato?perfil=parceiro" },

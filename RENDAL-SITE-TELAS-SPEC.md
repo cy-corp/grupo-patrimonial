@@ -322,7 +322,7 @@ Seções:
 
 7. **Andamento da obra** (se `status = obra`) — timeline vertical compacta com etapas `feito/atual/próximo`; etapa atual com ponto dourado pulsante (desliga com reduced motion).
 
-8. **Financiamento e avaliação** — texto curto + `Disclaimer`:
+8. **Financiamento e avaliação** — texto curto + CTA **Faça seu financiamento aqui** → `/contato?perfil=financiar#financiamento` (placeholder até o form; ver [RENDAL-FINANCIAMENTO-FORM.md](./RENDAL-FINANCIAMENTO-FORM.md)). `Disclaimer` quando o form existir:
    *A equipe orienta o processo com a Caixa e outros bancos. Em projetos de referência, a avaliação ficou acima do preço de venda; isso depende da unidade e da análise do banco e não é garantia.*
 
 9. **FaqList** do empreendimento.

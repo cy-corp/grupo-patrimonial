@@ -3,7 +3,19 @@ import { companies } from "@/lib/companies";
 import { GENERIC_CONTACT_ERROR } from "@/lib/contact/constants";
 import { mailForCompany, resendConfigured } from "@/lib/contact/mail-config";
 import { enforceLeadRateLimit } from "@/lib/contact/rate-limit";
-import { confirmationLeadEmail, internalLeadEmail } from "@/lib/contact/templates";
+import {
+  confirmationLeadEmail,
+  financiamentoConfirmationEmail,
+  internalLeadEmail,
+} from "@/lib/contact/templates";
+import { empreendimentos } from "@/lib/rendal/content/empreendimentos";
+import {
+  checklistFinanciamento,
+  FINANCIAMENTO_DISCLAIMER,
+  FINANCIAMENTO_SUBJECT,
+  isFgts,
+  isTipoRenda,
+} from "@/lib/rendal/financiamento";
 import { requestIp, verifyTurnstile } from "@/lib/contact/turnstile";
 import {
   formatPhoneBr,
@@ -15,6 +27,34 @@ function resendClient() {
   return new Resend(process.env.RESEND_API_KEY);
 }
 
+function collapseLine(value: FormDataEntryValue | null) {
+  return typeof value === "string" ? value.replace(/[\u0000-\u001F\u007F]/g, " ").replace(/\s+/g, " ").trim() : "";
+}
+
+function financiamentoExtras(formData: FormData, name: string) {
+  const tipoRenda = formData.get("tipoRenda");
+  const fgts = formData.get("fgts");
+  const empreendimento = collapseLine(formData.get("empreendimento")).slice(0, 80);
+  const known = empreendimentos.find((item) => item.nome === empreendimento);
+  const checklist = checklistFinanciamento({
+    tipoRenda: isTipoRenda(tipoRenda) ? tipoRenda : "",
+    fgts: isFgts(fgts) ? fgts : "",
+  });
+  const company = companies.rendal;
+  return {
+    subjectSuffix: empreendimento ? ` · ${known?.nome ?? empreendimento}` : "",
+    confirmation: {
+      subject: `Recebemos seu pedido de orientação de crédito — ${company.name}`,
+      ...financiamentoConfirmationEmail({
+        company,
+        name,
+        checklist,
+        disclaimer: FINANCIAMENTO_DISCLAIMER,
+      }),
+    },
+  };
+}
+
 async function sendPair(input: {
   companyId: "rendal" | "dcorp";
   name: string;
@@ -23,6 +63,8 @@ async function sendPair(input: {
   subject: string;
   message: string;
   kind: "contact" | "quote";
+  subjectSuffix?: string;
+  confirmation?: { subject: string; text: string; html: string };
 }) {
   const { company, inbox, from } = mailForCompany(input.companyId);
   if (!inbox) return { ok: false as const, message: GENERIC_CONTACT_ERROR };
@@ -36,7 +78,10 @@ async function sendPair(input: {
     message: input.message,
     kind: input.kind,
   });
-  const confirm = confirmationLeadEmail({ company, name: input.name });
+  const confirm = input.confirmation ?? {
+    subject: `Recebemos sua mensagem — ${company.name}`,
+    ...confirmationLeadEmail({ company, name: input.name }),
+  };
   const resend = resendClient();
   const brand = input.companyId === "dcorp" ? "DCorp" : "Rendal";
 
@@ -44,7 +89,7 @@ async function sendPair(input: {
     from,
     to: inbox,
     replyTo: input.email || undefined,
-    subject: `[${brand}] ${input.subject} — ${input.name}`,
+    subject: `[${brand}] ${input.subject} — ${input.name}${input.subjectSuffix ?? ""}`,
     text: internal.text,
     html: internal.html,
   });
@@ -57,7 +102,7 @@ async function sendPair(input: {
     const confirmation = await resend.emails.send({
       from,
       to: input.email,
-      subject: `Recebemos sua mensagem — ${company.name}`,
+      subject: confirm.subject,
       text: confirm.text,
       html: confirm.html,
     });
@@ -90,6 +135,11 @@ export async function sendContact(formData: FormData) {
   const limited = await enforceLeadRateLimit("contact", ip, fields.email || fields.phone);
   if (!limited.ok) return { success: false, message: limited.message };
 
+  const financiamento =
+    fields.companyId === "rendal" && fields.subject === FINANCIAMENTO_SUBJECT
+      ? financiamentoExtras(formData, fields.name)
+      : undefined;
+
   try {
     const sent = await sendPair({
       companyId: fields.companyId,
@@ -99,6 +149,7 @@ export async function sendContact(formData: FormData) {
       subject: fields.subject,
       message: fields.message,
       kind: "contact",
+      ...financiamento,
     });
     return sent.ok
       ? { success: true, message: sent.message }

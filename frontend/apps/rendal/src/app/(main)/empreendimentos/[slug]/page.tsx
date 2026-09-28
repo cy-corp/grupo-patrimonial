@@ -109,9 +109,9 @@ export default async function EmpreendimentoPage({
       <FinalCta
         id="banco-titulo"
         title="Financiamento e avaliação"
-        subtitle="A equipe orienta o processo com a Caixa e outros bancos. Fale com a Rendal para entender as condições do seu caso."
-        href="/contato"
-        cta="Fale com a Rendal"
+        subtitle="Oriente o crédito antes de escolher a unidade. A equipe analisa seu perfil com a Caixa e outros bancos e retorna uma orientação no seu nome."
+        href={`/contato?perfil=financiar&empreendimento=${item.slug}#financiamento`}
+        cta="Faça seu financiamento aqui"
       />
 
       <FaqList items={faqCapetinga} />

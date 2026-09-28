@@ -8,6 +8,7 @@ export const SUBJECTS_BY_COMPANY: Record<CompanyId, readonly string[]> = {
     "Outros",
     "Lista de lançamento",
     "Parceria",
+    "Simulação de financiamento",
   ],
   dcorp: [
     "Solicitar orçamento",

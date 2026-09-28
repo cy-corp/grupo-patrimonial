@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { ProfileForm } from "@/components/rendal/contato/ProfileForm";
 import { RendalReveal } from "@/components/rendal/RendalReveal";
 import { companies } from "@/lib/companies";
+import { isContactProfileId } from "@/lib/rendal/contact-profiles";
 
 export const metadata: Metadata = {
   title: "Contato",
@@ -9,16 +10,20 @@ export const metadata: Metadata = {
   alternates: { canonical: "/contato" },
 };
 
-const PERFIS = ["comprar", "terreno", "investir", "parceiro"] as const;
-
 export default async function ContatoPage({
   searchParams,
 }: {
-  searchParams: Promise<{ perfil?: string; assunto?: string }>;
+  searchParams: Promise<{ perfil?: string; assunto?: string; empreendimento?: string }>;
 }) {
   const params = await searchParams;
-  const fromAssunto = params.assunto === "visita" ? "comprar" : undefined;
-  const initial = PERFIS.find((item) => item === (params.perfil ?? fromAssunto)) ?? "comprar";
+  const fromAssunto =
+    params.assunto === "visita"
+      ? "comprar"
+      : params.assunto === "financiamento"
+        ? "financiar"
+        : undefined;
+  const candidate = params.perfil ?? fromAssunto;
+  const initial = isContactProfileId(candidate) ? candidate : "comprar";
   const company = companies.rendal;
 
   return (
@@ -35,7 +40,7 @@ export default async function ContatoPage({
       </RendalReveal>
       <RendalReveal delayMs={80}>
         <div className="mx-auto mt-10 max-w-5xl">
-          <ProfileForm initial={initial} />
+          <ProfileForm initial={initial} empreendimento={params.empreendimento} />
         </div>
       </RendalReveal>
       <section className="mx-auto mt-12 grid max-w-5xl gap-3 sm:grid-cols-3" aria-label="Outros canais">

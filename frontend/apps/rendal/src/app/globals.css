@@ -143,6 +143,62 @@ html {
   }
 }
 
+@keyframes rendal-step-in {
+  from {
+    opacity: 0;
+    transform: translateX(var(--step-from, 16px));
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes rendal-pop {
+  0% {
+    transform: scale(0.4);
+    opacity: 0;
+  }
+  60% {
+    transform: scale(1.08);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes rendal-doc-in {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.rendal-step {
+  animation: rendal-step-in 360ms cubic-bezier(0.32, 0.72, 0, 1) both;
+}
+
+.rendal-pop {
+  animation: rendal-pop 520ms cubic-bezier(0.32, 0.72, 0, 1) 120ms both;
+}
+
+.rendal-doc-in {
+  animation: rendal-doc-in 320ms cubic-bezier(0.32, 0.72, 0, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rendal-step,
+  .rendal-pop,
+  .rendal-doc-in {
+    animation: none;
+  }
+}
+
 html[data-js] .no-js-only {
   display: none;
 }

@@ -19,7 +19,7 @@ export const faqHome: FaqItem[] = [
   },
   {
     q: "Dá para financiar?",
-    a: "A equipe orienta o processo com a Caixa e outros bancos, conforme a documentação, a unidade escolhida e o perfil do comprador. A aprovação depende da análise da instituição.",
+    a: "Sim. Em Contato, em Quero financiar, você inicia a orientação de crédito no estilo pré-aprovação — a equipe analisa o perfil e retorna uma orientação no seu nome, com a Caixa e outros bancos. A aprovação final depende da instituição.",
   },
   {
     q: "Qual o prazo até a entrega?",

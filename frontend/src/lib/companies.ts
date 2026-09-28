@@ -46,6 +46,7 @@ const CAMPINAS_MAPS =
 const CAMPINAS_ADDRESS =
   "Rua Dr. João Alves dos Santos, 332, Jardim Paineiras, Campinas-SP";
 
+const RENDAL_PHONE = "19993670722";
 const DCORP_PHONE = "19993670722";
 const DCORP_CNPJ = "55085352000189";
 
@@ -56,9 +57,9 @@ export const companies: Record<CompanyId, Company> = {
     legalName: "Grupo Rendal",
     role: "Incorporação",
     email: "contato@gruporendal.com.br",
-    phone: "(19) 99999-9999",
-    phoneHref: "tel:+5519999999999",
-    whatsapp: process.env.NEXT_PUBLIC_WHATSAPP_RENDAL ?? "5519999999999",
+    phone: formatPhoneBr(RENDAL_PHONE),
+    phoneHref: `tel:+55${RENDAL_PHONE}`,
+    whatsapp: process.env.NEXT_PUBLIC_WHATSAPP_RENDAL ?? `55${RENDAL_PHONE}`,
     address: CAMPINAS_ADDRESS,
     city: "Campinas-SP",
     cnpj: process.env.NEXT_PUBLIC_CNPJ_RENDAL ?? "",

@@ -1,4 +1,5 @@
 import type { Company } from "@/lib/companies";
+import { checklistText, type ChecklistItem } from "@/lib/rendal/financiamento";
 
 function escapeHtml(value: string) {
   return value
@@ -36,6 +37,48 @@ export function internalLeadEmail(input: {
       <strong>Telefone:</strong> ${escapeHtml(input.phone)}<br/>
       <strong>Assunto:</strong> ${escapeHtml(input.subject)}</p>
       <p style="white-space:pre-wrap">${escapeHtml(input.message || "(sem mensagem)")}</p>
+    </div>
+  `;
+
+  return { text, html };
+}
+
+export function financiamentoConfirmationEmail(input: {
+  company: Company;
+  name: string;
+  checklist: ChecklistItem[];
+  disclaimer: string;
+}) {
+  const first = input.name.split(" ")[0] || input.name;
+  const text = [
+    `Olá, ${first}.`,
+    "",
+    "Recebemos seu pedido de orientação de crédito. A equipe retorna em até um dia útil.",
+    "",
+    "Enquanto isso, vá separando:",
+    checklistText(input.checklist),
+    "",
+    input.disclaimer,
+    "",
+    "Esta é uma confirmação automática. Não é necessário responder este e-mail.",
+  ].join("\n");
+
+  const items = input.checklist
+    .map(
+      (item) =>
+        `<li style="margin:0 0 6px">${escapeHtml(item.label)}${item.detail ? ` <span style="color:#4D4D4D">— ${escapeHtml(item.detail)}</span>` : ""}</li>`,
+    )
+    .join("");
+
+  const html = `
+    <div style="font-family:Arial,sans-serif;color:#1F1F1F;line-height:1.6;max-width:560px">
+      <p style="font-size:12px;letter-spacing:0.16em;text-transform:uppercase;color:#0F5B63;font-weight:700">${escapeHtml(input.company.legalName)}</p>
+      <p>Olá, ${escapeHtml(first)}.</p>
+      <p>Recebemos seu pedido de orientação de crédito. A equipe retorna em até um dia útil.</p>
+      <p style="margin-bottom:8px"><strong>Enquanto isso, vá separando:</strong></p>
+      <ul style="padding-left:20px;margin-top:0">${items}</ul>
+      <p style="color:#4D4D4D;font-size:13px">${escapeHtml(input.disclaimer)}</p>
+      <p style="color:#4D4D4D;font-size:13px">Esta é uma confirmação automática. Não é necessário responder este e-mail.</p>
     </div>
   `;
 
