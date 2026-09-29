@@ -136,6 +136,101 @@ function escapeHtml(value: string) {
     .replace(/"/g, "&quot;");
 }
 
+const FIELD_LABELS: Record<string, string> = {
+  perfil: "Perfil",
+  assunto: "Assunto",
+  empreendimento: "Empreendimento",
+  empresa: "Empresa",
+  creci: "CRECI",
+  cidade: "Cidade",
+  tamanho: "Tamanho",
+  documento: "Documentação",
+  preferencia: "Preferência",
+  dia: "Dia",
+  periodo: "Período",
+  faixa: "Faixa",
+  tipo: "Tipo",
+};
+
+function prettyLabel(key: string) {
+  return FIELD_LABELS[key.toLowerCase()] ?? key.replace(/[-_]/g, " ").replace(/^\w/, (ch) => ch.toUpperCase());
+}
+
+function leakedLine(line: string) {
+  const trimmed = line.trim();
+  if (!trimmed) return false;
+  if (/^(cf-turnstile-response|turnstileToken|g-recaptcha-response|website|privacy|dossier)\s*:/i.test(trimmed)) {
+    return true;
+  }
+  if (trimmed.length > 180 && /^[A-Za-z0-9._+\-/=]+$/.test(trimmed.replace(/\s/g, ""))) {
+    return true;
+  }
+  return false;
+}
+
+function formatValueHtml(value: string) {
+  if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
+    return `<a href="mailto:${escapeHtml(value)}">${escapeHtml(value)}</a>`;
+  }
+  const digits = value.replace(/\D/g, "");
+  if (digits.length >= 10 && digits.length <= 13 && /^[\d()\s+\-]+$/.test(value)) {
+    return `<a href="tel:+55${digits.slice(-11)}">${escapeHtml(value)}</a>`;
+  }
+  if (/^https?:\/\//i.test(value)) {
+    return `<a href="${escapeHtml(value)}">abrir</a>`;
+  }
+  return escapeHtml(value);
+}
+
+export function formatLeadMessageHtml(message: string, skipSubject?: string) {
+  const blocks: string[] = [];
+  let current: string[] = [];
+
+  const flush = () => {
+    if (!current.length) return;
+    blocks.push(`<p style="margin:0 0 14px;line-height:1.7">${current.join("<br/>")}</p>`);
+    current = [];
+  };
+
+  for (const raw of message.replace(/\r\n/g, "\n").split("\n")) {
+    const line = raw.trimEnd();
+    if (!line.trim()) {
+      flush();
+      continue;
+    }
+    if (leakedLine(line)) continue;
+    const match = line.match(/^([^:]{1,80}):\s*(.*)$/);
+    if (match) {
+      const key = match[1].trim();
+      const value = match[2].trim();
+      if (key.toLowerCase() === "assunto" && skipSubject && value === skipSubject) continue;
+      if (!value || value === "on") continue;
+      current.push(`<strong>${escapeHtml(prettyLabel(key))}:</strong> ${formatValueHtml(value)}`);
+      continue;
+    }
+    current.push(escapeHtml(line.trim()));
+  }
+  flush();
+  return blocks.join("") || `<p style="margin:0;color:#4D4D4D">(sem mensagem)</p>`;
+}
+
+export function formatLeadMessageText(message: string, skipSubject?: string) {
+  return message
+    .replace(/\r\n/g, "\n")
+    .split("\n")
+    .filter((line) => {
+      if (leakedLine(line)) return false;
+      const match = line.trim().match(/^([^:]{1,80}):\s*(.*)$/);
+      if (match && match[1].trim().toLowerCase() === "assunto" && skipSubject && match[2].trim() === skipSubject) {
+        return false;
+      }
+      return true;
+    })
+    .join("\n")
+    .replace(/\n{3,}/g, "\n\n")
+    .trim();
+}
+
 export function internalLeadEmail(input: {
   company: Company;
   name: string;
@@ -145,28 +240,44 @@ export function internalLeadEmail(input: {
   message: string;
   kind: "contact" | "quote";
   label?: string;
+  messageHtml?: string;
 }) {
   const kindLabel =
     input.label ?? (input.kind === "quote" ? "Orçamento" : "Contato");
   const accent = ACCENT[input.company.id];
+  const email = input.email.trim() || "—";
+  const phone = input.phone.trim() || "—";
+  const bodyText = formatLeadMessageText(input.message, input.subject) || "(sem mensagem)";
   const text = [
     `${kindLabel} — ${input.company.legalName}`,
     `Nome: ${input.name}`,
-    `E-mail: ${input.email}`,
-    `Telefone: ${input.phone}`,
+    `E-mail: ${email}`,
+    `Telefone: ${phone}`,
     `Assunto: ${input.subject}`,
     "",
-    input.message || "(sem mensagem)",
+    bodyText,
   ].join("\n");
 
+  const emailHtml =
+    email.includes("@")
+      ? `<a href="mailto:${escapeHtml(email)}">${escapeHtml(email)}</a>`
+      : escapeHtml(email);
+  const phoneDigits = phone.replace(/\D/g, "");
+  const phoneHtml =
+    phoneDigits.length >= 10
+      ? `<a href="tel:+55${phoneDigits.slice(-11)}">${escapeHtml(phone)}</a>`
+      : escapeHtml(phone);
+
   const html = `
-    <div style="font-family:Arial,sans-serif;color:#0F172A;line-height:1.5">
-      <p style="font-size:12px;letter-spacing:0.16em;text-transform:uppercase;color:${accent};font-weight:700">${escapeHtml(kindLabel)} · ${escapeHtml(input.company.legalName)}</p>
-      <p><strong>Nome:</strong> ${escapeHtml(input.name)}<br/>
-      <strong>E-mail:</strong> ${escapeHtml(input.email)}<br/>
-      <strong>Telefone:</strong> ${escapeHtml(input.phone)}<br/>
-      <strong>Assunto:</strong> ${escapeHtml(input.subject)}</p>
-      <p style="white-space:pre-wrap">${escapeHtml(input.message || "(sem mensagem)")}</p>
+    <div style="font-family:Arial,sans-serif;color:#1F1F1F;line-height:1.5;max-width:560px">
+      <p style="margin:0 0 16px;font-size:12px;letter-spacing:0.16em;text-transform:uppercase;color:${accent};font-weight:700">${escapeHtml(kindLabel)} · ${escapeHtml(input.company.legalName)}</p>
+      <p style="margin:0 0 18px;line-height:1.7">
+        <strong>Nome:</strong> ${escapeHtml(input.name)}<br/>
+        <strong>E-mail:</strong> ${emailHtml}<br/>
+        <strong>Telefone:</strong> ${phoneHtml}<br/>
+        <strong>Assunto:</strong> ${escapeHtml(input.subject)}
+      </p>
+      ${input.messageHtml ?? formatLeadMessageHtml(input.message, input.subject)}
     </div>
   `;
 

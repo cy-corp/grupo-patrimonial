@@ -24,7 +24,7 @@ export function TurnstileField({
       <Turnstile
         key={resetSignal}
         siteKey={siteKey}
-        options={{ theme: "light", size: "flexible" }}
+        options={{ theme: "light", size: "flexible", responseField: false }}
         onSuccess={setToken}
         onExpire={() => setToken("")}
         onError={() => setToken("")}

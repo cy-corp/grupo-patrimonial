@@ -77,13 +77,42 @@ export function LeadForm({
     event.preventDefault();
     const form = event.currentTarget;
     const data = new FormData(form);
-    const lines = [`Perfil: ${perfil ?? "contato"}`, `Assunto: ${subject}`];
+    const skip = new Set([
+      "company",
+      "subject",
+      "turnstileToken",
+      "cf-turnstile-response",
+      "website",
+      "emailOptional",
+      "phoneOptional",
+      "name",
+      "email",
+      "phone",
+      "contato",
+      "message",
+      "privacy",
+      "dossier",
+    ]);
+    const labels: Record<string, string> = {
+      perfil: "Perfil",
+      empreendimento: "Empreendimento",
+      empresa: "Empresa",
+      creci: "CRECI",
+      cidade: "Cidade",
+      tamanho: "Tamanho",
+      documento: "Documentação",
+      preferencia: "Preferência",
+      dia: "Dia",
+      periodo: "Período",
+      faixa: "Faixa",
+      tipo: "Tipo",
+    };
+    const lines = [`Perfil: ${perfil ?? "contato"}`];
     for (const [key, value] of data.entries()) {
-      if (typeof value !== "string" || !value.trim()) continue;
-      if (["company", "subject", "turnstileToken", "website", "emailOptional", "phoneOptional", "name", "email", "phone", "contato", "message"].includes(key)) {
-        continue;
-      }
-      lines.push(`${key}: ${value.trim()}`);
+      if (typeof value !== "string" || !value.trim() || value === "on") continue;
+      if (skip.has(key) || key.startsWith("cf-")) continue;
+      const label = labels[key] ?? key;
+      lines.push(`${label}: ${value.trim()}`);
     }
     const note = String(data.get("message") ?? "").trim();
     if (note) lines.push(note);

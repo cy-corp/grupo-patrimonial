@@ -542,73 +542,197 @@ export function primeiraEtapaInvalida(draft: Draft, opts: { tipologiaObrigatoria
   return etapasVisiveis(draft.estadoCivil).find((etapa) => Object.keys(errosEtapa(etapa.id, draft, opts)).length > 0)?.id ?? null;
 }
 
-function linha(label: string, value: string) {
-  return `${label}: ${value || "—"}`;
+function dash(value: string) {
+  return value.trim() || "—";
 }
 
-function blocoPessoa(titulo: string, pessoa: Pessoa) {
+type DossierRow = { label: string; value: string; kind?: "email" | "phone" };
+type DossierFile = { name: string; href: string };
+type DossierSection = {
+  title: string;
+  rows?: DossierRow[];
+  lines?: string[];
+  groups?: { label: string; files: DossierFile[]; empty?: boolean }[];
+  note?: string;
+};
+
+function row(label: string, value: string, kind?: DossierRow["kind"]): DossierRow {
+  return { label, value: dash(value), kind };
+}
+
+function pessoaRows(pessoa: Pessoa): DossierRow[] {
   return [
-    titulo,
-    linha("Nome", pessoa.nome),
-    linha("CPF", pessoa.cpf),
-    linha("Nascimento", formatDataBr(pessoa.nascimento)),
-    linha("RG", pessoa.rg),
-    linha("Emissão do RG", formatDataBr(pessoa.rgEmissao)),
-    linha("Órgão expedidor", pessoa.rgOrgao),
-    linha("Pai", pessoa.pai),
-    linha("Mãe", pessoa.mae),
-    linha("Telefone", pessoa.tel),
-    linha("E-mail", pessoa.email),
-    linha("Profissão", pessoa.profissao),
-    linha("Renda mensal", pessoa.renda),
+    row("Nome", pessoa.nome),
+    row("CPF", pessoa.cpf),
+    row("Nascimento", formatDataBr(pessoa.nascimento)),
+    row("RG", pessoa.rg),
+    row("Emissão do RG", formatDataBr(pessoa.rgEmissao)),
+    row("Órgão expedidor", pessoa.rgOrgao),
+    row("Pai", pessoa.pai),
+    row("Mãe", pessoa.mae),
+    row("Telefone", pessoa.tel, "phone"),
+    row("E-mail", pessoa.email, "email"),
+    row("Profissão", pessoa.profissao),
+    row("Renda mensal", pessoa.renda),
   ];
+}
+
+function escapeHtml(value: string) {
+  return value
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
+}
+
+function digitsTel(value: string) {
+  return value.replace(/\D/g, "");
+}
+
+function rowText(item: DossierRow) {
+  return `${item.label}: ${item.value}`;
+}
+
+function rowHtml(item: DossierRow) {
+  const label = `<strong>${escapeHtml(item.label)}:</strong> `;
+  if (item.kind === "email" && item.value.includes("@")) {
+    return `${label}<a href="mailto:${escapeHtml(item.value)}">${escapeHtml(item.value)}</a>`;
+  }
+  if (item.kind === "phone") {
+    const digits = digitsTel(item.value);
+    if (digits.length >= 10) {
+      return `${label}<a href="tel:+55${digits}">${escapeHtml(item.value)}</a>`;
+    }
+  }
+  return `${label}${escapeHtml(item.value)}`;
+}
+
+function dossierSections(draft: Draft, linkArquivo?: (arquivo: ArquivoEnviado) => string): DossierSection[] {
+  const endereco = [draft.logradouro, draft.numero, draft.complemento, draft.bairro, draft.cidadeEndereco, draft.ufEndereco, draft.cep]
+    .filter(Boolean)
+    .join(", ");
+  const civil: DossierRow[] = [row("Estado civil", labelDe(ESTADOS_CIVIS, draft.estadoCivil))];
+  if (draft.estadoCivil === "casado") civil.push(row("Regime", labelDe(REGIMES, draft.regime)));
+  if (precisaConjuge(draft.estadoCivil)) {
+    civil.push(row(draft.estadoCivil === "uniao" ? "Data da união" : "Data do casamento", formatDataBr(draft.dataCasamento)));
+    civil.push(row("Cônjuge compõe renda", simNaoLabel(draft.compoeRenda)));
+  }
+
+  const contrato: DossierRow[] = [row("Contrato de compra e venda", simNaoLabel(draft.contrato))];
+  if (draft.contrato === "sim") {
+    contrato.push(row("Prazo limite", formatDataBr(draft.prazoContrato)));
+    contrato.push(row("Multa", simNaoLabel(draft.multa)));
+  }
+
+  const sections: DossierSection[] = [
+    {
+      title: "Imóvel e crédito",
+      rows: [
+        row("Empreendimento", draft.empreendimento),
+        row("Tipologia", labelDe(TIPOLOGIAS, draft.tipologia)),
+        row("Cidade do imóvel", `${draft.cidade}${draft.uf ? `/${draft.uf}` : ""}`),
+        row("Valor do imóvel", draft.valorImovel),
+        row("Prazo", draft.prazo ? `${draft.prazo} anos` : ""),
+        row("Entrada", draft.entrada),
+        row("FGTS", draft.fgts === "sim" ? `Sim, ${draft.fgtsValor}` : simNaoLabel(draft.fgts)),
+        row("Saldo devedor do imóvel adquirido", draft.saldoDevedor === "sim" ? `Sim, ${draft.saldoValor}` : simNaoLabel(draft.saldoDevedor)),
+      ],
+    },
+    {
+      title: "Cliente",
+      rows: [...pessoaRows(draft.voce), row("Endereço", endereco)],
+    },
+    { title: "Estado civil", rows: civil },
+  ];
+
+  if (precisaConjuge(draft.estadoCivil)) {
+    sections.push({ title: "Cônjuge", rows: pessoaRows(draft.conjuge) });
+  }
+
+  sections.push({ title: "Contrato", rows: contrato });
+
+  if (draft.contas.length) {
+    sections.push({
+      title: "Contas bancárias",
+      lines: draft.contas.map((conta) => formatContaBancaria(conta)),
+    });
+  }
+  if (draft.obs.trim()) {
+    sections.push({ title: "Observação", lines: [draft.obs.trim()] });
+  }
+
+  sections.push({
+    title: "Documentos",
+    note: "Cada arquivo é um link. Valem por 14 dias.",
+    groups: documentosDaCotacao(draft).map((slot) => {
+      const files = draft.arquivos[slot.id] ?? [];
+      return {
+        label: slot.label,
+        empty: files.length === 0,
+        files: files.map((arquivo) => ({
+          name: arquivo.name,
+          href: linkArquivo?.(arquivo) ?? "",
+        })),
+      };
+    }),
+  });
+
+  return sections;
+}
+
+export function htmlDossier(draft: Draft, linkArquivo?: (arquivo: ArquivoEnviado) => string) {
+  const body = dossierSections(draft, linkArquivo)
+    .map((section) => {
+      const parts: string[] = [
+        `<p style="margin:18px 0 8px;font-size:11px;letter-spacing:0.14em;text-transform:uppercase;font-weight:700;color:#0F5B63">${escapeHtml(section.title)}</p>`,
+      ];
+      if (section.rows?.length) {
+        parts.push(`<p style="margin:0;line-height:1.7">${section.rows.map(rowHtml).join("<br/>")}</p>`);
+      }
+      if (section.lines?.length) {
+        parts.push(`<p style="margin:0;line-height:1.7">${section.lines.map((line) => escapeHtml(line)).join("<br/>")}</p>`);
+      }
+      if (section.note) {
+        parts.push(`<p style="margin:0 0 8px;color:#4D4D4D;font-size:13px">${escapeHtml(section.note)}</p>`);
+      }
+      if (section.groups?.length) {
+        parts.push(
+          section.groups
+            .map((group) => {
+              const files = group.empty
+                ? "<span style=\"color:#4D4D4D\">não enviado</span>"
+                : group.files
+                    .map((file) =>
+                      file.href
+                        ? `<a href="${escapeHtml(file.href)}">${escapeHtml(file.name)}</a>`
+                        : escapeHtml(file.name),
+                    )
+                    .join("<br/>");
+              return `<p style="margin:0 0 12px;line-height:1.7"><strong>${escapeHtml(group.label)}</strong><br/>${files}</p>`;
+            })
+            .join(""),
+        );
+      }
+      return parts.join("");
+    })
+    .join("");
+
+  return `<div style="font-family:Arial,sans-serif;color:#1F1F1F;line-height:1.6;max-width:560px">${body}</div>`;
 }
 
 export function textoDossier(draft: Draft, linkArquivo?: (arquivo: ArquivoEnviado) => string) {
-  const linhas = [
-    "Cotação de financiamento imobiliário",
-    "",
-    linha("Empreendimento", draft.empreendimento),
-    linha("Tipologia", labelDe(TIPOLOGIAS, draft.tipologia)),
-    linha("Cidade do imóvel", `${draft.cidade}${draft.uf ? `/${draft.uf}` : ""}`),
-    linha("Valor do imóvel", draft.valorImovel),
-    linha("Prazo", draft.prazo ? `${draft.prazo} anos` : ""),
-    linha("Entrada", draft.entrada),
-    linha("FGTS", draft.fgts === "sim" ? `Sim, ${draft.fgtsValor}` : simNaoLabel(draft.fgts)),
-    linha("Saldo devedor do imóvel adquirido", draft.saldoDevedor === "sim" ? `Sim, ${draft.saldoValor}` : simNaoLabel(draft.saldoDevedor)),
-    "",
-    ...blocoPessoa("Cliente", draft.voce),
-    linha("Endereço", [draft.logradouro, draft.numero, draft.complemento, draft.bairro, draft.cidadeEndereco, draft.ufEndereco, draft.cep].filter(Boolean).join(", ")),
-    "",
-    linha("Estado civil", labelDe(ESTADOS_CIVIS, draft.estadoCivil)),
-  ];
-  if (draft.estadoCivil === "casado") linhas.push(linha("Regime", labelDe(REGIMES, draft.regime)));
-  if (precisaConjuge(draft.estadoCivil)) {
-    linhas.push(linha(draft.estadoCivil === "uniao" ? "Data da união" : "Data do casamento", formatDataBr(draft.dataCasamento)));
-    linhas.push(linha("Cônjuge compõe renda", simNaoLabel(draft.compoeRenda)));
-    linhas.push("", ...blocoPessoa("Cônjuge", draft.conjuge));
-  }
-  linhas.push(
-    "",
-    linha("Contrato de compra e venda", simNaoLabel(draft.contrato)),
-  );
-  if (draft.contrato === "sim") {
-    linhas.push(linha("Prazo limite", formatDataBr(draft.prazoContrato)));
-    linhas.push(linha("Multa", simNaoLabel(draft.multa)));
-  }
-  if (draft.contas.length) {
-    linhas.push("", "Contas bancárias");
-    for (const conta of draft.contas) linhas.push(`- ${formatContaBancaria(conta)}`);
-  }
-  if (draft.obs) linhas.push("", "Observação", draft.obs);
-  linhas.push("", "Documentos", "Os links abaixo valem por 14 dias e só abrem para quem recebe este e-mail.");
-  for (const slot of documentosDaCotacao(draft)) {
-    const files = draft.arquivos[slot.id] ?? [];
-    linhas.push(slot.label);
-    if (!files.length) linhas.push("- (não enviado)");
-    for (const arquivo of files) {
-      const href = linkArquivo?.(arquivo);
-      linhas.push(href ? `- ${arquivo.name}: ${href}` : `- ${arquivo.name}`);
+  const linhas = ["Cotação de financiamento imobiliário"];
+  for (const section of dossierSections(draft, linkArquivo)) {
+    linhas.push("", section.title);
+    for (const item of section.rows ?? []) linhas.push(rowText(item));
+    for (const line of section.lines ?? []) linhas.push(line);
+    if (section.note) linhas.push(section.note);
+    for (const group of section.groups ?? []) {
+      linhas.push(group.label);
+      if (group.empty) linhas.push("- (não enviado)");
+      for (const file of group.files) {
+        linhas.push(file.href ? `- ${file.name}: ${file.href}` : `- ${file.name}`);
+      }
     }
   }
   return linhas.join("\n");

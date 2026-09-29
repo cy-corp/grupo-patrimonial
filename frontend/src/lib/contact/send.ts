@@ -16,6 +16,7 @@ import {
   documentosDaCotacao,
   FINANCIAMENTO_DISCLAIMER,
   FINANCIAMENTO_SUBJECT,
+  htmlDossier,
   parseDossier,
   primeiraEtapaInvalida,
   textoDossier,
@@ -41,10 +42,13 @@ function financiamentoExtras(formData: FormData, name: string) {
   const empreendimento = draft.empreendimento;
   const known = empreendimentos.find((item) => item.nome === empreendimento);
   const origin = getRendalSiteUrl();
+  const linker = (arquivo: { pathname: string; name: string; size: number }) =>
+    linkArquivo(origin, arquivo.pathname);
   const company = companies.rendal;
   const checklist = documentosDaCotacao(draft).map((slot) => ({ id: slot.id, label: slot.label }));
   return {
-    message: textoDossier(draft, (arquivo) => linkArquivo(origin, arquivo.pathname)),
+    message: textoDossier(draft, linker),
+    messageHtml: htmlDossier(draft, linker),
     subjectSuffix: empreendimento ? ` · ${known?.nome ?? empreendimento}` : "",
     confirmation: {
       subject: `Recebemos seu pedido de orientação de crédito — ${company.name}`,
@@ -67,6 +71,7 @@ async function sendPair(input: {
   message: string;
   kind: "contact" | "quote";
   subjectSuffix?: string;
+  messageHtml?: string;
   confirmation?: { subject: string; text: string; html: string };
 }) {
   const { company, inbox, from } = mailForCompany(input.companyId);
@@ -86,6 +91,7 @@ async function sendPair(input: {
     message: input.message,
     kind: input.kind,
     label: copy.internalLabel,
+    messageHtml: input.messageHtml,
   });
   const confirm = input.confirmation ?? confirmationLeadEmail({
     company,
@@ -164,6 +170,7 @@ export async function sendContact(formData: FormData): Promise<{ success: boolea
       message: financiamento?.message ?? fields.message,
       kind: "contact",
       subjectSuffix: financiamento?.subjectSuffix,
+      messageHtml: financiamento?.messageHtml,
       confirmation: financiamento?.confirmation,
     });
     return sent.ok

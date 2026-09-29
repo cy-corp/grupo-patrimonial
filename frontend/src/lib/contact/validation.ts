@@ -66,7 +66,12 @@ export function parseContactForm(formData: FormData):
   else if (contato) phone = digitsOnly(contato);
   if (launchList && name.length < 2) name = "Lista de lançamento";
 
-  const message = str(formData, "message").replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F]/g, "").trim();
+  const message = str(formData, "message")
+    .replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F]/g, "")
+    .split("\n")
+    .filter((line) => !/^(cf-turnstile-response|turnstileToken|g-recaptcha-response|website|privacy|dossier)\s*:/i.test(line.trim()))
+    .join("\n")
+    .trim();
   const turnstileToken = str(formData, "turnstileToken");
 
   if (name.length < 2 || name.length > CONTACT_LIMITS.name) {
