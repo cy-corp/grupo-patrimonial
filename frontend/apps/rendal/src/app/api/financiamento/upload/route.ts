@@ -1,8 +1,24 @@
 import { handleUpload, type HandleUploadBody } from "@vercel/blob/client";
 import { NextResponse } from "next/server";
-import { enforceUploadRateLimit } from "@/lib/contact/rate-limit";
+import { enforceUploadGuards } from "@/lib/contact/rate-limit";
 import { clientIp } from "@/lib/contact/turnstile";
 import { ARQUIVO_MAX_BYTES, ARQUIVO_TIPOS } from "@/lib/rendal/financiamento";
+
+function payloadDoCliente(raw: string | null | undefined) {
+  try {
+    const parsed = JSON.parse(raw || "{}") as { turnstileToken?: unknown; size?: unknown };
+    const size = Number(parsed.size);
+    return {
+      token: typeof parsed.turnstileToken === "string" ? parsed.turnstileToken : "",
+      bytes:
+        Number.isFinite(size) && size > 0
+          ? Math.min(Math.ceil(size), ARQUIVO_MAX_BYTES)
+          : ARQUIVO_MAX_BYTES,
+    };
+  } catch {
+    return { token: "", bytes: ARQUIVO_MAX_BYTES };
+  }
+}
 
 export async function POST(request: Request) {
   if (!process.env.BLOB_READ_WRITE_TOKEN?.trim()) {
@@ -20,15 +36,17 @@ export async function POST(request: Request) {
   }
 
   try {
+    const ip = clientIp(new Headers(request.headers));
     const json = await handleUpload({
       body,
       request,
-      onBeforeGenerateToken: async (pathname) => {
+      onBeforeGenerateToken: async (pathname, clientPayload) => {
         if (!pathname.startsWith("financiamento/") || pathname.includes("..")) {
           throw new Error("Caminho inválido.");
         }
-        const limited = await enforceUploadRateLimit(clientIp(new Headers(request.headers)));
-        if (!limited.ok) throw new Error(limited.message);
+        const payload = payloadDoCliente(clientPayload);
+        const guarded = await enforceUploadGuards(ip, payload);
+        if (!guarded.ok) throw new Error(guarded.message);
         return {
           allowedContentTypes: [...ARQUIVO_TIPOS, "image/jpg"],
           maximumSizeInBytes: ARQUIVO_MAX_BYTES,

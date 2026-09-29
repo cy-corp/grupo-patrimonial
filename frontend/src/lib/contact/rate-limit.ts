@@ -1,7 +1,16 @@
 import { Ratelimit } from "@upstash/ratelimit";
 import { Redis } from "@upstash/redis";
-import { GENERIC_CONTACT_ERROR, RATE_LIMIT_ERROR } from "@/lib/contact/constants";
+import {
+  GENERIC_CONTACT_ERROR,
+  RATE_LIMIT_ERROR,
+  UPLOAD_BYTES_ERROR,
+  UPLOAD_CHALLENGE_ERROR,
+} from "@/lib/contact/constants";
 import { isProduction } from "@/lib/contact/mail-config";
+import { verifyTurnstile } from "@/lib/contact/turnstile";
+
+const UPLOAD_BYTES_PER_DAY = 200 * 1024 * 1024;
+const UPLOAD_GRANT_TTL_S = 45 * 60;
 
 let redis: Redis | null | undefined;
 const limiters = new Map<string, Ratelimit>();
@@ -89,4 +98,63 @@ export async function enforceUploadRateLimit(ip: string) {
     return { ok: false as const, message: "Muitos arquivos em pouco tempo. Espere um pouco e tente de novo." };
   }
   return { ok: true as const };
+}
+
+async function hasUploadGrant(ip: string) {
+  const client = getRedis();
+  if (!client) return false;
+  return Boolean(await client.get(`lead:upload-ok:${ip}`));
+}
+
+async function grantUpload(ip: string) {
+  const client = getRedis();
+  if (!client) return;
+  await client.set(`lead:upload-ok:${ip}`, "1", { ex: UPLOAD_GRANT_TTL_S });
+}
+
+async function enforceUploadBytes(ip: string, bytes: number) {
+  const client = getRedis();
+  if (!client) {
+    if (isProduction()) {
+      return { ok: false as const, message: "Envio de arquivo indisponível agora." };
+    }
+    return { ok: true as const };
+  }
+  const size = Math.max(1, Math.min(bytes, UPLOAD_BYTES_PER_DAY));
+  const day = new Date().toISOString().slice(0, 10);
+  const key = `lead:upload-bytes:${day}:${ip}`;
+  const used = await client.incrby(key, size);
+  if (used === size) await client.expire(key, 60 * 60 * 48);
+  if (used > UPLOAD_BYTES_PER_DAY) {
+    await client.decrby(key, size);
+    return { ok: false as const, message: UPLOAD_BYTES_ERROR };
+  }
+  return { ok: true as const };
+}
+
+export async function enforceUploadGuards(
+  ip: string,
+  input: { token: string; bytes: number },
+) {
+  const client = getRedis();
+  if (!client) {
+    if (isProduction()) {
+      return { ok: false as const, message: "Envio de arquivo indisponível agora." };
+    }
+    return { ok: true as const };
+  }
+
+  const granted = await hasUploadGrant(ip);
+  if (!granted) {
+    const challenge = await verifyTurnstile(input.token, ip);
+    if (!challenge.ok) {
+      return { ok: false as const, message: UPLOAD_CHALLENGE_ERROR };
+    }
+    await grantUpload(ip);
+  }
+
+  const limited = await enforceUploadRateLimit(ip);
+  if (!limited.ok) return limited;
+
+  return enforceUploadBytes(ip, input.bytes);
 }

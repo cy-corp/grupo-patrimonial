@@ -58,11 +58,13 @@ export function DocumentosStep({
   erros,
   onComprovante,
   onArquivos,
+  waitTurnstile,
 }: {
   draft: Draft;
   erros: Record<string, string>;
   onComprovante: (qual: "renda" | "renda-conjuge", value: ComprovanteId) => void;
   onArquivos: (id: DocSlotId, arquivos: ArquivoEnviado[]) => void;
+  waitTurnstile: () => Promise<string>;
 }) {
   const slots = documentosDaCotacao(draft);
   const enviados = slots.filter((slot) => (draft.arquivos[slot.id]?.length ?? 0) > 0).length;
@@ -91,11 +93,13 @@ export function DocumentosStep({
           setFalha((current) => ({ ...current, [id]: `${pronto.name} passa de 10 MB.` }));
           break;
         }
+        const turnstileToken = await waitTurnstile();
         const blob = await upload(`financiamento/${id}/${nomeSeguro(pronto.name)}`, pronto, {
           access: "private",
           handleUploadUrl: "/api/financiamento/upload",
           contentType: pronto.type || "application/pdf",
           multipart: pronto.size > 4 * 1024 * 1024,
+          clientPayload: JSON.stringify({ turnstileToken, size: pronto.size }),
           onUploadProgress: (event) => setProgresso(((i + event.percentage / 100) / files.length) * 100),
         });
         next = [...next, { pathname: blob.pathname, name: nomeVisivel(pronto.name), size: pronto.size }];

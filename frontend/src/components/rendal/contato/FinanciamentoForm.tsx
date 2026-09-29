@@ -5,7 +5,7 @@ import { ArrowLeft, ArrowRight, CaretDown, Check, Clock, PencilSimple, ShieldChe
 import { Combobox } from "@base-ui/react/combobox";
 import { submitContact } from "@/lib/actions";
 import { HoneypotField } from "@/components/contato/HoneypotField";
-import { TurnstileField } from "@/components/contato/TurnstileField";
+import { TurnstileField, type TurnstileHandle } from "@/components/contato/TurnstileField";
 import { ContasBancariasField } from "@/components/rendal/contato/ContasBancariasField";
 import { DocumentosStep } from "@/components/rendal/contato/DocumentosStep";
 import { empreendimentos } from "@/lib/rendal/content/empreendimentos";
@@ -380,16 +380,20 @@ export function FinanciamentoForm({ empreendimento }: { empreendimento?: string 
   const [errorMessage, setErrorMessage] = useState("");
   const [resetSignal, setResetSignal] = useState(0);
   const [voltarDaEdicao, setVoltarDaEdicao] = useState(false);
+  const [challengeOn, setChallengeOn] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
   const headingRef = useRef<HTMLHeadingElement>(null);
   const hydratedRef = useRef(false);
   const stepChangedRef = useRef(false);
+  const turnstileRef = useRef<TurnstileHandle>(null);
+  const revisaoTokenRef = useRef(false);
 
   const etapas = useMemo(() => etapasVisiveis(draft.estadoCivil), [draft.estadoCivil]);
   const index = Math.max(0, etapas.findIndex((etapa) => etapa.id === etapaId));
   const etapa = etapas[index] ?? etapas[0];
   const erros = tried ? errosEtapa(etapa.id, draft, { tipologiaObrigatoria: !esconderTipologia }) : {};
   const copy = COPY[etapa.id];
+  const showChallenge = challengeOn || etapa.id === "documentos" || etapa.id === "banco" || etapa.id === "revisao";
 
   useEffect(() => {
     try {
@@ -430,6 +434,34 @@ export function FinanciamentoForm({ empreendimento }: { empreendimento?: string 
     headingRef.current?.focus({ preventScroll: true });
     track("financiamento_step", { step: String(index + 1), nome: etapa.label });
   }, [etapa.id, etapa.label, index]);
+
+  useEffect(() => {
+    if (etapa.id === "documentos" || etapa.id === "banco" || etapa.id === "revisao") {
+      setChallengeOn(true);
+    }
+  }, [etapa.id]);
+
+  useEffect(() => {
+    if (etapa.id !== "revisao") {
+      revisaoTokenRef.current = false;
+      return;
+    }
+    if (revisaoTokenRef.current) return;
+    revisaoTokenRef.current = true;
+    setResetSignal((value) => value + 1);
+  }, [etapa.id]);
+
+  async function waitTurnstile() {
+    const deadline = Date.now() + 20_000;
+    while (!turnstileRef.current && Date.now() < deadline) {
+      await new Promise((resolve) => setTimeout(resolve, 150));
+    }
+    try {
+      return (await turnstileRef.current?.waitForToken()) ?? "";
+    } catch {
+      throw new Error("A verificação demorou. Tente de novo em instantes.");
+    }
+  }
 
   function update(partial: Partial<Draft>) {
     setDraft((current) => ({ ...current, ...partial }));
@@ -833,6 +865,7 @@ export function FinanciamentoForm({ empreendimento }: { empreendimento?: string 
                 <DocumentosStep
                   draft={draft}
                   erros={erros}
+                  waitTurnstile={waitTurnstile}
                   onComprovante={(qualComprovante, value) => update(qualComprovante === "renda" ? { comprovanteRenda: value } : { comprovanteRendaConjuge: value })}
                   onArquivos={(id, arquivos) => update({ arquivos: { ...draft.arquivos, [id]: arquivos } })}
                 />
@@ -880,10 +913,15 @@ export function FinanciamentoForm({ empreendimento }: { empreendimento?: string 
                     <ShieldCheck weight="duotone" className="mt-0.5 size-5 shrink-0 text-[#0F5B63]" aria-hidden />
                     {FINANCIAMENTO_DISCLAIMER}
                   </p>
-                  <TurnstileField resetSignal={resetSignal} />
                 </div>
               ) : null}
             </div>
+
+            {showChallenge ? (
+              <div className="mt-4 flex justify-center">
+                <TurnstileField ref={turnstileRef} variant="invisible" resetSignal={resetSignal} />
+              </div>
+            ) : null}
 
             <div className={cn("mt-6 flex items-center gap-3", etapa.id === "revisao" && "sticky bottom-0 -mx-5 border-t border-[#1F1F1F]/8 bg-white/95 px-5 py-4 backdrop-blur sm:static sm:mx-0 sm:border-0 sm:bg-transparent sm:p-0")}>
               {index > 0 || voltarDaEdicao ? (

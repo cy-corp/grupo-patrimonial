@@ -32,3 +32,9 @@ export const GENERIC_CONTACT_ERROR =
 
 export const RATE_LIMIT_ERROR =
   "Muitas tentativas. Aguarde alguns minutos e tente de novo.";
+
+export const UPLOAD_CHALLENGE_ERROR =
+  "Não consegui validar o envio. Espere um instante e tente de novo.";
+
+export const UPLOAD_BYTES_ERROR =
+  "Limite de arquivos por hoje. Fale no WhatsApp se precisar continuar.";
