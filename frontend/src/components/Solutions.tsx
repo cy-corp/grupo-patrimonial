@@ -15,7 +15,7 @@ const brands = [
     logo: "/brands/rendal-logo.png",
     image: "/incorporadora/incorporadora-hero.jpg",
     imageAlt: "Empreendimento residencial em desenvolvimento",
-    href: "/incorporadora",
+    href: "https://gruporendal.com",
     panelClass: "bg-[#F3EEE4] text-graphite",
   },
   {
@@ -29,7 +29,7 @@ const brands = [
     logo: "/brands/dcorp-logo.png",
     image: "/construtora/construtora-execucao.jpg",
     imageAlt: "Obra em execução com estrutura e guindastes",
-    href: "/engenharia",
+    href: "https://dcorp.com.br",
     panelClass: "bg-[#E4DDD0] text-graphite",
   },
 ];

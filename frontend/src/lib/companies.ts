@@ -64,7 +64,7 @@ export const companies: Record<CompanyId, Company> = {
     city: "Campinas-SP",
     cnpj: process.env.NEXT_PUBLIC_CNPJ_RENDAL ?? "",
     mapsEmbed: CAMPINAS_MAPS,
-    pageHref: "/incorporadora",
+    pageHref: "/",
     contactHref: "/contato?empresa=rendal",
   },
   dcorp: {
@@ -80,7 +80,7 @@ export const companies: Record<CompanyId, Company> = {
     city: "Campinas-SP",
     cnpj: process.env.NEXT_PUBLIC_CNPJ_DCORP || DCORP_CNPJ,
     mapsEmbed: CAMPINAS_MAPS,
-    pageHref: "/engenharia",
+    pageHref: "/",
     contactHref: "/contato?empresa=dcorp#contato-form",
   },
 };

@@ -1,8 +1,13 @@
+import type { Metadata } from "next";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
 import { WhatsAppButton } from "@/components/whatsapp-button";
 import { PreloadAssets } from "@/components/PreloadAssets";
+
+export const metadata: Metadata = {
+  robots: { index: false, follow: false },
+};
 
 export default function LandingLayout({
   children,

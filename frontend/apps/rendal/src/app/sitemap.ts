@@ -4,6 +4,7 @@ import { getRendalSiteUrl } from "@/lib/rendal/site";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const origin = getRendalSiteUrl();
+  const lastModified = new Date();
   const paths = [
     "/",
     "/quem-somos",
@@ -15,8 +16,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...empreendimentos.map((item) => `/empreendimentos/${item.slug}`),
   ];
   return paths.map((path) => ({
-    url: `${origin}${path}`,
-    changeFrequency: "weekly",
-    priority: path === "/" ? 1 : 0.7,
+    url: path === "/" ? `${origin}/` : `${origin}${path}`,
+    lastModified,
+    changeFrequency: path === "/" ? "weekly" : "weekly",
+    priority: path === "/" ? 1 : path.startsWith("/empreendimentos") ? 0.8 : 0.7,
   }));
 }

@@ -15,6 +15,7 @@ const allura = Allura({
 });
 
 export const metadata: Metadata = {
+  robots: { index: false, follow: false, nocache: true },
   title: {
     default: "Grupo Rendal e DCorp Engenharia",
     template: "%s | Rendal e DCorp",

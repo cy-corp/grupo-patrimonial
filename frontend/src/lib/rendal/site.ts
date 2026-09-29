@@ -6,9 +6,7 @@ export function rendalWhatsapp(text: string) {
 }
 
 export function getRendalSiteUrl() {
-  const fromEnv =
-    process.env.NEXT_PUBLIC_RENDAL_URL?.trim() ||
-    process.env.NEXT_PUBLIC_SITE_URL?.trim();
+  const fromEnv = process.env.NEXT_PUBLIC_RENDAL_URL?.trim();
   if (fromEnv) return fromEnv.replace(/\/$/, "");
-  return "https://gruporendal.com.br";
+  return "https://gruporendal.com";
 }
