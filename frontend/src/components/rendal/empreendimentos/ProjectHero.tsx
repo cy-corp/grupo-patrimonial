@@ -2,6 +2,8 @@
 
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
+import { ArrowLeft } from "@phosphor-icons/react";
 import { EASE, headlineLight } from "@/lib/rendal/tokens";
 import { PageHero } from "@/components/rendal/PageHero";
 import { SegmentedControl } from "@/components/rendal/SegmentedControl";
@@ -16,6 +18,19 @@ export function ProjectHero({ item }: { item: Empreendimento }) {
     return <VideoHero item={item} />;
   }
   return <FacadeHero item={item} />;
+}
+
+function BackToEmpreendimentos() {
+  return (
+    <Link
+      href="/empreendimentos"
+      className="inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-[#7A4A2B] transition-colors duration-700 hover:text-[#1F1F1F] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#7A4A2B]"
+      style={{ transitionTimingFunction: EASE }}
+    >
+      <ArrowLeft weight="bold" className="size-4 shrink-0" aria-hidden />
+      Empreendimentos
+    </Link>
+  );
 }
 
 function projectTitle(nome: string) {
@@ -39,6 +54,7 @@ function VideoHero({ item }: { item: Empreendimento }) {
   return (
     <PageHero
       className="pb-24"
+      back={<BackToEmpreendimentos />}
       eyebrow={`${STATUS_LABEL[item.status]} · ${item.bairro ?? item.cidade}`}
       title={projectTitle(item.nome)}
       subtitle={item.heroLead ?? fatosDoEmpreendimento(item)}
@@ -61,6 +77,7 @@ function FacadeHero({ item }: { item: Empreendimento }) {
     <PageHero
       className="pb-24"
       wide
+      back={<BackToEmpreendimentos />}
       eyebrow={`${STATUS_LABEL[item.status]} · ${item.bairro ?? item.cidade}`}
       title={projectTitle(item.nome)}
       subtitle={item.heroLead ?? fatosDoEmpreendimento(item)}

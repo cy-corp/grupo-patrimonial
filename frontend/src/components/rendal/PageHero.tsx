@@ -11,6 +11,7 @@ export function PageHero({
   imageAlt,
   media,
   action,
+  back,
   dark = false,
   grain = false,
   paper = true,
@@ -26,6 +27,8 @@ export function PageHero({
   /** Replaces the default image frame when provided. */
   media?: ReactNode;
   action?: ReactNode;
+  /** Top-left control, e.g. back to listing. */
+  back?: ReactNode;
   dark?: boolean;
   /** Stronger grain + gradient wash — use on dark heroes that feel flat. */
   grain?: boolean;
@@ -48,6 +51,7 @@ export function PageHero({
       )}
     >
       <div className={cn("relative z-[1] mx-auto flex w-full flex-col items-center", wide ? "max-w-7xl" : "max-w-6xl")}>
+        {back ? <div className="mb-8 w-full self-start">{back}</div> : null}
         <header className="mx-auto max-w-[680px] text-center">
           <p className={cn("text-sm font-semibold", dark ? "text-[#C9A96A]" : "text-[#7A4A2B]")}>
             {eyebrow}
