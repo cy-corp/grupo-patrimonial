@@ -15,6 +15,7 @@ export function PageHero({
   grain = false,
   paper = true,
   priority = false,
+  wide = false,
   className,
 }: {
   eyebrow: string;
@@ -31,6 +32,8 @@ export function PageHero({
   /** Paper noise on the cream. Off when the media already paints that cream. */
   paper?: boolean;
   priority?: boolean;
+  /** Wider media column; title stays on the 680px measure. */
+  wide?: boolean;
   className?: string;
 }) {
   return (
@@ -44,7 +47,7 @@ export function PageHero({
         className ?? "pb-12 sm:pb-20",
       )}
     >
-      <div className="relative z-[1] mx-auto flex max-w-6xl flex-col items-center">
+      <div className={cn("relative z-[1] mx-auto flex w-full flex-col items-center", wide ? "max-w-7xl" : "max-w-6xl")}>
         <header className="mx-auto max-w-[680px] text-center">
           <p className={cn("text-sm font-semibold", dark ? "text-[#C9A96A]" : "text-[#7A4A2B]")}>
             {eyebrow}

@@ -47,14 +47,30 @@ export default function EmpreendimentosPage() {
       </RendalReveal>
 
       <section className="px-6 py-12 sm:py-20" aria-label="Lista de empreendimentos">
-        <div className={single ? "mx-auto max-w-5xl" : "mx-auto grid max-w-6xl gap-6 md:grid-cols-2 xl:grid-cols-3"}>
+        <div
+          className={
+            single
+              ? "mx-auto max-w-5xl"
+              : "mx-auto flex max-w-6xl flex-wrap justify-center gap-6"
+          }
+        >
           {list.map((item, index) => (
-            <RendalReveal key={item.slug} delayMs={index * 80}>
+            <RendalReveal
+              key={item.slug}
+              delayMs={index * 80}
+              className={
+                single
+                  ? undefined
+                  : list.length <= 2
+                    ? "flex w-full md:w-[calc((100%-1.5rem)/2)]"
+                    : "flex w-full md:w-[calc((100%-1.5rem)/2)] xl:w-[calc((100%-3rem)/3)]"
+              }
+            >
             <article
-              className={single ? "relative grid overflow-hidden rounded-3xl bg-white ring-1 ring-[#1F1F1F]/10 md:grid-cols-2" : "relative h-full overflow-hidden rounded-3xl bg-white ring-1 ring-[#1F1F1F]/10"}
+              className={single ? "relative grid w-full overflow-hidden rounded-3xl bg-white ring-1 ring-[#1F1F1F]/10 md:grid-cols-2" : "relative h-full w-full overflow-hidden rounded-3xl bg-white ring-1 ring-[#1F1F1F]/10"}
             >
               <div className={single ? "relative aspect-[4/5] md:aspect-auto md:min-h-[320px]" : "relative aspect-[4/5] md:aspect-[4/3]"}>
-                <Image src={item.heroDia.src} alt={item.heroDia.alt} fill priority={single} sizes={single ? "(max-width: 768px) 100vw, 50vw" : "(max-width: 768px) 100vw, 33vw"} className="object-cover" />
+                <Image src={item.heroDia.src} alt={item.heroDia.alt} fill priority={single} sizes="(max-width: 768px) 100vw, 50vw" className="object-cover" />
                 <StatusChip status={item.status} className="absolute top-4 left-4" />
               </div>
               <div className="flex flex-col justify-center p-6">
