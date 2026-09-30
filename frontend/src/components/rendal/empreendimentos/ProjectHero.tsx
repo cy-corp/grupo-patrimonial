@@ -129,12 +129,13 @@ function HeroVideo({ src, poster, alt }: { src: string; poster: string; alt: str
       alt={alt}
       fill
       priority
-      sizes="(max-width: 1024px) 100vw, 1152px"
-      className="object-cover"
+      sizes="(max-width: 768px) 100vw, 576px"
+      className="object-cover object-center"
     />
   );
 
-  const frame = "relative aspect-video w-full overflow-hidden rounded-3xl bg-[#EDE6DA] ring-1 ring-[#1F1F1F]/10";
+  const frame =
+    "relative mx-auto block aspect-[4/5] w-full max-w-xl overflow-hidden rounded-3xl bg-[#EDE6DA] ring-1 ring-[#1F1F1F]/10";
 
   if (!ready) {
     return <div className={frame}>{posterImage}</div>;
@@ -154,11 +155,11 @@ function HeroVideo({ src, poster, alt }: { src: string; poster: string; alt: str
       {posterImage}
       <video
         ref={ref}
-        className="pointer-events-none absolute inset-0 h-full w-full object-cover"
+        className="pointer-events-none absolute inset-0 h-full w-full object-cover object-center"
         src={src}
         poster={poster}
-        width={1280}
-        height={720}
+        width={960}
+        height={1200}
         autoPlay
         muted
         loop

@@ -80,6 +80,7 @@ export default async function EmpreendimentoPage({
       <ProjectHero item={item} />
 
       {lote && item.racional.length ? (
+        <RendalReveal>
         <section className="bg-white px-6 py-24" aria-labelledby="fatos-titulo">
           <div className="mx-auto max-w-6xl">
             <SectionHeader
@@ -101,6 +102,7 @@ export default async function EmpreendimentoPage({
             </div>
           </div>
         </section>
+        </RendalReveal>
       ) : null}
 
       {item.diaNaCasa.length ? (

@@ -77,7 +77,7 @@ export function PageHero({
           {action ? <div className="mt-8">{action}</div> : null}
         </header>
         {media ? (
-          <div className="mt-10 w-full">{media}</div>
+          <div className="mt-10 flex w-full justify-center">{media}</div>
         ) : image ? (
           <div className="relative mt-10 aspect-[4/5] max-h-[60svh] w-full overflow-hidden rounded-3xl bg-[#EDE6DA] md:aspect-video md:max-h-none">
             <Image
