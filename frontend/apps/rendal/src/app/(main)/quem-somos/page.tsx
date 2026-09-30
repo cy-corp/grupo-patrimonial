@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { preload } from "react-dom";
 import { PageHero } from "@/components/rendal/PageHero";
 import { SectionHeader } from "@/components/rendal/SectionHeader";
 import { FinalCta } from "@/components/rendal/FinalCta";
@@ -6,6 +7,7 @@ import { RendalButton } from "@/components/rendal/RendalButton";
 import { RendalReveal } from "@/components/rendal/RendalReveal";
 import { Decisions } from "@/components/rendal/quem-somos/Decisions";
 import { MaterialsMark } from "@/components/rendal/quem-somos/MaterialsMark";
+import { LOGO_BRUTA } from "@/lib/rendal/content/materias";
 import { getRendalSiteUrl } from "@/lib/rendal/site";
 
 export const metadata: Metadata = {
@@ -31,6 +33,7 @@ const PRINCIPIOS = [
 ];
 
 export default function QuemSomosPage() {
+  preload(LOGO_BRUTA.src, { as: "image", fetchPriority: "high" });
   const org = {
     "@context": "https://schema.org",
     "@type": "Organization",

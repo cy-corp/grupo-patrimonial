@@ -11,7 +11,7 @@ export type Materia = {
 
 /** Render único 2172×724 no creme `#F8F1E3` (sem knockout: o isopor é branco demais pra furar o fundo). */
 export const LOGO_BRUTA = {
-  src: "/quem-somos/logo-bruta.png",
+  src: "/quem-somos/logo-bruta.webp",
   width: 2172,
   height: 724,
   alt: "Símbolo da Rendal em quatro matérias: terra, concreto, aço e isopor",

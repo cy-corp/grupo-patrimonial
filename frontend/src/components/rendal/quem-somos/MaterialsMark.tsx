@@ -1,7 +1,6 @@
 "use client";
 
 import { useRef, useState, type CSSProperties, type KeyboardEvent } from "react";
-import { preload } from "react-dom";
 import { cn } from "@/lib/utils";
 import { EASE } from "@/lib/rendal/tokens";
 import { IDLE, LOGO_BRUTA, MATERIAS, type MateriaId } from "@/lib/rendal/content/materias";
@@ -67,9 +66,7 @@ function Stage({
 }
 
 export function MaterialsMark() {
-  preload(LOGO_BRUTA.src, { as: "image", fetchPriority: "high" });
-
-  const [activeId, setActiveId] = useState<MateriaId | null>(null);
+  const [activeId, setActiveId] = useState<MateriaId>("terra");
   const railRef = useRef<HTMLOListElement>(null);
 
   const activeIndex = MATERIAS.findIndex((m) => m.id === activeId);
