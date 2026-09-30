@@ -146,7 +146,13 @@ export function useLightbox(images: Midia[]) {
   return { openAt, props };
 }
 
-export function Gallery({ images }: { images: Midia[] }) {
+export function Gallery({
+  images,
+  featuredFirst = false,
+}: {
+  images: Midia[];
+  featuredFirst?: boolean;
+}) {
   const { openAt, props } = useLightbox(images);
 
   if (!images.length) return null;
@@ -154,20 +160,30 @@ export function Gallery({ images }: { images: Midia[] }) {
   return (
     <>
       <ul className="m-0 grid list-none grid-cols-1 gap-3 p-0 sm:grid-cols-2 lg:grid-cols-3">
-        {images.map((image) => (
-          <li key={image.src}>
+        {images.map((image, index) => (
+          <li
+            key={image.src}
+            className={featuredFirst && index === 0 ? "sm:col-span-2" : undefined}
+          >
             <button
               type="button"
               aria-label={`Ampliar: ${image.alt}`}
               onClick={() => openAt(image.src)}
-              className="relative block aspect-[16/10] w-full cursor-pointer overflow-hidden rounded-2xl bg-[#EDE6DA] transition-transform duration-500 hover:scale-[1.01] motion-reduce:transition-none motion-reduce:hover:scale-100"
+              className={cn(
+                "relative block w-full cursor-pointer overflow-hidden rounded-2xl bg-[#EDE6DA] transition-transform duration-500 hover:scale-[1.01] motion-reduce:transition-none motion-reduce:hover:scale-100",
+                featuredFirst && index === 0 ? "aspect-[16/9]" : "aspect-[16/10]",
+              )}
               style={{ transitionTimingFunction: EASE }}
             >
               <Image
                 src={image.src}
                 alt={image.alt}
                 fill
-                sizes="(max-width: 1024px) 100vw, 33vw"
+                sizes={
+                  featuredFirst && index === 0
+                    ? "(max-width: 1024px) 100vw, 66vw"
+                    : "(max-width: 1024px) 100vw, 33vw"
+                }
                 className={image.fit === "contain" ? "object-contain p-3" : "object-cover"}
               />
             </button>

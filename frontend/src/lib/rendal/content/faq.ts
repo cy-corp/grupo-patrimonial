@@ -48,6 +48,19 @@ export const faqCapetinga: FaqItem[] = [
   faqHome[6],
 ];
 
+export const faqPassos: FaqItem[] = [
+  faqHome[3],
+  {
+    q: "O que está à venda agora?",
+    a: "Lotes no loteamento em implantação. As vias e a demarcação já estão no terreno. A casa entra depois, no modelo Rendal, se for o seu caminho.",
+  },
+  {
+    q: "Dá para financiar?",
+    a: "Depende do lote e da fase. Na visita ou em Contato, a equipe orienta o caminho com a Caixa e outros bancos. A aprovação final é da instituição.",
+  },
+  faqHome[5],
+];
+
 export const faqProprietarios: FaqItem[] = [
   {
     q: "Preciso pagar pelo estudo?",

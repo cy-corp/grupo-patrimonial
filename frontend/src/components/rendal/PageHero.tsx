@@ -10,10 +10,12 @@ export function PageHero({
   image,
   imageAlt,
   media,
+  action,
   dark = false,
   grain = false,
   paper = true,
   priority = false,
+  className,
 }: {
   eyebrow: string;
   title: ReactNode;
@@ -22,21 +24,24 @@ export function PageHero({
   imageAlt?: string;
   /** Replaces the default image frame when provided. */
   media?: ReactNode;
+  action?: ReactNode;
   dark?: boolean;
   /** Stronger grain + gradient wash — use on dark heroes that feel flat. */
   grain?: boolean;
   /** Paper noise on the cream. Off when the media already paints that cream. */
   paper?: boolean;
   priority?: boolean;
+  className?: string;
 }) {
   return (
     <section
       id="page-hero"
       className={cn(
-        "relative px-6 pt-36 pb-12 sm:pb-20",
+        "relative px-6 pt-36",
         paper && "rendal-hero-paper",
         dark ? "bg-[#1F1F1F]" : "bg-[#F8F1E3]",
         grain && "rendal-hero-grain",
+        className ?? "pb-12 sm:pb-20",
       )}
     >
       <div className="relative z-[1] mx-auto flex max-w-6xl flex-col items-center">
@@ -66,6 +71,7 @@ export function PageHero({
           >
             {subtitle}
           </p>
+          {action ? <div className="mt-8">{action}</div> : null}
         </header>
         {media ? (
           <div className="mt-10 w-full">{media}</div>

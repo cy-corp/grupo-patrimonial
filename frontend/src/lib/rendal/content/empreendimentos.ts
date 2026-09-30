@@ -37,8 +37,13 @@ export type Empreendimento = {
   precoAPartirDe?: number;
   precoPublico: boolean;
   diferenciais: Array<"laje-lazer" | "lavabo-social" | "fachada" | "integracao">;
+  /** Overrides the differential line when the product is not the house kit. */
+  fatos?: string;
+  /** Longer line under the video hero title. */
+  heroLead?: string;
   heroDia: Midia;
   heroNoite: Midia;
+  heroVideo?: Midia & { poster: string };
   galeria: Midia[];
   plantas: Planta[];
   hotspots: Hotspot[];
@@ -49,8 +54,78 @@ export type Empreendimento = {
 };
 
 const CAPETINGA = "/referencia/capetinga-dener";
+const PASSOS = "/referencia/passos";
 
 export const empreendimentos: Empreendimento[] = [
+  {
+    slug: "passos",
+    nome: "Loteamento Passos",
+    status: "obra",
+    cidade: "Passos",
+    bairro: "Passos, MG",
+    precoPublico: false,
+    diferenciais: [],
+    fatos: "vias em execução · lotes demarcados · Passos, MG",
+    heroLead: "Um terreno em Passos, já no chão. Veja o projeto.",
+    heroDia: {
+      src: `${PASSOS}/01-vista-vale.jpg`,
+      alt: "Vista do Loteamento Passos ao pôr do sol, com vias e o vale ao fundo",
+    },
+    heroNoite: {
+      src: `${PASSOS}/03-via-por-do-sol.jpg`,
+      alt: "Via do Loteamento Passos ao entardecer",
+    },
+    heroVideo: {
+      src: `${PASSOS}/video-hero.mp4`,
+      poster: `${PASSOS}/video-poster.jpg`,
+      alt: "Percurso pelas vias do Loteamento Passos",
+    },
+    galeria: [
+      {
+        src: `${PASSOS}/01-vista-vale.jpg`,
+        alt: "Vista do loteamento e do vale ao pôr do sol",
+      },
+      {
+        src: `${PASSOS}/02-via-curva-mata.jpg`,
+        alt: "Via em curva com guia de concreto e mata ao fundo",
+      },
+      {
+        src: `${PASSOS}/03-via-por-do-sol.jpg`,
+        alt: "Via do loteamento ao entardecer",
+      },
+      {
+        src: `${PASSOS}/04-via-subida.jpg`,
+        alt: "Via subindo o loteamento, com casas vizinhas à esquerda",
+      },
+      {
+        src: `${PASSOS}/05-lotes-marcadores.jpg`,
+        alt: "Lotes demarcados com marcadores no terreno",
+      },
+    ],
+    plantas: [],
+    hotspots: [],
+    racional: [
+      {
+        titulo: "Vias em execução",
+        texto: "Guias, drenagem e terrapleno já no lugar. O loteamento está saindo do papel.",
+      },
+      {
+        titulo: "Lotes demarcados",
+        texto: "Os limites estão marcados no terreno. Na visita, você vê o lote e o entorno.",
+      },
+      {
+        titulo: "Vista para o vale",
+        texto: "Passos, MG, com mata e cidade ao fundo. O lugar é o produto, nesta fase.",
+      },
+    ],
+    diaNaCasa: [],
+    localizacao: {
+      enderecoPublico: "Passos, MG",
+      mapas: "https://www.google.com/maps/search/?api=1&query=Passos%20MG",
+      waze: "https://waze.com/ul?q=Passos%20MG&navigate=yes",
+      proximidades: [],
+    },
+  },
   {
     slug: "capetinga",
     nome: "Residencial Capetinga",
@@ -210,6 +285,7 @@ const DIFERENCIAL: Record<Empreendimento["diferenciais"][number], string> = {
 };
 
 export function fatosDoEmpreendimento(item: Empreendimento) {
+  if (item.fatos) return item.fatos;
   return item.diferenciais.map((id) => DIFERENCIAL[id]).join(" · ");
 }
 

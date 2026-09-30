@@ -46,7 +46,7 @@ import { cn } from "@/lib/utils";
 
 const DRAFT_KEY = "rendal:financiamento:v2";
 const DRAFT_TTL_MS = 7 * 24 * 60 * 60 * 1000;
-const UF_POR_CIDADE: Record<string, Uf> = { Capetinga: "MG" };
+const UF_POR_CIDADE: Record<string, Uf> = { Capetinga: "MG", Passos: "MG" };
 
 const COPY: Record<EtapaId, { title: string; text: string }> = {
   imovel: { title: "Qual imóvel você quer financiar?", text: "Cidade, valor e o prazo que você tem em mente." },

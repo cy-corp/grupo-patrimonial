@@ -14,7 +14,8 @@ import {
 const EASE = "cubic-bezier(0.32,0.72,0,1)";
 const FACADE = "/wireframes/fachada-noite.jpg";
 
-const PRICE_FROM = empreendimentos[0]?.precoAPartirDe ?? 289_000;
+const PRICE_FROM =
+  empreendimentos.find((item) => item.precoAPartirDe)?.precoAPartirDe ?? 289_000;
 const MIN = 150_000;
 const MAX = 900_000;
 const STEP = 10_000;
