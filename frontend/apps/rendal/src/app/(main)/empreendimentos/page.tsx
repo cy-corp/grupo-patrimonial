@@ -9,7 +9,6 @@ import {
   empreendimentos,
   fatosDoEmpreendimento,
   formatPreco,
-  type EmpreendimentoStatus,
 } from "@/lib/rendal/content/empreendimentos";
 import { faqEmpreendimentos } from "@/lib/rendal/content/faq";
 import { RendalReveal } from "@/components/rendal/RendalReveal";
@@ -21,23 +20,8 @@ export const metadata: Metadata = {
   alternates: { canonical: "/empreendimentos" },
 };
 
-const STATUS: EmpreendimentoStatus[] = ["lancamento", "obra", "entregue", "referencia"];
-
-export default async function EmpreendimentosPage({
-  searchParams,
-}: {
-  searchParams: Promise<{ status?: string; cidade?: string }>;
-}) {
-  const params = await searchParams;
-  const showFilters = empreendimentos.length > 1;
-  const status = STATUS.find((item) => item === params.status);
-  const cidade = params.cidade;
-  const list = empreendimentos.filter((item) => {
-    if (status && item.status !== status) return false;
-    if (cidade && item.cidade !== cidade) return false;
-    return true;
-  });
-  const cidades = [...new Set(empreendimentos.map((item) => item.cidade))];
+export default function EmpreendimentosPage() {
+  const list = empreendimentos;
   const single = empreendimentos.length === 1;
 
   const itemList = {
@@ -61,27 +45,6 @@ export default async function EmpreendimentosPage({
           subtitle="Laje de lazer, lavabo social e acabamento onde faz diferença. Veja plantas e condições antes de visitar."
         />
       </RendalReveal>
-
-      {showFilters ? (
-        <div className="mx-auto flex max-w-5xl flex-col gap-3 px-6">
-          <div className="flex gap-2 overflow-x-auto">
-            <Filter href="/empreendimentos" on={!status}>Todos</Filter>
-            <Filter href="/empreendimentos?status=lancamento" on={status === "lancamento"}>Em lançamento</Filter>
-            <Filter href="/empreendimentos?status=obra" on={status === "obra"}>Em obra</Filter>
-            <Filter href="/empreendimentos?status=entregue" on={status === "entregue"}>Entregues</Filter>
-            <Filter href="/empreendimentos?status=referencia" on={status === "referencia"}>Referência</Filter>
-          </div>
-          {cidades.length > 1 ? (
-            <div className="flex gap-2 overflow-x-auto">
-              {cidades.map((item) => (
-                <Filter key={item} href={`/empreendimentos?cidade=${encodeURIComponent(item)}`} on={cidade === item}>
-                  {item}
-                </Filter>
-              ))}
-            </div>
-          ) : null}
-        </div>
-      ) : null}
 
       <section className="px-6 py-12 sm:py-20" aria-label="Lista de empreendimentos">
         <div className={single ? "mx-auto max-w-5xl" : "mx-auto grid max-w-6xl gap-6 md:grid-cols-2 xl:grid-cols-3"}>
@@ -130,17 +93,5 @@ export default async function EmpreendimentosPage({
 
       <FaqList items={faqEmpreendimentos} title="Antes da visita" />
     </main>
-  );
-}
-
-function Filter({ href, on, children }: { href: string; on: boolean; children: React.ReactNode }) {
-  return (
-    <Link
-      href={href}
-      aria-current={on ? "true" : undefined}
-      className={on ? "inline-flex min-h-11 shrink-0 items-center rounded-full bg-[#1F1F1F] px-4 text-sm font-semibold text-white" : "inline-flex min-h-11 shrink-0 items-center rounded-full bg-white px-4 text-sm font-semibold text-[#1F1F1F] ring-1 ring-[#1F1F1F]/10"}
-    >
-      {children}
-    </Link>
   );
 }
