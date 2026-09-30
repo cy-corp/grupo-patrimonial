@@ -11,10 +11,10 @@ import {
   useRef,
   useState,
   type CSSProperties,
-  type ReactNode,
 } from "react";
 import { CaretDown } from "@phosphor-icons/react";
 import { siteConfigs } from "@grupo-patrimonial/site-config";
+import { CssGlass } from "@/components/rendal/CssGlass";
 import { cn } from "@/lib/utils";
 
 const HERO_IMG = "/wireframes/hero-preview-ceu.jpg";
@@ -24,37 +24,6 @@ const NAV_DESKTOP = "min-[1150px]";
 
 const PRIMARY_CTA =
   "inline-flex h-11 items-center justify-center gap-2 rounded-full bg-[#1F1F1F] px-5 text-sm font-semibold tracking-tight text-white transition-[background-color,transform,box-shadow] duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] hover:bg-[#333333] hover:shadow-[0_8px_24px_rgba(31,31,31,0.28)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white active:scale-[0.98] sm:h-12 sm:px-6 sm:text-base";
-
-function CssGlass({
-  className,
-  children,
-  borderless = false,
-  radius = 999,
-}: {
-  className?: string;
-  children: ReactNode;
-  borderless?: boolean;
-  radius?: number | string | false;
-}) {
-  return (
-    <div
-      className={className}
-      style={{
-        ...(radius === false ? {} : { borderRadius: radius }),
-        background:
-          "linear-gradient(135deg, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0.07) 50%, rgba(255,255,255,0.12) 100%)",
-        backdropFilter: "blur(16px) saturate(150%)",
-        WebkitBackdropFilter: "blur(16px) saturate(150%)",
-        border: borderless ? "none" : "0.5px solid rgba(255,255,255,0.18)",
-        boxShadow: borderless
-          ? "0 8px 24px rgba(0,0,0,0.14)"
-          : "inset 0 0.5px 0 rgba(255,255,255,0.4), 0 8px 24px rgba(0,0,0,0.14)",
-      }}
-    >
-      {children}
-    </div>
-  );
-}
 
 function cssNumber(name: string, fallback: number) {
   if (typeof window === "undefined") return fallback;
