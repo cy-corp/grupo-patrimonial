@@ -5,6 +5,7 @@ import { FinalCta } from "@/components/rendal/FinalCta";
 import { RendalButton } from "@/components/rendal/RendalButton";
 import { RendalReveal } from "@/components/rendal/RendalReveal";
 import { Decisions } from "@/components/rendal/quem-somos/Decisions";
+import { MaterialsMark } from "@/components/rendal/quem-somos/MaterialsMark";
 import { getRendalSiteUrl } from "@/lib/rendal/site";
 
 export const metadata: Metadata = {
@@ -41,14 +42,12 @@ export default function QuemSomosPage() {
   return (
     <main id="conteudo" className="bg-[#F8F1E3]">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(org) }} />
-      <RendalReveal>
+      <RendalReveal blur={false}>
         <PageHero
           eyebrow="A Rendal"
           title="Incorporação com o orçamento no lugar certo."
           subtitle="Do terreno à entrega, cada decisão de projeto é tomada pelo que gera uso e valor para quem mora."
-          image="/quem-somos/quem-somos-hero.jpg"
-          imageAlt="Equipe e método da Rendal"
-          priority
+          media={<MaterialsMark />}
         />
       </RendalReveal>
 

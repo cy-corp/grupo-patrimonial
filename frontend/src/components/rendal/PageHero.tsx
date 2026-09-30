@@ -9,6 +9,7 @@ export function PageHero({
   subtitle,
   image,
   imageAlt,
+  media,
   dark = false,
   grain = false,
   priority = false,
@@ -18,6 +19,8 @@ export function PageHero({
   subtitle: string;
   image?: string;
   imageAlt?: string;
+  /** Replaces the default image frame when provided. */
+  media?: ReactNode;
   dark?: boolean;
   /** Stronger grain + gradient wash — use on dark heroes that feel flat. */
   grain?: boolean;
@@ -60,7 +63,9 @@ export function PageHero({
             {subtitle}
           </p>
         </header>
-        {image ? (
+        {media ? (
+          <div className="mt-10 w-full">{media}</div>
+        ) : image ? (
           <div className="relative mt-10 aspect-[4/5] max-h-[60svh] w-full overflow-hidden rounded-3xl bg-[#EDE6DA] md:aspect-video md:max-h-none">
             <Image
               src={image}

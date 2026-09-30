@@ -14,10 +14,13 @@ export function RendalReveal({
   children,
   className,
   delayMs = 0,
+  blur = true,
 }: {
   children: ReactNode;
   className?: string;
   delayMs?: number;
+  /** Blur smears high-contrast renders (the brute lockup). Skip it there. */
+  blur?: boolean;
 }) {
   const ref = useRef<HTMLDivElement>(null);
   const [shown, setShown] = useState(false);
@@ -49,8 +52,10 @@ export function RendalReveal({
     <div
       ref={ref}
       className={cn(
-        "transition-[opacity,filter,transform] duration-700",
-        shown ? "opacity-100" : "translate-y-16 opacity-0 blur-md",
+        "transition-[opacity,transform] duration-700",
+        blur && "transition-[opacity,filter,transform]",
+        shown ? "opacity-100" : "translate-y-16 opacity-0",
+        !shown && blur && "blur-md",
         className,
       )}
       style={

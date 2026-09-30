@@ -225,7 +225,7 @@ Seções:
    - Eyebrow: *A Rendal*
    - H1: **Incorporação com o orçamento no lugar certo.**
    - Sub: *Do terreno à entrega, cada decisão de projeto é tomada pelo que gera uso e valor para quem mora.*
-   - Mídia: `quem-somos/quem-somos-hero.jpg` (substituir por foto real quando houver).
+   - Mídia: `MaterialsMark` com `quem-somos/logo-bruta.png` (lockup bruto com alfa). Hover/tap em cada pedra (Terra, Concreto, Aço, EPS) e arco civilizacional na legenda. Navegável por tap, foco e setas. Nav continua na logomarca polida.
 
 2. **Decisões, não adjetivos** — *peça fora da caixa*
    Uma sequência de "antes → decisão Rendal" em cartões que viram (flip horizontal no desktop, empilhado com transição de texto no mobile):
