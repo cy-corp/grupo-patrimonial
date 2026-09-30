@@ -135,12 +135,12 @@ export function DocumentosStep({
                 <p className="text-sm font-semibold text-[#1F1F1F]">{slot.label}</p>
                 <p className="mt-0.5 text-sm leading-5 text-[#1F1F1F]/55">{slot.hint}</p>
               </div>
-              {arquivos.length ? <Check weight="bold" className="mt-0.5 size-4 shrink-0 text-[#0F5B63]" aria-hidden /> : null}
+              {arquivos.length ? <Check weight="bold" className="mt-0.5 size-4 shrink-0 text-[#7A4A2B]" aria-hidden /> : null}
             </div>
             {slot.escolha ? (
               <div className="mt-3 grid gap-2">
                 {COMPROVANTES.map((item) => (
-                  <label key={item.id} className={cn(choiceClass, escolha === item.id ? "bg-[#0F5B63] text-white ring-[#0F5B63]" : "bg-white text-[#1F1F1F] ring-[#1F1F1F]/12")}>
+                  <label key={item.id} className={cn(choiceClass, escolha === item.id ? "bg-[#1F1F1F] text-white ring-[#7A4A2B]" : "bg-white text-[#1F1F1F] ring-[#1F1F1F]/12")}>
                     <input
                       type="radio"
                       name={slot.escolha}
@@ -160,7 +160,7 @@ export function DocumentosStep({
                   key={arquivo.pathname}
                   className="grid min-w-0 grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-2 overflow-hidden rounded-xl bg-white px-3 py-2 text-sm"
                 >
-                  <FileText className="size-4 shrink-0 text-[#0F5B63]" aria-hidden />
+                  <FileText className="size-4 shrink-0 text-[#7A4A2B]" aria-hidden />
                   <span className="min-w-0 truncate font-semibold" title={arquivo.name}>
                     {nomeVisivel(arquivo.name)}
                   </span>
@@ -176,7 +176,7 @@ export function DocumentosStep({
               ))}
             </ul>
             {arquivos.length < slot.max ? (
-              <label className="mt-3 flex min-h-12 cursor-pointer items-center justify-center rounded-full bg-white px-4 text-sm font-semibold text-[#0F5B63] ring-1 ring-[#0F5B63]/20">
+              <label className="mt-3 flex min-h-12 cursor-pointer items-center justify-center rounded-full bg-white px-4 text-sm font-semibold text-[#7A4A2B] ring-1 ring-[#7A4A2B]/20">
                 {busy === slot.id
                   ? `Enviando ${Math.round(progresso)}%`
                   : slot.max === 1

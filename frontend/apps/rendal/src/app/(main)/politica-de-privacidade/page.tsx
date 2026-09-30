@@ -33,7 +33,7 @@ export default function PoliticaPage() {
           Política de Privacidade
         </h1>
         <details className="mt-8 rounded-2xl bg-white p-4 ring-1 ring-[#1F1F1F]/10">
-          <summary className="min-h-11 cursor-pointer text-sm font-semibold text-[#0F5B63]">Índice</summary>
+          <summary className="min-h-11 cursor-pointer text-sm font-semibold text-[#7A4A2B]">Índice</summary>
           <nav className="mt-3 flex flex-col gap-2" aria-label="Índice">
             {SECTIONS.map((section) => (
               <a key={section.id} href={`#${section.id}`} className="inline-flex min-h-11 items-center text-base text-[#1F1F1F]">
@@ -53,7 +53,7 @@ export default function PoliticaPage() {
         <p className="mt-10 text-sm leading-6 text-[#1F1F1F]/60">
           Texto operacional do site. A revisão jurídica ainda precisa validar o documento final.
         </p>
-        <Link href="/contato" className="mt-8 inline-flex h-12 items-center rounded-full bg-[#0F5B63] px-6 font-semibold text-white">
+        <Link href="/contato" className="mt-8 inline-flex h-12 items-center rounded-full bg-[#1F1F1F] px-6 font-semibold text-white">
           Ir para contato
         </Link>
       </article>

@@ -77,8 +77,8 @@ function Jaw({
       <Image
         src={companyId === "rendal" ? "/brands/rendal-logo.png" : "/brands/dcorp-logo.png"}
         alt=""
-        width={1016}
-        height={813}
+        width={1461}
+        height={887}
         className="mt-4 h-12 w-auto max-w-[10rem] object-contain md:mt-5 md:h-16 md:max-w-[13rem]"
       />
       <span className="mt-4 font-display text-3xl text-graphite md:mt-5 md:text-5xl">

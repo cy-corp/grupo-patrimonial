@@ -684,7 +684,7 @@ export function htmlDossier(draft: Draft, linkArquivo?: (arquivo: ArquivoEnviado
   const body = dossierSections(draft, linkArquivo)
     .map((section) => {
       const parts: string[] = [
-        `<p style="margin:18px 0 8px;font-size:11px;letter-spacing:0.14em;text-transform:uppercase;font-weight:700;color:#0F5B63">${escapeHtml(section.title)}</p>`,
+        `<p style="margin:18px 0 8px;font-size:11px;letter-spacing:0.14em;text-transform:uppercase;font-weight:700;color:#7A4A2B">${escapeHtml(section.title)}</p>`,
       ];
       if (section.rows?.length) {
         parts.push(`<p style="margin:0;line-height:1.7">${section.rows.map(rowHtml).join("<br/>")}</p>`);

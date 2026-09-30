@@ -28,13 +28,13 @@ export function PageHero({
       id="page-hero"
       className={cn(
         "rendal-hero-paper relative px-6 pt-36 pb-12 sm:pb-20",
-        dark ? "bg-[#0E2A2D]" : "bg-[#F8F1E3]",
+        dark ? "bg-[#1F1F1F]" : "bg-[#F8F1E3]",
         grain && "rendal-hero-grain",
       )}
     >
       <div className="relative z-[1] mx-auto flex max-w-6xl flex-col items-center">
         <header className="mx-auto max-w-[680px] text-center">
-          <p className={cn("text-sm font-semibold", dark ? "text-[#C9A96A]" : "text-[#0F5B63]")}>
+          <p className={cn("text-sm font-semibold", dark ? "text-[#C9A96A]" : "text-[#7A4A2B]")}>
             {eyebrow}
           </p>
           <h1 className="mt-4 text-4xl font-semibold leading-[1.2] tracking-tight text-balance sm:text-5xl lg:text-6xl">

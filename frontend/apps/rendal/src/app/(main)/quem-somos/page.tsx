@@ -84,18 +84,21 @@ export default function QuemSomosPage() {
       </RendalReveal>
 
       <RendalReveal>
-        <section className="px-6 py-12 sm:py-20 md:py-24" aria-labelledby="principios-titulo">
+        <section className="px-6 pt-12 pb-10 sm:pt-20 sm:pb-12 md:pt-24 md:pb-16" aria-labelledby="principios-titulo">
           <div className="mx-auto grid max-w-5xl gap-8 md:grid-cols-3">
             <h2 id="principios-titulo" className="sr-only">Como decidimos</h2>
             {PRINCIPIOS.map((item, index) => (
               <RendalReveal key={item.n} delayMs={index * 80}>
                 <article>
-                  <p className="text-4xl font-semibold tabular-nums text-[#0F5B63]">{item.n}</p>
+                  <p className="text-4xl font-semibold tabular-nums text-[#7A4A2B]">{item.n}</p>
                   <h3 className="mt-3 text-2xl font-semibold tracking-tight text-[#1F1F1F]">{item.title}</h3>
                   <p className="mt-2 text-base leading-7 text-[#1F1F1F]/70">{item.text}</p>
                 </article>
               </RendalReveal>
             ))}
+          </div>
+          <div className="mx-auto mt-8 flex max-w-5xl justify-center md:mt-10">
+            <RendalButton href="/empreendimentos" variant="ghost">Ver empreendimentos</RendalButton>
           </div>
         </section>
       </RendalReveal>
@@ -120,11 +123,6 @@ export default function QuemSomosPage() {
       </section>
       */}
 
-      <RendalReveal>
-        <div className="flex justify-center px-6 pb-4">
-          <RendalButton href="/empreendimentos" variant="ghost">Ver empreendimentos</RendalButton>
-        </div>
-      </RendalReveal>
       <FinalCta
         title="Vamos conversar sobre o próximo empreendimento?"
         subtitle="Conte o que você está olhando. A equipe retorna para marcar a conversa certa."

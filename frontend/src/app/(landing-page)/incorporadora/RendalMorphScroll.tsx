@@ -229,7 +229,7 @@ export function RendalMorphScroll() {
           <div className="mx-auto w-full max-w-[1100px] rounded-2xl border border-white/80 bg-[#FBFCFC] px-4 pb-5 pt-5 shadow-[0_18px_50px_rgba(31,31,31,0.08)] sm:px-6 sm:pb-6 sm:pt-6 md:rounded-[2rem] md:px-8 md:pb-7 md:pt-7">
             <div className="mb-4 flex items-end justify-between gap-4 md:mb-5">
               <div className="min-w-0">
-                <p className="m-0 font-sans text-xs font-semibold uppercase tracking-widest text-[#0F5B63]">
+                <p className="m-0 font-sans text-xs font-semibold uppercase tracking-widest text-[#7A4A2B]">
                   Do papel à obra
                 </p>
                 <div className="mt-1 md:mt-1.5">
@@ -327,7 +327,7 @@ export function RendalMorphScroll() {
                     className="h-1 flex-1 overflow-hidden rounded-full bg-[#1F1F1F]/10"
                   >
                     <div
-                      className="h-full rounded-full bg-[#0F5B63]"
+                      className="h-full rounded-full bg-[#1F1F1F]"
                       style={{ width: `${barWidth}%` }}
                     />
                   </div>

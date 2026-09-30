@@ -40,7 +40,7 @@ export function CapitalBar() {
         {CATS.map((cat, index) => (
           <div key={cat.id} className="flex items-center gap-3">
             <div
-              className="h-8 rounded-full bg-[#0F5B63] transition-all duration-700 motion-reduce:transition-none"
+              className="h-8 rounded-full bg-[#1F1F1F] transition-all duration-700 motion-reduce:transition-none"
               style={{ width: `${widths[index]}%`, transitionTimingFunction: EASE }}
             />
             <span className="text-sm font-semibold text-[#1F1F1F]">{cat.label}</span>
@@ -54,7 +54,7 @@ export function CapitalBar() {
             className="flex h-full items-center justify-center overflow-hidden px-2 text-xs font-semibold text-white transition-all duration-700 motion-reduce:transition-none"
             style={{
               width: `${widths[index]}%`,
-              background: index % 2 === 0 ? "#0F5B63" : "#147078",
+              background: index % 2 === 0 ? "#1F1F1F" : "#4D4D4D",
               transitionTimingFunction: EASE,
             }}
           >

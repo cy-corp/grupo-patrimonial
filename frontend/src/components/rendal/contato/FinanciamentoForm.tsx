@@ -62,7 +62,7 @@ const COPY: Record<EtapaId, { title: string; text: string }> = {
 };
 
 const inputClass =
-  "mt-2 h-12 w-full rounded-2xl border border-[#1F1F1F]/15 bg-white px-4 text-base font-normal text-[#1F1F1F] outline-none transition-colors duration-300 placeholder:text-[#1F1F1F]/35 focus-visible:border-[#0F5B63] focus-visible:outline-2 focus-visible:outline-[#0F5B63]";
+  "mt-2 h-12 w-full rounded-2xl border border-[#1F1F1F]/15 bg-white px-4 text-base font-normal text-[#1F1F1F] outline-none transition-colors duration-300 placeholder:text-[#1F1F1F]/35 focus-visible:border-[#7A4A2B] focus-visible:outline-2 focus-visible:outline-[#7A4A2B]";
 
 function Field({
   label,
@@ -211,7 +211,7 @@ function OptionCombobox({
                     className="flex min-h-11 cursor-pointer items-center gap-3 rounded-xl px-3 text-sm font-semibold text-[#1F1F1F] outline-none data-highlighted:bg-[#F8F1E3]"
                   >
                     <span className="min-w-0 flex-1 truncate">{item.label}</span>
-                    <Combobox.ItemIndicator className="text-[#0F5B63]">
+                    <Combobox.ItemIndicator className="text-[#7A4A2B]">
                       <Check weight="bold" className="size-4" aria-hidden />
                     </Combobox.ItemIndicator>
                   </Combobox.Item>
@@ -266,7 +266,7 @@ function Choice({
       aria-pressed={checked}
       className={cn(
         "min-h-12 cursor-pointer rounded-2xl px-3 text-sm font-semibold ring-1 transition-[color,background-color,box-shadow,ring-color] duration-500",
-        checked ? "bg-[#0F5B63] text-white ring-[#0F5B63]" : "bg-white text-[#1F1F1F] ring-[#1F1F1F]/12",
+        checked ? "bg-[#1F1F1F] text-white ring-[#7A4A2B]" : "bg-white text-[#1F1F1F] ring-[#1F1F1F]/12",
       )}
       style={{ transitionTimingFunction: EASE }}
     >
@@ -329,7 +329,7 @@ function TipoGrid({ value, onChange }: { value: string; onChange: (id: Draft["ti
       <span
         ref={pillRef}
         aria-hidden
-        className="pointer-events-none absolute top-0 left-0 z-0 rounded-2xl bg-[#0F5B63] opacity-0 will-change-transform motion-reduce:!transition-none"
+        className="pointer-events-none absolute top-0 left-0 z-0 rounded-2xl bg-[#1F1F1F] opacity-0 will-change-transform motion-reduce:!transition-none"
         style={{ transition: TIPO_MOVE }}
       />
       {TIPOLOGIAS.map((item) => {
@@ -558,7 +558,7 @@ export function FinanciamentoForm({ empreendimento }: { empreendimento?: string 
     const first = draft.voce.nome.trim().split(/\s+/)[0] ?? "";
     return (
       <section ref={sectionRef} id="financiamento" className="scroll-mt-28 overflow-clip rounded-3xl bg-white p-5 ring-1 ring-[#1F1F1F]/10 sm:p-8">
-        <span className="inline-flex size-14 items-center justify-center rounded-full bg-[#0F5B63] text-white" aria-hidden>
+        <span className="inline-flex size-14 items-center justify-center rounded-full bg-[#1F1F1F] text-white" aria-hidden>
           <Check weight="bold" className="size-7" />
         </span>
         <h2 className="mt-5 text-2xl font-semibold tracking-tight text-[#1F1F1F] sm:text-3xl">
@@ -566,12 +566,12 @@ export function FinanciamentoForm({ empreendimento }: { empreendimento?: string 
         </h2>
         <p className="mt-2 max-w-xl text-base leading-7 text-[#1F1F1F]/70">O retorno chega em até dois dias úteis, pelo WhatsApp e pelo e-mail.</p>
         <p className="mt-6 flex gap-2 rounded-2xl bg-[#F8F1E3] p-4 text-sm leading-6 text-[#1F1F1F]/80">
-          <ShieldCheck weight="duotone" className="mt-0.5 size-5 shrink-0 text-[#0F5B63]" aria-hidden />
+          <ShieldCheck weight="duotone" className="mt-0.5 size-5 shrink-0 text-[#7A4A2B]" aria-hidden />
           {FINANCIAMENTO_DISCLAIMER}
         </p>
         <a
           href={whatsappFallback}
-          className="mt-6 inline-flex h-12 items-center justify-center gap-2 rounded-full bg-[#0F5B63] px-5 text-base font-semibold text-white"
+          className="mt-6 inline-flex h-12 items-center justify-center gap-2 rounded-full bg-[#1F1F1F] px-5 text-base font-semibold text-white"
         >
           <WhatsappLogo weight="fill" className="size-5" aria-hidden />
           Falar agora
@@ -589,7 +589,7 @@ export function FinanciamentoForm({ empreendimento }: { empreendimento?: string 
       <div className="grid lg:grid-cols-[minmax(0,1fr)_20rem]">
         <div className="min-w-0 p-5 sm:p-8">
           <header>
-            <p className="inline-flex items-center gap-1.5 rounded-full bg-[#F8F1E3] px-3 py-1 text-xs font-semibold text-[#0F5B63]">
+            <p className="inline-flex items-center gap-1.5 rounded-full bg-[#F8F1E3] px-3 py-1 text-xs font-semibold text-[#7A4A2B]">
               <Clock weight="bold" className="size-3.5" aria-hidden />
               Cotação de crédito
             </p>
@@ -606,7 +606,7 @@ export function FinanciamentoForm({ empreendimento }: { empreendimento?: string 
               <span>Guardamos suas respostas. Continue de onde parou.</span>
               <button
                 type="button"
-                className="min-h-11 cursor-pointer font-semibold text-[#0F5B63]"
+                className="min-h-11 cursor-pointer font-semibold text-[#7A4A2B]"
                 onClick={() => {
                   setDraft(inicial(empreendimento));
                   setEtapaId("imovel");
@@ -636,7 +636,7 @@ export function FinanciamentoForm({ empreendimento }: { empreendimento?: string 
               {etapas.map((item, itemIndex) => (
                 <span key={item.id} className="h-1.5 overflow-hidden rounded-full bg-[#EDE6DA]">
                   <span
-                    className="block h-full origin-left rounded-full bg-[#0F5B63] transition-transform duration-500"
+                    className="block h-full origin-left rounded-full bg-[#1F1F1F] transition-transform duration-500"
                     style={{ transform: `scaleX(${itemIndex <= index ? 1 : 0})`, transitionTimingFunction: EASE }}
                   />
                 </span>
@@ -910,7 +910,7 @@ export function FinanciamentoForm({ empreendimento }: { empreendimento?: string 
                 <div className="mt-6 flex flex-col gap-3">
                   <Revisao draft={draft} onEdit={(id) => goTo(id, true)} />
                   <p className="flex gap-2 rounded-2xl bg-[#F8F1E3] p-4 text-sm leading-6 text-[#1F1F1F]/80">
-                    <ShieldCheck weight="duotone" className="mt-0.5 size-5 shrink-0 text-[#0F5B63]" aria-hidden />
+                    <ShieldCheck weight="duotone" className="mt-0.5 size-5 shrink-0 text-[#7A4A2B]" aria-hidden />
                     {FINANCIAMENTO_DISCLAIMER}
                   </p>
                 </div>
@@ -930,12 +930,12 @@ export function FinanciamentoForm({ empreendimento }: { empreendimento?: string 
                 </button>
               ) : null}
               {etapa.id === "revisao" ? (
-                <button type="submit" disabled={status === "sending"} className="ml-auto inline-flex h-12 cursor-pointer items-center justify-center gap-2 rounded-full bg-[#0F5B63] px-6 text-base font-semibold text-white disabled:cursor-wait disabled:opacity-70">
+                <button type="submit" disabled={status === "sending"} className="ml-auto inline-flex h-12 cursor-pointer items-center justify-center gap-2 rounded-full bg-[#1F1F1F] px-6 text-base font-semibold text-white disabled:cursor-wait disabled:opacity-70">
                   {status === "sending" ? "Enviando…" : "Enviar cotação"}
                   {status === "sending" ? null : <ArrowRight weight="bold" className="size-4" aria-hidden />}
                 </button>
               ) : (
-                <button type="button" onClick={continuar} className="ml-auto inline-flex h-12 cursor-pointer items-center justify-center gap-2 rounded-full bg-[#0F5B63] px-6 text-base font-semibold text-white">
+                <button type="button" onClick={continuar} className="ml-auto inline-flex h-12 cursor-pointer items-center justify-center gap-2 rounded-full bg-[#1F1F1F] px-6 text-base font-semibold text-white">
                   Continuar
                   <ArrowRight weight="bold" className="size-4" aria-hidden />
                 </button>
@@ -950,7 +950,7 @@ export function FinanciamentoForm({ empreendimento }: { empreendimento?: string 
             {etapa.id === "revisao" ? (
               <p className="mt-4 text-xs leading-5 text-[#1F1F1F]/55">
                 Ao enviar, você concorda com o uso destes dados e documentos só para a cotação.{" "}
-                <a href="/politica-de-privacidade" className="font-semibold text-[#0F5B63] underline-offset-2 hover:underline">Política de privacidade</a>.
+                <a href="/politica-de-privacidade" className="font-semibold text-[#7A4A2B] underline-offset-2 hover:underline">Política de privacidade</a>.
               </p>
             ) : null}
           </form>
@@ -963,7 +963,7 @@ export function FinanciamentoForm({ empreendimento }: { empreendimento?: string 
                 const ok = (draft.arquivos[slot.id]?.length ?? 0) >= slot.min;
                 return (
                   <li key={slot.id} className="flex items-start gap-2">
-                    <Check weight="bold" className={cn("mt-0.5 size-4 shrink-0", ok ? "text-[#0F5B63]" : "text-[#1F1F1F]/25")} aria-hidden />
+                    <Check weight="bold" className={cn("mt-0.5 size-4 shrink-0", ok ? "text-[#7A4A2B]" : "text-[#1F1F1F]/25")} aria-hidden />
                     <span className={ok ? "font-semibold text-[#1F1F1F]" : "text-[#1F1F1F]/60"}>{slot.label}</span>
                   </li>
                 );
@@ -1007,10 +1007,10 @@ function Revisao({ draft, onEdit }: { draft: Draft; onEdit: (id: EtapaId) => voi
         <li key={bloco.id}>
           <button type="button" onClick={() => onEdit(bloco.id)} className="flex w-full cursor-pointer items-center gap-3 rounded-2xl bg-[#F8F1E3]/80 px-4 py-3 text-left">
             <span className="min-w-0 flex-1">
-              <span className="text-xs font-semibold tracking-wide text-[#0F5B63] uppercase">{bloco.titulo}</span>
+              <span className="text-xs font-semibold tracking-wide text-[#7A4A2B] uppercase">{bloco.titulo}</span>
               <span className="mt-1 block text-sm leading-6 text-[#1F1F1F]">{bloco.linhas.join(" · ")}</span>
             </span>
-            <PencilSimple weight="bold" className="size-4 shrink-0 text-[#0F5B63]" aria-hidden />
+            <PencilSimple weight="bold" className="size-4 shrink-0 text-[#7A4A2B]" aria-hidden />
             <span className="sr-only">Editar {bloco.titulo}</span>
           </button>
         </li>

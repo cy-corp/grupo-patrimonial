@@ -29,7 +29,7 @@ export function RendalSocialProof() {
 
         <RendalReveal delayMs={120}>
           <div>
-            <p className="text-sm font-semibold uppercase tracking-widest text-[#0F5B63]">
+            <p className="text-sm font-semibold uppercase tracking-widest text-[#7A4A2B]">
               Referência de produto
             </p>
             <h2
@@ -47,7 +47,7 @@ export function RendalSocialProof() {
             <blockquote className="mt-8 rounded-2xl bg-white p-6 ring-1 ring-[#1F1F1F]/10 sm:p-8">
               <Quotes
                 weight="fill"
-                className="size-6 text-[#0F5B63]"
+                className="size-6 text-[#7A4A2B]"
                 aria-hidden
               />
               <p className="mt-3 text-lg leading-8 text-pretty text-[#1F1F1F]">
@@ -61,7 +61,7 @@ export function RendalSocialProof() {
 
             <Link
               href={primaryEmpreendimentoHref()}
-              className="mt-8 inline-flex min-h-11 items-center justify-center rounded-full bg-[#0F5B63] px-6 py-2.5 text-base font-semibold text-white transition-all duration-700 hover:bg-[#0A3F45] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0F5B63] active:scale-[0.98]"
+              className="mt-8 inline-flex min-h-11 items-center justify-center rounded-full bg-[#1F1F1F] px-6 py-2.5 text-base font-semibold text-white transition-all duration-700 hover:bg-[#333333] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#7A4A2B] active:scale-[0.98]"
               style={{ transitionTimingFunction: EASE }}
             >
               Conhecer o empreendimento

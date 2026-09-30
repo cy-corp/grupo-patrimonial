@@ -55,7 +55,7 @@ export function PartnerKit() {
 
       {preview ? (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-[#0E2A2D]/70 p-6"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-[#1F1F1F]/70 p-6"
           role="dialog"
           aria-modal="true"
           aria-label={preview.titulo}
@@ -97,7 +97,7 @@ function KitCard({
   onShare: () => void;
 }) {
   return (
-    <article className="w-full max-w-[280px] overflow-hidden rounded-3xl bg-[#0E2A2D] text-left text-white">
+    <article className="w-full max-w-[280px] overflow-hidden rounded-3xl bg-[#1F1F1F] text-left text-white">
       <button type="button" onClick={onOpen} className="block w-full cursor-pointer text-left">
         <KitFace card={card} />
       </button>
@@ -119,7 +119,7 @@ function KitFace({ card }: { card: Kit }) {
   return (
     <div className="relative aspect-[9/16] w-full">
       <img src={card.imagem} alt="" className="h-full w-full object-cover" />
-      <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-[#0E2A2D] to-transparent p-4">
+      <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-[#1F1F1F] to-transparent p-4">
         <p className="text-xs font-semibold uppercase tracking-widest text-[#C9A96A]">Rendal</p>
         <h3 className="mt-2 text-2xl font-semibold leading-tight tracking-tight text-balance">{card.titulo}</h3>
         <p className="mt-2 text-sm leading-6 text-white/80">{card.frase}</p>
@@ -134,7 +134,7 @@ function DownloadLink({ id, className = "" }: { id: string; className?: string }
       href={`/parceiros/kit/${id}`}
       download={`rendal-${id}.png`}
       onClick={() => track("kit_download", { kit: id })}
-      className={`inline-flex min-h-11 items-center justify-center rounded-full bg-[#0F5B63] text-sm font-semibold ${className}`}
+      className={`inline-flex min-h-11 items-center justify-center rounded-full bg-[#1F1F1F] text-sm font-semibold text-white ${className}`}
     >
       Baixar imagem
     </a>

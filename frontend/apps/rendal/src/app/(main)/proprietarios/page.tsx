@@ -148,7 +148,7 @@ function Model({
       <h3 className="text-xl font-semibold text-[#1F1F1F]">{title}</h3>
       <p className="mt-3 text-base leading-7 text-[#1F1F1F]/70">{como}</p>
       <p className="mt-3 text-base leading-7 text-[#1F1F1F]/70">{para}</p>
-      <p className="mt-3 text-sm font-semibold text-[#0F5B63]">{horizonte}</p>
+      <p className="mt-3 text-sm font-semibold text-[#7A4A2B]">{horizonte}</p>
     </article>
   );
 }

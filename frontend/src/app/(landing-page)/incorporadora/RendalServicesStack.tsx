@@ -79,7 +79,7 @@ export function RendalServicesStack() {
     >
       <div className="container mx-auto grid grid-cols-1 gap-10 px-6 lg:grid-cols-12 lg:gap-16 lg:px-24">
         <header className="t-stagger-line lg:col-span-4">
-          <span className="mb-4 block font-sans text-[10px] font-bold uppercase tracking-[0.4em] text-[#0F5B63]">
+          <span className="mb-4 block font-sans text-[10px] font-bold uppercase tracking-[0.4em] text-[#7A4A2B]">
             Atuação
           </span>
           <h2 className="mb-6 font-display text-4xl leading-[1.08] text-balance text-graphite md:text-6xl">
@@ -99,7 +99,7 @@ export function RendalServicesStack() {
                 className="rounded-2xl bg-white/80 px-7 py-8 ring-1 ring-graphite/10 md:px-10 md:py-10"
               >
                 <div className="mb-5 flex items-center justify-between gap-4">
-                  <span className="font-sans text-xs font-semibold tabular-nums tracking-[0.22em] text-[#0F5B63]">
+                  <span className="font-sans text-xs font-semibold tabular-nums tracking-[0.22em] text-[#7A4A2B]">
                     {service.num}
                   </span>
                   <span className="h-px min-w-12 flex-1 bg-graphite/10" />

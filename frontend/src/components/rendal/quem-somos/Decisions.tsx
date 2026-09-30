@@ -63,7 +63,7 @@ function FlipCard({
               <HandTap
                 weight="duotone"
                 aria-hidden
-                className="rendal-tap-hand size-6 shrink-0 text-[#0F5B63]"
+                className="rendal-tap-hand size-6 shrink-0 text-[#7A4A2B]"
                 style={{ animationDelay: `${delayMs}ms` }}
               />
             </span>
@@ -71,7 +71,7 @@ function FlipCard({
               {mercado}
             </span>
           </span>
-          <span className="col-start-1 row-start-1 flex h-full flex-col justify-between rounded-3xl bg-[#0F5B63] p-6 text-white [backface-visibility:hidden] [transform:rotateY(180deg)]">
+          <span className="col-start-1 row-start-1 flex h-full flex-col justify-between rounded-3xl bg-[#1F1F1F] p-6 text-white [backface-visibility:hidden] [transform:rotateY(180deg)]">
             <span className="text-sm font-semibold text-white/70">Decisão Rendal</span>
             <span className="text-xl font-semibold tracking-tight text-balance">{rendal}</span>
           </span>
@@ -89,7 +89,7 @@ export function Decisions() {
           {CARDS.map((card) => (
             <article key={card.rendal} className="rounded-3xl bg-white p-5 ring-1 ring-[#1F1F1F]/10">
               <p className="text-base text-[#1F1F1F]/40 line-through">{card.mercado}</p>
-              <p className="mt-4 text-lg font-semibold text-[#0F5B63]">{card.rendal}</p>
+              <p className="mt-4 text-lg font-semibold text-[#7A4A2B]">{card.rendal}</p>
             </article>
           ))}
         </SnapRail>

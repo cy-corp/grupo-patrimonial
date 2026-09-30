@@ -76,8 +76,8 @@ export function RendalIslandNav() {
             <Image
               src="/brands/rendal-logo-sem-subtitulo.png"
               alt="Rendal"
-              width={1016}
-              height={813}
+              width={1461}
+              height={808}
               priority
               className="h-9 w-auto"
             />
@@ -105,7 +105,7 @@ export function RendalIslandNav() {
             <Link
               href="/contato?perfil=financiar#perfil"
               onClick={() => setOpen(false)}
-              className="inline-flex h-10 shrink-0 items-center justify-center rounded-full bg-[#0F5B63] px-3.5 text-sm font-semibold whitespace-nowrap text-white transition-colors duration-700 hover:bg-[#0A474E] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0F5B63] lg:min-h-11 lg:px-4"
+              className="inline-flex h-10 shrink-0 items-center justify-center rounded-full bg-[#1F1F1F] px-3.5 text-sm font-semibold whitespace-nowrap text-white transition-colors duration-700 hover:bg-[#333333] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#7A4A2B] lg:min-h-11 lg:px-4"
               style={{ transitionTimingFunction: EASE }}
             >
               Financie aqui
@@ -169,7 +169,7 @@ export function RendalIslandNav() {
                 key={item.href}
                 href={item.href}
                 onClick={() => setOpen(false)}
-                className="inline-flex min-h-11 items-center text-base font-semibold text-[#0F5B63]"
+                className="inline-flex min-h-11 items-center text-base font-semibold text-[#7A4A2B]"
               >
                 {item.label}
               </Link>
@@ -178,7 +178,7 @@ export function RendalIslandNav() {
           <Link
             href={cta.href}
             onClick={() => setOpen(false)}
-            className="mt-4 inline-flex h-12 w-max items-center justify-center rounded-full bg-[#0F5B63] px-6 text-base font-semibold text-white"
+            className="mt-4 inline-flex h-12 w-max items-center justify-center rounded-full bg-[#1F1F1F] px-6 text-base font-semibold text-white"
           >
             {cta.label}
           </Link>

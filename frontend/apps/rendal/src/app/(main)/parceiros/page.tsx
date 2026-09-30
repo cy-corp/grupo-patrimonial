@@ -30,7 +30,7 @@ export default async function ParceirosPage({
           title={
             <>
               <span className={`block pb-[0.12em] ${headlineLight}`}>Um produto fácil de explicar</span>
-              <span className="block pb-[0.12em] text-[#0F5B63]">é mais fácil de vender.</span>
+              <span className="block pb-[0.12em] text-[#7A4A2B]">é mais fácil de vender.</span>
             </>
           }
           subtitle="Trabalhamos com imobiliárias, corretores e empresas de construção que compartilham o cuidado com o projeto."

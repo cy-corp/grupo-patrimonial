@@ -3,7 +3,7 @@ import { SUBJECTS_BY_COMPANY } from "@/lib/contact/constants";
 import { checklistText, type ChecklistItem } from "@/lib/rendal/financiamento";
 
 const ACCENT: Record<CompanyId, string> = {
-  rendal: "#0F5B63",
+  rendal: "#7A4A2B",
   dcorp: "#C9A96A",
 };
 
@@ -313,7 +313,7 @@ export function financiamentoConfirmationEmail(input: {
 
   const html = `
     <div style="font-family:Arial,sans-serif;color:#1F1F1F;line-height:1.6;max-width:560px">
-      <p style="font-size:12px;letter-spacing:0.16em;text-transform:uppercase;color:#0F5B63;font-weight:700">${escapeHtml(input.company.legalName)}</p>
+      <p style="font-size:12px;letter-spacing:0.16em;text-transform:uppercase;color:#7A4A2B;font-weight:700">${escapeHtml(input.company.legalName)}</p>
       <p>Olá, ${escapeHtml(first)}.</p>
       <p>Recebemos seu pedido de orientação de crédito e os documentos enviados. A equipe retorna em até dois dias úteis.</p>
       <p style="margin-bottom:8px"><strong>Documentos recebidos:</strong></p>

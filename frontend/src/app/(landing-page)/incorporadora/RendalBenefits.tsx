@@ -68,7 +68,7 @@ export function RendalBenefits() {
                   <article className="h-full rounded-2xl bg-white p-6 ring-1 ring-[#1F1F1F]/10 sm:p-8">
                     <Icon
                       weight="duotone"
-                      className="size-8 text-[#0F5B63]"
+                      className="size-8 text-[#7A4A2B]"
                       aria-hidden
                     />
                     <h3 className="mt-4 text-xl font-semibold tracking-tight text-balance text-[#1F1F1F]">

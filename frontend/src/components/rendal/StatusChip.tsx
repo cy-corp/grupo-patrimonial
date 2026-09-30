@@ -12,7 +12,7 @@ export function StatusChip({
   return (
     <span
       className={cn(
-        "inline-flex min-h-7 items-center rounded-full bg-[#F8F1E3]/95 px-3 text-xs font-semibold text-[#0F5B63]",
+        "inline-flex min-h-7 items-center rounded-full bg-[#F8F1E3]/95 px-3 text-xs font-semibold text-[#7A4A2B]",
         className,
       )}
     >

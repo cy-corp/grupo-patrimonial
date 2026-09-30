@@ -25,7 +25,7 @@ export async function GET(
           flexDirection: "column",
           justifyContent: "flex-end",
           position: "relative",
-          background: "#0E2A2D",
+          background: "#1F1F1F",
           color: "white",
         }}
       >
@@ -46,7 +46,7 @@ export async function GET(
             display: "flex",
             flexDirection: "column",
             padding: 64,
-            background: "linear-gradient(to top, #0E2A2D 0%, rgba(14,42,45,0) 100%)",
+            background: "linear-gradient(to top, #1F1F1F 0%, rgba(31,31,31,0) 100%)",
           }}
         >
           <div style={{ fontSize: 28, letterSpacing: 4, color: "#C9A96A" }}>RENDAL</div>

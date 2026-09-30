@@ -63,14 +63,14 @@ export default function EmpreendimentosPage() {
                     />
                   </div>
                   <div className="flex flex-col justify-center p-6 sm:p-8 md:p-10">
-                    <p className="text-sm font-semibold text-[#0F5B63]">
+                    <p className="text-sm font-semibold text-[#7A4A2B]">
                       {project.status}
                     </p>
                     <h2 className="mt-2 text-2xl font-semibold tracking-tight text-balance text-[#1F1F1F] sm:text-3xl">
                       {project.name}
                     </h2>
                     <p className="mt-3 flex items-center gap-2 text-sm text-[#1F1F1F]/65">
-                      <MapPin weight="duotone" className="size-5 shrink-0 text-[#0F5B63]" aria-hidden />
+                      <MapPin weight="duotone" className="size-5 shrink-0 text-[#7A4A2B]" aria-hidden />
                       {project.city}
                     </p>
                     <p className="mt-4 text-base leading-7 text-pretty text-[#1F1F1F]/70">
@@ -79,7 +79,7 @@ export default function EmpreendimentosPage() {
                     <div className="mt-8 flex flex-wrap gap-3">
                       <Link
                         href="/contato?empresa=rendal&assunto=visita"
-                        className="inline-flex items-center justify-center gap-2 rounded-full bg-[#0F5B63] px-3 py-2 text-base font-semibold text-white transition-all duration-700 hover:bg-[#0A3F45] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0F5B63] active:scale-[0.98]"
+                        className="inline-flex items-center justify-center gap-2 rounded-full bg-[#1F1F1F] px-3 py-2 text-base font-semibold text-white transition-all duration-700 hover:bg-[#333333] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#7A4A2B] active:scale-[0.98]"
                         style={{ transitionTimingFunction: EASE }}
                       >
                         Agendar visita
@@ -87,7 +87,7 @@ export default function EmpreendimentosPage() {
                       </Link>
                       <Link
                         href="/contato?empresa=rendal"
-                        className="inline-flex items-center justify-center rounded-full bg-transparent px-3 py-2 text-base font-semibold text-[#0F5B63] ring-1 ring-[#0F5B63]/40 transition-all duration-700 hover:bg-[#0F5B63]/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0F5B63] active:scale-[0.98]"
+                        className="inline-flex items-center justify-center rounded-full bg-transparent px-3 py-2 text-base font-semibold text-[#7A4A2B] ring-1 ring-[#7A4A2B]/40 transition-all duration-700 hover:bg-[#7A4A2B]/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#7A4A2B] active:scale-[0.98]"
                         style={{ transitionTimingFunction: EASE }}
                       >
                         Falar com a equipe
@@ -112,7 +112,7 @@ export default function EmpreendimentosPage() {
           </p>
           <Link
             href="/contato?empresa=rendal"
-            className="mt-8 inline-flex items-center justify-center rounded-full bg-[#0F5B63] px-3 py-2 text-base font-semibold text-white transition-all duration-700 hover:bg-[#0A3F45] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0F5B63] active:scale-[0.98]"
+            className="mt-8 inline-flex items-center justify-center rounded-full bg-[#1F1F1F] px-3 py-2 text-base font-semibold text-white transition-all duration-700 hover:bg-[#333333] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#7A4A2B] active:scale-[0.98]"
             style={{ transitionTimingFunction: EASE }}
           >
             Entrar em contato

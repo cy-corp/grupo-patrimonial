@@ -43,7 +43,7 @@ function Plant({
         type="button"
         onClick={() => onOpen(planta.imagem.src)}
         aria-label={`Ampliar ${planta.imagem.alt}`}
-        className="group relative mx-auto block cursor-zoom-in overflow-hidden rounded-3xl bg-[#EDE6DA] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0F5B63]/50"
+        className="group relative mx-auto block cursor-zoom-in overflow-hidden rounded-3xl bg-[#EDE6DA] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#7A4A2B]/50"
         style={{
           aspectRatio: `${width} / ${height}`,
           width: `min(100%, 28rem, calc(${PLANT_MAX_HEIGHT} * ${width / height}))`,
@@ -78,7 +78,7 @@ function Plant({
                 />
               </span>
               <span
-                className="pointer-events-none absolute rounded-[10px] ring-2 ring-[#0F5B63] shadow-[0_0_0_4px_rgba(15,91,99,0.18)] transition-[left,top,width,height,opacity] duration-500 motion-reduce:transition-none"
+                className="pointer-events-none absolute rounded-[10px] ring-2 ring-[#7A4A2B] shadow-[0_0_0_4px_rgba(122,74,43,0.18)] transition-[left,top,width,height,opacity] duration-500 motion-reduce:transition-none"
                 style={{
                   ...transition,
                   left: `${shape.x}%`,
@@ -92,7 +92,7 @@ function Plant({
           );
         })}
 
-        <span className="absolute left-3 top-3 inline-flex items-center gap-1.5 rounded-full bg-[#0F5B63] px-3 py-1.5 text-xs font-semibold text-white shadow-sm">
+        <span className="absolute left-3 top-3 inline-flex items-center gap-1.5 rounded-full bg-[#1F1F1F] px-3 py-1.5 text-xs font-semibold text-white shadow-sm">
           {planta.label}
           <span aria-hidden className="text-white/50">·</span>
           {step.ambiente}
@@ -149,15 +149,15 @@ export function DayInHouse({ item }: { item: Empreendimento }) {
                 className={cn(
                   "w-full cursor-pointer rounded-3xl p-5 text-left ring-1 transition-[background-color,box-shadow] duration-500 motion-reduce:transition-none",
                   on
-                    ? "bg-[#0F5B63]/[0.05] ring-2 ring-[#0F5B63] shadow-[0_0_0_4px_rgba(15,91,99,0.12)]"
-                    : "bg-white ring-[#1F1F1F]/10 hover:ring-[#0F5B63]/30",
+                    ? "bg-[#7A4A2B]/[0.05] ring-2 ring-[#7A4A2B] shadow-[0_0_0_4px_rgba(122,74,43,0.12)]"
+                    : "bg-white ring-[#1F1F1F]/10 hover:ring-[#7A4A2B]/30",
                 )}
                 style={{ transitionTimingFunction: EASE }}
               >
-                <p className="flex items-center gap-2 text-sm font-semibold tabular-nums text-[#0F5B63]">
+                <p className="flex items-center gap-2 text-sm font-semibold tabular-nums text-[#7A4A2B]">
                   {passo.hora}
-                  <span aria-hidden className="text-[#0F5B63]/40">·</span>
-                  <span className="font-medium text-[#0F5B63]/80">
+                  <span aria-hidden className="text-[#7A4A2B]/40">·</span>
+                  <span className="font-medium text-[#7A4A2B]/80">
                     {planta ? `${planta.label} · ` : ""}
                     {passo.ambiente}
                   </span>

@@ -10,10 +10,10 @@ import { cn } from "@/lib/utils";
 import { EASE } from "@/lib/rendal/tokens";
 
 const variants = {
-  primary: "bg-[#0F5B63] text-white hover:bg-[#0A474E] focus-visible:outline-[#0F5B63]",
+  primary: "bg-[#1F1F1F] text-white hover:bg-[#333333] focus-visible:outline-[#7A4A2B]",
   gold: "bg-[#C9A96A] text-[#1F1F1F] hover:bg-[#D8BC84] focus-visible:outline-[#C9A96A]",
   ghost:
-    "bg-transparent text-[#0F5B63] ring-1 ring-[#0F5B63]/30 hover:bg-[#0F5B63]/5 focus-visible:outline-[#0F5B63]",
+    "bg-transparent text-[#7A4A2B] ring-1 ring-[#7A4A2B]/30 hover:bg-[#7A4A2B]/5 focus-visible:outline-[#7A4A2B]",
   onDark: "bg-white text-[#1F1F1F] hover:bg-white/90 focus-visible:outline-white",
 } as const;
 

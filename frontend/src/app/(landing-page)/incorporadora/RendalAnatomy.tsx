@@ -183,7 +183,7 @@ export function RendalAnatomy() {
 
           <RendalReveal delayMs={120}>
             <div>
-              <p className="text-sm font-semibold text-[#0F5B63]">O que entra no projeto</p>
+              <p className="text-sm font-semibold text-[#7A4A2B]">O que entra no projeto</p>
               <ol className="m-0 mt-4 flex list-none flex-col gap-2 p-0">
                 {SEEN.map((item, index) => {
                   const on = active === index;
@@ -195,7 +195,7 @@ export function RendalAnatomy() {
                         onFocus={() => setActive(index)}
                         onClick={() => setActive(index)}
                         className={cn(
-                          "flex w-full cursor-pointer items-start gap-4 rounded-2xl p-4 text-left transition-all duration-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#0F5B63]",
+                          "flex w-full cursor-pointer items-start gap-4 rounded-2xl p-4 text-left transition-all duration-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#7A4A2B]",
                           on
                             ? "bg-white shadow-[0_12px_32px_rgba(31,31,31,0.08)]"
                             : "bg-[#EDE6DA] max-lg:items-center max-lg:py-3 hover:bg-[#E8E0D2]",

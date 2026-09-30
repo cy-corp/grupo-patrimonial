@@ -60,7 +60,7 @@ export function RendalConceptProofs() {
                     />
                   </div>
                   <div className="px-2 pb-2 pt-6 sm:px-4 sm:pb-4 sm:pt-8">
-                    <p className="text-sm font-semibold text-[#0F5B63]">
+                    <p className="text-sm font-semibold text-[#7A4A2B]">
                       {card.kicker}
                     </p>
                     <h3 className="mt-2 text-3xl font-semibold tracking-tight text-balance text-[#1F1F1F]">

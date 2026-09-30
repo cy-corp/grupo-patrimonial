@@ -24,7 +24,7 @@ function GalleryArrow({
       }}
       className={cn(
         "absolute top-1/2 z-[2] flex size-11 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full border border-[#1F1F1F]/12 bg-[#F8F1E3]/90 text-[#1F1F1F] shadow-[0_6px_18px_rgba(15,30,32,0.12)] backdrop-blur-sm transition-colors duration-300",
-        "hover:border-[#0F5B63]/35 hover:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0F5B63]/40",
+        "hover:border-[#7A4A2B]/35 hover:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#7A4A2B]/40",
         direction === "prev" ? "left-3 md:left-4" : "right-3 md:right-4",
       )}
       style={{ transitionTimingFunction: EASE }}
@@ -76,7 +76,7 @@ export function Lightbox({
   return (
     <Dialog.Root open={open} onOpenChange={onOpenChange}>
       <Dialog.Portal>
-        <Dialog.Backdrop className="fixed inset-0 z-[120] bg-[#0E2A2D]/60" />
+        <Dialog.Backdrop className="fixed inset-0 z-[120] bg-[#1F1F1F]/60" />
         <Dialog.Popup className="fixed inset-3 z-[121] m-auto flex h-fit max-h-[92svh] w-full max-w-5xl flex-col outline-none sm:inset-6">
           <div className="mb-3 flex items-center justify-between gap-4 px-1">
             <Dialog.Title className="truncate text-sm font-semibold text-white/90 sm:text-base">
@@ -90,7 +90,7 @@ export function Lightbox({
           <div
             className={cn(
               "relative overflow-hidden rounded-2xl",
-              contain ? "bg-[#EDE6DA]" : "bg-[#0E2A2D]",
+              contain ? "bg-[#EDE6DA]" : "bg-[#1F1F1F]",
             )}
           >
             <div

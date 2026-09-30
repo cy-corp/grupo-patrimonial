@@ -65,7 +65,7 @@ export function StickyActionBar({
           href={primaryHref}
           tabIndex={show ? undefined : -1}
           onClick={() => track(eventName)}
-          className="inline-flex h-12 min-h-11 flex-1 items-center justify-center rounded-full bg-[#0F5B63] px-4 text-base font-semibold text-white"
+          className="inline-flex h-12 min-h-11 flex-1 items-center justify-center rounded-full bg-[#1F1F1F] px-4 text-base font-semibold text-white"
         >
           {primaryLabel}
         </Link>

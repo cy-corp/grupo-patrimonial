@@ -52,7 +52,7 @@ export function Journey() {
               aria-pressed={open === index}
               className={cn(
                 "min-h-11 w-full cursor-pointer rounded-2xl px-3 py-3 text-left text-sm font-semibold transition-colors duration-500 motion-reduce:transition-none",
-                open === index ? "bg-[#0F5B63] text-white" : "bg-white text-[#1F1F1F]",
+                open === index ? "bg-[#1F1F1F] text-white" : "bg-white text-[#1F1F1F]",
               )}
               style={{ transitionTimingFunction: EASE }}
             >
@@ -70,7 +70,7 @@ export function Journey() {
           >
             <h3 className="text-2xl font-semibold text-[#1F1F1F]">{etapa.title}</h3>
             <p className="mt-3 text-base leading-7 text-[#1F1F1F]/70">
-              <span className="font-semibold text-[#0F5B63]">A Rendal faz. </span>
+              <span className="font-semibold text-[#7A4A2B]">A Rendal faz. </span>
               {etapa.rendal}
             </p>
             <p className="mt-2 text-base leading-7 text-[#1F1F1F]/70">

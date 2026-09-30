@@ -46,7 +46,7 @@ export default async function ContatoPage({
       </RendalReveal>
       <section className="mx-auto mt-12 grid max-w-5xl gap-3 sm:grid-cols-3" aria-label="Outros canais">
         <RendalReveal delayMs={0}>
-          <a href={`https://wa.me/${company.whatsapp.replace(/\D/g, "")}`} className="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-full bg-[#0F5B63] px-4 font-semibold text-white">
+          <a href={`https://wa.me/${company.whatsapp.replace(/\D/g, "")}`} className="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-full bg-[#1F1F1F] px-4 font-semibold text-white">
             <WhatsAppIcon className="size-5 shrink-0" aria-hidden />
             WhatsApp
           </a>

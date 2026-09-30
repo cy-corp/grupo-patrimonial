@@ -96,7 +96,7 @@ export default function InvestidoresPage() {
           ].map(([n, text], index) => (
             <RendalReveal key={n} delayMs={index * 80}>
               <article>
-                <p className="text-3xl font-semibold tabular-nums text-[#0F5B63]">{n}</p>
+                <p className="text-3xl font-semibold tabular-nums text-[#7A4A2B]">{n}</p>
                 <p className="mt-2 text-lg font-semibold text-[#1F1F1F]">{text}</p>
               </article>
             </RendalReveal>
@@ -105,7 +105,7 @@ export default function InvestidoresPage() {
       </section>
 
       <RendalReveal>
-      <section className="bg-[#0E2A2D] px-6 py-12 sm:py-20" aria-labelledby="apresentacao-titulo">
+      <section className="bg-[#1F1F1F] px-6 py-12 sm:py-20" aria-labelledby="apresentacao-titulo">
         <div className="mx-auto max-w-xl rounded-3xl bg-[#F8F1E3] p-6">
           <h2 id="apresentacao-titulo" className="text-3xl font-semibold tracking-tight text-[#1F1F1F]">
             Solicitar apresentação

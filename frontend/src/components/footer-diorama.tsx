@@ -174,7 +174,7 @@ function City({
         <primitive object={root} />
         <mesh rotation-x={-Math.PI / 2} position={[0, 0.001, 6]} receiveShadow>
           <planeGeometry args={[160, 18]} />
-          <shadowMaterial color="#0E2A2D" opacity={0.2} transparent />
+          <shadowMaterial color="#1F1F1F" opacity={0.2} transparent />
         </mesh>
       </group>
     );

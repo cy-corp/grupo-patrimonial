@@ -30,7 +30,7 @@ export const CONTACT_PROFILES = [
   subject: string;
 }>;
 const chip =
-  "min-h-11 cursor-pointer rounded-full bg-[#EDE6DA] px-4 text-sm font-semibold text-[#1F1F1F] has-[:checked]:bg-[#0F5B63] has-[:checked]:text-white";
+  "min-h-11 cursor-pointer rounded-full bg-[#EDE6DA] px-4 text-sm font-semibold text-[#1F1F1F] has-[:checked]:bg-[#1F1F1F] has-[:checked]:text-white";
 
 export function ProfileForm({
   initial,
@@ -76,7 +76,7 @@ export function ProfileForm({
               onClick={() => setPerfil(item.id)}
               className={cn(
                 "flex min-h-24 min-w-0 cursor-pointer flex-col items-start justify-between rounded-3xl p-4 text-left ring-1 transition-colors duration-700",
-                on ? "bg-[#0F5B63] text-white ring-[#0F5B63]" : "bg-white text-[#1F1F1F] ring-[#1F1F1F]/10",
+                on ? "bg-[#1F1F1F] text-white ring-[#7A4A2B]" : "bg-white text-[#1F1F1F] ring-[#1F1F1F]/10",
               )}
             >
               <Icon weight="duotone" className="size-7" aria-hidden />
@@ -123,7 +123,7 @@ export function ProfileForm({
                       </>
                     ) : perfil === "terreno" ? (
                       <p className="text-base leading-7 text-[#1F1F1F]/70">
-                        <Link href="/proprietarios#qualificador" className="font-semibold text-[#0F5B63]">
+                        <Link href="/proprietarios#qualificador" className="font-semibold text-[#7A4A2B]">
                           Prefere responder em 60 segundos?
                         </Link>
                       </p>

@@ -14,7 +14,7 @@ import {
 import { cn } from "@/lib/utils";
 
 const inputClass =
-  "mt-2 h-12 w-full rounded-2xl border border-[#1F1F1F]/15 bg-white px-4 text-base font-normal text-[#1F1F1F] outline-none transition-colors duration-300 placeholder:text-[#1F1F1F]/35 focus-visible:border-[#0F5B63] focus-visible:outline-2 focus-visible:outline-[#0F5B63]";
+  "mt-2 h-12 w-full rounded-2xl border border-[#1F1F1F]/15 bg-white px-4 text-base font-normal text-[#1F1F1F] outline-none transition-colors duration-300 placeholder:text-[#1F1F1F]/35 focus-visible:border-[#7A4A2B] focus-visible:outline-2 focus-visible:outline-[#7A4A2B]";
 
 const MAX = 4;
 
@@ -81,7 +81,7 @@ function BancoCombobox({
                     >
                       <span className="w-9 shrink-0 tabular-nums text-[#1F1F1F]/55">{banco.code}</span>
                       <span className="min-w-0 flex-1 truncate">{banco.name}</span>
-                      <Combobox.ItemIndicator className="text-[#0F5B63]">
+                      <Combobox.ItemIndicator className="text-[#7A4A2B]">
                         <Check weight="bold" className="size-4" aria-hidden />
                       </Combobox.ItemIndicator>
                     </Combobox.Item>
@@ -232,7 +232,7 @@ export function ContasBancariasField({
           onClick={() =>
             onChange([...value, { id: newId(), code: "", agencia: "", conta: "", digito: "" }])
           }
-          className="inline-flex min-h-11 cursor-pointer items-center gap-2 self-start text-sm font-semibold text-[#0F5B63]"
+          className="inline-flex min-h-11 cursor-pointer items-center gap-2 self-start text-sm font-semibold text-[#7A4A2B]"
         >
           <Plus weight="bold" className="size-4" aria-hidden />
           {value.length === 0 ? "Adicionar conta" : "Adicionar outra conta"}

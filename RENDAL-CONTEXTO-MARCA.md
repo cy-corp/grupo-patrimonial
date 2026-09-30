@@ -106,7 +106,7 @@ Ideia do cliente (áudio): entregar **mais produto** pelo orçamento da faixa �
 **Aplicação inteligente do seu dinheiro.**  
 Sub: *Cada centavo no lugar certo — da laje ao acabamento.*
 
-Assinatura de marca (manual): *Estratégia hoje. Mais valor sempre.*
+Assinatura de marca (manual v2): *Incorporação inteligente.*
 
 ### Pilares de conteúdo
 

@@ -18,7 +18,7 @@ export function SectionHeader({
   return (
     <header className={cn("max-w-[680px]", align === "center" && "mx-auto text-center")}>
       {eyebrow ? (
-        <p className={cn("text-sm font-semibold", onDark ? "text-[#C9A96A]" : "text-[#0F5B63]")}>
+        <p className={cn("text-sm font-semibold", onDark ? "text-[#C9A96A]" : "text-[#7A4A2B]")}>
           {eyebrow}
         </p>
       ) : null}

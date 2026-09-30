@@ -68,7 +68,7 @@ export function RendalPriceGuess() {
       aria-labelledby="chute-titulo"
     >
       <RendalReveal className="mx-auto max-w-7xl">
-        <div className="grid overflow-hidden rounded-4xl bg-[#0E2A2D] text-white shadow-[0_28px_60px_rgba(31,31,31,0.18)] lg:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)]">
+        <div className="grid overflow-hidden rounded-4xl bg-[#1F1F1F] text-white shadow-[0_28px_60px_rgba(31,31,31,0.18)] lg:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)]">
           <div className="relative aspect-video lg:aspect-auto lg:min-h-[36rem]">
             <Image
               src={FACADE}
@@ -106,7 +106,7 @@ export function RendalPriceGuess() {
                     className="absolute inset-0 flex flex-col items-center justify-center bg-[#F8F1E3] px-3 pt-6 text-center text-[#1F1F1F] backface-hidden"
                     style={{ clipPath: TAG_SHAPE }}
                   >
-                    <span className="absolute top-3 size-3 rounded-full bg-[#0E2A2D] ring-2 ring-[#C9A96A]" />
+                    <span className="absolute top-3 size-3 rounded-full bg-[#1F1F1F] ring-2 ring-[#C9A96A]" />
                     <span className="text-xs font-semibold uppercase tracking-widest text-[#1F1F1F]/50">
                       Preço
                     </span>
@@ -118,7 +118,7 @@ export function RendalPriceGuess() {
                     className="absolute inset-0 flex rotate-y-180 flex-col items-center justify-center bg-[#C9A96A] px-3 pt-6 text-center text-[#1F1F1F] backface-hidden"
                     style={{ clipPath: TAG_SHAPE }}
                   >
-                    <span className="absolute top-3 size-3 rounded-full bg-[#0E2A2D] ring-2 ring-[#F8F1E3]" />
+                    <span className="absolute top-3 size-3 rounded-full bg-[#1F1F1F] ring-2 ring-[#F8F1E3]" />
                     <span className="text-xs font-semibold uppercase tracking-widest text-[#1F1F1F]/60">
                       A partir de
                     </span>
@@ -182,9 +182,9 @@ export function RendalPriceGuess() {
                 onChange={(event) => onGuess(Number(event.target.value))}
                 className={cn(
                   "mt-5 h-2 w-full cursor-pointer appearance-none rounded-full outline-none disabled:cursor-default disabled:opacity-50",
-                  "focus-visible:ring-2 focus-visible:ring-[#C9A96A] focus-visible:ring-offset-4 focus-visible:ring-offset-[#0E2A2D]",
-                  "[&::-webkit-slider-thumb]:size-7 [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:border-4 [&::-webkit-slider-thumb]:border-[#0E2A2D] [&::-webkit-slider-thumb]:bg-[#C9A96A] [&::-webkit-slider-thumb]:shadow-[0_0_0_1px_rgba(201,169,106,0.6)]",
-                  "[&::-moz-range-thumb]:size-6 [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:border-4 [&::-moz-range-thumb]:border-[#0E2A2D] [&::-moz-range-thumb]:bg-[#C9A96A]",
+                  "focus-visible:ring-2 focus-visible:ring-[#C9A96A] focus-visible:ring-offset-4 focus-visible:ring-offset-[#1F1F1F]",
+                  "[&::-webkit-slider-thumb]:size-7 [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:border-4 [&::-webkit-slider-thumb]:border-[#1F1F1F] [&::-webkit-slider-thumb]:bg-[#C9A96A] [&::-webkit-slider-thumb]:shadow-[0_0_0_1px_rgba(201,169,106,0.6)]",
+                  "[&::-moz-range-thumb]:size-6 [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:border-4 [&::-moz-range-thumb]:border-[#1F1F1F] [&::-moz-range-thumb]:bg-[#C9A96A]",
                 )}
                 style={{
                   background: `linear-gradient(to right, #C9A96A ${fill}%, rgba(255,255,255,0.15) ${fill}%)`,
@@ -202,7 +202,7 @@ export function RendalPriceGuess() {
                 onClick={() => setRevealed(true)}
                 tabIndex={revealed ? -1 : undefined}
                 className={cn(
-                  "inline-flex h-12 cursor-pointer items-center justify-center rounded-full bg-white px-6 text-base font-semibold text-[#0E2A2D] transition-colors duration-700 hover:bg-[#F8F1E3] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#C9A96A] active:scale-[0.98]",
+                  "inline-flex h-12 cursor-pointer items-center justify-center rounded-full bg-white px-6 text-base font-semibold text-[#1F1F1F] transition-colors duration-700 hover:bg-[#F8F1E3] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#C9A96A] active:scale-[0.98]",
                   revealed && "hidden",
                 )}
                 style={{ transitionTimingFunction: EASE }}

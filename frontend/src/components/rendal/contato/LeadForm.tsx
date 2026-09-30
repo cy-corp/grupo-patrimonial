@@ -9,7 +9,7 @@ import { cn } from "@/lib/utils";
 import { EASE } from "@/lib/rendal/tokens";
 
 const fieldClass =
-  "mt-2 h-12 w-full rounded-2xl border border-[#1F1F1F]/15 bg-white px-4 text-base text-[#1F1F1F] outline-none focus-visible:border-[#0F5B63] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#0F5B63]";
+  "mt-2 h-12 w-full rounded-2xl border border-[#1F1F1F]/15 bg-white px-4 text-base text-[#1F1F1F] outline-none focus-visible:border-[#7A4A2B] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#7A4A2B]";
 
 export function Field({
   label,
@@ -137,7 +137,7 @@ export function LeadForm({
     return (
       <div role="status" aria-live="polite" className="rounded-3xl bg-white p-6 ring-1 ring-[#1F1F1F]/10">
         <p className="flex items-center gap-3 text-lg font-semibold text-[#1F1F1F]">
-          <span className="inline-flex size-8 items-center justify-center rounded-full bg-[#0F5B63] text-white" aria-hidden>
+          <span className="inline-flex size-8 items-center justify-center rounded-full bg-[#1F1F1F] text-white" aria-hidden>
             ✓
           </span>
           {message}
@@ -186,7 +186,7 @@ export function LeadForm({
       ) : null}
       <p className="text-sm leading-6 text-[#1F1F1F]/65">
         Ao enviar, você concorda com o uso dos dados para retorno deste contato.{" "}
-        <a href="/politica-de-privacidade" className="font-semibold text-[#0F5B63] underline-offset-2 hover:underline">
+        <a href="/politica-de-privacidade" className="font-semibold text-[#7A4A2B] underline-offset-2 hover:underline">
           Política de privacidade
         </a>
         .
@@ -195,7 +195,7 @@ export function LeadForm({
       <button
         type="submit"
         disabled={status === "sending"}
-        className="inline-flex h-12 min-h-11 cursor-pointer items-center justify-center rounded-full bg-[#0F5B63] px-6 text-base font-semibold text-white transition-colors duration-700 hover:bg-[#0A474E] disabled:opacity-60"
+        className="inline-flex h-12 min-h-11 cursor-pointer items-center justify-center rounded-full bg-[#1F1F1F] px-6 text-base font-semibold text-white transition-colors duration-700 hover:bg-[#333333] disabled:opacity-60"
         style={{ transitionTimingFunction: EASE }}
       >
         {status === "sending" ? "Enviando…" : submitLabel}

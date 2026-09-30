@@ -17,7 +17,7 @@ Documentos-base (ler antes):
 
 A home (`/`, concept) está pronta e **é a fonte da verdade visual e de tom**. As demais telas ainda reexportam páginas legadas do site unificado (`GoldButton`, títulos `font-black uppercase`, `#0F172A`) ou nem existem.
 
-Objetivo: entregar as telas restantes com o **mesmo sistema da home** — cream `#F8F1E3`, petróleo `#0F5B63`, grafite `#1F1F1F`, dourado pontual, `font-semibold tracking-tight`, cards `rounded-2xl/4xl`, CTAs pílula, reveal com blur — e, em cada tela, **uma única peça "fora da caixa"** que prove o método Rendal, projetada primeiro para o polegar.
+Objetivo: entregar as telas restantes com o **mesmo sistema da home** — cream `#F8F1E3`, grafite `#1F1F1F` (CTA), terra `#7A4A2B` (labels/acento), dourado pontual, `font-semibold tracking-tight`, cards `rounded-2xl/4xl`, CTAs pílula, reveal com blur — e, em cada tela, **uma única peça "fora da caixa"** que prove o método Rendal, projetada primeiro para o polegar.
 
 | Rota | Estado hoje | Ação |
 |------|-------------|------|
@@ -81,7 +81,7 @@ A maior parte do público B/C e de corretores chega pelo celular (WhatsApp, Inst
 - Um `h1` por página; seções com `aria-labelledby`.
 - Skip link "Ir para o conteúdo" (já existe na `RendalIslandNav`) apontando para `#conteudo` em todas as páginas.
 - Controles customizados (segmented, tabs, slider, qualificador) com semântica nativa ou ARIA completa (`role="tablist"`, `aria-selected`, setas do teclado).
-- Contraste AA: texto `#1F1F1F/65` é o mínimo sobre cream; sobre petróleo escuro, `white/70`.
+- Contraste AA: texto `#1F1F1F/65` é o mínimo sobre cream; sobre grafite escuro, `white/70`.
 - `aria-live="polite"` em resultados dinâmicos (qualificador, formulário).
 
 ---
@@ -97,10 +97,9 @@ Hoje `EASE`, classes de CTA e cores estão duplicados em cada arquivo. Antes das
 | `cream` | `#F8F1E3` | fundo base |
 | `cream-deep` | `#EDE6DA` | cards inativos, placeholders de imagem |
 | `white` | `#FFFFFF` | seções alternadas (HowItWorks, FAQ) |
-| `petroleo` | `#0F5B63` | CTA primário, labels, ícones |
-| `petroleo-hover` | `#0A474E` | hover CTA |
-| `petroleo-noite` | `#0E2A2D` | blocos escuros de destaque (PriceGuess) |
-| `grafite` | `#1F1F1F` | texto, CTA final |
+| `grafite` | `#1F1F1F` | texto, CTA primário, blocos escuros |
+| `grafite-hover` | `#333333` | hover CTA |
+| `terra` | `#7A4A2B` | labels, links, focus, ícones |
 | `dourado` | `#C9A96A` | acento pontual (hotspot ativo, fio decorativo, etiqueta) |
 | `ease` | `cubic-bezier(0.32,0.72,0,1)` | todas as transições |
 | `dur` | `700ms` (UI), `250ms` (acordeão), `350ms` (troca de texto) | |
@@ -111,7 +110,7 @@ Tipografia (padrão da home, **não** o do `DESIGN_GUIDELINE.md` legado):
 |-------|---------|
 | H1 de página | `text-4xl sm:text-5xl lg:text-6xl font-semibold tracking-tight text-balance` + gradiente `#000→#666` (claro) ou `#FFF→#9B9B9B` (escuro) |
 | H2 de seção | `text-3xl sm:text-4xl md:text-5xl font-semibold tracking-tight text-balance text-[#1F1F1F]` |
-| Label/eyebrow | `text-sm font-semibold text-[#0F5B63]` (sem caixa alta pesada; `uppercase tracking-widest` só em micro-labels de dado) |
+| Label/eyebrow | `text-sm font-semibold text-[#7A4A2B]` (sem caixa alta pesada; `uppercase tracking-widest` só em micro-labels de dado) |
 | Corpo | `text-base sm:text-lg leading-7 sm:leading-8 text-pretty text-[#1F1F1F]/70` |
 | Números | `tabular-nums` sempre |
 
@@ -128,7 +127,7 @@ Local sugerido: `frontend/src/components/rendal/` (primitivos) e `frontend/src/c
 | Componente | Função | Tipo |
 |------------|--------|------|
 | `RendalReveal` | Mover de `incorporadora/` para `components/rendal/`, sem mudar contrato | client |
-| `RendalButton` | Variantes `primary` (petróleo), `gold`, `ghost`, `onDark`; tamanhos `md` (h-12) e `sm` (h-10); `asChild` p/ `Link` | server-safe |
+| `RendalButton` | Variantes `primary` (grafite), `gold`, `ghost` (terra), `onDark`; tamanhos `md` (h-12) e `sm` (h-10); `asChild` p/ `Link` | server-safe |
 | `SectionHeader` | eyebrow + h2 + sub, alinhamento `center`/`start` | server |
 | `PageHero` | Hero de página interna (ver 2.4) | server + slot client |
 | `StickyActionBar` | Barra fixa inferior mobile (CTA + WhatsApp), aparece após o hero via `IntersectionObserver`, some perto do footer | client |
@@ -159,7 +158,7 @@ A home tem um hero cinematográfico de scroll; páginas internas **não devem re
 - Desktop: eyebrow + H1 + sub centrados (`pt-36`), abaixo uma mídia `aspect-video rounded-3xl max-w-6xl` — mesma composição do `StaticHero` da home.
 - Mobile: mídia `aspect-[4/5] max-h-[60svh]`; texto acima; nada sobreposto à imagem.
 - Grão de papel (`.rendal-hero-paper`) no fundo, como na home.
-- Variante `dark` (fundo `#0E2A2D`) só para Investidores.
+- Variante `dark` (fundo `#1F1F1F`) só para Investidores.
 
 ### 2.5 Footer
 
@@ -236,13 +235,13 @@ Seções:
    | Um banheiro no fundo, junto aos quartos | Lavabo social: visita não entra na área íntima |
    | Orçamento igual em tudo | Capital no que se vê e se usa; técnica racional no resto |
    | Venda sem mostrar o projeto | Planta, acabamento e memorial abertos antes da visita |
-   Mobile: `SnapRail` com cards de 85% de largura; cada card mostra "mercado" em cima (riscado sutil em `#1F1F1F/40`) e "Rendal" embaixo em petróleo. Sem flip 3D no mobile (custo + legibilidade).
+   Mobile: `SnapRail` com cards de 85% de largura; cada card mostra "mercado" em cima (riscado sutil em `#1F1F1F/40`) e "Rendal" embaixo em terra. Sem flip 3D no mobile (custo + legibilidade).
 
 3. **O que a Rendal faz** — frentes da incorporadora (texto do cliente):
    Terrenos e viabilidade · Estruturação jurídica e SPE · Aprovações e licenciamento · Coordenação de projetos · Relação com investidores e proprietários · Comercialização.
    Grid 2×3 no desktop, lista com ícone (Phosphor `duotone`) no mobile. Cada item com uma linha de descrição.
 
-4. **Como decidimos** — três princípios curtos, número grande `tabular-nums` em petróleo:
+4. **Como decidimos** — três princípios curtos, número grande `tabular-nums` em terra:
    01 *Projeto antes de obra* · 02 *Capital onde aparece* · 03 *Transparência antes da venda*.
 
 5. **Pessoas** — liderança com fotos existentes (`quem-somos/*.png`).
@@ -298,7 +297,7 @@ Seções:
 1. **Hero do empreendimento**
    - Mídia: render de fachada (dia) com troca suave para noite em loop lento de 8s **ou** toggle "Dia / Noite" (`SegmentedControl`) — reaproveita `render-fachada-dia/noite`. Toggle é preferível (controle do usuário, sem animação infinita).
    - Texto abaixo da mídia no mobile, ao lado no desktop: `StatusChip`, nome (H1), cidade, fatos em linha, CTA primário.
-   - Mobile: a partir daqui a `StickyActionBar` passa a existir: **[Agendar visita]** (petróleo, flex-1) + **[WhatsApp]** (ícone, 48px).
+   - Mobile: a partir daqui a `StickyActionBar` passa a existir: **[Agendar visita]** (grafite, flex-1) + **[WhatsApp]** (ícone, 48px).
 
 2. **Um dia na casa** — *peça fora da caixa*
    Linha do tempo de um dia que "acende" ambientes na planta:
@@ -308,7 +307,7 @@ Seções:
    - *22h — Os quartos ficam reservados, longe do movimento.* (térreo, destaca quartos)
    Implementação: planta em `<figure>` sticky + passos que ativam por `IntersectionObserver` (não scroll-scrub). Destaque = máscara SVG/overlay com polígonos por ambiente (coordenadas em % no conteúdo), opacidade do resto a 35%.
    Desktop: planta sticky à esquerda, passos à direita.
-   Mobile: planta sticky no topo ocupando `~45svh`, passos como cards abaixo rolando por baixo; o card ativo tem borda petróleo. A `StickyActionBar` esconde enquanto essa seção está ativa, para não esmagar a viewport.
+   Mobile: planta sticky no topo ocupando `~45svh`, passos como cards abaixo rolando por baixo; o card ativo tem borda terra. A `StickyActionBar` esconde enquanto essa seção está ativa, para não esmagar a viewport.
    Reduced motion: sem sticky; cada passo mostra sua própria miniatura da planta com o ambiente destacado.
 
 3. **Plantas** — `SegmentedControl` *Térreo · Laje* (+ variações de unidade). Imagem da planta com **zoom por pinça** no mobile e botão "Tela cheia" que abre um dialog (Base UI `Dialog`, já instalado). Download do projeto em PDF quando existir (`projeto-arquitetonico-*.pdf`) como link simples, com tamanho do arquivo.
@@ -362,7 +361,7 @@ Seções:
    3. *Como está a documentação?* — *Matrícula em meu nome · Inventário/partilha · Posse · Não sei*
    4. *O que você prefere?* — *Vender · Permutar · Ser sócio · Quero entender as opções*
    Tela final: resumo das respostas em linguagem natural (*"Terreno de 1.000 a 5.000 m² em Campinas, matrícula em seu nome, interesse em permuta."*) + nome e WhatsApp → envia. Mensagem de confirmação honesta: *A equipe analisa as informações e retorna para marcar uma conversa. Isso não é uma avaliação do terreno.*
-   Implementação: estado local (`useReducer`), progresso `01/04` + barra petróleo (mesmo visual do step do hero da home), transições de texto 350ms, voltar sem perder respostas, estado persistido em `sessionStorage`. Funciona como formulário comum sem JS (fallback: todas as perguntas numa página).
+   Implementação: estado local (`useReducer`), progresso `01/04` + barra grafite (mesmo visual do step do hero da home), transições de texto 350ms, voltar sem perder respostas, estado persistido em `sessionStorage`. Funciona como formulário comum sem JS (fallback: todas as perguntas numa página).
    Mobile: é aqui que a tela brilha — cada passo cabe numa viewport, botões de resposta `min-h-14` empilhados.
 
 5. **Perguntas de proprietário** — FaqList: *Preciso pagar pelo estudo? · Quanto tempo leva a viabilidade? · Meu terreno tem pendência, dá para conversar? · Como fica a parte jurídica?* (respostas a validar com o cliente).
@@ -381,7 +380,7 @@ Aceite: qualificador completável com uma mão em < 60 s; nenhuma promessa de va
 **Público:** investidor, family office, parceiro de capital.
 **CTA primário:** Solicitar apresentação.
 
-Tom: o mais institucional do site. Variante **dark** (`#0E2A2D` / grafite) no hero para marcar a mudança de público, voltando ao cream no corpo.
+Tom: o mais institucional do site. Variante **dark** (`#1F1F1F` / grafite) no hero para marcar a mudança de público, voltando ao cream no corpo.
 
 Seções:
 

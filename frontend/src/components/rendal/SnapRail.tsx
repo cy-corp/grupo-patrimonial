@@ -82,7 +82,7 @@ export function SnapRail({
               onClick={() => go(i)}
               className={cn(
                 "size-2.5 cursor-pointer rounded-full",
-                i === index ? "bg-[#0F5B63]" : "bg-[#1F1F1F]/20",
+                i === index ? "bg-[#1F1F1F]" : "bg-[#1F1F1F]/20",
               )}
             />
           ))}

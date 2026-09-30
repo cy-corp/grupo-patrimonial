@@ -40,7 +40,7 @@ export function SegmentedControl<T extends string>({
     >
       <span
         aria-hidden
-        className="pointer-events-none absolute top-1 bottom-1 rounded-full bg-[#0F5B63] transition-transform duration-700 motion-reduce:transition-none"
+        className="pointer-events-none absolute top-1 bottom-1 rounded-full bg-[#1F1F1F] transition-transform duration-700 motion-reduce:transition-none"
         style={{
           width: `calc((100% - 0.5rem) / ${options.length})`,
           left: "0.25rem",

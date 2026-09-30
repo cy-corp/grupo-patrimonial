@@ -28,10 +28,10 @@ function Item({
         aria-expanded={open}
         aria-controls={panelId}
         onClick={onToggle}
-        className="t-acc-head flex min-h-11 w-full cursor-pointer items-center justify-between gap-4 px-6 py-5 text-left focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0F5B63] sm:px-8"
+        className="t-acc-head flex min-h-11 w-full cursor-pointer items-center justify-between gap-4 px-6 py-5 text-left focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#7A4A2B] sm:px-8"
       >
         <span className="text-base font-semibold text-balance text-[#1F1F1F] sm:text-lg">{question}</span>
-        <span className="t-acc-chevron shrink-0 text-[#0F5B63]">
+        <span className="t-acc-chevron shrink-0 text-[#7A4A2B]">
           <CaretDown weight="bold" className="size-5" aria-hidden />
         </span>
       </button>

@@ -136,7 +136,7 @@ export default async function EmpreendimentoPage({
                     <legend className="text-sm font-semibold text-[#1F1F1F]">Dia</legend>
                     <div className="mt-2 flex flex-wrap gap-2">
                       {["Dia útil", "Sábado"].map((label) => (
-                        <label key={label} className="min-h-11 cursor-pointer rounded-full bg-[#EDE6DA] px-4 text-sm font-semibold has-[:checked]:bg-[#0F5B63] has-[:checked]:text-white">
+                        <label key={label} className="min-h-11 cursor-pointer rounded-full bg-[#EDE6DA] px-4 text-sm font-semibold has-[:checked]:bg-[#1F1F1F] has-[:checked]:text-white">
                           <input className="sr-only" type="radio" name="dia" value={label} />
                           <span className="inline-flex min-h-11 items-center">{label}</span>
                         </label>
@@ -147,7 +147,7 @@ export default async function EmpreendimentoPage({
                     <legend className="text-sm font-semibold text-[#1F1F1F]">Período</legend>
                     <div className="mt-2 flex flex-wrap gap-2">
                       {["Manhã", "Tarde"].map((label) => (
-                        <label key={label} className="min-h-11 cursor-pointer rounded-full bg-[#EDE6DA] px-4 text-sm font-semibold has-[:checked]:bg-[#0F5B63] has-[:checked]:text-white">
+                        <label key={label} className="min-h-11 cursor-pointer rounded-full bg-[#EDE6DA] px-4 text-sm font-semibold has-[:checked]:bg-[#1F1F1F] has-[:checked]:text-white">
                           <input className="sr-only" type="radio" name="periodo" value={label} />
                           <span className="inline-flex min-h-11 items-center">{label}</span>
                         </label>

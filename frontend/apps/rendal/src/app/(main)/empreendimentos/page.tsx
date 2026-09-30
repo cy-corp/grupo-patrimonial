@@ -103,11 +103,11 @@ export default async function EmpreendimentosPage({
                 <p className="mt-2 text-sm text-[#1F1F1F]/65">{item.bairro ?? item.cidade}</p>
                 <p className="mt-3 text-base text-[#1F1F1F]/70">{fatosDoEmpreendimento(item)}</p>
                 {item.precoPublico && item.precoAPartirDe ? (
-                  <p className="mt-3 text-sm font-semibold tabular-nums text-[#0F5B63]">
+                  <p className="mt-3 text-sm font-semibold tabular-nums text-[#7A4A2B]">
                     a partir de {formatPreco(item.precoAPartirDe)}
                   </p>
                 ) : null}
-                <p className="mt-6 text-sm font-semibold text-[#0F5B63]">Ver empreendimento</p>
+                <p className="mt-6 text-sm font-semibold text-[#7A4A2B]">Ver empreendimento</p>
               </div>
             </article>
             </RendalReveal>
@@ -138,7 +138,7 @@ function Filter({ href, on, children }: { href: string; on: boolean; children: R
     <Link
       href={href}
       aria-current={on ? "true" : undefined}
-      className={on ? "inline-flex min-h-11 shrink-0 items-center rounded-full bg-[#0F5B63] px-4 text-sm font-semibold text-white" : "inline-flex min-h-11 shrink-0 items-center rounded-full bg-white px-4 text-sm font-semibold text-[#1F1F1F] ring-1 ring-[#1F1F1F]/10"}
+      className={on ? "inline-flex min-h-11 shrink-0 items-center rounded-full bg-[#1F1F1F] px-4 text-sm font-semibold text-white" : "inline-flex min-h-11 shrink-0 items-center rounded-full bg-white px-4 text-sm font-semibold text-[#1F1F1F] ring-1 ring-[#1F1F1F]/10"}
     >
       {children}
     </Link>

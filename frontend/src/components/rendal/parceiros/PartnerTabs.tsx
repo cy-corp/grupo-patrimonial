@@ -68,7 +68,7 @@ export function PartnerTabs({ initial = "imobiliarias" }: { initial?: TabId }) {
                 className={cn(
                   "inline-flex min-h-11 cursor-pointer items-center rounded-full px-4 text-sm font-semibold transition-colors duration-500",
                   on
-                    ? "bg-[#0F5B63] text-white"
+                    ? "bg-[#1F1F1F] text-white"
                     : "bg-white text-[#1F1F1F] ring-1 ring-[#1F1F1F]/10",
                 )}
                 style={{ transitionTimingFunction: EASE }}
@@ -133,7 +133,7 @@ export function PartnerTabs({ initial = "imobiliarias" }: { initial?: TabId }) {
             (step, index) => (
               <RendalReveal key={step} delayMs={index * 80} className="h-full">
                 <article className="h-full rounded-3xl bg-white p-5">
-                  <p className="text-sm font-semibold tabular-nums text-[#0F5B63]">
+                  <p className="text-sm font-semibold tabular-nums text-[#7A4A2B]">
                     {String(index + 1).padStart(2, "0")}
                   </p>
                   <p className="mt-2 font-semibold text-[#1F1F1F]">{step}</p>

@@ -43,7 +43,7 @@ const LIGHTS: [number, number] = [0.72, 0.82];
 const FINALE: [number, number] = [0.84, 0.9];
 
 const CTA =
-  "inline-flex h-12 items-center justify-center rounded-full bg-[#0F5B63] px-6 text-base font-semibold text-white transition-all duration-700 hover:bg-[#0A474E] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0F5B63] active:scale-[0.98]";
+  "inline-flex h-12 items-center justify-center rounded-full bg-[#1F1F1F] px-6 text-base font-semibold text-white transition-all duration-700 hover:bg-[#333333] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#7A4A2B] active:scale-[0.98]";
 
 const HEADLINE_GRADIENT =
   "bg-gradient-to-r from-[#000000] to-[#666666] bg-clip-text text-transparent";
@@ -122,7 +122,7 @@ function scrollToGuess(event: MouseEvent<HTMLAnchorElement>) {
 function FinaleCopy() {
   return (
     <>
-      <p className="text-sm font-semibold text-[#0F5B63]">Do projeto à obra</p>
+      <p className="text-sm font-semibold text-[#7A4A2B]">Do projeto à obra</p>
       <h2 className="mt-2 text-2xl font-semibold tracking-tight text-balance text-[#1F1F1F] sm:text-3xl">
         Agora, o investimento.
       </h2>
@@ -399,7 +399,7 @@ export function RendalConceptHero() {
                 </motion.p>
                 <div className="mt-3 h-1 w-40 overflow-hidden rounded-full bg-[#1F1F1F]/10">
                   <motion.div
-                    className="h-full origin-left rounded-full bg-[#0F5B63]"
+                    className="h-full origin-left rounded-full bg-[#1F1F1F]"
                     style={{ scaleX: stepBar }}
                   />
                 </div>

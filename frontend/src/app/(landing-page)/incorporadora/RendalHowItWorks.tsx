@@ -53,12 +53,12 @@ export function RendalHowItWorks() {
                 <RendalReveal delayMs={index * 100} className="h-full">
                   <article className="flex h-full flex-col rounded-2xl bg-[#F8F1E3] p-6 sm:p-8">
                     <div className="flex items-center justify-between gap-4">
-                      <span className="text-sm font-semibold tabular-nums tracking-widest text-[#0F5B63]">
+                      <span className="text-sm font-semibold tabular-nums tracking-widest text-[#7A4A2B]">
                         {step.num}
                       </span>
                       <Icon
                         weight="duotone"
-                        className="size-8 text-[#0F5B63]"
+                        className="size-8 text-[#7A4A2B]"
                         aria-hidden
                       />
                     </div>

@@ -18,10 +18,10 @@ export default function NotFound() {
             A página que você procurou não existe ou mudou de lugar.
           </p>
           <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
-            <Link href="/" className="inline-flex h-12 min-h-11 items-center rounded-full bg-[#0F5B63] px-6 font-semibold text-white">
+            <Link href="/" className="inline-flex h-12 min-h-11 items-center rounded-full bg-[#1F1F1F] px-6 font-semibold text-white">
               Ir para o início
             </Link>
-            <Link href="/empreendimentos" className="inline-flex h-12 min-h-11 items-center rounded-full px-6 font-semibold text-[#0F5B63] ring-1 ring-[#0F5B63]/30">
+            <Link href="/empreendimentos" className="inline-flex h-12 min-h-11 items-center rounded-full px-6 font-semibold text-[#7A4A2B] ring-1 ring-[#7A4A2B]/30">
               Ver empreendimentos
             </Link>
           </div>

@@ -30,7 +30,7 @@ export function Plants({ item }: { item: Empreendimento }) {
         type="button"
         onClick={() => openAt(planta.imagem.src)}
         aria-label={`Ampliar ${planta.imagem.alt}`}
-        className="relative mx-auto mt-6 block cursor-zoom-in overflow-hidden rounded-3xl bg-[#EDE6DA] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0F5B63]/50"
+        className="relative mx-auto mt-6 block cursor-zoom-in overflow-hidden rounded-3xl bg-[#EDE6DA] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#7A4A2B]/50"
         style={{
           aspectRatio: `${width} / ${height}`,
           width: `min(100%, 28rem, calc(70svh * ${width / height}))`,
@@ -49,7 +49,7 @@ export function Plants({ item }: { item: Empreendimento }) {
         <button
           type="button"
           onClick={() => openAt(planta.imagem.src)}
-          className="inline-flex min-h-11 cursor-pointer items-center rounded-full px-4 text-sm font-semibold text-[#0F5B63] ring-1 ring-[#0F5B63]/30"
+          className="inline-flex min-h-11 cursor-pointer items-center rounded-full px-4 text-sm font-semibold text-[#7A4A2B] ring-1 ring-[#7A4A2B]/30"
         >
           Tela cheia
         </button>

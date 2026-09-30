@@ -55,7 +55,7 @@ export function Hotspots({
                   onFocus={() => setActive(index)}
                   onClick={() => setActive(index)}
                   className={cn(
-                    "flex min-h-11 w-full cursor-pointer items-start gap-4 rounded-2xl p-4 text-left transition-all duration-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#0F5B63]",
+                    "flex min-h-11 w-full cursor-pointer items-start gap-4 rounded-2xl p-4 text-left transition-all duration-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#7A4A2B]",
                     on ? "bg-white shadow-[0_12px_32px_rgba(31,31,31,0.08)]" : "bg-[#EDE6DA]",
                   )}
                   style={{ transitionTimingFunction: EASE }}

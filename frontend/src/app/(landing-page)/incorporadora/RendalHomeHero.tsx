@@ -22,8 +22,8 @@ const HERO_IMG_MOBILE = "/wireframes/hero-preview-ceu-9x16.jpg";
 const EASE = "cubic-bezier(0.32,0.72,0,1)";
 const NAV_DESKTOP = "min-[1150px]";
 
-const PETROL_CTA =
-  "inline-flex h-11 items-center justify-center gap-2 rounded-full bg-[#0F5B63] px-5 text-sm font-semibold tracking-tight text-white transition-[background-color,transform,box-shadow] duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] hover:bg-[#0A474E] hover:shadow-[0_8px_24px_rgba(15,91,99,0.35)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white active:scale-[0.98] sm:h-12 sm:px-6 sm:text-base";
+const PRIMARY_CTA =
+  "inline-flex h-11 items-center justify-center gap-2 rounded-full bg-[#1F1F1F] px-5 text-sm font-semibold tracking-tight text-white transition-[background-color,transform,box-shadow] duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] hover:bg-[#333333] hover:shadow-[0_8px_24px_rgba(31,31,31,0.28)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white active:scale-[0.98] sm:h-12 sm:px-6 sm:text-base";
 
 function CssGlass({
   className,
@@ -235,8 +235,8 @@ export function RendalHomeHero() {
             <Image
               src="/brands/rendal-logo-sem-subtitulo.png"
               alt="Rendal"
-              width={1016}
-              height={813}
+              width={1461}
+              height={808}
               priority
               className="h-full w-auto max-w-[6rem] object-contain object-center sm:max-w-[7.25rem]"
             />
@@ -448,7 +448,7 @@ export function RendalHomeHero() {
               <Link
                 href="/empreendimentos"
                 className={cn(
-                  PETROL_CTA,
+                  PRIMARY_CTA,
                   "h-10 w-full cursor-pointer text-xs md:h-12 md:w-auto md:text-sm",
                 )}
               >

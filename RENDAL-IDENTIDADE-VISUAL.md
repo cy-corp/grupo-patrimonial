@@ -1,284 +1,156 @@
-# Grupo Rendal
+# Rendal
 ## Manual de Identidade Visual
 
-> Diferentes negócios. Um só propósito.
+> Incorporação inteligente.
 
+Alinhado ao *Manual de Identidade Visual Rendal v2* (2026).  
 Documento complementar de posicionamento e diferencial comercial: [RENDAL-CONTEXTO-MARCA.md](./RENDAL-CONTEXTO-MARCA.md).
 
 ---
 
-# A Marca
+# Conceito da marca
 
-O Grupo Rendal nasce da união de diferentes frentes de atuação sob uma mesma visão estratégica. Mais do que um conjunto de empresas, a marca representa a convergência entre conhecimento, execução, inovação e desenvolvimento sustentável.
+Uma identidade construída a partir dos materiais que transformam território em empreendimento.
 
-Sua identidade visual traduz a ideia de integração: negócios distintos que operam de forma complementar para gerar valor, impulsionar pessoas e construir soluções duradouras.
+**Matéria. Engenharia. Valor.**
 
-A marca deve sempre ser apresentada de maneira consistente, preservando sua clareza, elegibilidade e força institucional.
-
----
-
-# Conceito
-
-O símbolo foi concebido a partir de quatro formas independentes que se conectam em uma composição única.
-
-Cada elemento representa uma área fundamental da atuação do grupo:
-
-- Construção
-- Agro
-- Tecnologia
-- Consultoria
-
-A união dessas partes forma um sistema visual equilibrado que simboliza colaboração, crescimento e geração de valor.
+A Rendal atua na incorporação e estruturação de empreendimentos. A identidade visual nasce de quatro elementos materiais — terra, concreto, aço e EPS — organizados de forma precisa e polida. A composição traduz a passagem da matéria-prima para um ativo imobiliário planejado, eficiente e contemporâneo.
 
 ---
 
-# Personalidade da Marca
+# Os quatro elementos
 
-A identidade do Grupo Rendal deve transmitir:
+Cada peça possui função própria; juntas, formam uma estrutura única.
 
-- Solidez
-- Sofisticação
-- Inteligência
-- Credibilidade
-- Visão de longo prazo
-- Evolução sustentável
+| Elemento | Papel | Significado |
+|----------|--------|-------------|
+| Terra | Origem | Território, implantação e potencial imobiliário |
+| Concreto | Solidez | Durabilidade, base técnica e permanência |
+| Aço | Estrutura | Engenharia, precisão e desempenho |
+| EPS | Inovação | Industrialização, eficiência e construção inteligente |
 
-A comunicação visual deve evitar excessos, privilegiando clareza, equilíbrio e refinamento.
+Não redesenhar, esticar ou alterar individualmente as peças. Preservar o equilíbrio entre os quatro módulos, o respiro central e a leitura compacta do conjunto.
 
 ---
 
-# Logotipo
+# Linguagem da marca
+
+| Traço | Como deve parecer e soar |
+|-------|--------------------------|
+| Inteligente | Decisões baseadas em viabilidade, técnica e estratégia |
+| Sólida | Confiança sem excesso de formalidade |
+| Contemporânea | Arquitetura limpa, materiais honestos e tecnologia |
+| Eficiente | Menos ruído, mais clareza, prazo e resultado |
+
+---
+
+# Assinatura principal
 
 A assinatura institucional é composta por:
 
-1. Símbolo
-2. Nome "Grupo Rendal"
-3. Assinatura complementar "Participações e Soluções"
+1. **Símbolo** — quatro módulos orgânicos
+2. **Logotipo** — RENDAL
+3. **Assinatura** — INCORPORAÇÃO INTELIGENTE
 
 A relação entre esses elementos é fixa e não deve ser alterada.
 
----
+## Logomarca polida (principal)
 
-# Versões Oficiais
+Assinatura institucional do site, favicon (símbolo) e header. Arquivo-fonte: `Logomarca polida.png`.
 
-## Principal
+No produto digital:
 
-Versão prioritária para aplicações em fundos claros.
+| Superfície | Arquivo | Recorte |
+|------------|---------|---------|
+| Lockup completo | `frontend/apps/rendal/public/brands/rendal-logo.png` | Símbolo + RENDAL + assinatura |
+| Header / hero | `rendal-logo-sem-subtitulo.png` | Símbolo + RENDAL (sem tagline) |
+| Favicon / OG | `apps/rendal/src/app/icon.png` | Só o símbolo |
 
-## Negativa
+## Logomarca bruta (conceitual)
 
-Versão destinada a fundos escuros, preservando contraste e legibilidade.
-
-## Monocromática
-
-Aplicação restrita a situações onde limitações técnicas impeçam o uso da versão institucional.
-
-## Horizontal
-
-Indicada para cabeçalhos, assinaturas e espaços horizontais.
-
-## Vertical
-
-Indicada para materiais institucionais e aplicações de destaque.
-
-## Ícone
-
-Representação simplificada destinada a ambientes digitais, aplicativos e avatares.
+A versão bruta integra o universo visual e mostra os quatro elementos antes da transformação. Uso: campanhas, manifestos, apresentações, placas e peças de alto impacto. **Não usar no chrome do site** (header, favicon, botões).
 
 ---
 
-# Área de Proteção
+# Área de proteção
 
-Para garantir legibilidade e presença visual, deve ser respeitada uma área mínima de respiro ao redor da marca equivalente a 1× sua unidade de referência.
-
-Nenhum texto, imagem ou elemento gráfico deve invadir essa região.
+A referência mínima `X` equivale à altura da letra R do logotipo. Nenhum texto, fotografia, borda ou outro símbolo deve invadir essa área (`XX` no manual).
 
 ---
 
-# Redução Mínima
+# Redução mínima
 
-Para preservar a leitura da marca, respeite os seguintes limites mínimos:
-
-| Aplicação | Tamanho mínimo |
-|------------|----------------|
-| Logo horizontal | 30 mm / 180 px |
-| Logo vertical | 20 mm / 120 px |
-| Ícone | 10 mm / 48 px |
-
-A utilização abaixo desses limites compromete a integridade visual da marca.
+| Aplicação | Regra |
+|-----------|--------|
+| Uso institucional / digital com assinatura | Largura mínima 45 mm (impressão) ou 260 px (tela) |
+| Abaixo disso | Remover a assinatura (*INCORPORAÇÃO INTELIGENTE*) antes de comprometer a leitura |
+| Favicon, avatar, aplicações muito pequenas | Usar **apenas o símbolo** |
 
 ---
 
-# Paleta Institucional
+# Paleta cromática
 
-## Grafite
+Base neutra e sofisticada, com dourado como elemento de valor. O dourado deve funcionar como acento, acabamento ou detalhe — evitar grandes massas douradas. Grafite e cinzas formam a base institucional; branco e cinza claro garantem respiro.
 
-HEX `#1F1F1F`
+| Cor | HEX | Papel |
+|-----|-----|--------|
+| Grafite | `#1F1F1F` | Base institucional, texto, CTA primário no site |
+| Dourado | `#C9A96A` | Acento, acabamento, detalhe |
+| Cinza escuro | `#4D4D4D` | Apoio institucional |
+| Cinza claro | `#D9D9D9` | Estrutura e respiro |
+| Branco | `#FFFFFF` | Clareza, fundos claros |
+| Terra | `#7A4A2B` | Acento de origem (labels, links, focus, ícones) |
 
-Cor principal da identidade.
+**Petróleo `#0F5B63` saiu da paleta.** Não usar em UI nova.
 
-Representa:
+### Atmosfera digital do site
 
-- Solidez
-- Confiança
-- Estabilidade
+O site mantém o creme `#F8F1E3` (e `#EDE6DA`) como fundo “neutro claro” — não está na paleta impressa, mas o manual autoriza fundos grafite, branco e neutro claro. Blocos escuros usam grafite `#1F1F1F`, não teal.
 
----
-
-## Dourado
-
-HEX `#C9A96A`
-
-Elemento de destaque da marca.
-
-Representa:
-
-- Valor
-- Crescimento
-- Sofisticação
-
----
-
-## Azul-Petróleo
-
-HEX `#0F5B63`
-
-Cor associada à inovação e visão de futuro.
-
-Representa:
-
-- Inteligência
-- Tecnologia
-- Evolução
-
----
-
-## Cinza Escuro
-
-HEX `#4D4D4D`
-
-Cor de apoio para conteúdos institucionais.
-
----
-
-## Cinza Claro
-
-HEX `#D9D9D9`
-
-Cor estrutural utilizada para equilíbrio visual.
-
----
-
-## Branco
-
-HEX `#FFFFFF`
-
-Responsável pela sensação de clareza, amplitude e transparência.
+Fundos permitidos para a marca: grafite, branco, neutro claro. Contraste sempre acima do efeito.
 
 ---
 
 # Tipografia
 
-## Família Tipográfica
+Linguagem geométrica, limpa e técnica.
 
-Montserrat
+- **Títulos:** família geométrica sem serifa, peso Medium/Bold.
+- **Textos:** família sem serifa de alta legibilidade, peso Regular/Medium.
+- Evitar fontes ornamentais, manuscritas ou excessivamente condensadas.
 
-Uma tipografia contemporânea, objetiva e altamente legível, escolhida por seu equilíbrio entre presença institucional e versatilidade.
-
-### Hierarquia
-
-| Uso | Peso |
-|-------|--------|
-| Títulos | Montserrat Bold |
-| Subtítulos | Montserrat SemiBold |
-| Texto Corrido | Montserrat Regular |
+No site, Manrope permanece carregada como `--font-montserrat` até confirmação de Montserrat.
 
 ---
 
-# Elementos Gráficos
+# Versões da marca
 
-A linguagem visual da marca é construída a partir de três componentes principais:
+- Principal / fundo escuro
+- Principal / fundo claro
+- Monocromáticas em preto, branco e grafite (gravação, carimbo, bordado, recorte)
 
-### Formas Orgânicas
-
-Elementos derivados da geometria do símbolo institucional.
-
-### Linhas Finas Douradas
-
-Utilizadas como recurso de organização e destaque.
-
-### Espaço Negativo
-
-O uso generoso de áreas livres é parte fundamental da identidade visual.
+Não distorcer, inclinar, trocar as cores dos quatro materiais, aplicar efeitos extras, alterar a tipografia do logotipo, reorganizar os módulos ou usar sobre fundos que prejudiquem a leitura.
 
 ---
 
-# Direção Visual
+# Arquitetura de marcas
 
-A identidade do Grupo Rendal deve transmitir uma percepção premium e atemporal.
+Rendal e DCorp compartilham cultura visual (geometria, materiais, grafite, dourado, linguagem técnica) com papéis distintos:
 
-### Características desejadas
+- **Rendal** — Incorporação · negócio · desenvolvimento
+- **DCorp** — Engenharia · execução · construção
 
-- Composição limpa
-- Grande área de respiro
-- Hierarquia clara
-- Poucos elementos simultâneos
-- Sofisticação discreta
-- Contraste controlado
-
-### Referências visuais
-
-- Arquitetura contemporânea
-- Paisagens amplas
-- Materiais nobres
-- Superfícies metálicas
-- Ambientes corporativos premium
+A identidade DCorp (ouro / grafite / branco) não é alterada por este manual da Rendal.
 
 ---
 
-# Aplicações
+# Assinatura institucional
 
-A identidade pode ser utilizada em:
-
-- Papelaria institucional
-- Cartões de visita
-- Apresentações corporativas
-- Fachadas
-- Plataformas digitais
-- Aplicativos
-- Websites
-- Materiais comerciais
-- Comunicação interna
-
----
-
-# Restrições
-
-Não é permitido:
-
-- Distorcer a marca
-- Alterar proporções
-- Rotacionar elementos
-- Modificar as cores institucionais
-- Aplicar sombras ou efeitos não previstos
-- Utilizar versões de baixo contraste
-- Recriar ou redesenhar o símbolo
-
-Toda aplicação deve preservar a integridade visual definida neste manual.
-
----
-
-# Assinatura Institucional
-
-> Estratégia hoje. Mais valor sempre.
-
-> Mais que negócios, soluções para a vida.
-
-> Diferentes negócios. Um só propósito.
+> Incorporação inteligente.
 
 ## Mensagem-mãe do site (produto / home)
 
-Complementar às assinaturas acima — uso na landing e materiais digitais da incorporadora:
+Complementar à assinatura do lockup — uso na landing e materiais digitais da incorporadora:
 
 > Aplicação inteligente do seu dinheiro.
 

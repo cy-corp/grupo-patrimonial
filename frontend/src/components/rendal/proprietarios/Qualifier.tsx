@@ -94,18 +94,18 @@ export function Qualifier() {
             </select>
           </label>
         ))}
-        <button type="submit" className="inline-flex h-12 items-center justify-center rounded-full bg-[#0F5B63] font-semibold text-white">
+        <button type="submit" className="inline-flex h-12 items-center justify-center rounded-full bg-[#1F1F1F] font-semibold text-white">
           Continuar no contato
         </button>
       </form>
 
       <div className={cn("mt-6", ready ? "block" : "hidden")} aria-live="polite">
-        <p className="text-sm font-semibold tabular-nums text-[#0F5B63]">
+        <p className="text-sm font-semibold tabular-nums text-[#7A4A2B]">
           {done ? "Resumo" : `${String(step + 1).padStart(2, "0")}/04`}
         </p>
         <div className="mt-3 h-1 overflow-hidden rounded-full bg-[#EDE6DA]">
           <div
-            className="h-full bg-[#0F5B63] transition-all duration-700 motion-reduce:transition-none"
+            className="h-full bg-[#1F1F1F] transition-all duration-700 motion-reduce:transition-none"
             style={{
               width: `${(Math.min(step, STEPS.length) / STEPS.length) * 100}%`,
               transitionTimingFunction: EASE,
@@ -173,7 +173,7 @@ export function Qualifier() {
                   track("qualificador_step", { step: "cidade" });
                   setStep(1);
                 }}
-                className="mt-4 inline-flex h-12 min-h-11 cursor-pointer items-center rounded-full bg-[#0F5B63] px-6 font-semibold text-white disabled:opacity-50"
+                className="mt-4 inline-flex h-12 min-h-11 cursor-pointer items-center rounded-full bg-[#1F1F1F] px-6 font-semibold text-white disabled:opacity-50"
               >
                 Continuar
               </button>
@@ -182,7 +182,7 @@ export function Qualifier() {
               <button
                 type="button"
                 onClick={() => setStep((value) => value - 1)}
-                className="mt-4 min-h-11 cursor-pointer text-sm font-semibold text-[#0F5B63]"
+                className="mt-4 min-h-11 cursor-pointer text-sm font-semibold text-[#7A4A2B]"
               >
                 Voltar
               </button>
