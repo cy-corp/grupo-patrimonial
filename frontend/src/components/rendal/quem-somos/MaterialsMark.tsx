@@ -66,7 +66,7 @@ function Stage({
 }
 
 export function MaterialsMark() {
-  const [activeId, setActiveId] = useState<MateriaId>("terra");
+  const [activeId, setActiveId] = useState<MateriaId | null>("terra");
   const railRef = useRef<HTMLOListElement>(null);
 
   const activeIndex = MATERIAS.findIndex((m) => m.id === activeId);
