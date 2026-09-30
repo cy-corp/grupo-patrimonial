@@ -12,6 +12,7 @@ export function PageHero({
   media,
   dark = false,
   grain = false,
+  paper = true,
   priority = false,
 }: {
   eyebrow: string;
@@ -24,13 +25,16 @@ export function PageHero({
   dark?: boolean;
   /** Stronger grain + gradient wash — use on dark heroes that feel flat. */
   grain?: boolean;
+  /** Paper noise on the cream. Off when the media already paints that cream. */
+  paper?: boolean;
   priority?: boolean;
 }) {
   return (
     <section
       id="page-hero"
       className={cn(
-        "rendal-hero-paper relative px-6 pt-36 pb-12 sm:pb-20",
+        "relative px-6 pt-36 pb-12 sm:pb-20",
+        paper && "rendal-hero-paper",
         dark ? "bg-[#1F1F1F]" : "bg-[#F8F1E3]",
         grain && "rendal-hero-grain",
       )}

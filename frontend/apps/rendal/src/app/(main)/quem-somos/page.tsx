@@ -48,12 +48,16 @@ export default function QuemSomosPage() {
           title="Incorporação com o orçamento no lugar certo."
           subtitle="Do terreno à entrega, cada decisão de projeto é tomada pelo que gera uso e valor para quem mora."
           media={<MaterialsMark />}
+          paper={false}
         />
       </RendalReveal>
 
       <RendalReveal>
-        <section className="px-6 py-12 sm:py-20 md:py-24" aria-labelledby="decisoes-titulo">
-          <div className="mx-auto max-w-5xl">
+        <section
+          className="rendal-hero-paper relative px-6 py-12 sm:py-20 md:py-24"
+          aria-labelledby="decisoes-titulo"
+        >
+          <div className="relative z-[1] mx-auto max-w-5xl">
             <SectionHeader id="decisoes-titulo" eyebrow="Método" title="Decisões, não adjetivos." align="start" />
             <div className="mt-10">
               <Decisions />

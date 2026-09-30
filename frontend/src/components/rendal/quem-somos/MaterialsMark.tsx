@@ -1,6 +1,6 @@
 "use client";
 
-import { useId, useRef, useState, type CSSProperties, type KeyboardEvent } from "react";
+import { useRef, useState, type CSSProperties, type KeyboardEvent } from "react";
 import { preload } from "react-dom";
 import { cn } from "@/lib/utils";
 import { EASE } from "@/lib/rendal/tokens";
@@ -9,19 +9,13 @@ import { SHAPES } from "@/lib/rendal/content/materias-shapes";
 
 /**
  * Como funciona
- * - O logo é UM render só, PNG com alfa (preto do canvas furado por flood-fill das bordas).
- *   Cada pedra é o mesmo <image> recortado por clipPath. Nada de PNG separado.
- * - Estado ativo: o render inteiro perde opacidade e a pedra volta por cima no recorte original.
- *   Sem filtro de cor, sem retângulo preto (senão o alfa vira um box). Só opacity e transform.
- * - Um viewBox só, ao redor do lockup (símbolo + RENDAL). No mobile o creme aparece no alfa
- *   e o aspect ~2:1 mantém ícone e wordmark visíveis, sem crop só no símbolo.
+ * - O logo é UM <image> só. Empilhar o PNG (alfa nas bordas) estoura o metal das letras.
+ * - Destaque: véu creme nas pedras inativas. RENDAL e a pedra ativa ficam no render original.
  * - Hit area = contorno da pedra. Teclado/leitor usam o trilho abaixo.
  */
 
 const VIEWBOX = "380 -20 1436 750";
-
-const DIM = 0.32;
-const LIFT = 1.02;
+const VEIL = 0.62;
 
 const ease: CSSProperties = { transitionTimingFunction: EASE };
 const fade = "transition-[opacity,transform] duration-700 motion-reduce:transition-none";
@@ -33,8 +27,6 @@ function Stage({
   activeId: MateriaId | null;
   onSelect: (id: MateriaId) => void;
 }) {
-  const uid = useId().replace(/:/g, "");
-
   return (
     <svg
       viewBox={VIEWBOX}
@@ -42,49 +34,23 @@ function Stage({
       className="block h-auto w-full touch-manipulation select-none"
       style={{ WebkitTapHighlightColor: "transparent" }}
     >
-      <defs>
-        {MATERIAS.map((m) => (
-          <clipPath key={m.id} id={`${uid}-${m.id}`}>
-            <path d={SHAPES[m.id].d} />
-          </clipPath>
-        ))}
-      </defs>
-
       <image
         href={LOGO_BRUTA.src}
         width={LOGO_BRUTA.width}
         height={LOGO_BRUTA.height}
         preserveAspectRatio="xMidYMid meet"
-        className={fade}
-        style={{ ...ease, opacity: activeId ? DIM : 1 }}
       />
 
-      {MATERIAS.map((m) => {
-        const { cx, cy } = SHAPES[m.id];
-        const on = activeId === m.id;
-        return (
-          <g key={m.id} transform={`translate(${cx} ${cy})`}>
-            <g
-              className={fade}
-              style={{
-                ...ease,
-                opacity: on ? 1 : 0,
-                transform: `scale(${on ? LIFT : 1})`,
-              }}
-            >
-              <g transform={`translate(${-cx} ${-cy})`}>
-                <image
-                  href={LOGO_BRUTA.src}
-                  width={LOGO_BRUTA.width}
-                  height={LOGO_BRUTA.height}
-                  preserveAspectRatio="xMidYMid meet"
-                  clipPath={`url(#${uid}-${m.id})`}
-                />
-              </g>
-            </g>
-          </g>
-        );
-      })}
+      {MATERIAS.map((m) => (
+        <path
+          key={`veil-${m.id}`}
+          d={SHAPES[m.id].d}
+          fill="#F8F1E3"
+          pointerEvents="none"
+          className={fade}
+          style={{ ...ease, opacity: activeId && activeId !== m.id ? VEIL : 0 }}
+        />
+      ))}
 
       {MATERIAS.map((m) => (
         <path

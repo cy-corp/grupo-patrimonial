@@ -26,7 +26,7 @@ assert (W, H) == (2172, 724), f"esperava 2172x724, veio {W}x{H}"
 
 # região do símbolo (exclui o wordmark, que começa perto de y=72%)
 M = al > 128
-M[int(H * .66):] = False
+M[int(H * .715):] = False
 M[:, :int(W * .33)] = False
 M[:, int(W * .68):] = False
 l0, n = ndi.label(M)
