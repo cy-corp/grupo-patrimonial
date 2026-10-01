@@ -2,6 +2,7 @@ import { DcorpHero } from "./components/DcorpHero";
 import { DcorpAudiences } from "./components/DcorpAudiences";
 import { DcorpSolutions } from "./components/DcorpSolutions";
 import { DcorpServices } from "./components/DcorpServices";
+import { DcorpEnvironmentalTeaser } from "./components/DcorpEnvironmentalTeaser";
 import { DcorpInstitutional } from "./components/DcorpInstitutional";
 import { DcorpWorksTeaser } from "./components/DcorpWorksTeaser";
 import { DcorpCta } from "./components/DcorpCta";
@@ -17,6 +18,7 @@ export default function DcorpHomePage() {
       <DcorpAudiences />
       <DcorpSolutions />
       <DcorpServices />
+      <DcorpEnvironmentalTeaser />
       <DcorpInstitutional />
       <DcorpWorksTeaser />
       <DcorpCta />

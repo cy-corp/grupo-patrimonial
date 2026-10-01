@@ -36,6 +36,9 @@ export const metadata: Metadata = {
     "engenharia Campinas",
     "painel EPS",
     "sistemas construtivos",
+    "licenciamento ambiental",
+    "CAR",
+    "regularização de loteamento",
   ],
   robots: { index: true, follow: true },
   alternates: {

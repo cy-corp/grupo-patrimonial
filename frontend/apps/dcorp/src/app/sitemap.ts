@@ -6,6 +6,7 @@ const ROUTES = [
   "/quem-somos",
   "/sistemas-construtivos",
   "/servicos",
+  "/servicos-ambientais",
   "/obras",
   "/contato",
   "/politica-de-privacidade",

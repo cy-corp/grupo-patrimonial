@@ -39,6 +39,7 @@ export const siteConfigs: Record<SiteBrandId, SiteBrandConfig> = {
       { label: "A DCORP", href: "/quem-somos" },
       { label: "Sistemas construtivos", href: "/sistemas-construtivos" },
       { label: "Serviços", href: "/servicos" },
+      { label: "Ambiental", href: "/servicos-ambientais" },
       { label: "Obras", href: "/obras" },
       { label: "Contato", href: "/contato" },
     ],

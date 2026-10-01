@@ -17,7 +17,7 @@ export type DcorpSystem = {
 };
 
 export const DCORP_POSITIONING =
-  "Empresa de engenharia e construção especializada em sistemas construtivos industrializados, com atuação própria e prestação de serviços para incorporadoras, investidores, empresas e clientes terceiros.";
+  "Empresa de engenharia e construção especializada em sistemas construtivos industrializados, com atuação própria e prestação de serviços para incorporadoras, investidores, empresas e clientes terceiros. Atua também em regularização e serviços ambientais para loteamentos e imóveis rurais.";
 
 export const DCORP_HERO_SUPPORT =
   "Construção industrializada com engenharia, velocidade e controle — para incorporadoras, investidores e empresas.";
@@ -216,6 +216,78 @@ export const DCORP_SERVICE_GROUPS = [
     ],
     image: "/dcorp/services/03-gestao.jpg",
     alt: "Fiscalização e orientação técnica em obra",
+  },
+] as const;
+
+export const DCORP_ENVIRONMENTAL_HEADLINE =
+  "Regularizar o terreno. Liberar o projeto.";
+
+export const DCORP_ENVIRONMENTAL_SUPPORT =
+  "Regularização de loteamento, licenciamento e conformidade ambiental — do CAR à recuperação de área degradada.";
+
+export const DCORP_ENVIRONMENTAL_IMAGE = "/dcorp/services/04-ambiental.jpg";
+
+export const DCORP_ENVIRONMENTAL_IMAGE_ALT =
+  "Terreno e entorno natural em processo de regularização ambiental";
+
+export const DCORP_ENVIRONMENTAL_SERVICES = [
+  {
+    id: "regularizacao-loteamento",
+    title: "Regularização ambiental de loteamento",
+    shortTitle: "Regularização de loteamento",
+    deliverable:
+      "Diagnóstico, estudos e tramitação para regularizar o loteamento no órgão ambiental, alinhando o projeto à legislação vigente.",
+  },
+  {
+    id: "outorga",
+    title: "Outorga de recursos hídricos",
+    shortTitle: "Outorga",
+    deliverable:
+      "Pedido e acompanhamento da outorga de direito de uso da água junto ao órgão competente, para captação, lançamento ou interferência hídrica.",
+  },
+  {
+    id: "recurso-multa",
+    title: "Recurso de multa ambiental",
+    shortTitle: "Recurso de multa",
+    deliverable:
+      "Análise do auto de infração, peças técnicas e defesa administrativa para contestar ou reduzir multa ambiental.",
+  },
+  {
+    id: "licenciamento",
+    title: "Licenciamento ambiental",
+    shortTitle: "Licenciamento",
+    deliverable:
+      "Licença prévia, de instalação e de operação: estudos, protocolos e acompanhamento até a autorização do empreendimento.",
+  },
+  {
+    id: "car",
+    title: "CAR — Cadastro Ambiental Rural",
+    shortTitle: "CAR",
+    deliverable:
+      "Inscrição, retificação e regularização do Cadastro Ambiental Rural, com mapeamento de reserva legal e áreas de preservação.",
+  },
+  {
+    id: "recuperacao",
+    title: "Recuperação de área degradada",
+    shortTitle: "Recuperação de área degradada",
+    deliverable:
+      "Projeto de Recuperação de Área Degradada: diagnóstico, plantio, monitoramento e comprovação junto ao órgão ambiental.",
+  },
+] as const;
+
+export const DCORP_ENVIRONMENTAL_HOME_CHIPS = [
+  {
+    label: "Regularização",
+    href: "/servicos-ambientais#regularizacao-loteamento",
+  },
+  {
+    label: "Licenciamento",
+    href: "/servicos-ambientais#licenciamento",
+  },
+  { label: "CAR", href: "/servicos-ambientais#car" },
+  {
+    label: "Recuperação",
+    href: "/servicos-ambientais#recuperacao",
   },
 ] as const;
 

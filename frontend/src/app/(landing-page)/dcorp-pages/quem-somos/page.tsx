@@ -46,6 +46,14 @@ const ACTUATION = [
     detail:
       "Painel monolítico EPS, concreto in loco, ICF e Lightwall — escolhidos pelo desempenho da obra, não por catálogo.",
     href: "/sistemas-construtivos",
+    linkLabel: "Ver sistemas",
+  },
+  {
+    title: "Serviços ambientais",
+    detail:
+      "Regularização de loteamento, licenciamento, CAR, outorga, recurso de multa e recuperação de área degradada.",
+    href: "/servicos-ambientais",
+    linkLabel: "Ver serviços ambientais",
   },
 ] as const;
 
@@ -170,7 +178,7 @@ export default function DcorpQuemSomosPage() {
               Modelo de atuação
             </h2>
             <p className="mt-3 text-pretty font-sans text-base leading-relaxed text-[#4D4D4D]">
-              Uma engenharia, três frentes — sempre com método, sistema e
+              Uma engenharia, quatro frentes — sempre com método, sistema e
               entrega.
             </p>
           </motion.div>
@@ -201,7 +209,7 @@ export default function DcorpQuemSomosPage() {
                       href={item.href}
                       className="t-learn mt-4 inline-flex items-center gap-2 font-sans text-[12px] font-semibold text-[#1F1F1F]"
                     >
-                      Ver sistemas
+                      {item.linkLabel}
                       <span className="t-learn-chevron" aria-hidden="true">
                         →
                       </span>

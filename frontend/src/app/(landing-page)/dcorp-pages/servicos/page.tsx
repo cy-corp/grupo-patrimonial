@@ -184,6 +184,50 @@ export default function DcorpServicosPage() {
         })}
       </div>
 
+      <section className="border-t border-[#D9D9D9] bg-[#F7F7F7] px-6 py-16 md:px-12 md:py-20 lg:px-20">
+        <div className="mx-auto flex max-w-6xl flex-col gap-6 md:flex-row md:items-end md:justify-between">
+          <div className="max-w-xl">
+            <div className="mb-4 flex items-center gap-3">
+              <span className="h-px w-10 bg-[#C9A96A]" aria-hidden="true" />
+              <p className="font-sans text-[11px] font-semibold uppercase tracking-wide text-[#C9A96A]">
+                Ambiental
+              </p>
+            </div>
+            <h2 className="text-balance font-sans text-2xl font-bold text-[#1F1F1F] md:text-3xl">
+              Também na área ambiental.
+            </h2>
+            <p className="mt-3 max-w-md text-pretty font-sans text-base leading-relaxed text-[#4D4D4D]">
+              Regularização de loteamento, licenciamento, CAR, outorga e
+              recuperação de área degradada.
+            </p>
+          </div>
+          <Link
+            href="/servicos-ambientais"
+            className="t-learn inline-flex shrink-0 items-center gap-2 self-start font-sans text-[12px] font-semibold text-[#1F1F1F] md:self-auto"
+          >
+            Ver serviços ambientais
+            <span className="t-learn-chevron" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <path
+                  className="t-learn-arm t-learn-arm-top"
+                  d="M6 4L10 8"
+                  stroke="currentColor"
+                  strokeWidth="1.6"
+                  strokeLinecap="round"
+                />
+                <path
+                  className="t-learn-arm t-learn-arm-bot"
+                  d="M10 8L6 12"
+                  stroke="currentColor"
+                  strokeWidth="1.6"
+                  strokeLinecap="round"
+                />
+              </svg>
+            </span>
+          </Link>
+        </div>
+      </section>
+
       <section className="border-t border-[#D9D9D9] bg-[#1F1F1F] px-6 py-20 md:px-12 md:py-24 lg:px-20">
         <div className="mx-auto max-w-6xl">
           <motion.div
