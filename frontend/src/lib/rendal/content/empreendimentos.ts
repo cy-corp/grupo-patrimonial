@@ -1,5 +1,27 @@
 export type Midia = { src: string; alt: string; fit?: "cover" | "contain" };
 
+export type EtapaObraStatus = "concluido" | "em_execucao" | "proximo";
+
+export type ObraMidia = {
+  kind: "image" | "video";
+  src: string;
+  alt: string;
+  poster?: string;
+  aspect: "v" | "h" | "s";
+  destaque?: boolean;
+  tone?: string;
+  fit?: "cover" | "contain";
+};
+
+export type EtapaObra = {
+  id: string;
+  titulo: string;
+  /** Shorter label for the step nav. Falls back to titulo. */
+  label?: string;
+  status: EtapaObraStatus;
+  midias: ObraMidia[];
+};
+
 export type Planta = {
   id: "terreo" | "laje";
   label: string;
@@ -45,6 +67,8 @@ export type Empreendimento = {
   heroNoite: Midia;
   heroVideo?: Midia & { poster: string };
   galeria: Midia[];
+  /** Construction progress steps for loteamentos in obra. Replaces the flat gallery when present. */
+  etapasObra?: EtapaObra[];
   plantas: Planta[];
   hotspots: Hotspot[];
   racional: Array<{ titulo: string; texto: string }>;
@@ -55,6 +79,50 @@ export type Empreendimento = {
 
 const CAPETINGA = "/referencia/capetinga-dener";
 const PASSOS = "/referencia/passos";
+const OBRA = `${PASSOS}/obra`;
+
+function obraFoto(
+  pasta: string,
+  arquivo: string,
+  alt: string,
+  aspect: ObraMidia["aspect"],
+  tone: string,
+  destaque = false,
+): ObraMidia {
+  return {
+    kind: "image",
+    src: `${OBRA}/${pasta}/${arquivo}.webp`,
+    alt,
+    aspect,
+    tone,
+    ...(destaque ? { destaque: true } : {}),
+  };
+}
+
+function obraVideo(
+  pasta: string,
+  arquivo: string,
+  alt: string,
+  tone: string,
+  destaque = false,
+): ObraMidia {
+  return {
+    kind: "video",
+    src: `${OBRA}/${pasta}/${arquivo}.mp4`,
+    poster: `${OBRA}/${pasta}/${arquivo}-poster.jpg`,
+    alt,
+    aspect: "v",
+    tone,
+    ...(destaque ? { destaque: true } : {}),
+  };
+}
+
+export function midiasDaEtapa(etapa: EtapaObra): ObraMidia[] {
+  return [
+    ...etapa.midias.filter((item) => item.kind === "video"),
+    ...etapa.midias.filter((item) => item.kind !== "video"),
+  ];
+}
 
 export const empreendimentos: Empreendimento[] = [
   {
@@ -102,22 +170,90 @@ export const empreendimentos: Empreendimento[] = [
         alt: "Lotes demarcados com marcadores no terreno",
       },
     ],
-    plantas: [],
-    hotspots: [],
-    racional: [
+    etapasObra: [
       {
-        titulo: "Vias em execução",
-        texto: "Guias, drenagem e terrapleno já no lugar. O loteamento está saindo do papel.",
+        id: "aprovacao",
+        titulo: "Aprovação junto à prefeitura",
+        label: "Aprovação",
+        status: "concluido",
+        midias: [
+          {
+            kind: "image",
+            src: `${OBRA}/aprovacao/planta-lote.webp`,
+            alt: "Planta urbanística aprovada do Loteamento Passos",
+            aspect: "h",
+            destaque: true,
+            fit: "contain",
+            tone: "#FFFFFF",
+          },
+        ],
       },
       {
-        titulo: "Lotes demarcados",
-        texto: "Os limites estão marcados no terreno. Na visita, você vê o lote e o entorno.",
+        id: "terraplanagem",
+        titulo: "Execução de terraplanagem",
+        label: "Terraplanagem",
+        status: "concluido",
+        midias: [
+          obraVideo("terraplanagem", "video-01", "Terreno após a terraplanagem", "#866e63", true),
+          obraFoto("terraplanagem", "02", "Vista ampla da terraplanagem com o vale ao fundo", "h", "#876d5d"),
+          obraFoto("terraplanagem", "01", "Solo preparado com marcadores no terreno", "v", "#8e6961"),
+        ],
       },
       {
-        titulo: "Vista para o vale",
-        texto: "Passos, MG, com mata e cidade ao fundo. O lugar é o produto, nesta fase.",
+        id: "drenagem",
+        titulo: "Execução da rede de drenagem de água pluvial",
+        label: "Drenagem pluvial",
+        status: "concluido",
+        midias: [
+          obraFoto("drenagem", "01", "Boca de descarga da drenagem com enrocamento", "v", "#595a4e", true),
+          obraFoto("drenagem", "04", "Canal escalonado da drenagem pluvial", "v", "#6b6556"),
+          obraFoto("drenagem", "03", "Tubos de concreto para a rede pluvial", "v", "#6b714e"),
+          obraFoto("drenagem", "02", "Canal de concreto da drenagem pluvial", "v", "#5b554a"),
+          obraFoto("drenagem", "05", "Descarga da drenagem na encosta", "v", "#54564a"),
+          obraFoto("drenagem", "06", "Boca da drenagem com dissipador", "v", "#59594e"),
+          obraFoto("drenagem", "07", "Vista de cima do canal da drenagem", "v", "#686555"),
+          obraFoto("drenagem", "13", "Execução da estrutura de drenagem", "v", "#585658"),
+          obraFoto("drenagem", "08", "Estrutura de descarga da drenagem pluvial", "v", "#525449"),
+          obraFoto("drenagem", "09", "Descarga da drenagem na mata", "v", "#906a64"),
+          obraFoto("drenagem", "10", "Boca da drenagem vista de frente", "v", "#545549"),
+          obraFoto("drenagem", "11", "Saída da drenagem no limite do terreno", "v", "#946c6a"),
+          obraFoto("drenagem", "12", "Cabeçote da drenagem pluvial", "v", "#976a68"),
+        ],
+      },
+      {
+        id: "esgoto",
+        titulo: "Execução da rede de esgoto",
+        label: "Rede de esgoto",
+        status: "concluido",
+        midias: [
+          obraFoto("esgoto", "01", "Caixas de inspeção da rede de esgoto", "v", "#7c5c47", true),
+          obraFoto("esgoto", "02", "Execução da caixa da rede de esgoto", "v", "#76736f"),
+        ],
+      },
+      {
+        id: "meio-fio",
+        titulo: "Execução do meio fio",
+        label: "Meio fio",
+        status: "em_execucao",
+        midias: [
+          obraVideo("meio-fio", "video-01", "Percurso pelo meio fio na via", "#8c7a70", true),
+          obraVideo("meio-fio", "video-02", "Via com meio fio ao entardecer", "#957360"),
+          obraVideo("meio-fio", "video-03", "Via com meio fio dos dois lados", "#b49079"),
+          obraFoto("meio-fio", "01", "Meio fio em curva com vista para o vale", "h", "#8d7968"),
+          obraFoto("meio-fio", "02", "Via com meio fio dos dois lados", "h", "#9a836c"),
+          obraFoto("meio-fio", "03", "Meio fio reto na via recém aberta", "v", "#a1806a"),
+          obraFoto("meio-fio", "04", "Via curvada com meio fio ao entardecer", "h", "#917967"),
+          obraFoto("meio-fio", "05", "Meio fio ao entardecer na borda da mata", "v", "#947a68"),
+          obraFoto("meio-fio", "06", "Meio fio com casas vizinhas ao fundo", "v", "#90715d"),
+          obraFoto("meio-fio", "07", "Meio fio recém lançado na via", "v", "#9e8374"),
+          obraFoto("meio-fio", "08", "Meio fio alinhado na subida", "v", "#817065"),
+          obraFoto("meio-fio", "09", "Meio fio e o vale de Passos", "v", "#9d8a7a"),
+        ],
       },
     ],
+    plantas: [],
+    hotspots: [],
+    racional: [],
     diaNaCasa: [],
     localizacao: {
       enderecoPublico: "Passos, MG",
@@ -302,4 +438,10 @@ export const STATUS_LABEL: Record<EmpreendimentoStatus, string> = {
   obra: "Em obra",
   entregue: "Entregue",
   referencia: "Referência",
+};
+
+export const ETAPA_OBRA_STATUS: Record<EtapaObraStatus, string> = {
+  concluido: "Concluído",
+  em_execucao: "Em execução",
+  proximo: "Próximo",
 };

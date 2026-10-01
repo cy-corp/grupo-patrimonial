@@ -27,7 +27,7 @@ export function FinalCta({
           <p className="mt-4 text-base leading-7 text-pretty text-white/75 sm:text-lg sm:leading-8">
             {subtitle}
           </p>
-          <RendalButton href={href} className="mt-8">
+          <RendalButton href={href} variant="onDark" className="mt-8">
             {cta}
           </RendalButton>
         </div>

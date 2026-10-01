@@ -4,6 +4,7 @@ import { ProjectHero } from "@/components/rendal/empreendimentos/ProjectHero";
 import { DayInHouse } from "@/components/rendal/empreendimentos/DayInHouse";
 import { Plants } from "@/components/rendal/empreendimentos/Plants";
 import { Gallery } from "@/components/rendal/empreendimentos/Gallery";
+import { ObraEtapas } from "@/components/rendal/empreendimentos/ObraEtapas";
 import { FaqList } from "@/components/rendal/FaqList";
 import { SectionHeader } from "@/components/rendal/SectionHeader";
 import { StickyActionBar } from "@/components/rendal/StickyActionBar";
@@ -131,21 +132,39 @@ export default async function EmpreendimentoPage({
         </RendalReveal>
       ) : null}
 
-      <RendalReveal>
-        <section className="px-6 py-12 sm:py-20 md:py-24" aria-labelledby="galeria-titulo">
+      {item.etapasObra?.length ? (
+        <section id="obra" className="px-6 py-12 sm:py-20 md:py-24" aria-labelledby="obra-titulo">
           <div className="mx-auto max-w-6xl">
-            <SectionHeader
-              id="galeria-titulo"
-              title="Galeria"
-              subtitle={lote ? "Explore o terreno." : undefined}
-              align="start"
-            />
-            <div className="mt-8">
-              <Gallery images={midiasDoEmpreendimento(item)} featuredFirst={lote} />
+            <RendalReveal>
+              <SectionHeader
+                id="obra-titulo"
+                eyebrow="Andamento"
+                title="Da aprovação ao meio fio"
+                align="start"
+              />
+            </RendalReveal>
+            <div className="mt-10">
+              <ObraEtapas etapas={item.etapasObra} />
             </div>
           </div>
         </section>
-      </RendalReveal>
+      ) : (
+        <RendalReveal>
+          <section className="px-6 py-12 sm:py-20 md:py-24" aria-labelledby="galeria-titulo">
+            <div className="mx-auto max-w-6xl">
+              <SectionHeader
+                id="galeria-titulo"
+                title="Galeria"
+                subtitle={lote ? "Explore o terreno." : undefined}
+                align="start"
+              />
+              <div className="mt-8">
+                <Gallery images={midiasDoEmpreendimento(item)} featuredFirst={lote} />
+              </div>
+            </div>
+          </section>
+        </RendalReveal>
+      )}
 
       {lote ? (
         <FinalCta

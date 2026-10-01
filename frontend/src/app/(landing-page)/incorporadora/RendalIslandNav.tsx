@@ -7,6 +7,7 @@ import { useEffect, useId, useLayoutEffect, useRef, useState } from "react";
 import { siteConfigs } from "@grupo-patrimonial/site-config";
 import { cn } from "@/lib/utils";
 import { EASE } from "@/lib/rendal/tokens";
+import { getRendalChrome, RENDAL_CHROME_EVENT, type RendalChrome } from "@/lib/rendal/chrome";
 
 const ATALHOS = [
   { label: "Quero financiar", href: "/contato?perfil=financiar#perfil" },
@@ -26,6 +27,8 @@ export function RendalIslandNav() {
   const islandRef = useRef<HTMLElement>(null);
   const [open, setOpen] = useState(false);
   const [menuPad, setMenuPad] = useState<number | null>(null);
+  const [chrome, setChrome] = useState<RendalChrome>("");
+  const hideIsland = chrome === "obra-down" && !open;
   const home = pathname === "/" || pathname === "/concept";
   const cta = home
     ? { href: "/empreendimentos", label: "Ver empreendimentos" }
@@ -45,6 +48,15 @@ export function RendalIslandNav() {
       observer.disconnect();
       window.removeEventListener("resize", update);
     };
+  }, []);
+
+  useEffect(() => {
+    const onChrome = (event: Event) => {
+      setChrome((event as CustomEvent<RendalChrome>).detail ?? getRendalChrome());
+    };
+    setChrome(getRendalChrome());
+    window.addEventListener(RENDAL_CHROME_EVENT, onChrome);
+    return () => window.removeEventListener(RENDAL_CHROME_EVENT, onChrome);
   }, []);
 
   useEffect(() => {
@@ -70,8 +82,22 @@ export function RendalIslandNav() {
         Ir para o conteúdo
       </a>
 
-      <header ref={islandRef} className="pointer-events-none fixed inset-x-0 top-0 z-[60] flex justify-center px-4 pt-[max(1rem,env(safe-area-inset-top))] sm:pt-6">
-        <div className="pointer-events-auto flex w-max max-w-full items-center justify-between gap-4 rounded-full bg-white/70 py-2 pl-5 pr-2 shadow-[0_8px_32px_rgba(31,31,31,0.08)] ring-1 ring-[#1F1F1F]/5 backdrop-blur-xl lg:gap-6">
+      <header
+        ref={islandRef}
+        inert={hideIsland}
+        aria-hidden={hideIsland || undefined}
+        className="pointer-events-none fixed inset-x-0 top-0 z-[60] flex justify-center px-4 pt-[max(1rem,env(safe-area-inset-top))] sm:pt-6"
+        style={{
+          transition: `transform 500ms ${EASE}`,
+          transform: hideIsland ? "translateY(calc(-100% - 1.5rem))" : "translateY(0)",
+        }}
+      >
+        <div
+          className={cn(
+            "pointer-events-auto flex w-max max-w-full items-center justify-between gap-4 rounded-full bg-white/70 py-2 pl-5 pr-2 shadow-[0_8px_32px_rgba(31,31,31,0.08)] ring-1 ring-[#1F1F1F]/5 backdrop-blur-xl lg:gap-6",
+            hideIsland && "pointer-events-none",
+          )}
+        >
           <Link href="/" aria-label="Rendal, início" className="shrink-0" onClick={() => setOpen(false)}>
             <Image
               src="/brands/rendal-logo-sem-subtitulo.png"
