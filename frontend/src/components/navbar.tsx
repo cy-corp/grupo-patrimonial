@@ -11,8 +11,8 @@ import { DualBrandLockup } from "./brands/DualBrandLockup";
 
 const mainLinks = [
   { name: "Home", href: "/" },
-  { name: "Rendal", href: "https://gruporendal.com" },
-  { name: "DCorp", href: "https://dcorp.com.br" },
+  { name: "Rendal", href: "https://www.gruporendal.com" },
+  { name: "DCorp", href: "https://www.dcorp.com.br" },
   { name: "Quem Somos", href: "/quem-somos" },
   { name: "Contato", href: "/contato" },
 ];

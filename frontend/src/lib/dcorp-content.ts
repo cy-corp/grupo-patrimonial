@@ -494,7 +494,7 @@ export function dcorpEnvironmentalHref(slug: string) {
 }
 
 export const DCORP_PASSOS_URL =
-  "https://gruporendal.com/empreendimentos/passos";
+  "https://www.gruporendal.com/empreendimentos/passos";
 
 export const DCORP_ENVIRONMENTAL_HOME_CHIPS = [
   {

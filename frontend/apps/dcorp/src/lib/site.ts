@@ -2,7 +2,7 @@
 export function getDcorpSiteUrl() {
   const fromEnv = process.env.NEXT_PUBLIC_SITE_URL?.trim();
   if (fromEnv) return fromEnv.replace(/\/$/, "");
-  return "https://dcorp.com.br";
+  return "https://www.dcorp.com.br";
 }
 
 export const DCORP_SITE_NAME = "DCORP Engenharia";

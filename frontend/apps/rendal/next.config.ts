@@ -1,7 +1,7 @@
 import { createNextConfig } from "../create-next-config";
 
-const CANONICAL = "https://gruporendal.com";
-const DCORP = "https://dcorp.com.br";
+const CANONICAL = "https://www.gruporendal.com";
+const DCORP = "https://www.dcorp.com.br";
 
 export default createNextConfig(__dirname, {
   async redirects() {
@@ -16,13 +16,13 @@ export default createNextConfig(__dirname, {
       { source: "/construtora", destination: DCORP, permanent: true },
       {
         source: "/",
-        has: [{ type: "host", value: "www.gruporendal.com" }],
+        has: [{ type: "host", value: "gruporendal.com" }],
         destination: CANONICAL,
         permanent: true,
       },
       {
         source: "/:path*",
-        has: [{ type: "host", value: "www.gruporendal.com" }],
+        has: [{ type: "host", value: "gruporendal.com" }],
         destination: `${CANONICAL}/:path*`,
         permanent: true,
       },
