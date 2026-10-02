@@ -30,13 +30,16 @@ function Photo({
   priority?: boolean;
 }) {
   return (
-    <div className={cn("relative overflow-hidden bg-[#1F1F1F]", className)}>
+    <div className={cn("relative overflow-hidden bg-[#EDEAE4]", className)}>
       <Image
         src={page.image}
         alt={page.imageAlt}
         fill
         sizes={sizes}
         className="object-cover"
+        placeholder="blur"
+        blurDataURL={page.blurDataURL}
+        quality={72}
         priority={priority}
       />
     </div>

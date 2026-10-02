@@ -335,6 +335,7 @@ export type DcorpEnvironmentalPage = {
   layout: DcorpEnvironmentalLayout;
   image: string;
   imageAlt: string;
+  blurDataURL: string;
   sections: DcorpEnvironmentalSection[];
 };
 
@@ -348,6 +349,8 @@ export const DCORP_ENVIRONMENTAL_PAGES: DcorpEnvironmentalPage[] = [
     image: "/dcorp/ambiental/regularizacao-loteamento.jpg",
     imageAlt:
       "Terreno dividido em futuros lotes, com estacas e uma faixa de vegetação preservada.",
+    blurDataURL:
+      "data:image/jpeg;base64,/9j/2wBDABQODxIPDRQSEBIXFRQYHjIhHhwcHj0sLiQySUBMS0dARkVQWnNiUFVtVkVGZIhlbXd7gYKBTmCNl4x9lnN+gXz/2wBDARUXFx4aHjshITt8U0ZTfHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHz/wAARCAAJABADASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAAAwIF/8QAIBAAAQMCBwAAAAAAAAAAAAAAAQACBAMyERMhUXKBgv/EABUBAQEAAAAAAAAAAAAAAAAAAAME/8QAFxEBAQEBAAAAAAAAAAAAAAAAAQIAIf/aAAwDAQACEQMRAD8Az3SpJtm1QNsVBny26Z7z6KBt47RGw8URqamQ4b//2Q==",
     sections: [
       {
         title: "O que é",
@@ -368,6 +371,8 @@ export const DCORP_ENVIRONMENTAL_PAGES: DcorpEnvironmentalPage[] = [
     image: "/dcorp/ambiental/outorga.jpg",
     imageAlt:
       "Poço e curso d'água em área rural, com irrigação ao fundo.",
+    blurDataURL:
+      "data:image/jpeg;base64,/9j/2wBDABQODxIPDRQSEBIXFRQYHjIhHhwcHj0sLiQySUBMS0dARkVQWnNiUFVtVkVGZIhlbXd7gYKBTmCNl4x9lnN+gXz/2wBDARUXFx4aHjshITt8U0ZTfHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHz/wAARCAAJABADASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAAAwIF/8QAHxAAAgICAQUAAAAAAAAAAAAAAQIAAxExBQQSIUGB/8QAFQEBAQAAAAAAAAAAAAAAAAAAAQT/xAAYEQACAwAAAAAAAAAAAAAAAAAAAREhQf/aAAwDAQACEQMRAD8ApuduC+QpGs9ognlbrVLEIq+sKDmZXT6eNZr5J5a0aZ//2Q==",
     sections: [
       {
         title: "O que é",
@@ -396,6 +401,8 @@ export const DCORP_ENVIRONMENTAL_PAGES: DcorpEnvironmentalPage[] = [
     image: "/dcorp/ambiental/recurso-multa.jpg",
     imageAlt:
       "Mesa de trabalho com peças técnicas de uma defesa ambiental, sem texto legível.",
+    blurDataURL:
+      "data:image/jpeg;base64,/9j/2wBDABQODxIPDRQSEBIXFRQYHjIhHhwcHj0sLiQySUBMS0dARkVQWnNiUFVtVkVGZIhlbXd7gYKBTmCNl4x9lnN+gXz/2wBDARUXFx4aHjshITt8U0ZTfHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHz/wAARCAAJABADASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAABAMF/8QAIhAAAQQBAgcAAAAAAAAAAAAAAgABAwQREyEiMjRhcYHR/8QAFAEBAAAAAAAAAAAAAAAAAAAAAf/EABURAQEAAAAAAAAAAAAAAAAAAAAR/9oADAMBAAIRAxEAPwB01x78Lg5RwxyYyRnl9n7fVh3qMdEilaYdMn4Bd8kSJT6dvKhf5/aIX//Z",
     sections: [
       {
         title: "O que é",
@@ -416,6 +423,8 @@ export const DCORP_ENVIRONMENTAL_PAGES: DcorpEnvironmentalPage[] = [
     image: "/dcorp/ambiental/licenciamento.jpg",
     imageAlt:
       "Obra no limite de uma área rural, com vegetação e casas ao longe.",
+    blurDataURL:
+      "data:image/jpeg;base64,/9j/2wBDABQODxIPDRQSEBIXFRQYHjIhHhwcHj0sLiQySUBMS0dARkVQWnNiUFVtVkVGZIhlbXd7gYKBTmCNl4x9lnN+gXz/2wBDARUXFx4aHjshITt8U0ZTfHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHz/wAARCAAJABADASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAABAMG/8QAIBAAAQQABwEAAAAAAAAAAAAAAQACAxEFBhMhMTNBUf/EABQBAQAAAAAAAAAAAAAAAAAAAAP/xAAZEQEAAgMAAAAAAAAAAAAAAAABAAIRMUH/2gAMAwEAAhEDEQA/AJw41pgAQx39N0ljNDYiQ6CPbin3azLepDd6iMvYtgNE/9k=",
     sections: [
       {
         title: "O que é",
@@ -448,6 +457,8 @@ export const DCORP_ENVIRONMENTAL_PAGES: DcorpEnvironmentalPage[] = [
     image: "/dcorp/ambiental/recuperacao.jpg",
     imageAlt:
       "Solo exposto ao lado de mudas nativas recém-plantadas.",
+    blurDataURL:
+      "data:image/jpeg;base64,/9j/2wBDABQODxIPDRQSEBIXFRQYHjIhHhwcHj0sLiQySUBMS0dARkVQWnNiUFVtVkVGZIhlbXd7gYKBTmCNl4x9lnN+gXz/2wBDARUXFx4aHjshITt8U0ZTfHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHz/wAARCAAJABADASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAwT/xAAeEAACAgEFAQAAAAAAAAAAAAABAgAREgMTMjNRcf/EABUBAQEAAAAAAAAAAAAAAAAAAAME/8QAGREAAgMBAAAAAAAAAAAAAAAAAAIBAyEx/9oADAMBAAIRAxEAPwCe6BxJHtMRDdsrG5qA+BzGblIm7k+SZdHsSOn/2Q==",
     sections: [
       {
         title: "O que é",
@@ -468,6 +479,8 @@ export const DCORP_ENVIRONMENTAL_PAGES: DcorpEnvironmentalPage[] = [
     image: "/dcorp/ambiental/recuperacao-encosta.jpg",
     imageAlt:
       "Encosta com solo exposto e mudas plantadas em curvas de nível.",
+    blurDataURL:
+      "data:image/jpeg;base64,/9j/2wBDABQODxIPDRQSEBIXFRQYHjIhHhwcHj0sLiQySUBMS0dARkVQWnNiUFVtVkVGZIhlbXd7gYKBTmCNl4x9lnN+gXz/2wBDARUXFx4aHjshITt8U0ZTfHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHz/wAARCAALABADASIAAhEBAxEB/8QAFwAAAwEAAAAAAAAAAAAAAAAAAAECBf/EAB4QAAEEAgMBAAAAAAAAAAAAAAEAAgMRITEEMkFh/8QAFQEBAQAAAAAAAAAAAAAAAAAAAQL/xAAWEQEBAQAAAAAAAAAAAAAAAAAAIRH/2gAMAwEAAhEDEQA/AMSFrWjwuSmkoUdelHHY1wlBHU4+aUTZFHVlG1Ef/9k=",
     sections: [
       {
         title: "O que é",
