@@ -315,23 +315,204 @@ export const DCORP_ENVIRONMENTAL_SERVICES = [
   },
 ] as const;
 
+export type DcorpEnvironmentalSection = {
+  title: string;
+  body: string;
+};
+
+export type DcorpEnvironmentalLayout =
+  | "texto-foto"
+  | "foto-texto"
+  | "faixa"
+  | "coluna"
+  | "centro"
+  | "cartoes";
+
+export type DcorpEnvironmentalPage = {
+  slug: string;
+  title: string;
+  description: string;
+  layout: DcorpEnvironmentalLayout;
+  image: string;
+  imageAlt: string;
+  sections: DcorpEnvironmentalSection[];
+};
+
+export const DCORP_ENVIRONMENTAL_PAGES: DcorpEnvironmentalPage[] = [
+  {
+    slug: "regularizacao-loteamento",
+    title: "Regularização ambiental de loteamento",
+    description:
+      "Quando o loteamento precisa se alinhar à legislação ambiental antes de seguir o projeto.",
+    layout: "texto-foto",
+    image: "/dcorp/ambiental/regularizacao-loteamento.jpg",
+    imageAlt:
+      "Terreno dividido em futuros lotes, com estacas e uma faixa de vegetação preservada.",
+    sections: [
+      {
+        title: "O que é",
+        body: "É o processo de colocar o loteamento em conformidade com as regras ambientais: diagnóstico do terreno, estudos e tramitação no órgão competente.",
+      },
+      {
+        title: "O que a DCORP conduz",
+        body: "A DCORP organiza o diagnóstico, os estudos e o protocolo, e acompanha o processo até a regularização do loteamento.",
+      },
+    ],
+  },
+  {
+    slug: "outorga",
+    title: "Outorga de recursos hídricos",
+    description:
+      "Autorização para usar água. O tipo depende de como e para quê a água entra no empreendimento.",
+    layout: "foto-texto",
+    image: "/dcorp/ambiental/outorga.jpg",
+    imageAlt:
+      "Poço e curso d'água em área rural, com irrigação ao fundo.",
+    sections: [
+      {
+        title: "O que é",
+        body: "Outorga é o direito de usar um recurso hídrico, pedido ao órgão competente. Sem ela, captação, lançamento ou interferência na água não seguem.",
+      },
+      {
+        title: "Poço artesiano",
+        body: "Captação de água subterrânea por poço. O pedido descreve a vazão, o uso e o ponto de captação.",
+      },
+      {
+        title: "Irrigação",
+        body: "Uso da água para irrigar lavoura ou área verde. O pedido informa a área, a cultura e o volume previsto.",
+      },
+      {
+        title: "Captação e lançamento",
+        body: "Captação é retirar água de um corpo hídrico. Lançamento é devolver efluente. Os dois pedem outorga quando a lei exige.",
+      },
+    ],
+  },
+  {
+    slug: "recurso-multa",
+    title: "Recurso de multa ambiental",
+    description:
+      "Defesa técnica contra auto de infração ambiental, na esfera administrativa.",
+    layout: "faixa",
+    image: "/dcorp/ambiental/recurso-multa.jpg",
+    imageAlt:
+      "Mesa de trabalho com peças técnicas de uma defesa ambiental, sem texto legível.",
+    sections: [
+      {
+        title: "O que é",
+        body: "É a análise do auto de infração e a peça de defesa para contestar ou reduzir a multa no processo administrativo.",
+      },
+      {
+        title: "Só na esfera administrativa",
+        body: "A DCORP atua na defesa administrativa. Recurso judicial fica de fora: daí em diante precisa de advogado.",
+      },
+    ],
+  },
+  {
+    slug: "licenciamento",
+    title: "Licenciamento ambiental",
+    description:
+      "Autorização do órgão ambiental para a atividade seguir, na obra ou na área rural.",
+    layout: "coluna",
+    image: "/dcorp/ambiental/licenciamento.jpg",
+    imageAlt:
+      "Obra no limite de uma área rural, com vegetação e casas ao longe.",
+    sections: [
+      {
+        title: "O que é",
+        body: "Licenciamento ambiental é o procedimento em que o órgão avalia o empreendimento e autoriza a atividade, com condições e estudos.",
+      },
+      {
+        title: "Quais atividades pedem licença",
+        body: "Depende do porte e do potencial de impacto. Obra, loteamento, indústria e atividade rural podem precisar de licença. A DCORP lê o caso e diz qual caminho se aplica.",
+      },
+      {
+        title: "Licença de operação",
+        body: "É a autorização para a atividade funcionar, depois das licenças prévia e de instalação, quando o órgão as exige.",
+      },
+      {
+        title: "Fazenda, obra e área rural",
+        body: "O licenciamento vale para empreendimento urbano e para atividade no campo, inclusive fazenda. O estudo muda conforme o uso do solo.",
+      },
+      {
+        title: "Estudo de Impacto de Vizinhança",
+        body: "O EIV analisa como o empreendimento afeta o entorno: tráfego, vizinhança e infraestrutura. Entra quando a legislação do município ou o licenciamento pede.",
+      },
+    ],
+  },
+  {
+    slug: "car",
+    title: "CAR — Cadastro Ambiental Rural",
+    description:
+      "O registro do imóvel rural que declara reserva legal, preservação e uso do solo.",
+    layout: "centro",
+    image: "/dcorp/ambiental/recuperacao.jpg",
+    imageAlt:
+      "Solo exposto ao lado de mudas nativas recém-plantadas.",
+    sections: [
+      {
+        title: "O que é",
+        body: "O CAR é o Cadastro Ambiental Rural. Nele o imóvel declara área, reserva legal, preservação permanente e o que está consolidado.",
+      },
+      {
+        title: "O que a DCORP faz",
+        body: "Inscrição, retificação e regularização do cadastro, com o mapeamento das áreas que a lei pede.",
+      },
+    ],
+  },
+  {
+    slug: "recuperacao",
+    title: "Recuperação de área degradada",
+    description:
+      "Projeto para recompor uma área degradada e comprovar o resultado junto ao órgão ambiental.",
+    layout: "cartoes",
+    image: "/dcorp/ambiental/recuperacao-encosta.jpg",
+    imageAlt:
+      "Encosta com solo exposto e mudas plantadas em curvas de nível.",
+    sections: [
+      {
+        title: "O que é",
+        body: "É o conjunto de diagnóstico, plantio e monitoramento para recuperar uma área e apresentar isso ao órgão ambiental.",
+      },
+      {
+        title: "PRAD",
+        body: "O Plano de Recuperação de Área Degradada descreve o dano, o que será recomposto e como o resultado será acompanhado.",
+      },
+      {
+        title: "PTRF",
+        body: "O Projeto Técnico de Recomposição da Flora detalha o plantio e a recomposição da vegetação exigida no processo.",
+      },
+    ],
+  },
+];
+
+export function getDcorpEnvironmentalPage(slug: string) {
+  return DCORP_ENVIRONMENTAL_PAGES.find((page) => page.slug === slug);
+}
+
+export function dcorpEnvironmentalHref(slug: string) {
+  return `/servicos-ambientais/${slug}`;
+}
+
+export const DCORP_PASSOS_URL =
+  "https://gruporendal.com/empreendimentos/passos";
+
 export const DCORP_ENVIRONMENTAL_HOME_CHIPS = [
   {
     label: "Regularização",
-    href: "/servicos-ambientais#regularizacao-loteamento",
+    href: "/servicos-ambientais/regularizacao-loteamento",
   },
   {
     label: "Licenciamento",
-    href: "/servicos-ambientais#licenciamento",
+    href: "/servicos-ambientais/licenciamento",
   },
   {
     label: "Recurso de multa",
-    href: "/servicos-ambientais#recurso-multa",
+    href: "/servicos-ambientais/recurso-multa",
   },
-  { label: "CAR", href: "/servicos-ambientais#car" },
+  { label: "CAR", href: "/servicos-ambientais/car" },
   {
     label: "Recuperação",
-    href: "/servicos-ambientais#recuperacao",
+    href: "/servicos-ambientais/recuperacao",
   },
 ] as const;
 

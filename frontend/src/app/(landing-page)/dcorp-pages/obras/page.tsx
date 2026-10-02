@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { motion, useReducedMotion } from "framer-motion";
-import { DCORP_WORKS_HOME } from "@/lib/dcorp-content";
+import { DCORP_PASSOS_URL, DCORP_WORKS_HOME } from "@/lib/dcorp-content";
 import { cn } from "@/lib/utils";
 import { DcorpPageCta, DcorpPageIntro } from "../DcorpPageChrome";
 import { DcorpWorkCarousel } from "./DcorpWorkCarousel";
@@ -26,6 +26,17 @@ export default function DcorpObrasPage() {
             title="Execução com escala."
             description="Cases em andamento e tipologias de execução — com engenharia e sistemas de alta produtividade."
           />
+          <p className="mt-6 max-w-2xl text-pretty font-sans text-base leading-relaxed text-[#4D4D4D] md:text-lg">
+            A Rendal incorpora e contrata a execução. A DCORP executa o{" "}
+            <a
+              href={DCORP_PASSOS_URL}
+              target="_blank"
+              rel="noreferrer"
+              className="font-semibold text-[#1F1F1F] underline decoration-[#C9A96A] underline-offset-4"
+            >
+              Loteamento Passos
+            </a>.
+          </p>
         </motion.div>
 
         <motion.nav

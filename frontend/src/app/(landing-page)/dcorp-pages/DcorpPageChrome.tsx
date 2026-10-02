@@ -10,16 +10,25 @@ export function DcorpPageIntro({
   eyebrow,
   title,
   description,
+  align = "start",
   className,
 }: {
   eyebrow: string;
   title: string;
   description: string;
+  align?: "start" | "center";
   className?: string;
 }) {
+  const centered = align === "center";
+
   return (
-    <header className={cn("max-w-3xl", className)}>
-      <div className="mb-5 flex items-center gap-3">
+    <header className={cn("max-w-3xl", centered && "mx-auto text-center", className)}>
+      <div
+        className={cn(
+          "mb-5 flex items-center gap-3",
+          centered && "justify-center",
+        )}
+      >
         <span className="h-px w-10 bg-[#C9A96A]" aria-hidden="true" />
         <p className="font-sans text-[11px] font-semibold uppercase text-[#C9A96A]">
           {eyebrow}
@@ -28,7 +37,12 @@ export function DcorpPageIntro({
       <h1 className="text-balance font-sans text-3xl font-bold text-[#1F1F1F] md:text-5xl lg:text-6xl">
         {title}
       </h1>
-      <p className="mt-6 max-w-2xl text-pretty font-sans text-base leading-relaxed text-[#4D4D4D] md:text-lg">
+      <p
+        className={cn(
+          "mt-6 max-w-2xl text-pretty font-sans text-base leading-relaxed text-[#4D4D4D] md:text-lg",
+          centered && "mx-auto",
+        )}
+      >
         {description}
       </p>
     </header>

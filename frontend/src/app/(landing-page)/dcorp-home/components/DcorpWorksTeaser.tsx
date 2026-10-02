@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
-import { DCORP_WORKS_HOME } from "@/lib/dcorp-content";
+import { DCORP_PASSOS_URL, DCORP_WORKS_HOME } from "@/lib/dcorp-content";
 import { cn } from "@/lib/utils";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
@@ -86,6 +86,17 @@ export function DcorpWorksTeaser() {
             <p className="mt-5 max-w-md text-pretty font-sans text-base leading-relaxed text-[#4D4D4D] md:text-lg">
               Holambra em andamento e execução em escala para residencial e
               incorporadoras.
+            </p>
+            <p className="mt-3 max-w-md text-pretty font-sans text-base leading-relaxed text-[#4D4D4D] md:text-lg">
+              A Rendal incorpora e contrata a execução. A DCORP executa o{" "}
+              <a
+                href={DCORP_PASSOS_URL}
+                target="_blank"
+                rel="noreferrer"
+                className="font-semibold text-[#1F1F1F] underline decoration-[#C9A96A] underline-offset-4"
+              >
+                Loteamento Passos
+              </a>.
             </p>
           </div>
           <Link

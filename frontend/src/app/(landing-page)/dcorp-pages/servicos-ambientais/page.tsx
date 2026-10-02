@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { motion, useReducedMotion } from "framer-motion";
 import {
   DCORP_ENVIRONMENTAL_EYEBROW,
@@ -9,6 +10,7 @@ import {
   DCORP_ENVIRONMENTAL_IMAGE_ALT,
   DCORP_ENVIRONMENTAL_SERVICES,
   DCORP_ENVIRONMENTAL_SUPPORT,
+  dcorpEnvironmentalHref,
 } from "@/lib/dcorp-content";
 import { cn } from "@/lib/utils";
 import { DcorpPageCta, DcorpPageIntro } from "../DcorpPageChrome";
@@ -47,9 +49,8 @@ export default function DcorpServicosAmbientaisPage() {
           }}
         >
           {DCORP_ENVIRONMENTAL_SERVICES.map((service, index) => (
-            <motion.a
+            <motion.div
               key={service.id}
-              href={`#${service.id}`}
               variants={
                 reduceMotion
                   ? undefined
@@ -63,11 +64,14 @@ export default function DcorpServicosAmbientaisPage() {
                     }
               }
               className={cn(
-                "group relative flex min-h-[5.5rem] flex-col justify-between gap-2 border-[#D9D9D9] p-4 transition-colors duration-[var(--duration-quick)] ease-[var(--ease-smooth-out)] hover:bg-[#F7F7F7] sm:min-h-24 sm:p-5",
-                "border-b border-r",
+                "border-b border-r border-[#D9D9D9]",
                 "max-lg:even:border-r-0 max-lg:[&:nth-last-child(-n+2)]:border-b-0",
                 "lg:[&:nth-child(3n)]:border-r-0 lg:[&:nth-last-child(-n+3)]:border-b-0",
               )}
+            >
+            <Link
+              href={dcorpEnvironmentalHref(service.id)}
+              className="group relative flex min-h-[5.5rem] flex-col justify-between gap-2 p-4 transition-colors duration-[var(--duration-quick)] ease-[var(--ease-smooth-out)] hover:bg-[#F7F7F7] sm:min-h-24 sm:p-5"
             >
               <span
                 className="absolute left-0 top-0 h-full w-0.5 origin-top scale-y-0 bg-[#C9A96A] transition-transform duration-[var(--duration-quick)] ease-[var(--ease-smooth-out)] group-hover:scale-y-100"
@@ -79,7 +83,8 @@ export default function DcorpServicosAmbientaisPage() {
               <span className="font-sans text-sm font-semibold leading-snug text-[#1F1F1F]">
                 {service.shortTitle}
               </span>
-            </motion.a>
+            </Link>
+            </motion.div>
           ))}
         </motion.nav>
       </div>
@@ -129,8 +134,7 @@ export default function DcorpServicosAmbientaisPage() {
               {DCORP_ENVIRONMENTAL_SERVICES.map((service, index) => (
                 <motion.li
                   key={service.id}
-                  id={service.id}
-                  className="grid scroll-mt-28 grid-cols-[2.5rem_1fr] gap-3 border-b border-[#D9D9D9] py-5 first:border-t sm:grid-cols-[3rem_1fr] sm:gap-5 sm:py-6"
+                  className="border-b border-[#D9D9D9] first:border-t"
                   initial={reduceMotion ? false : { opacity: 0, y: 12 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={VIEWPORT}
@@ -140,17 +144,22 @@ export default function DcorpServicosAmbientaisPage() {
                     delay: 0.04 * index,
                   }}
                 >
-                  <span className="font-sans text-sm font-semibold tabular-nums text-[#C9A96A]">
-                    {String(index + 1).padStart(2, "0")}
-                  </span>
-                  <div>
-                    <p className="font-sans text-base font-medium leading-snug text-[#1F1F1F] md:text-lg">
-                      {service.title}
-                    </p>
-                    <p className="mt-2 max-w-xl text-pretty font-sans text-sm leading-relaxed text-[#4D4D4D]">
-                      {service.deliverable}
-                    </p>
-                  </div>
+                  <Link
+                    href={dcorpEnvironmentalHref(service.id)}
+                    className="group grid grid-cols-[2.5rem_1fr] gap-3 py-5 transition-colors duration-[var(--duration-quick)] ease-out hover:bg-[#F7F7F7] sm:grid-cols-[3rem_1fr] sm:gap-5 sm:py-6"
+                  >
+                    <span className="font-sans text-sm font-semibold tabular-nums text-[#C9A96A]">
+                      {String(index + 1).padStart(2, "0")}
+                    </span>
+                    <div>
+                      <p className="font-sans text-base font-medium leading-snug text-[#1F1F1F] group-hover:underline group-hover:decoration-[#C9A96A] group-hover:underline-offset-4 md:text-lg">
+                        {service.title}
+                      </p>
+                      <p className="mt-2 max-w-xl text-pretty font-sans text-sm leading-relaxed text-[#4D4D4D]">
+                        {service.deliverable}
+                      </p>
+                    </div>
+                  </Link>
                 </motion.li>
               ))}
             </ol>

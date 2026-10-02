@@ -1,4 +1,5 @@
 import type { MetadataRoute } from "next";
+import { DCORP_ENVIRONMENTAL_PAGES } from "@/lib/dcorp-content";
 import { getDcorpSiteUrl } from "../lib/site";
 
 const ROUTES = [
@@ -7,10 +8,11 @@ const ROUTES = [
   "/sistemas-construtivos",
   "/servicos",
   "/servicos-ambientais",
+  ...DCORP_ENVIRONMENTAL_PAGES.map((page) => `/servicos-ambientais/${page.slug}`),
   "/obras",
   "/contato",
   "/politica-de-privacidade",
-] as const;
+];
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const origin = getDcorpSiteUrl();
