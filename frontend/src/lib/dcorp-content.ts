@@ -20,7 +20,40 @@ export const DCORP_POSITIONING =
   "Empresa de engenharia e construção especializada em sistemas construtivos industrializados, com atuação própria e prestação de serviços para incorporadoras, investidores, empresas e clientes terceiros. Atua também em regularização e serviços ambientais para loteamentos e imóveis rurais.";
 
 export const DCORP_HERO_SUPPORT =
-  "Construção industrializada com engenharia, velocidade e controle — para incorporadoras, investidores e empresas.";
+  "Empresa de engenharia em meio ambiente e construção civil — consultoria, projeto, aprovação e execução.";
+
+export const DCORP_WORLDS_EYEBROW = "Área de atuação";
+
+export const DCORP_WORLDS = [
+  {
+    id: "construcao-civil",
+    number: "01",
+    title: "Construção civil",
+    description:
+      "Projetos arquitetônicos, acompanhamento e execução de obras.",
+    href: "/servicos",
+    image: "/dcorp/services/02-execucao.jpg",
+    alt: "Execução de obra com sistemas industrializados",
+  },
+  {
+    id: "meio-ambiente",
+    number: "02",
+    title: "Meio ambiente",
+    description:
+      "Consultoria ambiental e aprovações de loteamentos e obras.",
+    href: "/servicos-ambientais",
+    image: "/dcorp/services/04-ambiental.jpg",
+    alt: "Terreno e entorno natural em regularização ambiental",
+  },
+] as const;
+
+export const DCORP_CIVIL_EYEBROW = "Construção civil";
+
+export const DCORP_CIVIL_HEADLINE =
+  "Projetos, acompanhamento e execução de obras.";
+
+export const DCORP_CIVIL_SUPPORT =
+  "Projetos arquitetônicos, engenharia e execução — em obras próprias e para terceiros, com sistemas industrializados.";
 
 export const DCORP_SYSTEMS_HEADLINE = "Sistemas que aceleram a obra.";
 
@@ -148,6 +181,11 @@ export const DCORP_SERVICE_GROUPS = [
     title: "Engenharia",
     items: [
       {
+        title: "Projetos arquitetônicos",
+        deliverable:
+          "Projeto e acompanhamento técnico até a obra, alinhado ao sistema construtivo escolhido.",
+      },
+      {
         title: "Planejamento executivo de obras",
         deliverable:
           "Sequência de etapas, prazos e critérios de execução definidos antes do canteiro.",
@@ -219,11 +257,13 @@ export const DCORP_SERVICE_GROUPS = [
   },
 ] as const;
 
+export const DCORP_ENVIRONMENTAL_EYEBROW = "Meio ambiente";
+
 export const DCORP_ENVIRONMENTAL_HEADLINE =
   "Regularizar o terreno. Liberar o projeto.";
 
 export const DCORP_ENVIRONMENTAL_SUPPORT =
-  "Regularização de loteamento, licenciamento e conformidade ambiental — do CAR à recuperação de área degradada.";
+  "Consultoria ambiental e aprovações de loteamentos e obras — do CAR à recuperação de área degradada.";
 
 export const DCORP_ENVIRONMENTAL_IMAGE = "/dcorp/services/04-ambiental.jpg";
 
@@ -247,10 +287,10 @@ export const DCORP_ENVIRONMENTAL_SERVICES = [
   },
   {
     id: "recurso-multa",
-    title: "Recurso de multa ambiental",
-    shortTitle: "Recurso de multa",
+    title: "Recurso de multa ambiental (esfera administrativa)",
+    shortTitle: "Recurso de multa (administrativo)",
     deliverable:
-      "Análise do auto de infração, peças técnicas e defesa administrativa para contestar ou reduzir multa ambiental.",
+      "Análise do auto de infração, peças técnicas e defesa na esfera administrativa. Recurso judicial fica fora — daí em diante precisa de advogado.",
   },
   {
     id: "licenciamento",
@@ -283,6 +323,10 @@ export const DCORP_ENVIRONMENTAL_HOME_CHIPS = [
   {
     label: "Licenciamento",
     href: "/servicos-ambientais#licenciamento",
+  },
+  {
+    label: "Recurso de multa",
+    href: "/servicos-ambientais#recurso-multa",
   },
   { label: "CAR", href: "/servicos-ambientais#car" },
   {

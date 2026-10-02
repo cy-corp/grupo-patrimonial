@@ -3,14 +3,14 @@ import type { Metadata } from "next";
 export { default } from "@/app/(landing-page)/dcorp-pages/servicos/page";
 
 export const metadata: Metadata = {
-  title: "Serviços",
+  title: "Construção civil",
   description:
-    "Engenharia, execução e gestão: planejamento, orçamentação, sistemas industrializados, fiscalização e capacitação de equipes.",
+    "Projetos arquitetônicos, acompanhamento e execução de obras — engenharia, sistemas industrializados e gestão.",
   alternates: { canonical: "/servicos" },
   openGraph: {
-    title: "Serviços | DCORP Engenharia",
+    title: "Construção civil | DCORP Engenharia",
     description:
-      "Da orçamentação à fiscalização — em obras próprias e para terceiros.",
+      "Projetos arquitetônicos, engenharia e execução — em obras próprias e para terceiros.",
     url: "/servicos",
   },
 };

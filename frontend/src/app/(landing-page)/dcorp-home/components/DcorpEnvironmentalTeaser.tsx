@@ -104,13 +104,13 @@ export function DcorpEnvironmentalTeaser() {
         </motion.div>
 
         <motion.ul
-          className="grid grid-cols-2 border border-[#D9D9D9] lg:grid-cols-4"
+          className="grid grid-cols-2 border border-[#D9D9D9] lg:grid-cols-5"
           {...listAnim}
         >
           {DCORP_ENVIRONMENTAL_HOME_CHIPS.map((chip, index) => (
             <motion.li
               key={chip.label}
-              className="border-[#D9D9D9] max-lg:odd:border-r max-lg:[&:nth-child(-n+2)]:border-b lg:border-r lg:[&:nth-child(4)]:border-r-0"
+              className="border-[#D9D9D9] max-lg:odd:border-r max-lg:[&:nth-child(-n+4)]:border-b max-lg:last:border-r-0 lg:border-r lg:last:border-r-0"
               {...itemAnim}
             >
               <Link

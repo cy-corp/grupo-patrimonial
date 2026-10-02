@@ -5,7 +5,12 @@ import Link from "next/link";
 import { motion, useReducedMotion } from "framer-motion";
 import { GoldButton } from "@/components/ui/gold-button";
 import { companies } from "@/lib/companies";
-import { DCORP_SERVICE_GROUPS } from "@/lib/dcorp-content";
+import {
+  DCORP_CIVIL_EYEBROW,
+  DCORP_CIVIL_HEADLINE,
+  DCORP_CIVIL_SUPPORT,
+  DCORP_SERVICE_GROUPS,
+} from "@/lib/dcorp-content";
 import { cn } from "@/lib/utils";
 import { DcorpPageIntro } from "../DcorpPageChrome";
 
@@ -13,7 +18,7 @@ const EASE = [0.22, 1, 0.36, 1] as const;
 const VIEWPORT = { once: true, amount: 0.18 } as const;
 
 const GROUP_LEDE: Record<string, string> = {
-  Engenharia: "Antes da obra: método, custo e projeto alinhados.",
+  Engenharia: "Antes da obra: projeto, método e custo alinhados.",
   Execução: "Na obra: sistemas industrializados e entrega com escala.",
   "Gestão e capacitação":
     "Durante e depois: controle, fiscalização e capacitação de equipes.",
@@ -31,9 +36,9 @@ export default function DcorpServicosPage() {
           transition={{ duration: 0.65, ease: EASE, delay: 0.1 }}
         >
           <DcorpPageIntro
-            eyebrow="Serviços"
-            title="Engenharia, execução e gestão com capacidade de obra."
-            description="Da orçamentação à fiscalização — em obras próprias e para terceiros, com sistemas industrializados e alta produtividade."
+            eyebrow={DCORP_CIVIL_EYEBROW}
+            title={DCORP_CIVIL_HEADLINE}
+            description={DCORP_CIVIL_SUPPORT}
           />
         </motion.div>
 

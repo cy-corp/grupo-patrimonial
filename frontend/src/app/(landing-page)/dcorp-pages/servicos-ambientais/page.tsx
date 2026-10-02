@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { motion, useReducedMotion } from "framer-motion";
 import {
+  DCORP_ENVIRONMENTAL_EYEBROW,
   DCORP_ENVIRONMENTAL_HEADLINE,
   DCORP_ENVIRONMENTAL_IMAGE,
   DCORP_ENVIRONMENTAL_IMAGE_ALT,
@@ -27,7 +28,7 @@ export default function DcorpServicosAmbientaisPage() {
           transition={{ duration: 0.65, ease: EASE, delay: 0.1 }}
         >
           <DcorpPageIntro
-            eyebrow="Serviços ambientais"
+            eyebrow={DCORP_ENVIRONMENTAL_EYEBROW}
             title={DCORP_ENVIRONMENTAL_HEADLINE}
             description={DCORP_ENVIRONMENTAL_SUPPORT}
           />
