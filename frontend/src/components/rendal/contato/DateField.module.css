@@ -1,0 +1,33 @@
+.picker:global(.rdp-root) {
+  font-family: inherit;
+  color: #1f1f1f;
+}
+
+.picker :global(.rdp-month_caption) {
+  display: none;
+}
+
+.picker :global(.rdp-weekday) {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: rgba(31, 31, 31, 0.55);
+}
+
+.picker :global(.rdp-selected .rdp-day_button) {
+  background: #1f1f1f;
+  color: #fff;
+  border-color: #7a4a2b;
+}
+
+.picker :global(.rdp-day_button:hover:not([disabled]):not([aria-selected="true"])) {
+  background: #f8f1e3;
+}
+
+@media (max-width: 380px) {
+  .picker:global(.rdp-root) {
+    --rdp-day-height: 2.25rem;
+    --rdp-day-width: 2.25rem;
+    --rdp-day_button-height: 2.1rem;
+    --rdp-day_button-width: 2.1rem;
+  }
+}

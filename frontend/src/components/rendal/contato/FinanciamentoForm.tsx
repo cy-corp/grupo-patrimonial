@@ -7,6 +7,7 @@ import { submitContact } from "@/lib/actions";
 import { HoneypotField } from "@/components/contato/HoneypotField";
 import { TurnstileField, type TurnstileHandle } from "@/components/contato/TurnstileField";
 import { ContasBancariasField } from "@/components/rendal/contato/ContasBancariasField";
+import { DateField } from "@/components/rendal/contato/DateField";
 import { DocumentosStep } from "@/components/rendal/contato/DocumentosStep";
 import { empreendimentos } from "@/lib/rendal/content/empreendimentos";
 import {
@@ -32,6 +33,7 @@ import {
   primeiraEtapaInvalida,
   REGIMES,
   sanitizeDraft,
+  TIPOS_BEM_ENTRADA,
   TIPOLOGIAS,
   UFS,
   type Draft,
@@ -50,7 +52,7 @@ const UF_POR_CIDADE: Record<string, Uf> = { Capetinga: "MG", Passos: "MG" };
 
 const COPY: Record<EtapaId, { title: string; text: string }> = {
   imovel: { title: "Qual imóvel você quer financiar?", text: "Cidade, valor e o prazo que você tem em mente." },
-  valores: { title: "Entrada, FGTS e saldo devedor", text: "Se não tiver entrada, coloque zero." },
+  valores: { title: "Entrada, FGTS e bem de entrada", text: "Se não tiver entrada em dinheiro, coloque zero." },
   voce: { title: "Seus dados", text: "Do jeito que a ficha do banco pede." },
   endereco: { title: "Onde você mora", text: "O CEP preenche a rua. O número fica com você." },
   identidade: { title: "RG e filiação", text: "A ficha pede isso mesmo quando o documento enviado é a CNH." },
@@ -230,6 +232,11 @@ const UF_OPCOES: Opcao[] = [{ value: "", label: "Escolher" }, ...UFS.map((uf) =>
 const EMPREENDIMENTO_OPCOES: Opcao[] = [
   { value: "", label: "Ainda não escolhi" },
   ...empreendimentos.map((item) => ({ value: item.nome, label: item.nome })),
+  { value: "__outro", label: "Outro" },
+];
+
+const TIPO_BEM_OPCOES: Opcao[] = [
+  ...TIPOS_BEM_ENTRADA.map((tipo) => ({ value: tipo, label: tipo })),
   { value: "__outro", label: "Outro" },
 ];
 
@@ -715,16 +722,58 @@ export function FinanciamentoForm({ empreendimento }: { empreendimento?: string 
                     </Field>
                   ) : null}
                   <div>
-                    <p className="text-sm font-semibold text-[#1F1F1F]">Tem saldo devedor do imóvel adquirido?</p>
+                    <p className="text-sm font-semibold text-[#1F1F1F]">Vai dar um bem de entrada?</p>
+                    <p className="mt-1 text-sm text-[#1F1F1F]/60">
+                      Imóvel, carro ou outro bem na negociação. Sujeito a avaliação.
+                    </p>
                     <div className="mt-2 grid grid-cols-2 gap-2">
-                      <Choice label="Sim" checked={draft.saldoDevedor === "sim"} onSelect={() => update({ saldoDevedor: "sim" })} />
-                      <Choice label="Não" checked={draft.saldoDevedor === "nao"} onSelect={() => update({ saldoDevedor: "nao", saldoValor: "" })} />
+                      <Choice label="Sim" checked={draft.bemEntrada === "sim"} onSelect={() => update({ bemEntrada: "sim" })} />
+                      <Choice
+                        label="Não"
+                        checked={draft.bemEntrada === "nao"}
+                        onSelect={() => update({ bemEntrada: "nao", tipoBemEntrada: "", saldoDevedor: "", saldoValor: "" })}
+                      />
                     </div>
-                    {erros.saldoDevedor ? <p className="mt-1.5 text-sm text-[#B4432F]">{erros.saldoDevedor}</p> : null}
+                    {erros.bemEntrada ? <p className="mt-1.5 text-sm text-[#B4432F]">{erros.bemEntrada}</p> : null}
                   </div>
-                  {draft.saldoDevedor === "sim" ? (
-                    <Field label="Valor do saldo devedor" error={erros.saldoValor}>
-                      <input inputMode="numeric" className={inputClass} value={draft.saldoValor} placeholder="R$ 0" onChange={(event) => update({ saldoValor: maskMoney(event.target.value) })} />
+                  {draft.bemEntrada === "sim" ? (
+                    <Field label="Tipo do bem" error={erros.tipoBemEntrada} plain labelId="financiamento-tipo-bem">
+                      <OptionCombobox
+                        labelledBy="financiamento-tipo-bem"
+                        value={draft.tipoBemEntrada}
+                        options={TIPO_BEM_OPCOES}
+                        placeholder="Imóvel, carro…"
+                        customValue="__outro"
+                        customPlaceholder="Descreva o bem"
+                        empty="Nenhuma opção com esse nome."
+                        invalid={Boolean(erros.tipoBemEntrada)}
+                        onChange={(tipoBemEntrada) => update({ tipoBemEntrada })}
+                      />
+                    </Field>
+                  ) : null}
+                  {draft.bemEntrada === "sim" ? (
+                    <div>
+                      <p className="text-sm font-semibold text-[#1F1F1F]">Há saldo devedor nesse bem?</p>
+                      <div className="mt-2 grid grid-cols-2 gap-2">
+                        <Choice label="Sim" checked={draft.saldoDevedor === "sim"} onSelect={() => update({ saldoDevedor: "sim" })} />
+                        <Choice
+                          label="Não"
+                          checked={draft.saldoDevedor === "nao"}
+                          onSelect={() => update({ saldoDevedor: "nao", saldoValor: "" })}
+                        />
+                      </div>
+                      {erros.saldoDevedor ? <p className="mt-1.5 text-sm text-[#B4432F]">{erros.saldoDevedor}</p> : null}
+                    </div>
+                  ) : null}
+                  {draft.bemEntrada === "sim" && draft.saldoDevedor === "sim" ? (
+                    <Field label="Quanto?" error={erros.saldoValor} hint="Valor restante a pagar no bem de entrada.">
+                      <input
+                        inputMode="numeric"
+                        className={inputClass}
+                        value={draft.saldoValor}
+                        placeholder="R$ 0"
+                        onChange={(event) => update({ saldoValor: maskMoney(event.target.value) })}
+                      />
                     </Field>
                   ) : null}
                 </div>
@@ -738,8 +787,14 @@ export function FinanciamentoForm({ empreendimento }: { empreendimento?: string 
                   <Field label="CPF" error={erros[`${prefix}cpf`]}>
                     <input inputMode="numeric" autoComplete="off" className={inputClass} value={pessoa.cpf} onChange={(event) => updatePessoa(qual, { cpf: maskCpf(event.target.value) })} />
                   </Field>
-                  <Field label="Data de nascimento" error={erros[`${prefix}nascimento`]}>
-                    <input type="date" className={inputClass} value={pessoa.nascimento} onChange={(event) => updatePessoa(qual, { nascimento: event.target.value })} />
+                  <Field label="Data de nascimento" error={erros[`${prefix}nascimento`]} plain labelId={`${prefix}nascimento`}>
+                    <DateField
+                      kind="birth"
+                      labelledBy={`${prefix}nascimento`}
+                      value={pessoa.nascimento}
+                      invalid={Boolean(erros[`${prefix}nascimento`])}
+                      onChange={(nascimento) => updatePessoa(qual, { nascimento })}
+                    />
                   </Field>
                   <Field label="Telefone" error={erros[`${prefix}tel`]}>
                     <input inputMode="tel" autoComplete="tel-national" className={inputClass} value={pessoa.tel} placeholder="(00) 00000-0000" onChange={(event) => updatePessoa(qual, { tel: maskPhone(event.target.value) })} />
@@ -758,8 +813,14 @@ export function FinanciamentoForm({ empreendimento }: { empreendimento?: string 
                       <Field label="RG com dígito" error={erros["conjuge.rg"]}>
                         <input inputMode="text" autoComplete="off" className={inputClass} value={pessoa.rg} placeholder="00.000.000-0" onChange={(event) => updatePessoa("conjuge", { rg: maskRg(event.target.value) })} />
                       </Field>
-                      <Field label="Data de emissão do RG" error={erros["conjuge.rgEmissao"]}>
-                        <input type="date" className={inputClass} value={pessoa.rgEmissao} onChange={(event) => updatePessoa("conjuge", { rgEmissao: event.target.value })} />
+                      <Field label="Data de emissão do RG" error={erros["conjuge.rgEmissao"]} plain labelId="conjuge-rg-emissao">
+                        <DateField
+                          kind="past"
+                          labelledBy="conjuge-rg-emissao"
+                          value={pessoa.rgEmissao}
+                          invalid={Boolean(erros["conjuge.rgEmissao"])}
+                          onChange={(rgEmissao) => updatePessoa("conjuge", { rgEmissao })}
+                        />
                       </Field>
                       <Field label="Órgão expedidor" error={erros["conjuge.rgOrgao"]}>
                         <input className={inputClass} value={pessoa.rgOrgao} placeholder="SSP/MG" onChange={(event) => updatePessoa("conjuge", { rgOrgao: event.target.value })} />
@@ -806,8 +867,14 @@ export function FinanciamentoForm({ empreendimento }: { empreendimento?: string 
                   <Field label="RG com dígito" error={erros.rg}>
                     <input inputMode="text" autoComplete="off" className={inputClass} value={draft.voce.rg} placeholder="00.000.000-0" onChange={(event) => updatePessoa("voce", { rg: maskRg(event.target.value) })} />
                   </Field>
-                  <Field label="Data de emissão" error={erros.rgEmissao}>
-                    <input type="date" className={inputClass} value={draft.voce.rgEmissao} onChange={(event) => updatePessoa("voce", { rgEmissao: event.target.value })} />
+                  <Field label="Data de emissão" error={erros.rgEmissao} plain labelId="voce-rg-emissao">
+                    <DateField
+                      kind="past"
+                      labelledBy="voce-rg-emissao"
+                      value={draft.voce.rgEmissao}
+                      invalid={Boolean(erros.rgEmissao)}
+                      onChange={(rgEmissao) => updatePessoa("voce", { rgEmissao })}
+                    />
                   </Field>
                   <Field label="Órgão expedidor" error={erros.rgOrgao}>
                     <input className={inputClass} value={draft.voce.rgOrgao} placeholder="SSP/MG" onChange={(event) => updatePessoa("voce", { rgOrgao: event.target.value })} />
@@ -845,8 +912,19 @@ export function FinanciamentoForm({ empreendimento }: { empreendimento?: string 
                   ) : null}
                   {precisaConjuge(draft.estadoCivil) ? (
                     <>
-                      <Field label={draft.estadoCivil === "uniao" ? "Data da união" : "Data do casamento"} error={erros.dataCasamento}>
-                        <input type="date" className={inputClass} value={draft.dataCasamento} onChange={(event) => update({ dataCasamento: event.target.value })} />
+                      <Field
+                        label={draft.estadoCivil === "uniao" ? "Data da união" : "Data do casamento"}
+                        error={erros.dataCasamento}
+                        plain
+                        labelId="data-casamento"
+                      >
+                        <DateField
+                          kind="past"
+                          labelledBy="data-casamento"
+                          value={draft.dataCasamento}
+                          invalid={Boolean(erros.dataCasamento)}
+                          onChange={(dataCasamento) => update({ dataCasamento })}
+                        />
                       </Field>
                       <div>
                         <p className="text-sm font-semibold text-[#1F1F1F]">O cônjuge vai compor renda?</p>
@@ -883,8 +961,14 @@ export function FinanciamentoForm({ empreendimento }: { empreendimento?: string 
                   </div>
                   {draft.contrato === "sim" ? (
                     <>
-                      <Field label="Data limite de pagamento" error={erros.prazoContrato}>
-                        <input type="date" className={inputClass} value={draft.prazoContrato} onChange={(event) => update({ prazoContrato: event.target.value })} />
+                      <Field label="Data limite de pagamento" error={erros.prazoContrato} plain labelId="prazo-contrato">
+                        <DateField
+                          kind="any"
+                          labelledBy="prazo-contrato"
+                          value={draft.prazoContrato}
+                          invalid={Boolean(erros.prazoContrato)}
+                          onChange={(prazoContrato) => update({ prazoContrato })}
+                        />
                       </Field>
                       <div>
                         <p className="text-sm font-semibold text-[#1F1F1F]">Tem multa?</p>
@@ -979,7 +1063,19 @@ export function FinanciamentoForm({ empreendimento }: { empreendimento?: string 
 function Revisao({ draft, onEdit }: { draft: Draft; onEdit: (id: EtapaId) => void }) {
   const blocos: { id: EtapaId; titulo: string; linhas: string[] }[] = [
     { id: "imovel", titulo: "Imóvel", linhas: [labelTipologia(draft.tipologia), `${draft.cidade}/${draft.uf}`, draft.valorImovel, draft.prazo ? `${draft.prazo} anos` : ""].filter(Boolean) },
-    { id: "valores", titulo: "Valores", linhas: [`Entrada ${draft.entrada}`, draft.fgts === "sim" ? `FGTS ${draft.fgtsValor}` : "Sem FGTS", draft.saldoDevedor === "sim" ? `Saldo devedor ${draft.saldoValor}` : "Sem saldo devedor"] },
+    {
+      id: "valores",
+      titulo: "Valores",
+      linhas: [
+        `Entrada ${draft.entrada}`,
+        draft.fgts === "sim" ? `FGTS ${draft.fgtsValor}` : "Sem FGTS",
+        draft.bemEntrada === "sim"
+          ? draft.saldoDevedor === "sim"
+            ? `Bem de entrada: ${draft.tipoBemEntrada || "—"} (sujeito a avaliação), saldo ${draft.saldoValor}`
+            : `Bem de entrada: ${draft.tipoBemEntrada || "—"} (sujeito a avaliação), sem saldo`
+          : "Sem bem de entrada",
+      ],
+    },
     { id: "voce", titulo: "Você", linhas: [draft.voce.nome, draft.voce.cpf, draft.voce.renda] },
     { id: "endereco", titulo: "Endereço", linhas: [`${draft.logradouro}, ${draft.numero}`, `${draft.cidadeEndereco}/${draft.ufEndereco}`, draft.cep] },
     { id: "identidade", titulo: "Identidade", linhas: [draft.voce.rg, draft.voce.rgOrgao, formatDataBr(draft.voce.rgEmissao)] },

@@ -65,6 +65,8 @@ export const COMPROVANTES = [
   { id: "holerites", label: "3 últimos holerites" },
 ] as const;
 
+export const TIPOS_BEM_ENTRADA = ["Imóvel", "Carro", "Moto"] as const;
+
 export type TipologiaId = (typeof TIPOLOGIAS)[number]["id"];
 export type EstadoCivilId = (typeof ESTADOS_CIVIS)[number]["id"];
 export type RegimeId = (typeof REGIMES)[number]["id"];
@@ -110,6 +112,8 @@ export type Draft = {
   entrada: string;
   fgts: SimNao | "";
   fgtsValor: string;
+  bemEntrada: SimNao | "";
+  tipoBemEntrada: string;
   saldoDevedor: SimNao | "";
   saldoValor: string;
   voce: Pessoa;
@@ -178,6 +182,8 @@ export function draftVazio(): Draft {
     entrada: "",
     fgts: "",
     fgtsValor: "",
+    bemEntrada: "",
+    tipoBemEntrada: "",
     saldoDevedor: "",
     saldoValor: "",
     voce: pessoaVazia(),
@@ -360,6 +366,11 @@ export function sanitizeDraft(value: unknown): Draft {
     const files = list.map(arquivoSeguro).filter((item): item is ArquivoEnviado => Boolean(item)).slice(0, limiteArquivos(id));
     if (files.length) arquivos[id] = files;
   }
+  const bemEntrada = oneOf(row.bemEntrada, ["sim", "nao"] as const);
+  const tipoBemEntrada = bemEntrada === "sim" ? texto(row.tipoBemEntrada, 80) : "";
+  const saldoDevedor = bemEntrada === "sim" ? oneOf(row.saldoDevedor, ["sim", "nao"] as const) : "";
+  const saldoValor =
+    bemEntrada === "sim" && saldoDevedor === "sim" ? maskMoney(texto(row.saldoValor, 20)) : "";
   return {
     ...base,
     tipologia: oneOf(row.tipologia, TIPOLOGIAS.map((item) => item.id)),
@@ -370,8 +381,10 @@ export function sanitizeDraft(value: unknown): Draft {
     entrada: maskMoney(texto(row.entrada, 20)),
     fgts: oneOf(row.fgts, ["sim", "nao"] as const),
     fgtsValor: maskMoney(texto(row.fgtsValor, 20)),
-    saldoDevedor: oneOf(row.saldoDevedor, ["sim", "nao"] as const),
-    saldoValor: maskMoney(texto(row.saldoValor, 20)),
+    bemEntrada,
+    tipoBemEntrada,
+    saldoDevedor,
+    saldoValor,
     voce: pessoaSanitizada(row.voce),
     cep: maskCep(texto(row.cep, 9)),
     logradouro: texto(row.logradouro, 120),
@@ -484,8 +497,14 @@ export function errosEtapa(id: EtapaId, draft: Draft, opts: { tipologiaObrigator
     if (draft.entrada === "") erros.entrada = "Informe a entrada. Se não houver, coloque zero.";
     if (!draft.fgts) erros.fgts = "Diga se vai usar o FGTS.";
     if (draft.fgts === "sim" && reais(draft.fgtsValor) <= 0) erros.fgtsValor = "Informe o valor do FGTS.";
-    if (!draft.saldoDevedor) erros.saldoDevedor = "Responda sobre o saldo devedor.";
-    if (draft.saldoDevedor === "sim" && reais(draft.saldoValor) <= 0) erros.saldoValor = "Informe o saldo devedor.";
+    if (!draft.bemEntrada) erros.bemEntrada = "Diga se vai dar um bem de entrada.";
+    if (draft.bemEntrada === "sim" && draft.tipoBemEntrada.trim().length < 2) {
+      erros.tipoBemEntrada = "Informe o tipo do bem.";
+    }
+    if (draft.bemEntrada === "sim" && !draft.saldoDevedor) erros.saldoDevedor = "Responda se há saldo devedor nesse bem.";
+    if (draft.bemEntrada === "sim" && draft.saldoDevedor === "sim" && reais(draft.saldoValor) <= 0) {
+      erros.saldoValor = "Informe o valor do saldo devedor.";
+    }
   }
   if (id === "voce") Object.assign(erros, pessoaErros(draft.voce, "", false));
   if (id === "endereco") {
@@ -635,7 +654,20 @@ function dossierSections(draft: Draft, linkArquivo?: (arquivo: ArquivoEnviado) =
         row("Prazo", draft.prazo ? `${draft.prazo} anos` : ""),
         row("Entrada", draft.entrada),
         row("FGTS", draft.fgts === "sim" ? `Sim, ${draft.fgtsValor}` : simNaoLabel(draft.fgts)),
-        row("Saldo devedor do imóvel adquirido", draft.saldoDevedor === "sim" ? `Sim, ${draft.saldoValor}` : simNaoLabel(draft.saldoDevedor)),
+        row(
+          "Bem de entrada (sujeito a avaliação)",
+          draft.bemEntrada === "sim"
+            ? `Sim — ${draft.tipoBemEntrada.trim() || "tipo não informado"}`
+            : simNaoLabel(draft.bemEntrada),
+        ),
+        ...(draft.bemEntrada === "sim"
+          ? [
+              row(
+                "Saldo devedor no bem de entrada",
+                draft.saldoDevedor === "sim" ? `Sim, ${draft.saldoValor}` : simNaoLabel(draft.saldoDevedor),
+              ),
+            ]
+          : []),
       ],
     },
     {
