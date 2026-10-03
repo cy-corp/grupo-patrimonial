@@ -3,6 +3,7 @@
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { PIN_DOT, PIN_GLYPHS, PIN_OUTLINE, PIN_VIEWBOX } from "./logo-paths";
+import { terrainRows } from "./terrain-rows";
 
 const MIN_MS = 1500;
 const MAX_MS = 7000;
@@ -24,6 +25,7 @@ export function Loader({ ready, onDone }: { ready: boolean; onDone: () => void }
     const min = window.setTimeout(() => setWaited(true), MIN_MS);
     const max = window.setTimeout(() => setExpired(true), MAX_MS);
     document.fonts.ready.then(() => setFonts(true)).catch(() => setFonts(true));
+    terrainRows().catch(() => {});
     return () => {
       window.clearTimeout(min);
       window.clearTimeout(max);

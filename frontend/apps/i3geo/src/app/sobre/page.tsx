@@ -5,6 +5,7 @@ import { brand } from "@/lib/brand";
 
 export const metadata: Metadata = {
   title: "Sobre",
+  alternates: { canonical: "/sobre" },
   description: "O significado do i³: psicologia, administração e técnica, multiplicadas pela força do indivíduo.",
 };
 

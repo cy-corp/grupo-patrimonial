@@ -1,7 +1,8 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Montserrat } from "next/font/google";
 import { WhatsAppButton } from "@/components/site/whatsapp-button";
 import { brand } from "@/lib/brand";
+import { organizationJsonLd, seo, siteUrl } from "@/lib/site";
 import "./globals.css";
 
 const montserrat = Montserrat({
@@ -11,11 +12,26 @@ const montserrat = Montserrat({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(siteUrl),
   title: {
-    default: brand.fullName,
+    default: seo.title,
     template: `%s · ${brand.name}`,
   },
-  description: `${brand.positioning} ${brand.tagline}`,
+  description: seo.description,
+  alternates: { canonical: "/" },
+  openGraph: {
+    type: "website",
+    locale: "pt_BR",
+    siteName: brand.name,
+    title: seo.title,
+    description: seo.description,
+    url: "/",
+  },
+  twitter: { card: "summary_large_image", title: seo.title, description: seo.description },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#005C74",
 };
 
 export default function RootLayout({
@@ -28,6 +44,7 @@ export default function RootLayout({
       <body className="flex min-h-full flex-col font-sans">
         {children}
         <WhatsAppButton />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }} />
       </body>
     </html>
   );

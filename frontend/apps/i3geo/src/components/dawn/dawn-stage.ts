@@ -85,3 +85,6 @@ export function skyAt(day: number) {
 
 export const css = ([r, g, b]: RGB, alpha = 1) => `rgba(${r},${g},${b},${alpha})`;
 export const PAPER = "#F6F4EF";
+
+// Rolagem, em alturas de tela, a partir da qual a abertura já está toda coberta pelo resto da página.
+export const EXPERIENCE_END = 7.05;

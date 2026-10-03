@@ -20,7 +20,7 @@ import {
 } from "../hero/terrain-assets";
 import { MAX_POLY } from "../hero/terrain-shader";
 import { fragmentShader, vertexShader } from "./dawn-shader";
-import { PAPER, cameraAt, stageAt, sunDirection } from "./dawn-stage";
+import { EXPERIENCE_END, PAPER, cameraAt, stageAt, sunDirection } from "./dawn-stage";
 
 const FOV = 30;
 const INTRO_SECONDS = 2.6;
@@ -101,7 +101,8 @@ function Terrain({
     };
   }, [assets]);
 
-  useEffect(() => scroll.on("change", () => invalidate()), [scroll, invalidate]);
+  // Depois que a abertura sai da tela, a rolagem não pede mais quadros à cena.
+  useEffect(() => scroll.on("change", (v) => v < EXPERIENCE_END && invalidate()), [scroll, invalidate]);
 
   useFrame((state, delta) => {
     const now = state.clock.elapsedTime;
@@ -168,7 +169,8 @@ function Terrain({
       pin.current.style.transform = `translate(-50%, ${-100 - (1 - s.pin) * 70}%)`;
     }
 
-    if (smoothV.current !== target || intro < 1) invalidate();
+    const visible = smoothV.current < EXPERIENCE_END || target < EXPERIENCE_END;
+    if ((smoothV.current !== target && visible) || intro < 1) invalidate();
     if (!reported.current) {
       reported.current = true;
       onFirstFrame();

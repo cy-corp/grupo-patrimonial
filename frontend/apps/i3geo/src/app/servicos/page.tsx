@@ -5,6 +5,7 @@ import { services, surveyDelivers, whatsappLink } from "@/lib/content";
 
 export const metadata: Metadata = {
   title: "Serviços",
+  alternates: { canonical: "/servicos" },
   description:
     "Georreferenciamento, retificação de área, desmembramento, levantamento topográfico e projetos técnicos em Minas Gerais e São Paulo.",
 };

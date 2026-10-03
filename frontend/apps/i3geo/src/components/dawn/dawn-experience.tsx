@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useReducedMotion, useScroll, useTransform, type MotionValue } from "framer-motion";
+import { motion, useMotionValueEvent, useReducedMotion, useScroll, useTransform, type MotionValue } from "framer-motion";
 import dynamic from "next/dynamic";
 import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
@@ -11,7 +11,7 @@ import { Coverage, Diagnosis, Field, Process, Stats } from "../site/home-section
 import { Loader } from "../site/loader";
 import { MobileMenu } from "../site/mobile-menu";
 import { SiteFooter, nav } from "../site/site-chrome";
-import { PAPER, css, skyAt, stageAt } from "./dawn-stage";
+import { EXPERIENCE_END, PAPER, css, skyAt, stageAt } from "./dawn-stage";
 
 const DawnScene = dynamic(() => import("./dawn-scene"), { ssr: false });
 
@@ -50,8 +50,8 @@ function Chapter({
   return (
     <section className={`relative flex items-start sm:items-center ${className}`}>
       <div className="px-4 pt-[16vh] sm:px-10 sm:pt-0 lg:px-16">
-        <div className="max-w-xl bg-[#F6F4EF]/85 p-5 backdrop-blur-sm sm:bg-transparent sm:p-0 sm:backdrop-blur-none">
-          <h2 className="text-balance break-words text-[clamp(1.2rem,6.2vw,1.7rem)] font-bold leading-[1.05] tracking-tight text-brand sm:text-5xl lg:text-6xl">{title}</h2>
+        <div className="max-w-xl lg:max-w-2xl bg-[#F6F4EF]/85 p-5 backdrop-blur-sm sm:bg-transparent sm:p-0 sm:backdrop-blur-none">
+          <h2 className="text-balance break-words text-[clamp(1.2rem,6.2vw,1.7rem)] font-bold leading-[1.05] tracking-tight text-brand sm:text-5xl lg:text-[3.4rem]">{title}</h2>
           <p className="mt-5 max-w-md text-base leading-relaxed text-graphite/80 sm:text-lg">{text}</p>
           <ul className="mt-6 flex flex-wrap gap-2">
             {data.map((d) => (
@@ -80,6 +80,9 @@ export function DawnExperience() {
   const { scrollY, scrollYProgress } = useScroll();
   const scroll = useTransform(scrollY, (y) => y / (typeof window === "undefined" ? 1 : window.innerHeight || 1));
   const day = useDay(scroll);
+  // Com a abertura fora da tela, o fundo fixo sai da composição da página.
+  const [past, setPast] = useState(false);
+  useMotionValueEvent(scroll, "change", (v) => setPast(v > EXPERIENCE_END));
   const onReady = useCallback(() => setReady(true), []);
   const [entered, setEntered] = useState(false);
   const onEntered = useCallback(() => setEntered(true), []);
@@ -113,7 +116,7 @@ export function DawnExperience() {
 
   return (
     <div className="relative [&_a:focus-visible]:outline-2 [&_a:focus-visible]:outline-offset-4 [&_a:focus-visible]:outline-orange" style={{ backgroundColor: PAPER }}>
-      <motion.div className="fixed inset-0" style={{ background: sky }} aria-hidden="true">
+      <motion.div className="fixed inset-0" style={{ background: sky, visibility: past ? "hidden" : "visible" }} aria-hidden="true">
         <motion.svg className="absolute inset-0 h-full w-full" style={{ opacity: stars }} preserveAspectRatio="none">
           {STARS.map((s, i) => (
             <circle key={i} cx={`${s.x}%`} cy={`${s.y}%`} r={s.r} fill="#fff" opacity={s.o} />

@@ -4,6 +4,7 @@ import { SiteFooter, SiteHeader } from "@/components/site/site-chrome";
 
 export const metadata: Metadata = {
   title: "Orçamento",
+  alternates: { canonical: "/orcamento" },
   description: "Monte o seu pedido de orçamento de topografia e georreferenciamento em quatro passos.",
 };
 
