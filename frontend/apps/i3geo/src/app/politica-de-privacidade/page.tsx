@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { LegalPage, type LegalSection } from "@/components/site/legal-page";
-import { contact } from "@/lib/content";
+import { addressLine, contact } from "@/lib/content";
 
 export const metadata: Metadata = {
   title: "Política de privacidade",
@@ -15,6 +15,7 @@ const sections: LegalSection[] = [
     title: "Quem é o responsável",
     paragraphs: [
       "A i3Geo é a responsável pelo tratamento dos dados pessoais descritos nesta política, nos termos da Lei Geral de Proteção de Dados (Lei nº 13.709/2018).",
+      `Endereço: ${addressLine}.`,
       `Para qualquer assunto sobre os seus dados, fale conosco pelo WhatsApp ${contact.phone}.`,
     ],
   },
@@ -27,15 +28,16 @@ const sections: LegalSection[] = [
     items: [
       "o serviço de interesse e o tamanho aproximado da área;",
       "o município e o estado onde a área fica;",
-      "o seu nome e o seu telefone;",
+      "o seu nome, o seu telefone e, se quiser, o seu e-mail;",
       "observações que você queira acrescentar.",
     ],
   },
   {
     title: "Como o pedido de orçamento funciona",
     paragraphs: [
-      "As informações que você preenche são usadas no seu próprio navegador para montar uma mensagem, que você envia à i3Geo pelo WhatsApp. O site não guarda esses dados em servidores nem em banco de dados.",
-      "A partir do envio, a conversa passa a acontecer no WhatsApp, serviço da Meta, que tem política de privacidade própria.",
+      "Ao enviar o pedido, as informações que você preencheu seguem por e-mail para a equipe da i3Geo. Se você informar o seu e-mail, recebe uma confirmação com o resumo. O site não mantém banco de dados com esses pedidos.",
+      "Para evitar envios automáticos e abuso, o formulário usa uma verificação contra robôs (Cloudflare Turnstile) e um limite de envios, que considera o endereço IP e o contato informado.",
+      "Você também pode enviar o mesmo resumo pelo WhatsApp, serviço da Meta, que tem política de privacidade própria.",
     ],
   },
   {
@@ -57,7 +59,7 @@ const sections: LegalSection[] = [
     title: "Com quem compartilhamos",
     paragraphs: [
       "Não vendemos nem cedemos os seus dados para fins de publicidade.",
-      "Os dados podem ser tratados por fornecedores que viabilizam o atendimento, como o WhatsApp e o serviço de hospedagem do site, que registra dados técnicos de acesso (endereço IP, navegador, data e hora) para funcionamento e segurança.",
+      "Os dados podem ser tratados por fornecedores que viabilizam o atendimento: o serviço de envio de e-mails (Resend), a verificação contra robôs (Cloudflare), o WhatsApp e a hospedagem do site, que registra dados técnicos de acesso (endereço IP, navegador, data e hora) para funcionamento e segurança.",
       "Quando o serviço exigir, informações do imóvel e do requerente são apresentadas aos órgãos e cartórios competentes, sempre dentro da finalidade contratada.",
     ],
   },

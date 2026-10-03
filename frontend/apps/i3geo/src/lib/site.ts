@@ -1,7 +1,7 @@
 import { contact, coverage, services } from "./content";
 
-// Endereço público do site. Em outro domínio, defina NEXT_PUBLIC_SITE_URL.
-export const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL ?? "https://i3geo.com.br").replace(/\/$/, "");
+// Endereço público do site. Em outro domínio, defina NEXT_PUBLIC_I3GEO_URL.
+export const siteUrl = (process.env.NEXT_PUBLIC_I3GEO_URL ?? "https://i3geo.com.br").replace(/\/$/, "");
 
 export const seo = {
   title: "i3Geo | Topografia e Georreferenciamento em MG e SP",
@@ -19,6 +19,13 @@ export const organizationJsonLd = {
   image: `${siteUrl}/opengraph-image`,
   description: seo.description,
   telephone: `+${contact.whatsapp}`,
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: `${contact.address.street}, ${contact.address.district}`,
+    addressLocality: contact.address.city,
+    addressRegion: contact.address.state,
+    addressCountry: "BR",
+  },
   areaServed: coverage.states.map((name) => ({ "@type": "State", name })),
   sameAs: ["https://www.instagram.com/i3geo.com.br/"],
   hasOfferCatalog: {

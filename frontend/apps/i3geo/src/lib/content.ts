@@ -159,7 +159,18 @@ export const processSteps = [
 export const contact = {
   whatsapp: "5519993670722",
   phone: "(19) 99367-0722",
+  // E-mail público de contato. Vazio até a i3Geo definir; quando preenchido, aparece no rodapé.
+  email: "",
+  // Mesmo endereço da Rendal, na sala 1.
+  address: {
+    street: "Rua Dr. João Alves dos Santos, 332, Sala 1",
+    district: "Jardim Paineiras",
+    city: "Campinas",
+    state: "SP",
+  },
 };
+
+export const addressLine = `${contact.address.street}, ${contact.address.district}, ${contact.address.city}-${contact.address.state}`;
 
 export function whatsappLink(text = "Olá, gostaria de falar com a i3Geo.") {
   return `https://wa.me/${contact.whatsapp}?text=${encodeURIComponent(text)}`;

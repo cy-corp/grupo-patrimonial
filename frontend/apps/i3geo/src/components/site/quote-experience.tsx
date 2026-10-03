@@ -1,7 +1,10 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
-import { useEffect, useState, type FormEvent } from "react";
+import { useEffect, useRef, useState, type FormEvent } from "react";
+import { submitQuote } from "@/app/actions";
+import { HoneypotField } from "@/components/contato/HoneypotField";
+import { TurnstileField, type TurnstileHandle } from "@/components/contato/TurnstileField";
 import { contact, services, whatsappLink, type ServiceId } from "@/lib/content";
 import { ServiceDiagram } from "./service-diagram";
 
@@ -47,6 +50,7 @@ type Answers = {
   uf: (typeof UFS)[number];
   name: string;
   phone: string;
+  email: string;
   notes: string;
 };
 
@@ -57,7 +61,7 @@ function serviceTitle(id: Answers["service"]) {
 }
 
 // A prancha técnica que se preenche conforme a pessoa responde.
-function Sheet({ answers, step, sent }: { answers: Answers; step: number; sent: boolean }) {
+function Sheet({ answers, step, sent, stamp }: { answers: Answers; step: number; sent: boolean; stamp: string }) {
   const m2 = areaM2(answers.area);
   const scale = 0.5 + (answers.area / 100) * 0.6;
   const rows = [
@@ -173,7 +177,7 @@ function Sheet({ answers, step, sent }: { answers: Answers; step: number; sent: 
             transition={{ type: "spring", stiffness: 240, damping: 14 }}
             className="pointer-events-none absolute left-1/2 top-[34%] -translate-x-1/2 border-[3px] border-orange px-5 py-2 text-center text-orange"
           >
-            <p className="text-xl font-bold tracking-[0.12em] sm:text-2xl">PEDIDO REGISTRADO</p>
+            <p className="text-xl font-bold tracking-[0.12em] sm:text-2xl">{stamp}</p>
             <p className="text-[10px] font-semibold tracking-[0.2em]">i3GEO · {new Date().toLocaleDateString("pt-BR")}</p>
           </motion.div>
         )}
@@ -188,6 +192,12 @@ const field =
 export function QuoteExperience({ heading: Heading = "h2" }: { heading?: "h1" | "h2" }) {
   const [step, setStep] = useState(0);
   const [sent, setSent] = useState(false);
+  // "email": o pedido chegou à i3Geo pelo site. "whatsapp": o envio pelo site falhou e o pedido segue pelo WhatsApp.
+  const [delivery, setDelivery] = useState<"email" | "whatsapp">("email");
+  const [sending, setSending] = useState(false);
+  const [attempt, setAttempt] = useState(0);
+  const turnstile = useRef<TurnstileHandle>(null);
+  const form = useRef<HTMLFormElement>(null);
   const [answers, setAnswers] = useState<Answers>({
     service: null,
     area: 45,
@@ -195,6 +205,7 @@ export function QuoteExperience({ heading: Heading = "h2" }: { heading?: "h1" | 
     uf: "MG",
     name: "",
     phone: "",
+    email: "",
     notes: "",
   });
   const set = <K extends keyof Answers>(key: K, value: Answers[K]) => setAnswers((a) => ({ ...a, [key]: value }));
@@ -215,27 +226,47 @@ export function QuoteExperience({ heading: Heading = "h2" }: { heading?: "h1" | 
     return () => window.removeEventListener("i3geo:service", onService);
   }, []);
 
-  function submit(event: FormEvent) {
+  const summary = [
+    "Olá, gostaria de um orçamento.",
+    `Serviço: ${serviceTitle(answers.service)}`,
+    `Área aproximada: ${formatArea(areaM2(answers.area))}`,
+    `Local: ${answers.city} ${answers.uf === "Outro" ? "" : answers.uf}`,
+    `Nome: ${answers.name}`,
+    `Telefone: ${answers.phone}`,
+    answers.notes && `Observações: ${answers.notes}`,
+  ]
+    .filter(Boolean)
+    .join("\n");
+
+  async function submit(event: FormEvent) {
     event.preventDefault();
     if (step < STEPS.length - 1) {
       setStep(step + 1);
       return;
     }
-    setSent(true);
-    if (contact.whatsapp) {
-      const text = [
-        "Olá, gostaria de um orçamento.",
-        `Serviço: ${serviceTitle(answers.service)}`,
-        `Área aproximada: ${formatArea(areaM2(answers.area))}`,
-        `Local: ${answers.city} ${answers.uf === "Outro" ? "" : answers.uf}`,
-        `Nome: ${answers.name}`,
-        `Telefone: ${answers.phone}`,
-        answers.notes && `Observações: ${answers.notes}`,
-      ]
-        .filter(Boolean)
-        .join("\n");
-      window.open(whatsappLink(text), "_blank", "noopener");
+    if (sending) return;
+    setSending(true);
+    let ok = false;
+    try {
+      const data = new FormData();
+      data.set("service", answers.service && answers.service !== "indefinido" ? answers.service : "");
+      data.set("area", formatArea(areaM2(answers.area)));
+      data.set("city", answers.city);
+      data.set("uf", answers.uf);
+      data.set("name", answers.name);
+      data.set("phone", answers.phone);
+      data.set("email", answers.email);
+      data.set("notes", answers.notes);
+      data.set("website", String(new FormData(form.current ?? undefined).get("website") ?? ""));
+      data.set("turnstileToken", (await turnstile.current?.waitForToken()) ?? "");
+      ok = (await submitQuote(data)).success;
+    } catch {
+      ok = false;
     }
+    setDelivery(ok ? "email" : "whatsapp");
+    setAttempt((n) => n + 1);
+    setSending(false);
+    setSent(true);
   }
 
   return (
@@ -257,12 +288,25 @@ export function QuoteExperience({ heading: Heading = "h2" }: { heading?: "h1" | 
 
           {sent ? (
             <div className="mt-12" role="status">
-              <h3 className="text-3xl font-bold tracking-tight text-[#A9E3F0]">Pedido registrado, {answers.name.split(" ")[0]}.</h3>
+              <h3 className="text-3xl font-bold tracking-tight text-[#A9E3F0]">
+                {delivery === "email" ? "Pedido registrado" : "Falta só enviar"}, {answers.name.split(" ")[0]}.
+              </h3>
               <p className="mt-4 max-w-md text-lg leading-relaxed text-white/80">
-                {contact.whatsapp
-                  ? "Abrimos o WhatsApp com o resumo do seu pedido. É só enviar a mensagem."
-                  : "A prancha ao lado resume o que você pediu."}
+                {delivery === "email"
+                  ? "A i3Geo recebeu o seu pedido e vai retornar em breve. Se quiser adiantar a conversa, mande também pelo WhatsApp."
+                  : "Não conseguimos enviar pelo site agora. Mande o resumo pelo WhatsApp: a mensagem já está pronta."}
               </p>
+              <a
+                href={whatsappLink(summary)}
+                target="_blank"
+                rel="noreferrer"
+                className={`mt-8 inline-block px-7 py-4 text-base font-bold transition-colors ${
+                  delivery === "email" ? "border border-white/30 text-white hover:border-white" : "bg-orange text-graphite hover:bg-white"
+                }`}
+              >
+                Enviar pelo WhatsApp {contact.phone}
+              </a>
+              <br />
               <button
                 type="button"
                 onClick={() => {
@@ -275,7 +319,8 @@ export function QuoteExperience({ heading: Heading = "h2" }: { heading?: "h1" | 
               </button>
             </div>
           ) : (
-            <form onSubmit={submit} className="mt-12">
+            <form ref={form} onSubmit={submit} className="relative mt-12">
+              <HoneypotField />
               <AnimatePresence mode="wait">
                 <motion.div
                   key={step}
@@ -404,9 +449,22 @@ export function QuoteExperience({ heading: Heading = "h2" }: { heading?: "h1" | 
                         />
                       </label>
                       <label className="text-sm font-semibold text-white/70">
+                        E-mail (opcional, para receber a confirmação)
+                        <input
+                          type="email"
+                          inputMode="email"
+                          autoComplete="email"
+                          value={answers.email}
+                          onChange={(e) => set("email", e.target.value)}
+                          placeholder="voce@exemplo.com"
+                          className={field}
+                        />
+                      </label>
+                      <label className="text-sm font-semibold text-white/70">
                         Quer contar mais alguma coisa? (opcional)
                         <input value={answers.notes} onChange={(e) => set("notes", e.target.value)} className={field} />
                       </label>
+                      <TurnstileField ref={turnstile} resetSignal={attempt} />
                     </div>
                   )}
                 </motion.div>
@@ -415,10 +473,10 @@ export function QuoteExperience({ heading: Heading = "h2" }: { heading?: "h1" | 
               <div className="mt-10 flex items-center gap-6">
                 <button
                   type="submit"
-                  disabled={step === 0 && !answers.service}
+                  disabled={(step === 0 && !answers.service) || sending}
                   className="bg-orange px-7 py-4 text-base font-bold text-graphite transition-colors hover:bg-white disabled:cursor-not-allowed disabled:opacity-40"
                 >
-                  {step === STEPS.length - 1 ? "Enviar pedido" : "Continuar"}
+                  {step === STEPS.length - 1 ? (sending ? "Enviando…" : "Enviar pedido") : "Continuar"}
                 </button>
                 {step > 0 && (
                   <button type="button" onClick={() => setStep(step - 1)} className="text-sm font-semibold text-white/75 hover:text-white">
@@ -437,7 +495,7 @@ export function QuoteExperience({ heading: Heading = "h2" }: { heading?: "h1" | 
           viewport={{ once: true, amount: 0.3 }}
           transition={{ duration: 0.9, ease }}
         >
-          <Sheet answers={answers} step={step} sent={sent} />
+          <Sheet answers={answers} step={step} sent={sent} stamp={delivery === "email" ? "PEDIDO REGISTRADO" : "PEDIDO PRONTO"} />
         </motion.div>
       </div>
     </section>

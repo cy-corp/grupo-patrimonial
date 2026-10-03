@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { contact, coverage, instagram, whatsappLink } from "@/lib/content";
+import { addressLine, contact, coverage, instagram, whatsappLink } from "@/lib/content";
 import { brand } from "@/lib/brand";
 import { FooterNascente } from "./footer-nascente";
 import { MobileMenu } from "./mobile-menu";
@@ -76,8 +76,13 @@ export function SiteFooter() {
             {contact.phone}
           </a>
           <p className="mt-1 text-sm font-semibold text-graphite/70">WhatsApp</p>
+          {contact.email && (
+            <a href={`mailto:${contact.email}`} className="mt-3 block text-sm font-semibold text-brand transition-colors hover:text-graphite">
+              {contact.email}
+            </a>
+          )}
           <p className="mt-4 text-sm leading-relaxed text-graphite/80">
-            Atendimento em {coverage.states.join(" e ")}, em um raio de até {coverage.radiusKm} km.
+            {addressLine}. Atendimento em {coverage.states.join(" e ")}, em um raio de até {coverage.radiusKm} km.
           </p>
           <Link
             href="/orcamento"
