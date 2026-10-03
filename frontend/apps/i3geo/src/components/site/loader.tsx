@@ -116,7 +116,7 @@ export function Loader({ ready, onDone }: { ready: boolean; onDone: () => void }
             )}
           </motion.svg>
           <p className="mt-8 h-5 text-xs font-semibold uppercase tracking-[0.22em] text-white/60">
-            {landed ? "Ponto medido" : "Carregando o relevo"}
+            {landed ? "Tudo pronto!" : "Carregando o relevo"}
           </p>
         </motion.div>
       )}
