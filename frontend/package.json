@@ -10,12 +10,14 @@
     "dev": "next dev --turbopack",
     "dev:rendal": "npm run dev --workspace @grupo-patrimonial/rendal -- --port 3001",
     "dev:dcorp": "npm run dev --workspace @grupo-patrimonial/dcorp -- --port 3002",
+    "dev:i3geo": "npm run dev --workspace @grupo-patrimonial/i3geo -- --port 3003",
     "dev:dashboard": "npm run dev --workspace @grupo-patrimonial/dashboard -- --port 3000",
     "build": "next build --turbopack",
     "start": "next start",
     "lint": "eslint",
     "build:rendal": "npm run build --workspace @grupo-patrimonial/rendal",
     "build:dcorp": "npm run build --workspace @grupo-patrimonial/dcorp",
+    "build:i3geo": "npm run build --workspace @grupo-patrimonial/i3geo",
     "build:dashboard": "npm run build --workspace @grupo-patrimonial/dashboard"
   },
   "dependencies": {
