@@ -10,10 +10,13 @@ import {
   useScroll,
   useTransform,
 } from "framer-motion";
-import Image from "next/image";
+import Image, { type StaticImageData } from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { coverage, diagnosis, processSteps, services, stats } from "@/lib/content";
+import fotoEstacao from "@/assets/fotos/campo-estacao-total.jpg";
+import fotoGnss from "@/assets/fotos/campo-gnss.jpg";
+import fotoReceptor from "@/assets/fotos/campo-receptor.jpg";
 import { ServiceDiagram } from "./service-diagram";
 
 const shell = "mx-auto max-w-7xl px-6 sm:px-10 lg:px-16";
@@ -195,11 +198,22 @@ export function Process() {
             </g>
           ))}
         </svg>
-        <ol className="mt-10 grid gap-10 sm:grid-cols-2 lg:mt-6 lg:grid-cols-4 lg:gap-8">
+        <ol className="relative mt-12 grid gap-12 lg:mt-6 lg:grid-cols-4 lg:gap-8">
+          {/* No celular a poligonal desce pela esquerda e se traça conforme a rolagem. */}
+          <li aria-hidden="true" className="pointer-events-none absolute bottom-3 left-[10px] top-3 w-0.5 lg:hidden">
+            <span className="absolute inset-0 border-l-2 border-dashed border-brand/25" />
+            <motion.span className="absolute inset-0 origin-top bg-orange" style={{ scaleY: drawn }} />
+          </li>
           {processSteps.map((step) => (
-            <li key={step.station} className="border-l-2 border-orange pl-5 lg:border-l-0 lg:pl-0">
-              <p className="text-sm font-bold text-orange lg:hidden">{step.station}</p>
-              <h3 className="text-xl font-bold tracking-tight text-graphite sm:text-2xl">{step.title}</h3>
+            <li key={step.station} className="relative pl-12 lg:pl-0">
+              <span
+                aria-hidden="true"
+                className="absolute left-0 top-0 flex size-[22px] items-center justify-center rounded-full border-2 border-brand bg-[#F6F4EF] lg:hidden"
+              >
+                <span className="block size-2 rounded-full bg-brand" />
+              </span>
+              <p className="text-sm font-bold text-brand lg:hidden">{step.station}</p>
+              <h3 className="mt-1 text-2xl font-bold tracking-tight text-graphite lg:mt-0 lg:text-2xl">{step.title}</h3>
               <p className="mt-3 max-w-[36ch] leading-relaxed text-graphite/80">{step.text}</p>
             </li>
           ))}
@@ -211,7 +225,7 @@ export function Process() {
 
 // A foto se revela de cima para baixo. O recorte fica num elemento interno,
 // porque um elemento totalmente recortado não dispara a entrada na tela.
-function Photo({ src, alt, sizes, className, delay = 0 }: { src: string; alt: string; sizes: string; className: string; delay?: number }) {
+function Photo({ src, alt, sizes, className, delay = 0 }: { src: StaticImageData; alt: string; sizes: string; className: string; delay?: number }) {
   return (
     <motion.div initial="hidden" whileInView="shown" viewport={{ once: true, amount: 0.25 }} className={`relative overflow-hidden ${className}`}>
       <motion.div
@@ -219,31 +233,32 @@ function Photo({ src, alt, sizes, className, delay = 0 }: { src: string; alt: st
         variants={{ hidden: { clipPath: "inset(0 0 100% 0)" }, shown: { clipPath: "inset(0 0 0% 0)" } }}
         transition={{ duration: 1.1, ease, delay }}
       >
-        <Image src={src} alt={alt} fill sizes={sizes} className="object-cover" />
+        <Image src={src} alt={alt} fill sizes={sizes} quality={70} placeholder="blur" className="object-cover" />
       </motion.div>
     </motion.div>
   );
 }
 
-// Fotos de campo. Provisórias, de banco gratuito: ver public/fotos/CREDITOS.md.
+// Fotos de campo. Provisórias, de banco gratuito: ver src/assets/fotos/CREDITOS.md.
+// O mosaico é o mesmo em qualquer largura: duas fotos lado a lado, o texto e uma foto larga.
 export function Field() {
   return (
     <section className="pb-24 sm:pb-32">
-      <div className={`${shell} grid gap-4 lg:grid-cols-12`}>
+      <div className={`${shell} grid grid-cols-12 gap-2 sm:gap-4`}>
         <Photo
-          src="/fotos/campo-gnss.jpg"
+          src={fotoGnss}
           alt="Receptor GNSS sobre tripé em uma área rural"
-          sizes="(min-width: 1024px) 58vw, 100vw"
-          className="aspect-[16/11] lg:col-span-7"
+          sizes="(min-width: 1280px) 670px, 58vw"
+          className="col-span-7 aspect-[4/5] sm:aspect-[16/11]"
         />
         <Photo
-          src="/fotos/campo-estacao-total.jpg"
+          src={fotoEstacao}
           alt="Topógrafo operando uma estação total em campo"
-          sizes="(min-width: 1024px) 42vw, 100vw"
-          className="aspect-[4/5] lg:col-span-5 lg:aspect-auto"
+          sizes="(min-width: 1280px) 480px, 42vw"
+          className="col-span-5"
           delay={0.15}
         />
-        <div className="flex flex-col justify-center py-8 lg:col-span-5 lg:py-0 lg:pr-10">
+        <div className="col-span-12 flex flex-col justify-center py-8 lg:col-span-5 lg:py-0 lg:pr-10">
           <h2 className="text-balance text-3xl font-bold leading-[1.05] tracking-tight text-brand sm:text-5xl">
             Não existe uma única maneira de medir todos os terrenos.
           </h2>
@@ -253,10 +268,10 @@ export function Field() {
           </p>
         </div>
         <Photo
-          src="/fotos/campo-receptor.jpg"
+          src={fotoReceptor}
           alt="Receptor GNSS instalado sobre um ponto elevado do terreno"
-          sizes="(min-width: 1024px) 58vw, 100vw"
-          className="aspect-[16/9] lg:col-span-7"
+          sizes="(min-width: 1280px) 670px, (min-width: 1024px) 58vw, 100vw"
+          className="col-span-12 aspect-[16/9] lg:col-span-7"
         />
       </div>
     </section>
