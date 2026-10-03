@@ -2,6 +2,7 @@ import Link from "next/link";
 import { coverage, instagram } from "@/lib/content";
 import { brand } from "@/lib/brand";
 import { FooterNascente } from "./footer-nascente";
+import { MobileMenu } from "./mobile-menu";
 
 export const nav = [
   { href: "/servicos", label: "Serviços" },
@@ -17,7 +18,7 @@ export function SiteHeader() {
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src="/brand/logo-i3geo-wordmark.svg" alt={brand.name} className="h-8 w-auto sm:h-9" />
         </Link>
-        <nav aria-label="Principal" className="flex items-center gap-6">
+        <nav aria-label="Principal" className="flex items-center gap-3 sm:gap-6">
           {nav.map((item) => (
             <Link
               key={item.href}
@@ -28,8 +29,10 @@ export function SiteHeader() {
             </Link>
           ))}
           <Link href="/orcamento" className="bg-brand px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-graphite">
-            Solicitar orçamento
+            <span className="sm:hidden">Orçamento</span>
+            <span className="hidden sm:inline">Solicitar orçamento</span>
           </Link>
+          <MobileMenu />
         </nav>
       </div>
     </header>

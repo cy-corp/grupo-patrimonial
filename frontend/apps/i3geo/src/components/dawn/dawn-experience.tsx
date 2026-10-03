@@ -8,6 +8,7 @@ import { brand, colors } from "@/lib/brand";
 import { ramp } from "../hero/beats";
 import { QuoteExperience } from "../site/quote-experience";
 import { Coverage, Diagnosis, Process, Stats } from "../site/home-sections";
+import { MobileMenu } from "../site/mobile-menu";
 import { SiteFooter, nav } from "../site/site-chrome";
 import { PAPER, css, skyAt, stageAt } from "./dawn-stage";
 
@@ -160,7 +161,7 @@ export function DawnExperience() {
             style={{ opacity: dayLogo }}
           />
         </Link>
-        <nav aria-label="Principal" className="flex items-center gap-6">
+        <nav aria-label="Principal" className="flex items-center gap-3 sm:gap-6">
           {nav.map((item) => (
             <motion.span key={item.href} style={{ color: ctaBg }} className="hidden text-sm font-medium sm:inline">
               <Link href={item.href} className="opacity-85 transition-opacity hover:opacity-100">
@@ -170,8 +171,12 @@ export function DawnExperience() {
           ))}
           <motion.span style={{ backgroundColor: ctaBg, color: ctaInk }} className="inline-block">
             <Link href="#contato" className="block px-4 py-2 text-sm font-semibold">
-              Solicitar orçamento
+              <span className="sm:hidden">Orçamento</span>
+              <span className="hidden sm:inline">Solicitar orçamento</span>
             </Link>
+          </motion.span>
+          <motion.span style={{ color: ctaBg }} className="flex sm:hidden">
+            <MobileMenu />
           </motion.span>
         </nav>
       </header>
