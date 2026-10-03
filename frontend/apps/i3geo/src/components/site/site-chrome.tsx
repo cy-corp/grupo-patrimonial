@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { coverage, instagram } from "@/lib/content";
 import { brand } from "@/lib/brand";
-import { FooterDiorama } from "./footer-diorama";
+import { FooterNascente } from "./footer-nascente";
 
 export const nav = [
   { href: "/servicos", label: "Serviços" },
@@ -38,43 +38,44 @@ export function SiteHeader() {
 
 export function SiteFooter() {
   return (
-    <footer className="relative overflow-hidden bg-[#03121A] text-white">
-      <FooterDiorama />
-      <div className="relative mx-auto grid max-w-7xl gap-10 border-t border-white/15 px-6 py-14 sm:grid-cols-[1.4fr_1fr_1fr] sm:px-10 lg:px-16">
-        <div>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/brand/logo-i3geo-wordmark-negativo.svg" alt={brand.name} className="h-9 w-auto" />
-          <p className="mt-4 max-w-xs text-sm leading-relaxed text-white/75">{brand.positioning}</p>
-        </div>
-        <ul className="space-y-3 text-sm">
+    <footer className="relative overflow-hidden bg-[#F6F4EF] text-graphite">
+      <div className="mx-auto grid max-w-7xl gap-10 px-6 pt-20 sm:grid-cols-[1.5fr_1fr_1fr] sm:px-10 lg:px-16">
+        <p className="max-w-md text-balance text-4xl font-bold leading-[1.02] tracking-tight text-brand sm:text-5xl">
+          Na dúvida, comece pelo levantamento.
+        </p>
+        <ul className="space-y-3 text-lg font-semibold text-brand">
           {nav.map((item) => (
             <li key={item.href}>
-              <Link href={item.href} className="text-white/85 transition-colors hover:text-white">
+              <Link href={item.href} className="transition-colors hover:text-graphite">
                 {item.label}
               </Link>
             </li>
           ))}
           <li>
-            <Link href="/orcamento" className="text-white/85 transition-colors hover:text-white">
+            <Link href="/orcamento" className="transition-colors hover:text-graphite">
               Orçamento
             </Link>
           </li>
+          <li>
+            <a href={instagram} target="_blank" rel="noreferrer" className="transition-colors hover:text-graphite">
+              Instagram
+            </a>
+          </li>
         </ul>
-        <div className="text-sm text-white/75">
-          <p>
+        <div>
+          <p className="text-sm leading-relaxed text-graphite/80">
             Atendimento em {coverage.states.join(" e ")}, em um raio de até {coverage.radiusKm} km.
           </p>
-          <a
-            href={instagram}
-            target="_blank"
-            rel="noreferrer"
-            className="mt-3 inline-block text-white/85 underline underline-offset-4 transition-colors hover:text-white"
+          <Link
+            href="/orcamento"
+            className="mt-6 inline-block bg-orange px-6 py-3.5 text-sm font-bold text-graphite transition-colors hover:bg-brand hover:text-white"
           >
-            Instagram
-          </a>
+            Solicitar orçamento
+          </Link>
         </div>
       </div>
-      <p className="border-t border-white/15 px-6 py-5 text-center text-xs text-white/60">
+      <FooterNascente />
+      <p className="relative border-t border-brand/15 px-6 py-5 text-center text-xs text-graphite/70">
         © {new Date().getFullYear()} {brand.name}. Todos os direitos reservados.
       </p>
     </footer>
