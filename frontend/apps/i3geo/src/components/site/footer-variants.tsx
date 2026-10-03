@@ -94,7 +94,7 @@ async function loadRows(rows: number, cols: number) {
 }
 
 // B. O relevo real em perfis empilhados, que se erguem quando o rodapé aparece.
-export function FooterHorizonte() {
+export function FooterHorizonte({ wordmark = false }: { wordmark?: boolean }) {
   const wrap = useRef<HTMLDivElement>(null);
   const canvas = useRef<HTMLCanvasElement>(null);
   const inView = useInView(wrap, { once: true, amount: 0.35 });
@@ -128,8 +128,8 @@ export function FooterHorizonte() {
       }
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       ctx.clearRect(0, 0, w, h);
-      const top = h * 0.3;
-      const step = (h * 0.62) / rows.length;
+      const top = h * (wordmark ? 0.62 : 0.3);
+      const step = (h * (wordmark ? 0.36 : 0.62)) / rows.length;
       const amp = h * 0.42 * t;
       rows.forEach((row, r) => {
         const base = top + r * step;
@@ -169,15 +169,23 @@ export function FooterHorizonte() {
       cancelAnimationFrame(frame);
       window.removeEventListener("resize", onResize);
     };
-  }, [rows, inView, reduce]);
+  }, [rows, inView, reduce, wordmark]);
 
   return (
     <footer className="relative overflow-hidden bg-[#03121A] text-white">
       <div className="relative mx-auto grid max-w-7xl gap-10 px-6 pt-20 sm:grid-cols-[1.5fr_1fr_1fr] sm:px-10 lg:px-16">
         <div>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/brand/logo-i3geo-wordmark-negativo.svg" alt={brand.name} className="h-12 w-auto" />
-          <p className="mt-5 max-w-xs text-lg leading-snug text-white/80">{brand.positioning}</p>
+          {wordmark ? (
+            <p className="max-w-md text-balance text-4xl font-bold leading-[1.02] tracking-tight sm:text-5xl">
+              Na dúvida, comece pelo levantamento.
+            </p>
+          ) : (
+            <>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="/brand/logo-i3geo-wordmark-negativo.svg" alt={brand.name} className="h-12 w-auto" />
+              <p className="mt-5 max-w-xs text-lg leading-snug text-white/80">{brand.positioning}</p>
+            </>
+          )}
         </div>
         <Nav className="space-y-3 text-lg font-semibold" />
         <div>
@@ -187,8 +195,19 @@ export function FooterHorizonte() {
           </Link>
         </div>
       </div>
-      <div ref={wrap} className="pointer-events-none relative -mt-6 h-[46vh] min-h-[280px]" aria-hidden="true">
-        <canvas ref={canvas} className="size-full" />
+      <div ref={wrap} className={`pointer-events-none relative ${wordmark ? "mt-4 h-[62vh] min-h-[360px]" : "-mt-6 h-[46vh] min-h-[280px]"}`} aria-hidden="true">
+        {wordmark && (
+          <motion.img
+            src="/brand/logo-i3geo-wordmark-negativo.svg"
+            alt=""
+            className="absolute inset-x-0 top-[6%] mx-auto w-[88%]"
+            initial={{ y: "45%", opacity: 0 }}
+            whileInView={{ y: "0%", opacity: 1 }}
+            viewport={{ once: true, amount: 0.35 }}
+            transition={{ duration: 1.8, ease }}
+          />
+        )}
+        <canvas ref={canvas} className="relative size-full" />
       </div>
       <p className="relative border-t border-white/15 px-6 py-4 text-center text-xs text-white/60">
         © {year} {brand.name}. Todos os direitos reservados.

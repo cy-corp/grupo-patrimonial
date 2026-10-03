@@ -11,6 +11,7 @@ const options = [
   { id: "A", name: "Curvas", text: "Logotipo gigante cortado na base, sobre curvas de nível que deslizam.", footer: <FooterCurvas /> },
   { id: "B", name: "Horizonte", text: "O relevo real em perfis empilhados, que se erguem ao entrar na tela.", footer: <FooterHorizonte /> },
   { id: "C", name: "Prancha", text: "Carimbo de planta técnica. Mova o cursor: as coordenadas acompanham.", footer: <FooterPrancha /> },
+  { id: "E", name: "Nascente", text: "O logo gigante nasce atrás das montanhas do relevo, com uma chamada no topo.", footer: <FooterHorizonte wordmark /> },
   { id: "D", name: "Maquete", text: "A versão atual: maquete 3D do relevo com o pin.", footer: <SiteFooter /> },
 ];
 
@@ -22,7 +23,7 @@ export default function RodapesPage() {
       <main className="flex-1 bg-[#F6F4EF]">
         <div className="mx-auto max-w-7xl px-6 py-16 sm:px-10 lg:px-16">
           <h1 className="text-4xl font-bold tracking-tight text-brand sm:text-6xl">Opções de rodapé</h1>
-          <p className="mt-4 max-w-xl text-lg text-graphite/80">Quatro modelos, um abaixo do outro, em tamanho real.</p>
+          <p className="mt-4 max-w-xl text-lg text-graphite/80">Cinco modelos, um abaixo do outro, em tamanho real.</p>
         </div>
         {options.map((option) => (
           <section key={option.id} className="pb-24">
