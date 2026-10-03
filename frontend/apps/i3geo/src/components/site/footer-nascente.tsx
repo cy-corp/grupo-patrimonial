@@ -58,6 +58,11 @@ export function FooterNascente() {
     if (!ctx) return;
     let frame = 0;
     let start: number | null = null;
+    // Usa toda a faixa de alturas do recorte e acentua os picos.
+    const flat = rows.flat();
+    const low = Math.min(...flat);
+    const span = Math.max(...flat) - low || 1;
+    const shape = (v: number) => Math.pow((v - low) / span, 1.5);
 
     const draw = (t: number) => {
       const dpr = Math.min(2, window.devicePixelRatio || 1);
@@ -78,14 +83,16 @@ export function FooterNascente() {
       const logoHeight = measured ? img.offsetHeight : w * LOGO.width * LOGO.ratio;
       const top = logoTop + logoHeight * 0.74;
       const step = Math.max(2, (h - top - 12) / rows.length);
-      const amp = logoHeight * 0.3 * t;
+      // Cada perfil pode subir até a altura do primeiro: os da frente ganham montanhas
+      // altas sem encobrir mais o logo.
+      const reach = logoHeight * 0.16;
       rows.forEach((row, r) => {
         const base = top + r * step;
         const near = r / (rows.length - 1);
         ctx.beginPath();
         row.forEach((v, c) => {
           const x = (c / (row.length - 1)) * w;
-          const y = base - v * amp * (0.45 + near * 0.55);
+          const y = base - shape(v) * (reach + r * step * 0.92) * t;
           if (c) ctx.lineTo(x, y);
           else ctx.moveTo(x, y);
         });
