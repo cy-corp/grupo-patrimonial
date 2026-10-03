@@ -1,9 +1,7 @@
 import type { Metadata } from "next";
-import Image from "next/image";
-import Link from "next/link";
 import { ServiceDiagram } from "@/components/site/service-diagram";
 import { SiteFooter, SiteHeader } from "@/components/site/site-chrome";
-import { services, surveyDelivers } from "@/lib/content";
+import { services, surveyDelivers, whatsappLink } from "@/lib/content";
 
 export const metadata: Metadata = {
   title: "Serviços",
@@ -22,17 +20,6 @@ export default function ServicosPage() {
             <p className="mt-6 max-w-xl text-lg leading-relaxed text-graphite/80">
               Cada projeto é tratado com responsabilidade, precisão cartográfica e visão jurídica.
             </p>
-            {/* Foto provisória de banco gratuito: ver public/fotos/CREDITOS.md. */}
-            <div className="relative mt-14 aspect-[21/9] overflow-hidden">
-              <Image
-                src="/fotos/campo-gnss.jpg"
-                alt="Receptor GNSS sobre tripé em uma área rural"
-                fill
-                priority
-                sizes="(min-width: 1280px) 1150px, 100vw"
-                className="object-cover"
-              />
-            </div>
           </div>
 
           {services.map((service) => (
@@ -65,21 +52,31 @@ export default function ServicosPage() {
             </section>
           ))}
 
-          <section className="border-t border-brand/15 py-20 sm:py-28">
-            <h2 className="max-w-3xl text-balance text-3xl font-bold tracking-tight text-brand sm:text-5xl">
-              Tem uma demanda e não sabe qual serviço precisa?
-            </h2>
-            <p className="mt-5 max-w-xl text-lg leading-relaxed text-graphite/80">
-              Fale com a i3Geo. A gente ajuda a identificar a solução adequada para o seu caso.
-            </p>
-            <Link
-              href="/orcamento"
-              className="mt-8 inline-block bg-orange px-7 py-4 text-base font-bold text-graphite transition-colors hover:bg-brand hover:text-white"
-            >
-              Solicitar orçamento
-            </Link>
-          </section>
         </div>
+
+        {/* Fecho em faixa escura e com outro canal (WhatsApp), para não repetir o rodapé claro logo abaixo. */}
+        <section className="bg-brand text-white">
+          <div className="mx-auto grid max-w-7xl items-end gap-10 px-6 py-20 sm:px-10 sm:py-28 lg:grid-cols-12 lg:px-16">
+            <div className="lg:col-span-8">
+              <h2 className="max-w-3xl text-balance text-3xl font-bold tracking-tight sm:text-5xl">
+                Tem uma demanda e não sabe qual serviço precisa?
+              </h2>
+              <p className="mt-5 max-w-xl text-lg leading-relaxed text-white/80">
+                Conte o seu caso. A gente ajuda a identificar a solução adequada.
+              </p>
+            </div>
+            <div className="lg:col-span-4 lg:text-right">
+              <a
+                href={whatsappLink("Olá, tenho uma demanda e gostaria de ajuda para identificar o serviço adequado.")}
+                target="_blank"
+                rel="noreferrer"
+                className="inline-block bg-white px-7 py-4 text-base font-bold text-brand transition-colors hover:bg-orange hover:text-graphite"
+              >
+                Conversar no WhatsApp
+              </a>
+            </div>
+          </div>
+        </section>
       </main>
       <SiteFooter />
     </>
