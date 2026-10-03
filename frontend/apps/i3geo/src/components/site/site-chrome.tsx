@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { coverage, instagram } from "@/lib/content";
 import { brand } from "@/lib/brand";
+import { FooterDiorama } from "./footer-diorama";
 
 export const nav = [
   { href: "/servicos", label: "Serviços" },
@@ -9,7 +10,8 @@ export const nav = [
 
 export function SiteHeader() {
   return (
-    <header className="sticky top-0 z-30 border-b border-brand/15 bg-[#F6F4EF]">
+    <header className="sticky top-0 z-30 bg-[#F6F4EF] text-brand">
+      <span className="header-ruler pointer-events-none absolute inset-x-0 bottom-0 block h-2 opacity-45" aria-hidden="true" />
       <div className="flex h-16 items-center justify-between px-6 sm:h-20 sm:px-10 lg:px-16">
         <Link href="/" aria-label={brand.name} className="block">
           {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -36,8 +38,9 @@ export function SiteHeader() {
 
 export function SiteFooter() {
   return (
-    <footer className="bg-graphite text-white">
-      <div className="mx-auto grid max-w-7xl gap-10 px-6 py-14 sm:grid-cols-[1.4fr_1fr_1fr] sm:px-10 lg:px-16">
+    <footer className="relative overflow-hidden bg-[#03121A] text-white">
+      <FooterDiorama />
+      <div className="relative mx-auto grid max-w-7xl gap-10 border-t border-white/15 px-6 py-14 sm:grid-cols-[1.4fr_1fr_1fr] sm:px-10 lg:px-16">
         <div>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src="/brand/logo-i3geo-wordmark-negativo.svg" alt={brand.name} className="h-9 w-auto" />

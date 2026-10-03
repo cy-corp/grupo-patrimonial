@@ -7,7 +7,7 @@ import { useCallback, useEffect, useState } from "react";
 import { brand, colors } from "@/lib/brand";
 import { ramp } from "../hero/beats";
 import { QuoteExperience } from "../site/quote-experience";
-import { Coverage, Diagnosis, Pillars, Process, Stats } from "../site/home-sections";
+import { Coverage, Diagnosis, Process, Stats } from "../site/home-sections";
 import { SiteFooter, nav } from "../site/site-chrome";
 import { PAPER, css, skyAt, stageAt } from "./dawn-stage";
 
@@ -75,7 +75,7 @@ export function DawnExperience() {
   const reduceMotion = useReducedMotion();
   const [webgl, setWebgl] = useState<boolean | null>(null);
   const [ready, setReady] = useState(false);
-  const { scrollY } = useScroll();
+  const { scrollY, scrollYProgress } = useScroll();
   const scroll = useTransform(scrollY, (y) => y / (typeof window === "undefined" ? 1 : window.innerHeight || 1));
   const day = useDay(scroll);
   const onReady = useCallback(() => setReady(true), []);
@@ -97,7 +97,7 @@ export function DawnExperience() {
   });
   const topScrim = useTransform(day, (d) => {
     const s = skyAt(d);
-    return `linear-gradient(180deg, ${css(s.top, 1)} 0%, ${css(s.top, 0.97)} 66%, ${css(s.top, 0)} 100%)`;
+    return css(s.top, 1);
   });
   const stars = useTransform(day, (d) => 1 - ramp(d, 0.02, 0.32));
   const nightLogo = useTransform(day, (d) => 1 - ramp(d, 0.35, 0.6));
@@ -135,11 +135,15 @@ export function DawnExperience() {
         )}
         <motion.div className="pointer-events-none absolute inset-0" style={{ background: scrim }} />
       </motion.div>
+      {/* Barra do cabeçalho: cor do céu, régua de coordenadas e progresso da página. */}
       <motion.div
-        className="pointer-events-none fixed inset-x-0 top-0 z-20 h-24 sm:h-28"
-        style={{ background: topScrim }}
+        className="pointer-events-none fixed inset-x-0 top-0 z-20 h-16 sm:h-20"
+        style={{ backgroundColor: topScrim, color: ctaBg }}
         aria-hidden="true"
-      />
+      >
+        <span className="header-ruler absolute inset-x-0 bottom-0 block h-2 opacity-45" />
+        <motion.span className="absolute inset-x-0 bottom-0 block h-0.5 origin-left bg-orange" style={{ scaleX: scrollYProgress }} />
+      </motion.div>
 
       <header className="fixed inset-x-0 top-0 z-30 flex h-16 items-center justify-between px-6 sm:h-20 sm:px-10 lg:px-16">
         <Link href="/" aria-label={brand.fullName} className="relative block h-8 w-[122px] sm:h-9 sm:w-[137px]">
@@ -265,7 +269,6 @@ export function DawnExperience() {
           <Diagnosis />
           <Process />
           <Coverage />
-          <Pillars />
           <QuoteExperience />
           <SiteFooter />
         </div>

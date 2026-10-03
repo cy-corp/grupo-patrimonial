@@ -6,12 +6,13 @@ import {
   motion,
   useInView,
   useReducedMotion,
+  useMotionValueEvent,
   useScroll,
   useTransform,
 } from "framer-motion";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-import { coverage, diagnosis, pillars, process, services, stats } from "@/lib/content";
+import { coverage, diagnosis, process, services, stats } from "@/lib/content";
 import { ServiceDiagram } from "./service-diagram";
 
 const shell = "mx-auto max-w-7xl px-6 sm:px-10 lg:px-16";
@@ -209,9 +210,16 @@ export function Process() {
 
 const RINGS = [50, 100, 150, 200];
 
+// O raio de atendimento se preenche conforme a rolagem.
 export function Coverage() {
+  const ref = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start 0.75", "center 0.45"] });
+  const radius = useTransform(scrollYProgress, [0, 1], [0, coverage.radiusKm / 2]);
+  const [km, setKm] = useState(0);
+  useMotionValueEvent(scrollYProgress, "change", (v) => setKm(Math.round((v * coverage.radiusKm) / 10) * 10));
+
   return (
-    <section className="overflow-hidden bg-brand py-24 text-white sm:py-32">
+    <section ref={ref} className="overflow-hidden bg-brand py-24 text-white sm:py-32">
       <div className={`${shell} grid items-center gap-16 lg:grid-cols-2`}>
         <div>
           <h2 className={h2}>
@@ -223,62 +231,32 @@ export function Coverage() {
         </div>
         <div className="relative mx-auto aspect-square w-full max-w-md" aria-hidden="true">
           <svg viewBox="-110 -110 220 220" className="size-full" fill="none">
-            {RINGS.map((km, i) => (
-              <motion.circle
-                key={km}
-                r={km / 2}
-                className="stroke-white/35"
+            <motion.circle r={radius} className="fill-white/15 stroke-orange" strokeWidth={1.2} />
+            {RINGS.map((ring) => (
+              <circle
+                key={ring}
+                r={ring / 2}
+                className={ring <= km ? "stroke-white/70" : "stroke-white/25"}
                 strokeWidth={0.5}
-                strokeDasharray={km === coverage.radiusKm ? undefined : "2 3"}
-                initial={{ scale: 0.4, opacity: 0 }}
-                whileInView={{ scale: 1, opacity: 1 }}
-                viewport={{ once: true, amount: 0.4 }}
-                transition={{ duration: 1.2, delay: i * 0.12, ease }}
+                strokeDasharray={ring === coverage.radiusKm ? undefined : "2 3"}
               />
             ))}
             <path d="M-104 0 H104 M0 -104 V104" className="stroke-white/20" strokeWidth={0.4} />
-            {RINGS.map((km) => (
-              <text key={km} x={3} y={-km / 2 + 7} className="fill-white/70 text-[5px] font-semibold">
-                {km} km
+            {RINGS.map((ring) => (
+              <text
+                key={ring}
+                x={3}
+                y={-ring / 2 + 7}
+                className={`text-[5px] font-semibold ${ring <= km ? "fill-white" : "fill-white/45"}`}
+              >
+                {ring} km
               </text>
             ))}
-            <g className="i3-rotate" style={{ "--i3-rotate-duration": "9s" } as React.CSSProperties}>
-              <path d="M0 0 L100 0 A100 100 0 0 0 86.6 -50 Z" className="fill-white/10" />
-              <path d="M0 0 L100 0" className="stroke-orange" strokeWidth={0.8} />
-            </g>
             <circle r={3} className="fill-orange" />
           </svg>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-export function Pillars() {
-  return (
-    <section className="bg-[#03121A] py-24 text-white sm:py-32">
-      <div className={`${shell} grid gap-14 lg:grid-cols-12`}>
-        <div className="lg:col-span-4">
-          <p className="text-[9rem] font-bold leading-none tracking-tight text-[#A9E3F0] sm:text-[12rem]">
-            i<sup className="text-[0.5em] text-orange">3</sup>
+          <p className="absolute bottom-0 right-0 text-right text-4xl font-bold tabular-nums tracking-tight sm:text-5xl">
+            {km} km
           </p>
-          <h2 className="mt-4 text-2xl font-bold tracking-tight sm:text-3xl">Três pilares, multiplicados pela força do indivíduo.</h2>
-        </div>
-        <div className="lg:col-span-8">
-          <ul className="grid gap-10 sm:grid-cols-3">
-            {pillars.map((pillar) => (
-              <li key={pillar.title} className="border-t border-white/25 pt-6">
-                <h3 className="text-xl font-bold tracking-tight">{pillar.title}</h3>
-                <p className="mt-3 leading-relaxed text-white/75">{pillar.short}</p>
-              </li>
-            ))}
-          </ul>
-          <Link
-            href="/sobre"
-            className="mt-12 inline-block border-b-2 border-orange pb-1 text-sm font-semibold text-white transition-colors hover:text-[#A9E3F0]"
-          >
-            Conheça o padrão i3Geo
-          </Link>
         </div>
       </div>
     </section>

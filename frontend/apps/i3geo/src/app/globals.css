@@ -59,3 +59,25 @@ body {
     animation: none;
   }
 }
+
+/* Tudo que executa uma ação ou seleciona algo mostra o cursor de mão. */
+a[href],
+button:not(:disabled),
+[role="tab"],
+[role="radio"],
+input[type="range"],
+select,
+summary,
+label[for] {
+  cursor: pointer;
+}
+
+/* Régua de coordenadas na base do cabeçalho: marcas a cada 12 px, maiores a cada 60 px. */
+.header-ruler {
+  background-image:
+    repeating-linear-gradient(90deg, currentColor 0 1px, transparent 1px 60px),
+    repeating-linear-gradient(90deg, currentColor 0 1px, transparent 1px 12px);
+  background-size: 100% 100%, 100% 50%;
+  background-position: bottom, bottom;
+  background-repeat: no-repeat;
+}
