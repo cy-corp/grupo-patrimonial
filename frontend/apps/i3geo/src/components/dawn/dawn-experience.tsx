@@ -8,6 +8,7 @@ import { brand, colors } from "@/lib/brand";
 import { ramp } from "../hero/beats";
 import { QuoteExperience } from "../site/quote-experience";
 import { Coverage, Diagnosis, Field, Process, Stats } from "../site/home-sections";
+import { Loader } from "../site/loader";
 import { MobileMenu } from "../site/mobile-menu";
 import { SiteFooter, nav } from "../site/site-chrome";
 import { PAPER, css, skyAt, stageAt } from "./dawn-stage";
@@ -80,6 +81,8 @@ export function DawnExperience() {
   const scroll = useTransform(scrollY, (y) => y / (typeof window === "undefined" ? 1 : window.innerHeight || 1));
   const day = useDay(scroll);
   const onReady = useCallback(() => setReady(true), []);
+  const [entered, setEntered] = useState(false);
+  const onEntered = useCallback(() => setEntered(true), []);
 
   useEffect(() => setWebgl(supportsWebGL2()), []);
   const live = webgl === true && !reduceMotion;
@@ -181,12 +184,15 @@ export function DawnExperience() {
         </nav>
       </header>
 
+      {/* Sem WebGL ou com movimento reduzido não há cena para esperar. */}
+      <Loader ready={ready || (webgl !== null && !live)} onDone={onEntered} />
+
       <main className="relative z-10">
         <section className="relative flex h-screen flex-col justify-end px-6 pb-[18vh] text-white sm:px-10 sm:pb-20 lg:px-16 lg:pb-24">
           <motion.h1
             initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.8, duration: 1.4, ease: [0.22, 1, 0.36, 1] }}
+            animate={entered ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+            transition={{ delay: 0.15, duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
             className="text-[clamp(3rem,6.2vw,6rem)] font-bold leading-[0.95] tracking-[-0.03em]"
           >
             Enxergar o território
@@ -195,8 +201,8 @@ export function DawnExperience() {
           </motion.h1>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.3, duration: 1, ease: [0.22, 1, 0.36, 1] }}
+            animate={entered ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+            transition={{ delay: 0.5, duration: 1, ease: [0.22, 1, 0.36, 1] }}
             className="mt-6 flex max-w-xl flex-col gap-6"
           >
             <p className="text-base leading-relaxed text-white/70 sm:text-lg">
