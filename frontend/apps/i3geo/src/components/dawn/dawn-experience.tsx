@@ -7,6 +7,8 @@ import { useCallback, useEffect, useState } from "react";
 import { brand, colors } from "@/lib/brand";
 import { ramp } from "../hero/beats";
 import { Contact } from "../landing/contact";
+import { Coverage, Pillars, Services, Situations } from "../site/home-sections";
+import { SiteFooter, nav } from "../site/site-chrome";
 import { PAPER, css, skyAt, stageAt } from "./dawn-stage";
 
 const DawnScene = dynamic(() => import("./dawn-scene"), { ssr: false });
@@ -154,7 +156,14 @@ export function DawnExperience() {
             style={{ opacity: dayLogo }}
           />
         </Link>
-        <nav className="flex items-center gap-5">
+        <nav aria-label="Principal" className="flex items-center gap-6">
+          {nav.map((item) => (
+            <motion.span key={item.href} style={{ color: ctaBg }} className="hidden text-sm font-medium sm:inline">
+              <Link href={item.href} className="opacity-85 transition-opacity hover:opacity-100">
+                {item.label}
+              </Link>
+            </motion.span>
+          ))}
           <motion.span style={{ backgroundColor: ctaBg, color: ctaInk }} className="inline-block">
             <Link href="#contato" className="block px-4 py-2 text-sm font-semibold">
               Solicitar orçamento
@@ -252,7 +261,12 @@ export function DawnExperience() {
           </div>
         </section>
         <div className="relative bg-[#F6F4EF]">
+          <Services />
+          <Situations />
+          <Coverage />
+          <Pillars />
           <Contact />
+          <SiteFooter />
         </div>
       </main>
     </div>
