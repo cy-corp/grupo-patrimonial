@@ -5,6 +5,8 @@ import { useEffect, useRef, useState } from "react";
 import { SIZE, terrain } from "@/components/hero/terrain";
 
 const PAPER = "#F6F4EF";
+// Posição do logo dentro da área do relevo: topo, largura (frações) e proporção do arquivo.
+const LOGO = { top: 0.05, width: 0.88, ratio: 645 / 2076 };
 
 // Perfis do relevo real, de norte a sul, lidos do mesmo PNG da abertura.
 async function loadRows(rows: number, cols: number) {
@@ -65,9 +67,12 @@ export function FooterNascente() {
       }
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       ctx.clearRect(0, 0, w, h);
-      const top = h * 0.62;
-      const step = (h * 0.36) / rows.length;
-      const amp = h * 0.42 * t;
+      // O relevo começa perto da base do logo, para encobrir só o pé das letras.
+      const logoTop = h * LOGO.top;
+      const logoHeight = w * LOGO.width * LOGO.ratio;
+      const top = logoTop + logoHeight * 0.74;
+      const step = Math.max(2, (h - top - 12) / rows.length);
+      const amp = logoHeight * 0.3 * t;
       rows.forEach((row, r) => {
         const base = top + r * step;
         const near = r / (rows.length - 1);
@@ -109,11 +114,11 @@ export function FooterNascente() {
   }, [rows, inView, reduce]);
 
   return (
-    <div ref={wrap} className="pointer-events-none relative mt-4 h-[44vh] min-h-[260px] sm:h-[62vh] sm:min-h-[360px]" aria-hidden="true">
+    <div ref={wrap} className="pointer-events-none relative mt-4 h-[calc(30vw+22vh)] min-h-[240px]" aria-hidden="true">
       <motion.img
         src="/brand/logo-i3geo-wordmark.svg"
         alt=""
-        className="absolute inset-x-0 top-[6%] mx-auto w-[88%]"
+        className="absolute inset-x-0 top-[5%] mx-auto w-[88%]"
         initial={{ y: "45%", opacity: 0 }}
         whileInView={{ y: "0%", opacity: 1 }}
         viewport={{ once: true, amount: 0.3 }}
