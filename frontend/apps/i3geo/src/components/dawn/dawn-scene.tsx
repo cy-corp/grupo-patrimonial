@@ -124,7 +124,8 @@ function Terrain({
     const focus = new THREE.Vector3(
       THREE.MathUtils.lerp(k.fx, px, k.focus),
       THREE.MathUtils.lerp(0.25, anchors.center[1], k.focus),
-      THREE.MathUtils.lerp(k.fz, pz, k.focus) + k.oz,
+      // Em tela larga o imóvel fica perto do centro, para o pin não encostar no topo.
+      THREE.MathUtils.lerp(k.fz, pz, k.focus) + k.oz * (1 - 0.7 * Math.min(1, Math.max(0, aspect - 0.8))),
     );
     // No desktop o imóvel se desloca para a direita, longe do texto.
     const shift = k.sx * Math.min(1, Math.max(0, aspect - 1));
@@ -234,7 +235,7 @@ function Terrain({
             alt=""
             width={56}
             height={71}
-            className="block h-[71px] w-14 max-w-none drop-shadow-[0_10px_18px_rgba(0,60,80,0.35)]"
+            className="block h-[clamp(150px,30vh,280px)] w-auto sm:h-[clamp(120px,24vh,230px)] max-w-none drop-shadow-[0_14px_26px_rgba(0,60,80,0.35)]"
           />
         </div>
       </Html>

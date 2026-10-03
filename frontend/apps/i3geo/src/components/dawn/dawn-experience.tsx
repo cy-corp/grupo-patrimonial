@@ -6,7 +6,6 @@ import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
 import { brand, colors } from "@/lib/brand";
 import { ramp } from "../hero/beats";
-import { facts, fmt } from "../hero/terrain";
 import { PAPER, css, skyAt, stageAt } from "./dawn-stage";
 
 const DawnScene = dynamic(() => import("./dawn-scene"), { ssr: false });
@@ -26,13 +25,6 @@ const STARS = (() => {
   return Array.from({ length: 90 }, () => ({ x: rnd() * 100, y: rnd() * 42, r: 0.4 + rnd() * 0.9, o: 0.25 + rnd() * 0.6 }));
 })();
 
-const rise = {
-  initial: { opacity: 0, y: 24 },
-  whileInView: { opacity: 1, y: 0 },
-  viewport: { once: true, amount: 0.4 },
-  transition: { duration: 0.9, ease: [0.22, 1, 0.36, 1] as const },
-};
-
 function mixHex(a: string, b: string, t: number) {
   const p = (h: string, i: number) => parseInt(h.slice(1 + i * 2, 3 + i * 2), 16);
   const c = [0, 1, 2].map((i) => Math.round(p(a, i) + (p(b, i) - p(a, i)) * t));
@@ -40,15 +32,11 @@ function mixHex(a: string, b: string, t: number) {
 }
 
 function Chapter({
-  index,
-  label,
   title,
   text,
   data,
   className,
 }: {
-  index: string;
-  label: string;
   title: string;
   text: string;
   data: string[];
@@ -57,24 +45,20 @@ function Chapter({
   return (
     <section className={`relative flex items-start sm:items-center ${className}`}>
       <div className="px-4 pt-[16vh] sm:px-10 sm:pt-0 lg:px-16">
-        <motion.div {...rise} className="max-w-xl bg-[#F6F4EF]/85 p-5 backdrop-blur-sm sm:bg-transparent sm:p-0 sm:backdrop-blur-none">
-          <p className="flex items-baseline gap-3 text-xs font-semibold uppercase tracking-[0.2em] text-graphite/60">
-            <span className="text-orange tabular-nums">{index}</span>
-            {label}
-          </p>
-          <h2 className="mt-4 text-4xl font-bold leading-[1.02] tracking-tight text-brand sm:text-6xl">{title}</h2>
-          <p className="mt-5 max-w-md text-base leading-relaxed text-graphite/75 sm:text-lg">{text}</p>
+        <div className="max-w-xl bg-[#F6F4EF]/85 p-5 backdrop-blur-sm sm:bg-transparent sm:p-0 sm:backdrop-blur-none">
+          <h2 className="text-balance text-[1.7rem] font-bold leading-[1.05] tracking-tight text-brand sm:text-5xl lg:text-6xl">{title}</h2>
+          <p className="mt-5 max-w-md text-base leading-relaxed text-graphite/80 sm:text-lg">{text}</p>
           <ul className="mt-6 flex flex-wrap gap-2">
             {data.map((d) => (
               <li
                 key={d}
-                className="border border-brand/15 bg-white/70 px-3 py-1.5 text-xs font-semibold text-brand tabular-nums backdrop-blur-sm"
+                className="border border-brand/15 bg-white px-3 py-1.5 text-xs font-semibold text-brand tabular-nums"
               >
                 {d}
               </li>
             ))}
           </ul>
-        </motion.div>
+        </div>
       </div>
     </section>
   );
@@ -110,7 +94,7 @@ export function DawnExperience() {
   });
   const topScrim = useTransform(day, (d) => {
     const s = skyAt(d);
-    return `linear-gradient(180deg, ${css(s.top, 0.96)} 0%, ${css(s.top, 0.8)} 45%, ${css(s.top, 0)} 100%)`;
+    return `linear-gradient(180deg, ${css(s.top, 1)} 0%, ${css(s.top, 0.97)} 66%, ${css(s.top, 0)} 100%)`;
   });
   const stars = useTransform(day, (d) => 1 - ramp(d, 0.02, 0.32));
   const nightLogo = useTransform(day, (d) => 1 - ramp(d, 0.35, 0.6));
@@ -122,7 +106,7 @@ export function DawnExperience() {
   const ctaInk = useTransform(day, (d) => mixHex(colors.petroleum, "#FFFFFF", ramp(d, 0.35, 0.6)));
 
   return (
-    <div className="relative" style={{ backgroundColor: PAPER }}>
+    <div className="relative [&_a:focus-visible]:outline-2 [&_a:focus-visible]:outline-offset-4 [&_a:focus-visible]:outline-orange" style={{ backgroundColor: PAPER }}>
       <motion.div className="fixed inset-0" style={{ background: sky }} aria-hidden="true">
         <motion.svg className="absolute inset-0 h-full w-full" style={{ opacity: stars }} preserveAspectRatio="none">
           {STARS.map((s, i) => (
@@ -178,7 +162,7 @@ export function DawnExperience() {
           </motion.span>
           <motion.span style={{ backgroundColor: ctaBg, color: ctaInk }} className="inline-block">
             <Link href="/#contato" className="block px-4 py-2 text-sm font-semibold">
-              Fale conosco
+              Solicitar orçamento
             </Link>
           </motion.span>
         </nav>
@@ -186,20 +170,11 @@ export function DawnExperience() {
 
       <main className="relative z-10">
         <section className="relative flex h-screen flex-col justify-end px-6 pb-[18vh] text-white sm:px-10 sm:pb-20 lg:px-16 lg:pb-24">
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.6, duration: 1.2 }}
-            className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.22em] text-white/60"
-          >
-            <span className="block size-1.5 rotate-45 bg-orange" />
-            {brand.fullName}
-          </motion.p>
           <motion.h1
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.8, duration: 1.4, ease: [0.22, 1, 0.36, 1] }}
-            className="mt-5 max-w-4xl text-[3.1rem] font-bold leading-[0.95] tracking-[-0.03em] sm:text-7xl lg:text-[7rem]"
+            className="text-[clamp(3rem,6.2vw,6rem)] font-bold leading-[0.95] tracking-[-0.03em]"
           >
             Enxergar o território
             <br />
@@ -212,7 +187,7 @@ export function DawnExperience() {
             className="mt-6 flex max-w-xl flex-col gap-6"
           >
             <p className="text-base leading-relaxed text-white/70 sm:text-lg">
-              Topografia, georreferenciamento e meio ambiente para decisões seguras sobre a terra.
+              Levantamento topográfico, georreferenciamento de imóveis rurais e estudos ambientais.
             </p>
             <div className="flex flex-wrap items-center gap-5">
               <Link
@@ -222,53 +197,47 @@ export function DawnExperience() {
                 Solicitar orçamento
               </Link>
               <a href="#amanhecer" className="text-sm font-semibold text-white/70 transition-colors hover:text-white">
-                Role para amanhecer ↓
+                Veja como trabalhamos
               </a>
             </div>
           </motion.div>
         </section>
 
         <section id="amanhecer" className="relative flex h-screen items-center justify-center px-6 text-center">
-          <motion.div {...rise} className="max-w-3xl">
-            <motion.h2 style={{ color: interludeInk }} className="text-4xl font-bold leading-[1.02] tracking-tight sm:text-6xl">
-              Quando a luz chega, o relevo aparece.
+          <div className="max-w-3xl">
+            <motion.h2 style={{ color: interludeInk }} className="text-balance text-4xl font-bold leading-[1.02] tracking-tight sm:text-6xl">
+              Do levantamento em campo ao documento entregue.
             </motion.h2>
             <motion.p style={{ color: interludeText }} className="mx-auto mt-6 max-w-lg text-base leading-relaxed sm:text-lg">
-              Cada sombra é uma encosta, cada curva é uma cota. É isso que a i3Geo mede, ponto a ponto, para você decidir
-              com clareza.
+              A i3Geo atua em três frentes: topografia, georreferenciamento e meio ambiente. A seguir, o que
+              entregamos em cada uma.
             </motion.p>
-          </motion.div>
+            {/* Falta prova real da empresa aqui (anos de atuação, hectares levantados, CREA e INCRA). */}
+          </div>
         </section>
 
         <Chapter
           className="h-[110vh]"
-          index="01"
-          label="Topografia"
-          title="Cada metro, medido."
-          text="Levantamentos planialtimétricos que transformam o relevo em cotas, perfis e curvas de nível para projetar com segurança."
-          data={[`Curvas a cada ${facts.contourInterval} m`, `Recorte de ${fmt.km(facts.extentKm[0])} × ${fmt.km(facts.extentKm[1])}`]}
+          title="Levantamento topográfico"
+          text="Medimos o terreno em campo e entregamos a planta com curvas de nível, cotas e perfis, pronta para projeto de engenharia, loteamento ou obra."
+          data={["Planta planialtimétrica", "Curvas de nível", "Perfis e cotas"]}
         />
         <Chapter
           className="h-[120vh]"
-          index="02"
-          label="Georreferenciamento"
-          title="Limites que não deixam dúvida."
-          text="Vértices medidos em SIRGAS 2000, perímetro fechado e área calculada para matrícula, cartório e certificação no INCRA."
-          data={[`${facts.vertices} vértices`, `Área ${fmt.ha(facts.areaHa)}`, facts.datum]}
+          title="Georreferenciamento de imóveis rurais"
+          text="Medimos os vértices da divisa, fechamos o perímetro e calculamos a área, no padrão exigido para o registro em cartório e a certificação no INCRA."
+          data={["Planta georreferenciada", "Memorial descritivo", "Certificação no INCRA"]}
         />
         <Chapter
           className="h-[120vh]"
-          index="03"
-          label="Meio Ambiente"
-          title="Onde a água passa, a decisão muda."
-          text="Rede de drenagem, APP e reserva legal mapeadas sobre o mesmo dado, para licenciar e planejar com responsabilidade."
-          data={[`APP ${facts.appWidthM} m · ${fmt.ha(facts.appHa)}`, `Reserva legal ${fmt.ha(facts.reserveHa)} (${fmt.pct(facts.reservePct)})`]}
+          title="Regularização ambiental"
+          text="Mapeamos as áreas de preservação permanente e a reserva legal sobre o mesmo levantamento, base para a regularização e o licenciamento ambiental do imóvel."
+          data={["APP", "Reserva legal", "Licenciamento ambiental"]}
         />
 
         <section className="relative flex h-screen flex-col items-center justify-end px-6 pb-14 text-center sm:pb-20">
-          <motion.div {...rise} className="flex flex-col items-center">
-            <p className="text-xs font-semibold uppercase tracking-[0.22em] text-graphite/60">{brand.tagline}</p>
-            <h2 className="mt-5 max-w-4xl text-4xl font-bold leading-[1.02] tracking-tight text-brand sm:text-6xl lg:text-7xl">
+          <div className="flex flex-col items-center">
+            <h2 className="max-w-4xl text-4xl font-bold leading-[1.02] tracking-tight text-brand sm:text-6xl lg:text-7xl">
               Precisão territorial.
               <br />
               <span className="text-graphite">Inteligência ambiental.</span>
@@ -278,19 +247,19 @@ export function DawnExperience() {
                 href="/#contato"
                 className="bg-orange px-7 py-4 text-base font-bold text-graphite transition-colors hover:bg-brand hover:text-white"
               >
-                Vamos medir o seu território
+                Solicitar orçamento
               </Link>
               <Link
                 href="/"
                 className="border border-brand/25 px-7 py-4 text-base font-semibold text-brand transition-colors hover:border-brand"
               >
-                Conhecer a i3Geo
+                Ver o site
               </Link>
             </div>
-            <p className="mt-10 text-[10px] text-graphite/45">
-              Conceito i3Geo · Imóvel ilustrativo · Relevo: AWS Terrain Tiles (SRTM)
+            <p className="mt-10 text-[11px] text-graphite/70">
+              Imóvel ilustrativo · Fonte do relevo: SRTM (NASA), via Terrain Tiles
             </p>
-          </motion.div>
+          </div>
         </section>
       </main>
     </div>
