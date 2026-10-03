@@ -34,6 +34,8 @@ async function loadRows(rows: number, cols: number) {
 export function FooterNascente() {
   const wrap = useRef<HTMLDivElement>(null);
   const canvas = useRef<HTMLCanvasElement>(null);
+  const logo = useRef<HTMLImageElement>(null);
+  const [loaded, setLoaded] = useState(false);
   const inView = useInView(wrap, { once: true, amount: 0.3 });
   const reduce = useReducedMotion();
   const [rows, setRows] = useState<number[][] | null>(null);
@@ -68,8 +70,12 @@ export function FooterNascente() {
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       ctx.clearRect(0, 0, w, h);
       // O relevo começa perto da base do logo, para encobrir só o pé das letras.
-      const logoTop = h * LOGO.top;
-      const logoHeight = w * LOGO.width * LOGO.ratio;
+      // Mede o logo de verdade: ele encolhe quando a tela é baixa, para o rodapé caber inteiro.
+      const img = logo.current;
+      const holder = img?.parentElement;
+      const measured = img && holder && img.offsetHeight > 0;
+      const logoTop = measured ? holder.offsetTop + img.offsetTop : h * LOGO.top;
+      const logoHeight = measured ? img.offsetHeight : w * LOGO.width * LOGO.ratio;
       const top = logoTop + logoHeight * 0.74;
       const step = Math.max(2, (h - top - 12) / rows.length);
       const amp = logoHeight * 0.3 * t;
@@ -111,19 +117,23 @@ export function FooterNascente() {
       cancelAnimationFrame(frame);
       window.removeEventListener("resize", onResize);
     };
-  }, [rows, inView, reduce]);
+  }, [rows, inView, reduce, loaded]);
 
   return (
-    <div ref={wrap} className="pointer-events-none relative mt-4 h-[calc(30vw+22vh)] min-h-[240px]" aria-hidden="true">
-      <motion.img
-        src="/brand/logo-i3geo-wordmark.svg"
-        alt=""
-        className="absolute inset-x-0 top-[5%] mx-auto w-[88%]"
-        initial={{ y: "45%", opacity: 0 }}
-        whileInView={{ y: "0%", opacity: 1 }}
-        viewport={{ once: true, amount: 0.3 }}
-        transition={{ duration: 1.8, ease: [0.22, 1, 0.36, 1] }}
-      />
+    <div ref={wrap} className="pointer-events-none relative mt-4 h-[calc(30vw+22vh)] min-h-[150px] shrink" aria-hidden="true">
+      <div className="absolute inset-x-0 top-[5%] flex h-[70%] justify-center">
+        <motion.img
+          ref={logo}
+          src="/brand/logo-i3geo-wordmark.svg"
+          alt=""
+          onLoad={() => setLoaded(true)}
+          className="h-auto max-h-full w-auto max-w-[88%] self-start"
+          initial={{ y: "45%", opacity: 0 }}
+          whileInView={{ y: "0%", opacity: 1 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 1.8, ease: [0.22, 1, 0.36, 1] }}
+        />
+      </div>
       <canvas ref={canvas} className="relative size-full" />
     </div>
   );

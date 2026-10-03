@@ -41,12 +41,13 @@ export function SiteHeader() {
 
 export function SiteFooter() {
   return (
-    <footer className="relative overflow-hidden bg-[#F6F4EF] text-graphite">
-      <div className="mx-auto grid max-w-7xl gap-10 px-6 pt-20 sm:grid-cols-[1.5fr_1fr_1fr] sm:px-10 lg:px-16">
-        <p className="max-w-md text-balance text-4xl font-bold leading-[1.02] tracking-tight text-brand sm:text-5xl">
+    // O rodapé nunca passa da altura da tela: o relevo encolhe para tudo caber abaixo do cabeçalho.
+    <footer className="relative flex max-h-[calc(100svh-4rem)] flex-col overflow-hidden bg-[#F6F4EF] text-graphite sm:max-h-[calc(100svh-5rem)]">
+      <div className="mx-auto grid w-full max-w-7xl shrink-0 gap-6 px-6 pt-10 sm:grid-cols-[1.5fr_1fr_1fr] sm:gap-10 sm:px-10 sm:pt-16 lg:px-16">
+        <p className="max-w-md text-balance text-3xl font-bold leading-[1.02] tracking-tight text-brand sm:text-5xl">
           Na dúvida, comece pelo levantamento.
         </p>
-        <ul className="space-y-3 text-lg font-semibold text-brand">
+        <ul className="flex flex-wrap gap-x-6 gap-y-2 text-lg font-semibold text-brand sm:block sm:space-y-3">
           {nav.map((item) => (
             <li key={item.href}>
               <Link href={item.href} className="transition-colors hover:text-graphite">
@@ -87,7 +88,7 @@ export function SiteFooter() {
         </div>
       </div>
       <FooterNascente />
-      <p className="relative border-t border-brand/15 px-6 py-5 text-center text-xs text-graphite/70">
+      <p className="relative shrink-0 border-t border-brand/15 px-6 py-4 text-center text-xs text-graphite/70">
         © {new Date().getFullYear()} {brand.name}. Todos os direitos reservados.
       </p>
     </footer>
