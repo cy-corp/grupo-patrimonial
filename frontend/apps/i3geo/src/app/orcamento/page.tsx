@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 
 // Texto provisório, a confirmar com a i3Geo.
 const next = [
-  { title: "Você envia o pedido", text: "O resumo segue para a i3Geo pelo WhatsApp, pronto para a conversa começar." },
+  { title: "Você envia o pedido", text: "O pedido chega na hora à equipe da i3Geo, com tudo o que você preencheu." },
   { title: "A equipe analisa o caso", text: "Entendemos a necessidade e, se for preciso, pedimos os documentos do imóvel." },
   { title: "Você recebe a proposta", text: "Com o serviço indicado, o escopo, o prazo e o valor, sem compromisso." },
 ] as const;

@@ -198,9 +198,9 @@ export function DawnExperience() {
             transition={{ delay: 0.15, duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
             className="text-[clamp(2.25rem,5.6vw,6rem)] font-bold leading-[0.97] tracking-[-0.03em]"
           >
-            Toda decisão começa
+            Precisão territorial.
             <br />
-            <span className="text-[#A9E3F0]">com informação confiável.</span>
+            <span className="text-[#A9E3F0]">Inteligência ambiental.</span>
           </motion.h1>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -261,9 +261,9 @@ export function DawnExperience() {
         <section className="relative h-[150vh]">
           <div className="sticky top-0 flex h-screen flex-col items-center justify-end px-6 pb-14 text-center sm:pb-20">
             <h2 className="max-w-4xl text-4xl font-bold leading-[1.02] tracking-tight text-brand sm:text-6xl lg:text-7xl">
-              Precisão territorial.
+              Toda decisão começa
               <br />
-              <span className="text-graphite">Inteligência ambiental.</span>
+              <span className="text-graphite">com informação confiável.</span>
             </h2>
             <div className="mt-8 flex flex-wrap justify-center gap-3">
               <Link
