@@ -74,7 +74,7 @@ export function DawnExperience() {
   const [webgl, setWebgl] = useState<boolean | null>(null);
   const [ready, setReady] = useState(false);
   const { scrollY } = useScroll();
-  const scroll = useTransform(scrollY, (y) => y / (typeof window === "undefined" ? 1 : window.innerHeight));
+  const scroll = useTransform(scrollY, (y) => y / (typeof window === "undefined" ? 1 : window.innerHeight || 1));
   const day = useDay(scroll);
   const onReady = useCallback(() => setReady(true), []);
 
@@ -230,8 +230,9 @@ export function DawnExperience() {
           data={["APP", "Reserva legal", "Licenciamento ambiental"]}
         />
 
-        <section className="relative flex h-screen flex-col items-center justify-end px-6 pb-14 text-center sm:pb-20">
-          <div className="flex flex-col items-center">
+        {/* O fecho segura meia tela de rolagem a mais, para o pin não passar direto. */}
+        <section className="relative h-[150vh]">
+          <div className="sticky top-0 flex h-screen flex-col items-center justify-end px-6 pb-14 text-center sm:pb-20">
             <h2 className="max-w-4xl text-4xl font-bold leading-[1.02] tracking-tight text-brand sm:text-6xl lg:text-7xl">
               Precisão territorial.
               <br />
