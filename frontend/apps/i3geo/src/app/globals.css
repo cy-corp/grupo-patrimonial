@@ -40,3 +40,22 @@ body {
 ::selection {
   background: color-mix(in srgb, var(--brand-petroleum) 25%, transparent);
 }
+
+/* Rotação em torno do centro do viewBox, para os desenhos SVG que giram. */
+@keyframes i3-rotate {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.i3-rotate {
+  transform-box: view-box;
+  transform-origin: center;
+  animation: i3-rotate var(--i3-rotate-duration, 60s) linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .i3-rotate {
+    animation: none;
+  }
+}

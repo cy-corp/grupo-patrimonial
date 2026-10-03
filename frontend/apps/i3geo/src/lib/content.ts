@@ -103,3 +103,57 @@ export const pillars = [
 ] as const;
 
 export const instagram = "https://www.instagram.com/i3geo.com.br/";
+
+// Números provisórios, inventados para o layout a pedido do Yago.
+// Confirmar com a i3Geo antes de publicar. Só o raio de 200 km vem de publicação deles.
+export const stats = [
+  { value: 12, prefix: "", suffix: " anos", label: "de atuação em campo" },
+  { value: 850, prefix: "+", suffix: "", label: "imóveis levantados" },
+  { value: 42000, prefix: "+", suffix: " ha", label: "medidos e mapeados" },
+  { value: 200, prefix: "", suffix: " km", label: "de raio de atendimento" },
+] as const;
+
+// Situação do cliente e o serviço que costuma resolver.
+export const diagnosis: { title: string; text: string; service: ServiceId }[] = [
+  {
+    title: "A cerca não parece estar no lugar certo",
+    text: "Cercas são deslocadas e refeitas ao longo dos anos. Medimos os limites e mostramos onde a divisa fica de fato.",
+    service: "georreferenciamento",
+  },
+  {
+    title: "A área do documento não bate com a do terreno",
+    text: "Analisamos os documentos e o que existe em campo para entender de onde vem a diferença e corrigi-la.",
+    service: "retificacao",
+  },
+  {
+    title: "Vou usar uma planta antiga",
+    text: "O terreno pode ter mudado. Um novo levantamento mostra se a planta ainda representa a situação atual.",
+    service: "levantamento",
+  },
+  {
+    title: "Estou comprando uma propriedade",
+    text: "Área, medidas, limites e confrontações conferidos em campo antes de fechar o negócio.",
+    service: "levantamento",
+  },
+  {
+    title: "Quero vender ou dividir parte da área",
+    text: "Definimos tecnicamente os limites e as medidas de cada parte, para a divisão ser registrada.",
+    service: "desmembramento",
+  },
+  {
+    title: "Vou construir ou implantar um projeto",
+    text: "Quando a base está correta, todas as etapas seguintes acontecem com mais segurança.",
+    service: "projetos",
+  },
+];
+
+// Etapas do trabalho. Texto provisório, a confirmar com a i3Geo.
+export const process = [
+  { station: "E-01", title: "Conversa e orçamento", text: "Entendemos a necessidade, analisamos os documentos e definimos o serviço certo." },
+  { station: "E-02", title: "Levantamento em campo", text: "A equipe vai ao local e mede com a metodologia adequada ao terreno." },
+  { station: "E-03", title: "Processamento e desenho", text: "Os dados viram plantas, memoriais e os documentos técnicos do serviço." },
+  { station: "E-04", title: "Entrega e acompanhamento", text: "Entregamos o material e acompanhamos os trâmites até a conclusão." },
+] as const;
+
+// WhatsApp da i3Geo com DDI e DDD, só dígitos. Vazio: o pedido não é enviado a lugar nenhum.
+export const contact = { whatsapp: "" };

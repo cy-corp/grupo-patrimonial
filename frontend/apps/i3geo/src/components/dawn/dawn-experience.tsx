@@ -6,8 +6,8 @@ import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
 import { brand, colors } from "@/lib/brand";
 import { ramp } from "../hero/beats";
-import { Contact } from "../landing/contact";
-import { Coverage, Pillars, Services, Situations } from "../site/home-sections";
+import { QuoteExperience } from "../site/quote-experience";
+import { Coverage, Diagnosis, Pillars, Process, Stats } from "../site/home-sections";
 import { SiteFooter, nav } from "../site/site-chrome";
 import { PAPER, css, skyAt, stageAt } from "./dawn-stage";
 
@@ -261,11 +261,12 @@ export function DawnExperience() {
           </div>
         </section>
         <div className="relative bg-[#F6F4EF]">
-          <Services />
-          <Situations />
+          <Stats />
+          <Diagnosis />
+          <Process />
           <Coverage />
           <Pillars />
-          <Contact />
+          <QuoteExperience />
           <SiteFooter />
         </div>
       </main>

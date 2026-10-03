@@ -61,7 +61,7 @@ export default function ServicosPage() {
               Fale com a i3Geo. A gente ajuda a identificar a solução adequada para o seu caso.
             </p>
             <Link
-              href="/#contato"
+              href="/orcamento"
               className="mt-8 inline-block bg-orange px-7 py-4 text-base font-bold text-graphite transition-colors hover:bg-brand hover:text-white"
             >
               Solicitar orçamento

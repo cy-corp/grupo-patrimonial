@@ -25,7 +25,7 @@ export function SiteHeader() {
               {item.label}
             </Link>
           ))}
-          <Link href="/#contato" className="bg-brand px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-graphite">
+          <Link href="/orcamento" className="bg-brand px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-graphite">
             Solicitar orçamento
           </Link>
         </nav>
@@ -52,8 +52,8 @@ export function SiteFooter() {
             </li>
           ))}
           <li>
-            <Link href="/#contato" className="text-white/85 transition-colors hover:text-white">
-              Contato
+            <Link href="/orcamento" className="text-white/85 transition-colors hover:text-white">
+              Orçamento
             </Link>
           </li>
         </ul>
