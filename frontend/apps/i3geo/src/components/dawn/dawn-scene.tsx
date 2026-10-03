@@ -1,0 +1,283 @@
+"use client";
+
+import { Html } from "@react-three/drei";
+import { Canvas, useFrame, useThree } from "@react-three/fiber";
+import type { MotionValue } from "framer-motion";
+import { useEffect, useMemo, useRef, useState } from "react";
+import * as THREE from "three";
+import { colors } from "@/lib/brand";
+import { ramp } from "../hero/beats";
+import { EXAGGERATION, SIZE, WORLD, facts, fmt, parcelCenter, perimeter, terrain, toWorld } from "../hero/terrain";
+import {
+  RANGE,
+  RANGE_WORLD,
+  loadHeights,
+  makeHeightTexture,
+  makeOverlayTexture,
+  rgb,
+  worldPoint,
+  type Assets,
+} from "../hero/terrain-assets";
+import { MAX_POLY } from "../hero/terrain-shader";
+import { fragmentShader, vertexShader } from "./dawn-shader";
+import { PAPER, cameraAt, stageAt, sunDirection } from "./dawn-stage";
+
+const FOV = 30;
+const INTRO_SECONDS = 2.6;
+
+function Terrain({
+  assets,
+  scroll,
+  onFirstFrame,
+}: {
+  assets: Assets;
+  scroll: MotionValue<number>;
+  onFirstFrame: () => void;
+}) {
+  const { camera, size, invalidate } = useThree();
+  const mobile = size.width < 640;
+  const smoothV = useRef(scroll.get());
+  const started = useRef<number | null>(null);
+  const reported = useRef(false);
+  const pin = useRef<HTMLDivElement | null>(null);
+  const area = useRef<HTMLDivElement | null>(null);
+  const env = useRef<(HTMLDivElement | null)[]>([]);
+  const vertexTags = useRef<(HTMLDivElement | null)[]>([]);
+
+  const geometry = useMemo(() => {
+    const segX = mobile ? 256 : 512;
+    return new THREE.PlaneGeometry(WORLD.width, WORLD.depth, segX, Math.round((segX * SIZE.height) / SIZE.width));
+  }, [mobile]);
+  useEffect(() => () => geometry.dispose(), [geometry]);
+
+  const material = useMemo(() => {
+    const poly = perimeter.map(([x, y]) => new THREE.Vector2(x, y));
+    while (poly.length < MAX_POLY) poly.push(new THREE.Vector2());
+    return new THREE.ShaderMaterial({
+      vertexShader,
+      fragmentShader,
+      transparent: true,
+      toneMapped: false,
+      uniforms: {
+        uHeight: { value: assets.heightTexture },
+        uOverlay: { value: assets.overlayTexture },
+        uSize: { value: new THREE.Vector2(SIZE.width, SIZE.height) },
+        uHMin: { value: terrain.hMin },
+        uHRange: { value: RANGE },
+        uMpp: { value: terrain.metersPerPixel },
+        uExaggeration: { value: EXAGGERATION },
+        uRangeWorld: { value: RANGE_WORLD },
+        uLift: { value: 1 },
+        uIntro: { value: 0 },
+        uDay: { value: 0 },
+        uSun: { value: new THREE.Vector3(1, 0, 0.02) },
+        uParcel: { value: 0 },
+        uFill: { value: 0 },
+        uEnv: { value: 0 },
+        uRivers: { value: 0 },
+        uPoly: { value: poly },
+        uPolyCount: { value: perimeter.length },
+        uNight: { value: rgb("#06212B") },
+        uGlow: { value: rgb("#8FDCEC") },
+        uPaper: { value: rgb(PAPER) },
+        uShade: { value: rgb("#BFCDD0") },
+        uInk: { value: rgb(colors.petroleum) },
+        uWater: { value: rgb("#2A8FAD") },
+        uWarm: { value: rgb("#FFB27A") },
+        uMist: { value: rgb("#F4E4D6") },
+        uOrange: { value: rgb(colors.orange) },
+      },
+    });
+  }, [assets]);
+  useEffect(() => () => material.dispose(), [material]);
+
+  const anchors = useMemo(() => {
+    const h = assets.heights;
+    return {
+      center: worldPoint(h, parcelCenter),
+      vertices: terrain.parcel.vertices.map((v) => worldPoint(h, [v.x, v.y])),
+      app: worldPoint(h, terrain.parcel.riverEdge[Math.floor(terrain.parcel.riverEdge.length * 0.45)] as [number, number]),
+      reserve: worldPoint(h, terrain.reserve.polygon[2] as [number, number]),
+    };
+  }, [assets]);
+
+  useEffect(() => scroll.on("change", () => invalidate()), [scroll, invalidate]);
+
+  useFrame((state, delta) => {
+    const now = state.clock.elapsedTime;
+    if (started.current === null) started.current = now;
+    const intro = Math.min(1, (now - started.current) / INTRO_SECONDS);
+    const introEase = 1 - Math.pow(1 - intro, 3);
+
+    const target = scroll.get();
+    smoothV.current = THREE.MathUtils.damp(smoothV.current, target, 5, Math.min(delta, 0.1));
+    if (Math.abs(smoothV.current - target) < 1e-4) smoothV.current = target;
+    const v = smoothV.current;
+    const s = stageAt(v);
+
+    const cam = camera as THREE.PerspectiveCamera;
+    const aspect = size.width / Math.max(1, size.height);
+    const tanHalf = Math.tan(THREE.MathUtils.degToRad(FOV / 2));
+    const cover = Math.min(WORLD.depth / 2 / tanHalf, WORLD.width / 2 / (tanHalf * aspect));
+    const k = cameraAt(v);
+    const [px, pz] = toWorld(parcelCenter[0], parcelCenter[1]);
+    const focus = new THREE.Vector3(
+      THREE.MathUtils.lerp(k.fx, px, k.focus),
+      THREE.MathUtils.lerp(0.25, anchors.center[1], k.focus),
+      // Em tela larga o imóvel fica perto do centro, para o pin não encostar no topo.
+      THREE.MathUtils.lerp(k.fz, pz, k.focus) + k.oz * (1 - 0.7 * Math.min(1, Math.max(0, aspect - 0.8))),
+    );
+    // No desktop o imóvel se desloca para a direita, longe do texto.
+    const shift = k.sx * Math.min(1, Math.max(0, aspect - 1));
+    const yawRad = THREE.MathUtils.degToRad(k.yaw);
+    focus.x -= Math.cos(yawRad) * shift;
+    focus.z += Math.sin(yawRad) * shift;
+    // No celular o imóvel desce na tela para o texto ficar em cima.
+    const push = Math.max(0, 1 - aspect) * 0.5 * k.focus * (1 - s.pin);
+    focus.x -= Math.sin(yawRad) * push;
+    focus.z -= Math.cos(yawRad) * push;
+    const narrow = 1 + Math.max(0, 1 - aspect) * 0.8;
+    const dist = cover * k.dist * narrow * (1 + (1 - introEase) * 0.25);
+    const pitch = THREE.MathUtils.degToRad(k.pitch);
+    const yaw = THREE.MathUtils.degToRad(k.yaw);
+    cam.position.set(
+      focus.x + dist * Math.cos(pitch) * Math.sin(yaw),
+      focus.y + dist * Math.sin(pitch),
+      focus.z + dist * Math.cos(pitch) * Math.cos(yaw),
+    );
+    cam.fov = FOV;
+    cam.updateProjectionMatrix();
+    cam.lookAt(focus);
+
+    const u = material.uniforms;
+    u.uIntro.value = introEase;
+    u.uDay.value = s.day;
+    u.uSun.value.set(...sunDirection(s.sun));
+    u.uParcel.value = s.parcel;
+    u.uFill.value = s.fill;
+    u.uEnv.value = s.env;
+    u.uRivers.value = s.rivers;
+
+    vertexTags.current.forEach((el, i) => {
+      if (el) el.style.opacity = String(s.parcel > 0.001 ? ramp(s.parcel * perimeter.length, i - 0.3, i) * (1 - s.pin) : 0);
+    });
+    if (area.current) area.current.style.opacity = String(s.fill * (1 - s.pin));
+    env.current.forEach((el) => el && (el.style.opacity = String(s.env * (1 - s.pin))));
+    if (pin.current) {
+      pin.current.style.opacity = String(s.pin);
+      pin.current.style.transform = `translate(-50%, ${-100 - (1 - s.pin) * 70}%)`;
+    }
+
+    if (smoothV.current !== target || intro < 1) invalidate();
+    if (!reported.current) {
+      reported.current = true;
+      onFirstFrame();
+    }
+  }, -1);
+
+  const tag =
+    "pointer-events-none select-none whitespace-nowrap border border-brand/15 bg-white/90 px-1.5 py-0.5 text-[10px] font-semibold text-graphite shadow-sm tabular-nums";
+
+  return (
+    <>
+      <mesh geometry={geometry} material={material} rotation-x={-Math.PI / 2} />
+      {terrain.parcel.vertices.map((v, i) => (
+        <Html key={v.id} position={anchors.vertices[i]} zIndexRange={[20, 0]}>
+          <div
+            ref={(el) => {
+              vertexTags.current[i] = el;
+            }}
+            className="pointer-events-none relative opacity-0"
+          >
+            <span className="absolute left-0 top-0 block size-2.5 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-white bg-orange shadow" />
+            <span className={`absolute left-2.5 top-0 -translate-y-1/2 ${tag}`}>
+              <span className="font-bold text-brand">{v.id}</span>
+              <span className="hidden sm:inline">
+                {" "}
+                E {fmt.coord(v.e)} · N {fmt.coord(v.n)}
+              </span>
+            </span>
+          </div>
+        </Html>
+      ))}
+      <Html position={anchors.center} zIndexRange={[20, 0]}>
+        <div ref={area} className="pointer-events-none -translate-x-1/2 -translate-y-1/2 opacity-0">
+          <span className="block whitespace-nowrap bg-brand px-2.5 py-1 text-sm font-bold text-white tabular-nums shadow">
+            {fmt.ha(facts.areaHa)}
+          </span>
+        </div>
+      </Html>
+      <Html position={anchors.reserve} zIndexRange={[20, 0]}>
+        <div
+          ref={(el) => {
+            env.current[0] = el;
+          }}
+          className="pointer-events-none -translate-x-1/2 -translate-y-1/2 opacity-0"
+        >
+          <span className={tag}>Reserva legal · {fmt.pct(facts.reservePct)}</span>
+        </div>
+      </Html>
+      <Html position={anchors.app} zIndexRange={[20, 0]}>
+        <div
+          ref={(el) => {
+            env.current[1] = el;
+          }}
+          className="pointer-events-none translate-x-3 -translate-y-1/2 opacity-0"
+        >
+          <span className={tag}>APP {facts.appWidthM} m</span>
+        </div>
+      </Html>
+      <Html position={anchors.center} zIndexRange={[30, 0]}>
+        <div ref={pin} className="pointer-events-none opacity-0" style={{ transform: "translate(-50%, -100%)" }}>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/brand/logo-i3geo-pin.svg"
+            alt=""
+            width={56}
+            height={71}
+            className="block h-[clamp(150px,30vh,280px)] w-auto sm:h-[clamp(120px,24vh,230px)] max-w-none drop-shadow-[0_14px_26px_rgba(0,60,80,0.35)]"
+          />
+        </div>
+      </Html>
+    </>
+  );
+}
+
+export default function DawnScene({ scroll, onReady }: { scroll: MotionValue<number>; onReady: () => void }) {
+  const [assets, setAssets] = useState<Assets | null>(null);
+
+  useEffect(() => {
+    let cancelled = false;
+    let created: Assets | null = null;
+    loadHeights()
+      .then((heights) => {
+        if (cancelled) return;
+        created = {
+          heights,
+          heightTexture: makeHeightTexture(heights),
+          overlayTexture: makeOverlayTexture(window.innerWidth < 640 ? 2 : 4),
+        };
+        setAssets(created);
+      })
+      .catch(() => {});
+    return () => {
+      cancelled = true;
+      created?.heightTexture.dispose();
+      created?.overlayTexture.dispose();
+    };
+  }, []);
+
+  if (!assets) return null;
+
+  return (
+    <Canvas
+      frameloop="demand"
+      dpr={[1, 1.5]}
+      gl={{ antialias: true, alpha: true, powerPreference: "high-performance" }}
+      camera={{ fov: FOV, near: 0.05, far: 100, position: [0, 6, 6] }}
+      style={{ position: "absolute", inset: 0 }}
+    >
+      <Terrain assets={assets} scroll={scroll} onFirstFrame={onReady} />
+    </Canvas>
+  );
+}

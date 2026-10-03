@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { brand } from "@/lib/brand";
 
@@ -10,9 +11,17 @@ const nav = [
 export function SiteHeader() {
   return (
     <header className="border-b border-border">
-      <div className="mx-auto flex h-16 max-w-5xl items-center justify-between px-6">
-        <Link href="/" className="text-lg font-bold tracking-tight text-brand">
-          {brand.name}
+      <div className="flex h-16 items-center justify-between px-6 lg:px-12 xl:px-20">
+        <Link href="/" aria-label={brand.fullName} className="block">
+          <Image
+            src="/brand/logo-i3geo-wordmark.svg"
+            alt={brand.name}
+            width={116}
+            height={36}
+            priority
+            unoptimized
+            className="h-9 w-auto"
+          />
         </Link>
         <nav aria-label="Principal" className="flex items-center gap-4 sm:gap-6">
           {nav.map((item) => (
