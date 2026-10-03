@@ -108,7 +108,7 @@ export function Equation() {
   return (
     <section className="bg-[#03121A] py-24 text-white sm:py-32">
       <div className="mx-auto max-w-7xl px-6 sm:px-10 lg:px-16">
-        <p className="flex flex-wrap items-baseline gap-x-5 gap-y-2 text-4xl font-bold tracking-tight sm:text-6xl lg:text-7xl">
+        <p className="flex flex-wrap items-baseline gap-x-4 gap-y-2 text-[clamp(1.5rem,8.6vw,2.25rem)] font-bold tracking-tight sm:gap-x-5 sm:text-6xl lg:text-7xl">
           {pillars.map((pillar, i) => (
             <motion.span
               key={pillar.title}
@@ -116,7 +116,7 @@ export function Equation() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.8 }}
               transition={{ duration: 0.7, delay: i * 0.25, ease: [0.22, 1, 0.36, 1] }}
-              className="flex items-baseline gap-x-5"
+              className="flex items-baseline gap-x-4 sm:gap-x-5"
             >
               {pillar.title}
               <span className="text-orange">×</span>

@@ -50,7 +50,7 @@ function Chapter({
     <section className={`relative flex items-start sm:items-center ${className}`}>
       <div className="px-4 pt-[16vh] sm:px-10 sm:pt-0 lg:px-16">
         <div className="max-w-xl bg-[#F6F4EF]/85 p-5 backdrop-blur-sm sm:bg-transparent sm:p-0 sm:backdrop-blur-none">
-          <h2 className="text-balance text-[1.7rem] font-bold leading-[1.05] tracking-tight text-brand sm:text-5xl lg:text-6xl">{title}</h2>
+          <h2 className="text-balance break-words text-[clamp(1.2rem,6.2vw,1.7rem)] font-bold leading-[1.05] tracking-tight text-brand sm:text-5xl lg:text-6xl">{title}</h2>
           <p className="mt-5 max-w-md text-base leading-relaxed text-graphite/80 sm:text-lg">{text}</p>
           <ul className="mt-6 flex flex-wrap gap-2">
             {data.map((d) => (

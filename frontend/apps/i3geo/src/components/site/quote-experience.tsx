@@ -282,7 +282,7 @@ export function QuoteExperience() {
                   {step === 0 && (
                     <fieldset>
                       <legend className="text-2xl font-bold tracking-tight">O que você precisa?</legend>
-                      <div className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-3">
+                      <div className="mt-6 grid grid-cols-1 gap-3 min-[430px]:grid-cols-2 sm:grid-cols-3">
                         {[...services.map((s) => ({ id: s.id as Answers["service"], title: s.title })), { id: "indefinido" as const, title: "Ainda não sei" }].map(
                           (option) => {
                             const selected = answers.service === option.id;
@@ -292,16 +292,16 @@ export function QuoteExperience() {
                                 type="button"
                                 aria-pressed={selected}
                                 onClick={() => set("service", option.id)}
-                                className={`flex flex-col items-start gap-3 border p-4 text-left text-sm font-semibold leading-tight transition-colors ${
+                                className={`flex min-w-0 items-center gap-4 border p-4 text-left text-sm font-semibold leading-tight transition-colors min-[430px]:flex-col min-[430px]:items-start min-[430px]:gap-3 ${
                                   selected ? "border-orange bg-white text-graphite" : "border-white/25 text-white hover:border-white/60"
                                 }`}
                               >
                                 {option.id && option.id !== "indefinido" ? (
-                                  <span className={`block w-16 ${selected ? "" : "[&_path]:stroke-white/80 [&_text]:fill-white"}`}>
+                                  <span className={`block w-16 shrink-0 ${selected ? "" : "[&_path]:stroke-white/80 [&_text]:fill-white"}`}>
                                     <ServiceDiagram key={String(selected)} id={option.id} className="w-full" />
                                   </span>
                                 ) : (
-                                  <span className="flex h-12 w-16 items-center text-3xl font-bold text-orange">?</span>
+                                  <span className="flex h-12 w-16 shrink-0 items-center text-3xl font-bold text-orange">?</span>
                                 )}
                                 {option.title}
                               </button>
@@ -317,7 +317,7 @@ export function QuoteExperience() {
                       <label htmlFor="quote-area" className="text-2xl font-bold tracking-tight">
                         Qual o tamanho aproximado da área?
                       </label>
-                      <p className="mt-8 text-6xl font-bold tracking-tight text-[#A9E3F0] tabular-nums sm:text-7xl">
+                      <p className="mt-8 whitespace-nowrap text-[clamp(2.5rem,14vw,3.75rem)] font-bold tracking-tight text-[#A9E3F0] tabular-nums sm:text-7xl">
                         {formatArea(areaM2(answers.area))}
                       </p>
                       <input

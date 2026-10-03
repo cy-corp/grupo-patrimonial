@@ -45,7 +45,7 @@ export default function ServicosPage() {
                 <ServiceDiagram id={service.id} className="w-full max-w-sm" />
               </div>
               <div className="lg:col-span-7">
-                <h2 className="text-balance text-3xl font-bold tracking-tight text-graphite sm:text-5xl">{service.title}</h2>
+                <h2 className="text-balance break-words text-[clamp(1.4rem,7vw,1.875rem)] font-bold tracking-tight text-graphite sm:text-5xl">{service.title}</h2>
                 <p className="mt-5 max-w-[62ch] text-lg leading-relaxed text-graphite/80">{service.text}</p>
                 <h3 className="mt-8 text-sm font-semibold text-brand">Quando você precisa</h3>
                 <p className="mt-2 max-w-[62ch] leading-relaxed text-graphite/80">{service.when}</p>

@@ -64,7 +64,7 @@ export function Stats() {
         <dl className="mt-14 grid grid-cols-2 gap-x-6 gap-y-10 lg:grid-cols-4">
           {stats.map((stat) => (
             <div key={stat.label} className="lg:text-center">
-              <dd className="whitespace-nowrap text-4xl font-bold tracking-tight text-graphite sm:text-5xl">
+              <dd className="whitespace-nowrap text-[clamp(1.25rem,6.4vw,2.25rem)] font-bold tracking-tight text-graphite sm:text-5xl">
                 <Count to={stat.value} prefix={stat.prefix} suffix={stat.suffix} />
               </dd>
               <dt className="mt-2 text-sm leading-snug text-graphite/75 sm:text-base">{stat.label}</dt>
@@ -98,7 +98,7 @@ export function Diagnosis() {
   return (
     <section id="servicos" className="bg-white py-24 sm:py-32">
       <div className={`${shell} grid gap-12 lg:grid-cols-12`}>
-        <div className="lg:col-span-6">
+        <div className="min-w-0 lg:col-span-6">
           <h2 className={`${h2} text-graphite`}>Qual é a sua situação?</h2>
           <p className="mt-5 max-w-md text-lg leading-relaxed text-graphite/80">
             Nem sempre a necessidade de um levantamento aparece de forma óbvia. Escolha o que mais se parece com o seu
@@ -126,7 +126,7 @@ export function Diagnosis() {
             ))}
           </ul>
         </div>
-        <div className="lg:col-span-6">
+        <div className="min-w-0 lg:col-span-6">
           <div className="border border-brand/15 bg-[#F6F4EF] p-6 sm:p-10 lg:sticky lg:top-28">
             <AnimatePresence mode="wait">
               <motion.div
@@ -138,7 +138,7 @@ export function Diagnosis() {
               >
                 <ServiceDiagram id={service.id} className="mx-auto w-full max-w-xs" />
                 <p className="mt-6 text-sm font-semibold text-orange">O que resolve</p>
-                <h3 className="mt-1 text-3xl font-bold tracking-tight text-brand sm:text-4xl">{service.title}</h3>
+                <h3 className="mt-1 break-words text-[clamp(1.2rem,5.6vw,1.875rem)] font-bold tracking-tight text-brand sm:text-4xl">{service.title}</h3>
                 <p className="mt-4 leading-relaxed text-graphite/85">{item.text}</p>
                 <div className="mt-8 flex flex-wrap items-center gap-5">
                   <a
