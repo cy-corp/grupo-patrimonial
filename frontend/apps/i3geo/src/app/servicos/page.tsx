@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { ServiceDiagram } from "@/components/site/service-diagram";
 import { SiteFooter, SiteHeader } from "@/components/site/site-chrome";
@@ -21,6 +22,17 @@ export default function ServicosPage() {
             <p className="mt-6 max-w-xl text-lg leading-relaxed text-graphite/80">
               Cada projeto é tratado com responsabilidade, precisão cartográfica e visão jurídica.
             </p>
+            {/* Foto provisória de banco gratuito: ver public/fotos/CREDITOS.md. */}
+            <div className="relative mt-14 aspect-[21/9] overflow-hidden">
+              <Image
+                src="/fotos/campo-gnss.jpg"
+                alt="Receptor GNSS sobre tripé em uma área rural"
+                fill
+                priority
+                sizes="(min-width: 1280px) 1150px, 100vw"
+                className="object-cover"
+              />
+            </div>
           </div>
 
           {services.map((service) => (

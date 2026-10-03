@@ -7,7 +7,7 @@ import { useCallback, useEffect, useState } from "react";
 import { brand, colors } from "@/lib/brand";
 import { ramp } from "../hero/beats";
 import { QuoteExperience } from "../site/quote-experience";
-import { Coverage, Diagnosis, Process, Stats } from "../site/home-sections";
+import { Coverage, Diagnosis, Field, Process, Stats } from "../site/home-sections";
 import { MobileMenu } from "../site/mobile-menu";
 import { SiteFooter, nav } from "../site/site-chrome";
 import { PAPER, css, skyAt, stageAt } from "./dawn-stage";
@@ -273,6 +273,7 @@ export function DawnExperience() {
           <Stats />
           <Diagnosis />
           <Process />
+          <Field />
           <Coverage />
           <QuoteExperience />
           <SiteFooter />

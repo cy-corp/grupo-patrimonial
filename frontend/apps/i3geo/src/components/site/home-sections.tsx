@@ -10,6 +10,7 @@ import {
   useScroll,
   useTransform,
 } from "framer-motion";
+import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { coverage, diagnosis, process, services, stats } from "@/lib/content";
@@ -203,6 +204,60 @@ export function Process() {
             </li>
           ))}
         </ol>
+      </div>
+    </section>
+  );
+}
+
+// A foto se revela de cima para baixo. O recorte fica num elemento interno,
+// porque um elemento totalmente recortado não dispara a entrada na tela.
+function Photo({ src, alt, sizes, className, delay = 0 }: { src: string; alt: string; sizes: string; className: string; delay?: number }) {
+  return (
+    <motion.div initial="hidden" whileInView="shown" viewport={{ once: true, amount: 0.25 }} className={`relative overflow-hidden ${className}`}>
+      <motion.div
+        className="absolute inset-0"
+        variants={{ hidden: { clipPath: "inset(0 0 100% 0)" }, shown: { clipPath: "inset(0 0 0% 0)" } }}
+        transition={{ duration: 1.1, ease, delay }}
+      >
+        <Image src={src} alt={alt} fill sizes={sizes} className="object-cover" />
+      </motion.div>
+    </motion.div>
+  );
+}
+
+// Fotos de campo. Provisórias, de banco gratuito: ver public/fotos/CREDITOS.md.
+export function Field() {
+  return (
+    <section className="pb-24 sm:pb-32">
+      <div className={`${shell} grid gap-4 lg:grid-cols-12`}>
+        <Photo
+          src="/fotos/campo-gnss.jpg"
+          alt="Receptor GNSS sobre tripé em uma área rural"
+          sizes="(min-width: 1024px) 58vw, 100vw"
+          className="aspect-[16/11] lg:col-span-7"
+        />
+        <Photo
+          src="/fotos/campo-estacao-total.jpg"
+          alt="Topógrafo operando uma estação total em campo"
+          sizes="(min-width: 1024px) 42vw, 100vw"
+          className="aspect-[4/5] lg:col-span-5 lg:aspect-auto"
+          delay={0.15}
+        />
+        <div className="flex flex-col justify-center py-8 lg:col-span-5 lg:py-0 lg:pr-10">
+          <h2 className="text-balance text-3xl font-bold leading-[1.05] tracking-tight text-brand sm:text-5xl">
+            Não existe uma única maneira de medir todos os terrenos.
+          </h2>
+          <p className="mt-5 max-w-md text-lg leading-relaxed text-graphite/80">
+            Relevo, vegetação, construções, acessos e pontos de referência mudam a forma de trabalhar. A equipe avalia a
+            situação, define a metodologia e interpreta os dados coletados.
+          </p>
+        </div>
+        <Photo
+          src="/fotos/campo-receptor.jpg"
+          alt="Receptor GNSS instalado sobre um ponto elevado do terreno"
+          sizes="(min-width: 1024px) 58vw, 100vw"
+          className="aspect-[16/9] lg:col-span-7"
+        />
       </div>
     </section>
   );
