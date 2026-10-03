@@ -13,7 +13,7 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-import { coverage, diagnosis, process, services, stats } from "@/lib/content";
+import { coverage, diagnosis, processSteps, services, stats } from "@/lib/content";
 import { ServiceDiagram } from "./service-diagram";
 
 const shell = "mx-auto max-w-7xl px-6 sm:px-10 lg:px-16";
@@ -190,13 +190,13 @@ export function Process() {
               <circle cx={x} cy={y} r={9} className="fill-[#F6F4EF] stroke-brand" strokeWidth={2} />
               <circle cx={x} cy={y} r={3} className="fill-brand" />
               <text x={x + 16} y={y - 12} className="fill-brand text-[13px] font-bold">
-                {process[i].station}
+                {processSteps[i].station}
               </text>
             </g>
           ))}
         </svg>
         <ol className="mt-10 grid gap-10 sm:grid-cols-2 lg:mt-6 lg:grid-cols-4 lg:gap-8">
-          {process.map((step) => (
+          {processSteps.map((step) => (
             <li key={step.station} className="border-l-2 border-orange pl-5 lg:border-l-0 lg:pl-0">
               <p className="text-sm font-bold text-orange lg:hidden">{step.station}</p>
               <h3 className="text-xl font-bold tracking-tight text-graphite sm:text-2xl">{step.title}</h3>

@@ -148,7 +148,7 @@ export const diagnosis: { title: string; text: string; service: ServiceId }[] = 
 ];
 
 // Etapas do trabalho. Texto provisório, a confirmar com a i3Geo.
-export const process = [
+export const processSteps = [
   { station: "E-01", title: "Conversa e orçamento", text: "Entendemos a necessidade, analisamos os documentos e definimos o serviço certo." },
   { station: "E-02", title: "Levantamento em campo", text: "A equipe vai ao local e mede com a metodologia adequada ao terreno." },
   { station: "E-03", title: "Processamento e desenho", text: "Os dados viram plantas, memoriais e os documentos técnicos do serviço." },
