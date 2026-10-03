@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { coverage, instagram } from "@/lib/content";
+import { contact, coverage, instagram, whatsappLink } from "@/lib/content";
 import { brand } from "@/lib/brand";
 import { FooterNascente } from "./footer-nascente";
 import { MobileMenu } from "./mobile-menu";
@@ -66,7 +66,16 @@ export function SiteFooter() {
           </li>
         </ul>
         <div>
-          <p className="text-sm leading-relaxed text-graphite/80">
+          <a
+            href={whatsappLink()}
+            target="_blank"
+            rel="noreferrer"
+            className="block text-2xl font-bold tracking-tight text-brand tabular-nums transition-colors hover:text-graphite"
+          >
+            {contact.phone}
+          </a>
+          <p className="mt-1 text-sm font-semibold text-graphite/70">WhatsApp</p>
+          <p className="mt-4 text-sm leading-relaxed text-graphite/80">
             Atendimento em {coverage.states.join(" e ")}, em um raio de até {coverage.radiusKm} km.
           </p>
           <Link

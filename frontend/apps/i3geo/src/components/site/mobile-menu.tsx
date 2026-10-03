@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { brand } from "@/lib/brand";
-import { coverage, instagram } from "@/lib/content";
+import { contact, coverage, instagram, whatsappLink } from "@/lib/content";
 
 const links = [
   { href: "/", label: "Início" },
@@ -89,7 +89,10 @@ export function MobileMenu() {
                     Instagram
                   </a>
                 </nav>
-                <p className="text-sm leading-relaxed text-graphite/75">
+                <a href={whatsappLink()} target="_blank" rel="noreferrer" className="text-2xl font-bold tracking-tight text-brand tabular-nums">
+                  {contact.phone}
+                </a>
+                <p className="mt-2 text-sm leading-relaxed text-graphite/75">
                   Atendimento em {coverage.states.join(" e ")}, em um raio de até {coverage.radiusKm} km.
                 </p>
                 <Link

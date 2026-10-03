@@ -155,5 +155,12 @@ export const process = [
   { station: "E-04", title: "Entrega e acompanhamento", text: "Entregamos o material e acompanhamos os trâmites até a conclusão." },
 ] as const;
 
-// WhatsApp da i3Geo com DDI e DDD, só dígitos. Vazio: o pedido não é enviado a lugar nenhum.
-export const contact = { whatsapp: "" };
+// WhatsApp da i3Geo com DDI e DDD, só dígitos.
+export const contact = {
+  whatsapp: "5519993670722",
+  phone: "(19) 99367-0722",
+};
+
+export function whatsappLink(text = "Olá, gostaria de falar com a i3Geo.") {
+  return `https://wa.me/${contact.whatsapp}?text=${encodeURIComponent(text)}`;
+}

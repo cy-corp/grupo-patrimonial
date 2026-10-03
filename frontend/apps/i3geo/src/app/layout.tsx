@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Montserrat } from "next/font/google";
+import { WhatsAppButton } from "@/components/site/whatsapp-button";
 import { brand } from "@/lib/brand";
 import "./globals.css";
 
@@ -26,6 +27,7 @@ export default function RootLayout({
     <html lang="pt-BR" className={`${montserrat.variable} h-full antialiased`}>
       <body className="flex min-h-full flex-col font-sans">
         {children}
+        <WhatsAppButton />
       </body>
     </html>
   );

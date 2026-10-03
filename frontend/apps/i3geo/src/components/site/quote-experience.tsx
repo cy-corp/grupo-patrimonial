@@ -2,7 +2,7 @@
 
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useState, type FormEvent } from "react";
-import { contact, services, type ServiceId } from "@/lib/content";
+import { contact, services, whatsappLink, type ServiceId } from "@/lib/content";
 import { ServiceDiagram } from "./service-diagram";
 
 const ease = [0.22, 1, 0.36, 1] as const;
@@ -223,11 +223,12 @@ export function QuoteExperience() {
         `Área aproximada: ${formatArea(areaM2(answers.area))}`,
         `Local: ${answers.city} ${answers.uf === "Outro" ? "" : answers.uf}`,
         `Nome: ${answers.name}`,
+        `Telefone: ${answers.phone}`,
         answers.notes && `Observações: ${answers.notes}`,
       ]
         .filter(Boolean)
         .join("\n");
-      window.open(`https://wa.me/${contact.whatsapp}?text=${encodeURIComponent(text)}`, "_blank", "noopener");
+      window.open(whatsappLink(text), "_blank", "noopener");
     }
   }
 
