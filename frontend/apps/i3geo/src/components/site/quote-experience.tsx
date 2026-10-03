@@ -185,7 +185,7 @@ function Sheet({ answers, step, sent }: { answers: Answers; step: number; sent: 
 const field =
   "mt-2 w-full border-0 border-b-2 border-white/30 bg-transparent px-0 py-3 text-xl font-semibold text-white outline-none transition-colors placeholder:font-normal placeholder:text-white/40 focus:border-orange";
 
-export function QuoteExperience() {
+export function QuoteExperience({ heading: Heading = "h2" }: { heading?: "h1" | "h2" }) {
   const [step, setStep] = useState(0);
   const [sent, setSent] = useState(false);
   const [answers, setAnswers] = useState<Answers>({
@@ -206,6 +206,12 @@ export function QuoteExperience() {
       setSent(false);
     };
     window.addEventListener("i3geo:service", onService);
+    // Vindo de um link como /orcamento?servico=desmembramento, o serviço já entra marcado.
+    const wanted = new URLSearchParams(window.location.search).get("servico");
+    if (wanted && services.some((s) => s.id === wanted)) {
+      setAnswers((a) => ({ ...a, service: wanted as ServiceId }));
+      setStep(1);
+    }
     return () => window.removeEventListener("i3geo:service", onService);
   }, []);
 
@@ -236,9 +242,9 @@ export function QuoteExperience() {
     <section id="contato" className="scroll-mt-20 overflow-hidden bg-[#03121A] py-24 text-white sm:py-32">
       <div className="mx-auto grid max-w-7xl items-center gap-14 px-6 sm:px-10 lg:grid-cols-12 lg:px-16">
         <div className="lg:col-span-7">
-          <h2 className="text-balance text-4xl font-bold leading-[1.02] tracking-tight sm:text-5xl lg:text-6xl">
+          <Heading className="text-balance text-4xl font-bold leading-[1.02] tracking-tight sm:text-5xl lg:text-6xl">
             Desenhe o seu pedido de orçamento.
-          </h2>
+          </Heading>
 
           <ol className="mt-10 flex gap-2" aria-label="Etapas">
             {STEPS.map((label, i) => (

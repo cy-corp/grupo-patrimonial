@@ -176,7 +176,7 @@ export function DawnExperience() {
             </motion.span>
           ))}
           <motion.span style={{ backgroundColor: ctaBg, color: ctaInk }} className="inline-block">
-            <Link href="#contato" className="block px-4 py-2 text-sm font-semibold">
+            <Link href="/orcamento" className="block px-4 py-2 text-sm font-semibold">
               <span className="sm:hidden">Orçamento</span>
               <span className="hidden sm:inline">Solicitar orçamento</span>
             </Link>
@@ -213,7 +213,7 @@ export function DawnExperience() {
             </p>
             <div className="flex flex-wrap items-center gap-5">
               <Link
-                href="#contato"
+                href="/orcamento"
                 className="bg-orange px-5 py-3 text-sm font-bold text-graphite transition-colors hover:bg-white"
               >
                 Solicitar orçamento

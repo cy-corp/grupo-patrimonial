@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { ServiceDiagram } from "@/components/site/service-diagram";
 import { SiteFooter, SiteHeader } from "@/components/site/site-chrome";
 import { services, surveyDelivers, whatsappLink } from "@/lib/content";
@@ -49,6 +50,12 @@ export default function ServicosPage() {
                     </ul>
                   </>
                 )}
+                <Link
+                  href={`/orcamento?servico=${service.id}`}
+                  className="mt-8 inline-block border-b-2 border-orange pb-1 text-sm font-semibold text-brand transition-colors hover:text-graphite"
+                >
+                  Pedir orçamento de {service.title.toLowerCase()}
+                </Link>
               </div>
             </section>
           ))}

@@ -88,9 +88,17 @@ export function SiteFooter() {
         </div>
       </div>
       <FooterNascente />
-      <p className="relative shrink-0 border-t border-brand/15 px-6 py-4 text-center text-xs text-graphite/70">
-        © {new Date().getFullYear()} {brand.name}. Todos os direitos reservados.
-      </p>
+      <div className="relative flex shrink-0 flex-wrap items-center justify-center gap-x-6 gap-y-1 border-t border-brand/15 px-6 py-4 text-xs text-graphite/70">
+        <p>
+          © {new Date().getFullYear()} {brand.name}. Todos os direitos reservados.
+        </p>
+        <Link href="/politica-de-privacidade" className="underline underline-offset-4 transition-colors hover:text-brand">
+          Política de privacidade
+        </Link>
+        <Link href="/termos-de-uso" className="underline underline-offset-4 transition-colors hover:text-brand">
+          Termos de uso
+        </Link>
+      </div>
     </footer>
   );
 }
