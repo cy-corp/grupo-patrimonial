@@ -33,7 +33,7 @@ function Block({ index, onActive, title, paragraphs }: { index: number; onActive
 
   return (
     <div ref={ref} className="flex min-h-[70vh] flex-col justify-center py-12">
-      <h2 className={`text-5xl font-bold tracking-tight sm:text-7xl ${index === 3 ? "text-orange" : "text-brand"}`}>{title}</h2>
+      <h2 className={`text-4xl font-bold tracking-tight min-[400px]:text-5xl sm:text-7xl ${index === 3 ? "text-orange" : "text-brand"}`}>{title}</h2>
       <div className="mt-8 space-y-5 text-lg leading-relaxed text-graphite/85 sm:text-xl">
         {paragraphs.map((paragraph) => (
           <p key={paragraph} className="max-w-[52ch]">
