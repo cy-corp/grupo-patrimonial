@@ -196,11 +196,11 @@ export function DawnExperience() {
             initial={{ opacity: 0, y: 30 }}
             animate={entered ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
             transition={{ delay: 0.15, duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
-            className="text-[clamp(3rem,6.2vw,6rem)] font-bold leading-[0.95] tracking-[-0.03em]"
+            className="text-[clamp(2.25rem,5.6vw,6rem)] font-bold leading-[0.97] tracking-[-0.03em]"
           >
-            Enxergar o território
+            Toda decisão começa
             <br />
-            <span className="text-[#A9E3F0]">como ele é.</span>
+            <span className="text-[#A9E3F0]">com informação confiável.</span>
           </motion.h1>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
