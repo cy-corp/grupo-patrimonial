@@ -78,7 +78,7 @@ export default function ServicosPage() {
                 href={whatsappLink("Olá, tenho uma demanda e gostaria de ajuda para identificar o serviço adequado.")}
                 target="_blank"
                 rel="noreferrer"
-                className="inline-block bg-white px-7 py-4 text-base font-bold text-brand transition-colors hover:bg-orange hover:text-graphite"
+                className="inline-block bg-white rounded-full px-7 py-4 text-base font-bold text-brand transition-colors hover:bg-orange hover:text-graphite"
               >
                 Conversar no WhatsApp
               </a>

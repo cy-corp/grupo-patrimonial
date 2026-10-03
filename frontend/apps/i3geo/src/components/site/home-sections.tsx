@@ -130,7 +130,7 @@ export function Diagnosis() {
           </ul>
         </div>
         <div className="min-w-0 lg:col-span-6">
-          <div className="border border-brand/15 bg-[#F6F4EF] p-6 sm:p-10 lg:sticky lg:top-28">
+          <div className="rounded-3xl border border-brand/15 bg-[#F6F4EF] p-6 sm:p-10 lg:sticky lg:top-28">
             <AnimatePresence mode="wait">
               <motion.div
                 key={active}
@@ -147,7 +147,7 @@ export function Diagnosis() {
                   <a
                     href="#contato"
                     onClick={() => window.dispatchEvent(new CustomEvent("i3geo:service", { detail: service.id }))}
-                    className="bg-brand px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-graphite"
+                    className="bg-brand rounded-full px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-graphite"
                   >
                     Pedir orçamento deste serviço
                   </a>
@@ -227,7 +227,7 @@ export function Process() {
 // porque um elemento totalmente recortado não dispara a entrada na tela.
 function Photo({ src, alt, sizes, className, delay = 0 }: { src: StaticImageData; alt: string; sizes: string; className: string; delay?: number }) {
   return (
-    <motion.div initial="hidden" whileInView="shown" viewport={{ once: true, amount: 0.25 }} className={`relative overflow-hidden ${className}`}>
+    <motion.div initial="hidden" whileInView="shown" viewport={{ once: true, amount: 0.25 }} className={`relative overflow-hidden rounded-2xl sm:rounded-3xl ${className}`}>
       <motion.div
         className="absolute inset-0"
         variants={{ hidden: { clipPath: "inset(0 0 100% 0)" }, shown: { clipPath: "inset(0 0 0% 0)" } }}

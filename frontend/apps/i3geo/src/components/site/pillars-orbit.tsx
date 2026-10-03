@@ -137,10 +137,10 @@ export function Equation() {
           patrimonial.
         </p>
         <div className="mt-10 flex flex-wrap gap-3">
-          <Link href="/orcamento" className="bg-orange px-7 py-4 text-base font-bold text-graphite transition-colors hover:bg-white">
+          <Link href="/orcamento" className="bg-orange rounded-full px-7 py-4 text-base font-bold text-graphite transition-colors hover:bg-white">
             Solicitar orçamento
           </Link>
-          <Link href="/servicos" className="border border-white/30 px-7 py-4 text-base font-semibold transition-colors hover:border-white">
+          <Link href="/servicos" className="border border-white/30 rounded-full px-7 py-4 text-base font-semibold transition-colors hover:border-white">
             Ver serviços
           </Link>
         </div>

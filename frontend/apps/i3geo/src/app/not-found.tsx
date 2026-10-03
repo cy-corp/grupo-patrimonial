@@ -17,12 +17,12 @@ export default function NotFound() {
               A página que você procurou não existe ou mudou de endereço.
             </p>
             <div className="mt-10 flex flex-wrap gap-3">
-              <Link href="/" className="bg-brand px-7 py-4 text-base font-bold text-white transition-colors hover:bg-graphite">
+              <Link href="/" className="bg-brand rounded-full px-7 py-4 text-base font-bold text-white transition-colors hover:bg-graphite">
                 Voltar ao início
               </Link>
               <Link
                 href="/servicos"
-                className="border border-brand/30 px-7 py-4 text-base font-semibold text-brand transition-colors hover:border-brand"
+                className="border border-brand/30 rounded-full px-7 py-4 text-base font-semibold text-brand transition-colors hover:border-brand"
               >
                 Ver serviços
               </Link>

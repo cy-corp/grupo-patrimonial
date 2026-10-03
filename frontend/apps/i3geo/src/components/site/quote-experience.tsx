@@ -280,7 +280,7 @@ export function QuoteExperience({ heading: Heading = "h2" }: { heading?: "h1" | 
           <ol className="mt-10 flex gap-2" aria-label="Etapas">
             {STEPS.map((label, i) => (
               <li key={label} className="flex-1">
-                <span className={`block h-1 transition-colors duration-500 ${i <= step ? "bg-orange" : "bg-white/20"}`} />
+                <span className={`block h-1 rounded-full transition-colors duration-500 ${i <= step ? "bg-orange" : "bg-white/20"}`} />
                 <span className={`mt-2 block text-xs font-semibold ${i === step ? "text-white" : "text-white/50"}`}>{label}</span>
               </li>
             ))}
@@ -300,7 +300,7 @@ export function QuoteExperience({ heading: Heading = "h2" }: { heading?: "h1" | 
                 href={whatsappLink(summary)}
                 target="_blank"
                 rel="noreferrer"
-                className={`mt-8 inline-block px-7 py-4 text-base font-bold transition-colors ${
+                className={`mt-8 inline-block rounded-full px-7 py-4 text-base font-bold transition-colors ${
                   delivery === "email" ? "border border-white/30 text-white hover:border-white" : "bg-orange text-graphite hover:bg-white"
                 }`}
               >
@@ -343,7 +343,7 @@ export function QuoteExperience({ heading: Heading = "h2" }: { heading?: "h1" | 
                                 type="button"
                                 aria-pressed={selected}
                                 onClick={() => set("service", option.id)}
-                                className={`flex min-w-0 items-center gap-4 border p-4 text-left text-sm font-semibold leading-tight transition-colors min-[430px]:flex-col min-[430px]:items-start min-[430px]:gap-3 ${
+                                className={`flex min-w-0 items-center gap-4 rounded-2xl border p-4 text-left text-sm font-semibold leading-tight transition-colors min-[430px]:flex-col min-[430px]:items-start min-[430px]:gap-3 ${
                                   selected ? "border-orange bg-white text-graphite" : "border-white/25 text-white hover:border-white/60"
                                 }`}
                               >
@@ -410,7 +410,7 @@ export function QuoteExperience({ heading: Heading = "h2" }: { heading?: "h1" | 
                             role="radio"
                             aria-checked={answers.uf === uf}
                             onClick={() => set("uf", uf)}
-                            className={`border px-5 py-2.5 text-sm font-semibold transition-colors ${
+                            className={`border rounded-full px-5 py-2.5 text-sm font-semibold transition-colors ${
                               answers.uf === uf ? "border-orange bg-orange text-graphite" : "border-white/30 hover:border-white/70"
                             }`}
                           >
@@ -474,7 +474,7 @@ export function QuoteExperience({ heading: Heading = "h2" }: { heading?: "h1" | 
                 <button
                   type="submit"
                   disabled={(step === 0 && !answers.service) || sending}
-                  className="bg-orange px-7 py-4 text-base font-bold text-graphite transition-colors hover:bg-white disabled:cursor-not-allowed disabled:opacity-40"
+                  className="bg-orange rounded-full px-7 py-4 text-base font-bold text-graphite transition-colors hover:bg-white disabled:cursor-not-allowed disabled:opacity-40"
                 >
                   {step === STEPS.length - 1 ? (sending ? "Enviando…" : "Enviar pedido") : "Continuar"}
                 </button>

@@ -50,14 +50,14 @@ function Chapter({
   return (
     <section className={`relative flex items-start sm:items-center ${className}`}>
       <div className="px-4 pt-[16vh] sm:px-10 sm:pt-0 lg:px-16">
-        <div className="max-w-xl lg:max-w-2xl bg-[#F6F4EF]/85 p-5 backdrop-blur-sm sm:bg-transparent sm:p-0 sm:backdrop-blur-none">
+        <div className="max-w-xl lg:max-w-2xl rounded-2xl bg-[#F6F4EF]/85 p-5 backdrop-blur-sm sm:rounded-none sm:bg-transparent sm:p-0 sm:backdrop-blur-none">
           <h2 className="text-balance break-words text-[clamp(1.2rem,6.2vw,1.7rem)] font-bold leading-[1.05] tracking-tight text-brand sm:text-5xl lg:text-[3.4rem]">{title}</h2>
           <p className="mt-5 max-w-md text-base leading-relaxed text-graphite/80 sm:text-lg">{text}</p>
           <ul className="mt-6 flex flex-wrap gap-2">
             {data.map((d) => (
               <li
                 key={d}
-                className="border border-brand/15 bg-white px-3 py-1.5 text-xs font-semibold text-brand tabular-nums"
+                className="border border-brand/15 bg-white rounded-full px-3 py-1.5 text-xs font-semibold text-brand tabular-nums"
               >
                 {d}
               </li>
@@ -175,8 +175,8 @@ export function DawnExperience() {
               </Link>
             </motion.span>
           ))}
-          <motion.span style={{ backgroundColor: ctaBg, color: ctaInk }} className="inline-block">
-            <Link href="/orcamento" className="block px-4 py-2 text-sm font-semibold">
+          <motion.span style={{ backgroundColor: ctaBg, color: ctaInk }} className="inline-block overflow-hidden rounded-full">
+            <Link href="/orcamento" className="block rounded-full px-4 py-2 text-sm font-semibold">
               <span className="sm:hidden">Orçamento</span>
               <span className="hidden sm:inline">Solicitar orçamento</span>
             </Link>
@@ -214,7 +214,7 @@ export function DawnExperience() {
             <div className="flex flex-wrap items-center gap-5">
               <Link
                 href="/orcamento"
-                className="bg-orange px-5 py-3 text-sm font-bold text-graphite transition-colors hover:bg-white"
+                className="bg-orange rounded-full px-5 py-3 text-sm font-bold text-graphite transition-colors hover:bg-white"
               >
                 Solicitar orçamento
               </Link>
@@ -268,7 +268,7 @@ export function DawnExperience() {
             <div className="mt-8 flex flex-wrap justify-center gap-3">
               <Link
                 href="#contato"
-                className="bg-orange px-7 py-4 text-base font-bold text-graphite transition-colors hover:bg-brand hover:text-white"
+                className="bg-orange rounded-full px-7 py-4 text-base font-bold text-graphite transition-colors hover:bg-brand hover:text-white"
               >
                 Solicitar orçamento
               </Link>

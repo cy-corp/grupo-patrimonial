@@ -28,7 +28,7 @@ export function SiteHeader() {
               {item.label}
             </Link>
           ))}
-          <Link href="/orcamento" className="bg-brand px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-graphite">
+          <Link href="/orcamento" className="bg-brand rounded-full px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-graphite">
             <span className="sm:hidden">Orçamento</span>
             <span className="hidden sm:inline">Solicitar orçamento</span>
           </Link>
@@ -86,7 +86,7 @@ export function SiteFooter() {
           </p>
           <Link
             href="/orcamento"
-            className="mt-6 inline-block bg-orange px-6 py-3.5 text-sm font-bold text-graphite transition-colors hover:bg-brand hover:text-white"
+            className="mt-6 inline-block bg-orange rounded-full px-6 py-3.5 text-sm font-bold text-graphite transition-colors hover:bg-brand hover:text-white"
           >
             Solicitar orçamento
           </Link>

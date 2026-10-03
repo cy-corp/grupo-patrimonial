@@ -98,7 +98,7 @@ export function MobileMenu() {
                 <Link
                   href="/orcamento"
                   onClick={() => setOpen(false)}
-                  className="mt-5 block bg-orange px-6 py-4 text-center text-base font-bold text-graphite"
+                  className="mt-5 block bg-orange rounded-full px-6 py-4 text-center text-base font-bold text-graphite"
                 >
                   Solicitar orçamento
                 </Link>

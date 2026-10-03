@@ -178,7 +178,7 @@ function Terrain({
   }, -1);
 
   const tag =
-    "pointer-events-none select-none whitespace-nowrap border border-brand/15 bg-white/90 px-1.5 py-0.5 text-[10px] font-semibold text-graphite shadow-sm tabular-nums";
+    "pointer-events-none select-none whitespace-nowrap border border-brand/15 rounded bg-white/90 px-1.5 py-0.5 text-[10px] font-semibold text-graphite shadow-sm tabular-nums";
 
   return (
     <>
@@ -204,7 +204,7 @@ function Terrain({
       ))}
       <Html position={anchors.center} zIndexRange={[20, 0]}>
         <div ref={area} className="pointer-events-none -translate-x-1/2 -translate-y-1/2 opacity-0">
-          <span className="block whitespace-nowrap bg-brand px-2.5 py-1 text-sm font-bold text-white tabular-nums shadow">
+          <span className="block whitespace-nowrap rounded-md bg-brand px-2.5 py-1 text-sm font-bold text-white tabular-nums shadow">
             {fmt.ha(facts.areaHa)}
           </span>
         </div>
