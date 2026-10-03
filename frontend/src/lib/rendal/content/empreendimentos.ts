@@ -212,12 +212,6 @@ export const empreendimentos: Empreendimento[] = [
           obraFoto("drenagem", "05", "Descarga da drenagem na encosta", "v", "#54564a"),
           obraFoto("drenagem", "06", "Boca da drenagem com dissipador", "v", "#59594e"),
           obraFoto("drenagem", "07", "Vista de cima do canal da drenagem", "v", "#686555"),
-          obraFoto("drenagem", "13", "Execução da estrutura de drenagem", "v", "#585658"),
-          obraFoto("drenagem", "08", "Estrutura de descarga da drenagem pluvial", "v", "#525449"),
-          obraFoto("drenagem", "09", "Descarga da drenagem na mata", "v", "#906a64"),
-          obraFoto("drenagem", "10", "Boca da drenagem vista de frente", "v", "#545549"),
-          obraFoto("drenagem", "11", "Saída da drenagem no limite do terreno", "v", "#946c6a"),
-          obraFoto("drenagem", "12", "Cabeçote da drenagem pluvial", "v", "#976a68"),
         ],
       },
       {
