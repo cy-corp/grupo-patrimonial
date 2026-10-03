@@ -164,7 +164,7 @@ function Terrain({
     if (area.current) area.current.style.opacity = String(s.fill * (1 - s.pin));
     env.current.forEach((el) => el && (el.style.opacity = String(s.env * (1 - s.pin))));
     if (pin.current) {
-      pin.current.style.opacity = String(s.pin);
+      pin.current.style.opacity = String(s.pin * (1 - ramp(v, 5.55, 5.85)));
       pin.current.style.transform = `translate(-50%, ${-100 - (1 - s.pin) * 70}%)`;
     }
 

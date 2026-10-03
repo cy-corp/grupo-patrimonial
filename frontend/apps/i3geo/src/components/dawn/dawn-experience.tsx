@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
 import { brand, colors } from "@/lib/brand";
 import { ramp } from "../hero/beats";
+import { Contact } from "../landing/contact";
 import { PAPER, css, skyAt, stageAt } from "./dawn-stage";
 
 const DawnScene = dynamic(() => import("./dawn-scene"), { ssr: false });
@@ -99,7 +100,6 @@ export function DawnExperience() {
   const stars = useTransform(day, (d) => 1 - ramp(d, 0.02, 0.32));
   const nightLogo = useTransform(day, (d) => 1 - ramp(d, 0.35, 0.6));
   const dayLogo = useTransform(day, (d) => ramp(d, 0.35, 0.6));
-  const navInk = useTransform(day, (d) => mixHex("#FFFFFF", colors.graphite, ramp(d, 0.35, 0.6)));
   const ctaBg = useTransform(day, (d) => mixHex("#FFFFFF", colors.petroleum, ramp(d, 0.35, 0.6)));
   const interludeInk = useTransform(day, (d) => mixHex("#FFFFFF", colors.petroleum, ramp(d, 0.4, 0.62)));
   const interludeText = useTransform(day, (d) => mixHex("#D5E3E7", colors.graphite, ramp(d, 0.4, 0.62)));
@@ -155,13 +155,8 @@ export function DawnExperience() {
           />
         </Link>
         <nav className="flex items-center gap-5">
-          <motion.span style={{ color: navInk }} className="hidden text-sm font-medium sm:inline">
-            <Link href="/" className="opacity-75 transition-opacity hover:opacity-100">
-              Ver o site
-            </Link>
-          </motion.span>
           <motion.span style={{ backgroundColor: ctaBg, color: ctaInk }} className="inline-block">
-            <Link href="/#contato" className="block px-4 py-2 text-sm font-semibold">
+            <Link href="#contato" className="block px-4 py-2 text-sm font-semibold">
               Solicitar orçamento
             </Link>
           </motion.span>
@@ -191,7 +186,7 @@ export function DawnExperience() {
             </p>
             <div className="flex flex-wrap items-center gap-5">
               <Link
-                href="/#contato"
+                href="#contato"
                 className="bg-orange px-5 py-3 text-sm font-bold text-graphite transition-colors hover:bg-white"
               >
                 Solicitar orçamento
@@ -244,16 +239,10 @@ export function DawnExperience() {
             </h2>
             <div className="mt-8 flex flex-wrap justify-center gap-3">
               <Link
-                href="/#contato"
+                href="#contato"
                 className="bg-orange px-7 py-4 text-base font-bold text-graphite transition-colors hover:bg-brand hover:text-white"
               >
                 Solicitar orçamento
-              </Link>
-              <Link
-                href="/"
-                className="border border-brand/25 px-7 py-4 text-base font-semibold text-brand transition-colors hover:border-brand"
-              >
-                Ver o site
               </Link>
             </div>
             <p className="mt-10 text-[11px] text-graphite/70">
@@ -261,6 +250,9 @@ export function DawnExperience() {
             </p>
           </div>
         </section>
+        <div className="relative bg-[#F6F4EF]">
+          <Contact />
+        </div>
       </main>
     </div>
   );

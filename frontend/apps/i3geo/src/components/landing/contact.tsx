@@ -6,23 +6,6 @@ export function Contact() {
           <h2 className="text-3xl font-bold tracking-tight text-foreground">
             Contato
           </h2>
-          <p className="mt-3 text-muted">
-            Estrutura placeholder — formulário e canais entram depois.
-          </p>
-        </div>
-        <div className="mt-10 grid gap-8 sm:grid-cols-2">
-          <div className="space-y-2">
-            <p className="text-sm font-semibold uppercase tracking-wide text-brand">
-              E-mail
-            </p>
-            <p className="text-muted">contato@i3geo.com.br</p>
-          </div>
-          <div className="space-y-2">
-            <p className="text-sm font-semibold uppercase tracking-wide text-brand">
-              Telefone
-            </p>
-            <p className="text-muted">(00) 0000-0000</p>
-          </div>
         </div>
         <form className="mt-12 grid max-w-xl gap-4" aria-label="Contato">
           <label className="grid gap-1.5 text-sm">
